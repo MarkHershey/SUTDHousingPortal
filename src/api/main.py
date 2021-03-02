@@ -123,7 +123,7 @@ def protected():
          -H "Authorization: Bearer <your_token>"
     """
     return {
-        message: f"protected endpoint (allowed user {flask_praetorian.current_user().username})"
+        "message": f"protected endpoint (allowed user {flask_praetorian.current_user().username})"
     }
 
 
