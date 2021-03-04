@@ -1,3 +1,4 @@
+attrs==20.3.0
 bcrypt==3.2.0
 certifi==2020.12.5
 cffi==1.14.5
@@ -8,12 +9,14 @@ dataclasses==0.8
 fastapi==0.63.0
 h11==0.12.0
 idna==2.10
+iniconfig==1.1.1
 markkk==0.0.16
 passlib==1.7.4
 pkg-resources==0.0.0
 pycparser==2.20
 pydantic==1.8.1
 PyJWT==2.0.1
+pytest==6.2.2
 requests==2.25.1
 six==1.15.0
 starlette==0.13.6

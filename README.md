@@ -16,7 +16,6 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
     -   [Docker](https://www.docker.com/)
 -   Testing
     -   [pytest](https://docs.pytest.org/en/stable/)
-    -   [tox](https://tox.readthedocs.io/en/latest/)
     -   [selenium](https://selenium-python.readthedocs.io/)
 
 ## Development
@@ -45,6 +44,13 @@ Check API documentation after firing up local server
 
 ```
 http://127.0.0.1:8000/docs
+```
+
+### Run tests
+
+```bash
+# At project root `YOUR/PATH/SUTDHousingPortal`
+$ pytest
 ```
 
 ## Developers
