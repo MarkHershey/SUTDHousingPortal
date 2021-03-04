@@ -1,9 +1,10 @@
-from typing import List, Dict
+from typing import Dict, List
+
 from markkk.logger import logger
 
 from .event import Event
-from .record import DisciplinaryRecords
 from .lifestyle import LifestyleProfile
+from .record import DisciplinaryRecords
 from .room import Room, RoomProfile
 
 

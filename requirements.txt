@@ -1,4 +1,6 @@
+bcrypt==3.2.0
 certifi==2020.12.5
+cffi==1.14.5
 chardet==4.0.0
 click==7.1.2
 colorlog==4.7.2
@@ -7,9 +9,13 @@ fastapi==0.63.0
 h11==0.12.0
 idna==2.10
 markkk==0.0.16
+passlib==1.7.4
 pkg-resources==0.0.0
+pycparser==2.20
 pydantic==1.8.1
+PyJWT==2.0.1
 requests==2.25.1
+six==1.15.0
 starlette==0.13.6
 typing-extensions==3.7.4.3
 urllib3==1.26.3
