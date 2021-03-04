@@ -26,7 +26,7 @@ def register(auth_details: User):
 
 
 @app.post("/register/admin", status_code=201)
-def register(new_admin: Admin):
+def register_admin(new_admin: Admin):
     if any(x["username"] == new_admin.username for x in users):
         raise HTTPException(status_code=400, detail="Username is taken")
     hashed_password = auth_handler.get_password_hash(new_admin.password)

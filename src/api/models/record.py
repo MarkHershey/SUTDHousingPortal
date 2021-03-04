@@ -5,8 +5,8 @@ from pydantic import BaseModel
 
 
 class DisciplinaryRecords(BaseModel):
-    id: str = None
+    uid: str = None
     student_id: str = None
-    type: str = None
+    record_type: str = None
     description: str = None
     issue_date: datetime = datetime.now()
