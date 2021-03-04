@@ -37,6 +37,27 @@ class Student(User):
         return values["username"]
 
 
+class StudentSettingsProfile(User):
+    phone_number: str = None
+    email_personal: str = None
+    local_addr_post_code: str = None
+    local_addr_street: str = None
+    local_addr_unit: str = None
+    preference_roommate: List[str] = []
+
+
+class StudentIdentityProfile(User):
+    student_id: str = None
+    full_name: str = None
+    gender: str = None  # Male / Female
+    enrollment_type: str = None
+    year_of_enrollment: int = None
+    sc_status: bool = False
+    pr_status: bool = False
+    nationality: str
+    email_sutd: str
+
+
 if __name__ == "__main__":
     s = Student(
         username="1004561",

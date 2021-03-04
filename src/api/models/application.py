@@ -5,8 +5,10 @@ from pydantic import BaseModel, validator
 
 
 class ApplicationForm(BaseModel):
+    uid: str = None
     pass
 
 
 class ApplicationPeriod(BaseModel):
+    uid: str = None
     pass
