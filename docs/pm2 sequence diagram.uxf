@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLSequenceAllInOne</id>
+    <coordinates>
+      <x>130</x>
+      <y>70</y>
+      <w>880</w>
+      <h>560</h>
+    </coordinates>
+    <panel_attributes>title=Floor Events Sequence Diagram
+autoTick=false
+overrideIds=true
+obj=House Guardian~id1 | System~b1 | Student~id2
+
+id1-&gt;b1: create_event()
+tick=
+b1-&gt;id2: notify_student()
+tick=
+id2-&gt;b1: signUp()
+tick=
+b1-&gt;b1 + :add_student()
+tick=2
+on=b1
+tick=3
+off=b1
+tick=
+id1 -&gt; b1: log_attendance()
+tick=
+b1-&gt;id2: add_event()
+	
+	
+//combinedFragment=alt~
+//	id1:[old]
+//	tick=
+//	combinedFragment=loop~loopid id1 b1
+//		id1:[1..10]
+//		tick=
+//		ref=id1 b1 :calculate
+//	--=loopid
+//		tick=
+//	id1-&gt;id2
+//	tick=
+//..
+//	id1:[new]
+//	tick=
+//	id1-&gt;b1
+//--
+tick=
+//id1.&gt;id2 + : Text with forced \n new line
+tick=2
+//continuation=id1 id2 :goto X
+tick=</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
