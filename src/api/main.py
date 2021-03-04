@@ -1,11 +1,12 @@
 from copy import copy
 
 from fastapi import Depends, FastAPI, HTTPException
+from markkk.logger import logger
 
-from auth import AuthHandler
-from models.admin import Admin
-from models.student import Student
-from models.user import User
+from .auth import AuthHandler
+from .models.room import Room, RoomProfile
+from .models.student import Student
+from .models.user import Admin, User
 
 app = FastAPI()
 
@@ -14,6 +15,10 @@ auth_handler = AuthHandler()
 users = []
 all_students = []
 all_admins = []
+
+
+###############################################################################
+# authentications
 
 
 @app.post("/register/user", status_code=201)
@@ -47,11 +52,6 @@ def register_student(new_student: Student):
     return
 
 
-@app.get("/students")
-def get_all_student():
-    return {"all_students": all_students}
-
-
 @app.post("/login")
 def login(auth_details: User):
     user = None
@@ -68,9 +68,56 @@ def login(auth_details: User):
     return {"token": token}
 
 
-@app.get("/unprotected")
-def unprotected():
-    return {"hello": "world"}
+###############################################################################
+# functions
+
+
+@app.get("/students")
+def get_all_student_info():
+    """
+    Set a Student as House Guardian
+    Require: Admin-write
+    """
+    return {"all_students": all_students}
+
+
+@app.put("/student/{student_id}/set_hg")
+def set_student_as_hg(student_id: str):
+    """
+    Set a Student as House Guardian
+    Require: Admin-write
+    """
+    # TODO:
+    pass
+
+
+@app.put("/student/{student_id}/revoke_sg")
+def revoke_student_as_hg(student_id: str):
+    """
+    Revoke a Student as House Guardian
+    Require: Admin-write
+    """
+    # TODO:
+    pass
+
+
+@app.put("/student/{student_id}/update_room_profile")
+def update_room_profile(student_id: str, room_profile_id: RoomProfile):
+    """
+    Update (Overwrite) a student's prefered room profile
+    Require: Student-self or Admin-write
+    """
+    # TODO:
+    pass
+
+
+###############################################################################
+# experiments
+
+
+@app.get("/")
+def index():
+    return "SUTD Housing Portal"
 
 
 @app.get("/protected")

@@ -3,6 +3,8 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
+from .lifestyle import LifestyleProfile
+from .room import RoomProfile
 from .user import User
 
 
@@ -19,15 +21,16 @@ class Student(User):
     email_sutd: str
     email_personal: str
     local_addr_post_code: str
-    # local_addr_street: str
-    # local_addr_unit: str
-    # travel_time_hrs: float
-    # attended_events: List[str] = []
-    # disciplinary_records: List[str] = []
-    # preference_lifestyle: LifestyleProfile = None
+    local_addr_street: str = None
+    local_addr_unit: str = None
+    attended_events: List[str] = []
+    disciplinary_records: List[str] = []
     preference_roommate: List[str] = []
-    # preference_room: RoomProfile = None
+    preference_room: RoomProfile = None
+    preference_lifestyle: LifestyleProfile = None
     is_house_guardian: bool = False
+    # derived
+    travel_time_hrs: float = None
 
     @validator("student_id", pre=True, always=True)
     def port_username_to_studentId(cls, v, *, values, **kwargs):

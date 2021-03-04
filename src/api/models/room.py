@@ -19,8 +19,8 @@ class Room(BaseModel):
     face_campus: bool = None
     face_airport: bool = None
     face_building: bool = None
-    current_occupants: List[str] = []  # list of current residents' student_id
-    history_occupants: List[str] = []  # list of past residents' student_id
+    current_effective_contract_count: int = 0
+    all_contracts: List[str] = []  # list of Contract UIDs
 
 
 class RoomProfile(BaseModel):

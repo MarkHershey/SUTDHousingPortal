@@ -7,9 +7,17 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
 -   Backend
     -   [FastAPI](https://fastapi.tiangolo.com/) (Python high performance web framework)
     -   [Uvicorn](https://www.uvicorn.org/) (Python asynchronous ASGI server)
+    -   [mongoDB](https://www.mongodb.com/)
 -   Frontend
     -   [React](https://reactjs.org/)
     -   [Bootstrap](https://getbootstrap.com/)
+-   Deployment
+    -   [NGINX](https://www.nginx.com/)
+    -   [Docker](https://www.docker.com/)
+-   Testing
+    -   [pytest](https://docs.pytest.org/en/stable/)
+    -   [tox](https://tox.readthedocs.io/en/latest/)
+    -   [selenium](https://selenium-python.readthedocs.io/)
 
 ## Development
 
@@ -19,6 +27,7 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
 -   Python 3.6+
 
 ```bash
+# At project root `YOUR/PATH/SUTDHousingPortal`
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install --upgrade pip wheel setuptools
@@ -28,8 +37,8 @@ $ pip install -r requirements.txt
 ### Run backend server locally
 
 ```bash
-$ cd src/api
-$ uvicorn main:app --reload
+# At project root `YOUR/PATH/SUTDHousingPortal`
+$ uvicorn src.api.main:app --reload
 ```
 
 Check API documentation after firing up local server
