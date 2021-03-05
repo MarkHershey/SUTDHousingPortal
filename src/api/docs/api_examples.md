@@ -16,20 +16,26 @@ curl --header "Content-Type: application/json" --request POST --data '{"username
 curl --header "Content-Type: application/json" --request POST --data '{"username": "admin", "password": "pass1234", "full_name": "Bill Gates", "email_sutd": "bill_gates@sutd.edu.sg", "read_only_privilege": false}' localhost:8000/register/admin
 ```
 
-### Login
-
-```bash
-curl --header "Content-Type: application/json" --request POST --data '{"username": "admin", "password": "pass1234"}' localhost:8000/login
-```
-
 ### Get a particular student profile without logging in
 
 ```bash
 curl -X GET "http://127.0.0.1:8000/student/1004561" -H  "accept: application/json"
 ```
 
+### Login
+
+```bash
+curl --header "Content-Type: application/json" --request POST --data '{"username": "admin", "password": "pass1234"}' localhost:8000/login
+```
+
 ### Get a particular student profile
 
 ```bash
 curl -X GET "http://127.0.0.1:8000/student/1004561" -H  "accept: application/json" -H  "Authorization: Bearer JWT_TOKEN"
+```
+
+### Get all user details
+
+```bash
+curl -X GET "http://127.0.0.1:8000/users" -H  "accept: application/json" -H  "Authorization: Bearer JWT_TOKEN"
 ```
