@@ -31,6 +31,9 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install --upgrade pip wheel setuptools
 $ pip install -r requirements.txt
+
+# if any packages not install properly, try this
+$ pip install --upgrade bcrypt pyjwt fastapi markkk passlib requests pytest uvicorn
 ```
 
 ### Run backend server locally

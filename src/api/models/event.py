@@ -6,6 +6,7 @@ from pydantic import BaseModel, validator
 
 
 class Event(BaseModel):
+    uid: str = None
     title: str
     event_type: str  # example: FE, IBE, etc
     description: str = "None"  # long text description of the event

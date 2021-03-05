@@ -19,7 +19,7 @@ curl --header "Content-Type: application/json" --request POST --data '{"username
 ### Get a particular student profile without logging in
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/student/1004561" -H  "accept: application/json"
+curl -X GET "http://127.0.0.1:8000/students/1004561" -H  "accept: application/json"
 ```
 
 ### Login
@@ -31,7 +31,7 @@ curl --header "Content-Type: application/json" --request POST --data '{"username
 ### Get a particular student profile
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/student/1004561" -H  "accept: application/json" -H  "Authorization: Bearer JWT_TOKEN"
+curl -X GET "http://127.0.0.1:8000/students/1000000" -H  "accept: application/json" -H  "Authorization: Bearer JWT_TOKEN"
 ```
 
 ### Get all user details

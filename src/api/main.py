@@ -92,7 +92,7 @@ def get_all_users_info(username=Depends(auth_handler.auth_wrapper)):
 # /student
 
 
-@app.get("/student")
+@app.get("/students")
 def get_all_student_info(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all student info
@@ -101,7 +101,7 @@ def get_all_student_info(username=Depends(auth_handler.auth_wrapper)):
     return {"all_students": all_students}
 
 
-@app.get("/student/{student_id}")
+@app.get("/students/{student_id}")
 def get_student_info(student_id: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Set a particular Student info
@@ -112,7 +112,7 @@ def get_student_info(student_id: str, username=Depends(auth_handler.auth_wrapper
     return student_info
 
 
-@app.put("/student/{student_id}")
+@app.put("/students/{student_id}")
 def update_student_info(
     student_id: str,
     student_settings: StudentSettingsProfile,
@@ -126,7 +126,7 @@ def update_student_info(
     pass
 
 
-@app.put("/student/{student_id}/set_hg")
+@app.put("/students/{student_id}/set_hg")
 def set_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Set a Student as House Guardian
@@ -136,7 +136,7 @@ def set_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wrappe
     pass
 
 
-@app.put("/student/{student_id}/revoke_sg")
+@app.put("/students/{student_id}/revoke_sg")
 def revoke_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Revoke a Student as House Guardian
@@ -146,7 +146,7 @@ def revoke_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wra
     pass
 
 
-@app.put("/student/{student_id}/update_room_profile")
+@app.put("/students/{student_id}/update_room_profile")
 def update_room_profile(
     student_id: str,
     room_profile: RoomProfile,
@@ -160,7 +160,7 @@ def update_room_profile(
     pass
 
 
-@app.put("/student/{student_id}/update_lifestyle_profile")
+@app.put("/students/{student_id}/update_lifestyle_profile")
 def update_lifestyle_profile(
     student_id: str,
     lifestyle_profile: LifestyleProfile,
@@ -224,6 +224,19 @@ def update_application(
     pass
 
 
+@app.delete("/applications/{uid}")
+def delete_application(
+    uid: str,
+    username=Depends(auth_handler.auth_wrapper),
+):
+    """
+    Delete an ApplicationForm info
+    Require: Admin-write
+    """
+    # TODO:
+    pass
+
+
 @app.post("/applications/{uid}/offer")
 def approve_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
@@ -249,6 +262,40 @@ def reject_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Reject an Application
     Require: Admin-write
+    """
+    # TODO:
+    pass
+
+
+###############################################################################
+# /events
+
+
+@app.get("/events")
+def get_all_events(username=Depends(auth_handler.auth_wrapper)):
+    """
+    Get all Events
+    Require: Any User
+    """
+    # TODO:
+    pass
+
+
+@app.post("/events", status_code=201)
+def create_event(username=Depends(auth_handler.auth_wrapper)):
+    """
+    Create an Event
+    Require: Any User
+    """
+    # TODO:
+    pass
+
+
+@app.get("/events/{uid}")
+def get_all_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
+    """
+    Get an Event info
+    Require: Any User
     """
     # TODO:
     pass
