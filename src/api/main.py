@@ -143,16 +143,20 @@ def get_all_users_info(username=Depends(auth_handler.auth_wrapper)):
 
 
 @app.get("/students")
-def get_all_student_info(username=Depends(auth_handler.auth_wrapper), num: int = 10):
+def get_all_student_info(username=Depends(auth_handler.auth_wrapper), num: int = 30):
     """
     Get all student info
     Require: Admin-read
     """
     student_info_list = []
+    count = 0
     try:
         for student_info in users_collection.find():
+            count += 1
             clean_dict(student_info)
             student_info_list.append(student_info)
+            if count >= num:
+                break
     except Exception as e:
         logger.error("Failed to query database.")
         logger.error(e)
@@ -195,8 +199,37 @@ def update_student_info(
     Update (Overwrite) a particular Student info
     Require: Student-self or Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    # Check access
+    if username == student_id:
+        permission_ok = True
+
+    try:
+        admin = admins_collection.find_one({"username": username})
+        if admin and admin.read_only_privilege == False:
+            permission_ok = True
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not permission_ok:
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to update this."
+        )
+
+    try:
+        # NOTE: there is a potential bug here, need to distinguish cases where
+        # A: user wants to clear certain field (supply 'None' as new value)
+        # B: user wants to preserve the value of certain field (Not changing anything, so supplying 'None')
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id}, update={"$set": student_settings}
+        )
+        return updated if updated else {"msg": "failed"}
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
 
 
 @app.put("/students/{student_id}/set_hg")
@@ -205,8 +238,31 @@ def set_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wrappe
     Set a Student as House Guardian
     Require: Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    try:
+        admin = admins_collection.find_one({"username": username})
+        if admin and admin.read_only_privilege == False:
+            permission_ok = True
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not permission_ok:
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to update this."
+        )
+
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": {"is_house_guardian": True}},
+        )
+        return updated if updated else {"msg": "failed"}
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
 
 
 @app.put("/students/{student_id}/revoke_sg")
@@ -215,8 +271,31 @@ def revoke_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wra
     Revoke a Student as House Guardian
     Require: Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    try:
+        admin = admins_collection.find_one({"username": username})
+        if admin and admin.read_only_privilege == False:
+            permission_ok = True
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not permission_ok:
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to update this."
+        )
+
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": {"is_house_guardian": False}},
+        )
+        return updated if updated else {"msg": "failed"}
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
 
 
 @app.put("/students/{student_id}/update_room_profile")
