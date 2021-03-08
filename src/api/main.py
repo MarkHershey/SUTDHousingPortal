@@ -1,8 +1,9 @@
+import json
 from copy import copy
 
 from fastapi import Depends, FastAPI, HTTPException
 from markkk.logger import logger
-import json
+
 from .auth import AuthHandler
 from .database import db
 from .models.application import ApplicationForm, ApplicationPeriod
@@ -11,21 +12,38 @@ from .models.record import DisciplinaryRecord
 from .models.room import Room, RoomProfile
 from .models.student import Student, StudentSettingsProfile
 from .models.user import Admin, User
+from .utils import clean_dict
 
 app = FastAPI()
 
 ###############################################################################
-# database
+# Database
 
 users = []
 all_students = {}
 all_admins = []
 all_user_info = {}
 
-# MongoDB
-students_collection = db["students"]
-admins_collection = db["admins"]
+### MongoDB Collection Reference ###
+# User
 users_collection = db["users"]
+# Admin
+admins_collection = db["admins"]
+# Student
+students_collection = db["students"]
+# ApplicationForm
+applications_collection = db["applications"]
+# ApplicationPeriod
+application_periods_collection = db["application_periods"]
+# Contract
+contracts_collection = db["contracts"]
+# Event
+events_collection = db["events"]
+# DisciplinaryRecord
+records_collection = db["records"]
+# Room
+rooms_collection = db["rooms"]
+
 
 ###############################################################################
 # authentications
@@ -125,12 +143,25 @@ def get_all_users_info(username=Depends(auth_handler.auth_wrapper)):
 
 
 @app.get("/students")
-def get_all_student_info(username=Depends(auth_handler.auth_wrapper)):
+def get_all_student_info(username=Depends(auth_handler.auth_wrapper), num: int = 10):
     """
     Get all student info
     Require: Admin-read
     """
-    return {"all_students": all_students}
+    student_info_list = []
+    try:
+        for student_info in users_collection.find():
+            clean_dict(student_info)
+            student_info_list.append(student_info)
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if len(student_info_list) == 0:
+        raise HTTPException(status_code=404, detail="No students found.")
+
+    return student_info_list
 
 
 @app.get("/students/{student_id}")
@@ -139,8 +170,18 @@ def get_student_info(student_id: str, username=Depends(auth_handler.auth_wrapper
     Set a particular Student info
     Require: Student-self or Admin-read
     """
-    # TODO:
-    student_info = all_user_info.get(student_id, {"msg": "student not found"})
+    try:
+        student_info = users_collection.find_one({"student_id": student_id})
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not student_info:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+    clean_dict(student_info)
+
     return student_info
 
 

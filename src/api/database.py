@@ -2,7 +2,7 @@ import pymongo
 from markkk.logger import logger
 
 try:
-    from .db_secrete import _DB_USER, _DB_PASS, _DB_NAME
+    from .db_secrete import _DB_NAME, _DB_PASS, _DB_USER
 except ImportError:
     _DB_USER = "REPLACE_ME"
     _DB_PASS = "REPLACE_ME"
