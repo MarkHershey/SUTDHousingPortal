@@ -1,0 +1,23 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Run Dev Env Setup Script
+              run: |
+                  pwd
+                  set -euo pipefail
+                  export TERM=xterm-256color
+                  ./dev_setup.sh
+            - name: Run Unit Tests
+              run: |
+                  source venv/bin/activate
+                  pytest
