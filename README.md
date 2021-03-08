@@ -22,24 +22,19 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
 
 ### Dependencies
 
--   Backend requires \*NIX system. ([Uvicorn](https://www.uvicorn.org/) depends on [uvloop](https://github.com/MagicStack/uvloop) which is not supported on Windows)
+-   Backend development requires Linux/maxOS as platform. ([Uvicorn](https://www.uvicorn.org/) depends on [uvloop](https://github.com/MagicStack/uvloop) which is not supported on Windows)
 -   Python 3.6+
 
 ```bash
 # At project root `YOUR/PATH/SUTDHousingPortal`
-$ python3 -m venv venv
-$ source venv/bin/activate
-$ pip install --upgrade pip wheel setuptools
-$ pip install -r requirements.txt
-
-# if any packages not install properly, try this
-$ pip install --upgrade bcrypt pyjwt fastapi markkk passlib requests pytest uvicorn
+$ ./dev_setup.sh
 ```
 
 ### Run backend server locally
 
 ```bash
 # At project root `YOUR/PATH/SUTDHousingPortal`
+$ source venv/bin/activate
 $ uvicorn src.api.main:app --reload
 ```
 
