@@ -4,6 +4,8 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
+from .helpers import uid_gen
+
 
 class Contract(BaseModel):
     uid: str
@@ -17,6 +19,10 @@ class Contract(BaseModel):
     payment_received: bool = False
     # derived
     total_days: int = 0
+
+    @validator("uid", pre=True, always=True)
+    def default_created_at(cls, v):
+        return v or uid_gen("C")
 
     @validator("created_at", pre=True, always=True)
     def default_created_at(cls, v):

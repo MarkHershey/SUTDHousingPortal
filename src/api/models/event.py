@@ -4,6 +4,8 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
+from .helpers import uid_gen
+
 
 class Event(BaseModel):
     uid: str = None
@@ -17,3 +19,7 @@ class Event(BaseModel):
     )
     signups: List[str] = []  # list of registered student_id
     attendance: List[str] = []  # list of attended student_id
+
+    @validator("uid", pre=True, always=True)
+    def default_created_at(cls, v):
+        return v or uid_gen("E")

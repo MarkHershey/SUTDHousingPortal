@@ -4,12 +4,12 @@ from fastapi import Depends, FastAPI, HTTPException
 from markkk.logger import logger
 
 from .auth import AuthHandler
+from .models.application import ApplicationForm, ApplicationPeriod
+from .models.lifestyle import LifestyleProfile
+from .models.record import DisciplinaryRecord
 from .models.room import Room, RoomProfile
 from .models.student import Student, StudentSettingsProfile
 from .models.user import Admin, User
-from .models.lifestyle import LifestyleProfile
-from .models.record import DisciplinaryRecord
-from .models.application import ApplicationForm, ApplicationPeriod
 
 app = FastAPI()
 
