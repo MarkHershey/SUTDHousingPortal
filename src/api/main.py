@@ -2,8 +2,9 @@ from copy import copy
 
 from fastapi import Depends, FastAPI, HTTPException
 from markkk.logger import logger
-
+import json
 from .auth import AuthHandler
+from .database import db
 from .models.application import ApplicationForm, ApplicationPeriod
 from .models.lifestyle import LifestyleProfile
 from .models.record import DisciplinaryRecord
@@ -21,6 +22,11 @@ all_students = {}
 all_admins = []
 all_user_info = {}
 
+# MongoDB
+students_collection = db["students"]
+admins_collection = db["admins"]
+users_collection = db["users"]
+
 ###############################################################################
 # authentications
 
@@ -28,54 +34,80 @@ auth_handler = AuthHandler()
 
 
 @app.post("/register/user", status_code=201)
-def register(auth_details: User):
-    if any(x["username"] == auth_details.username for x in users):
+def register(new_user: User):
+    search_count = users_collection.count_documents({"username": new_user.username})
+    if search_count > 0:
         raise HTTPException(status_code=400, detail="Username is taken")
-    hashed_password = auth_handler.get_password_hash(auth_details.password)
-    user_info = {"username": auth_details.username, "password": hashed_password}
-    users.append(user_info)
-    all_user_info[auth_details.username] = user_info
+    new_user.password = auth_handler.get_password_hash(new_user.password)
+
+    user_dict = dict(new_user.dict())
+    try:
+        # insert into database
+        users_collection.insert_one(user_dict)
+        logger.debug(f"New User inserted to DB: {new_user.username}")
+    except Exception as e:
+        logger.error(f"New User failed to be inserted to DB: {new_user.username}")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Failed to insert into database")
     return
 
 
 @app.post("/register/admin", status_code=201)
-def register_admin(new_admin: Admin):
-    if any(x["username"] == new_admin.username for x in users):
+def register_admin(new_user: Admin):
+    search_count = users_collection.count_documents({"username": new_user.username})
+    if search_count > 0:
         raise HTTPException(status_code=400, detail="Username is taken")
-    hashed_password = auth_handler.get_password_hash(new_admin.password)
-    user_info = {"username": new_admin.username, "password": hashed_password}
-    users.append(user_info)
-    all_user_info[new_admin.username] = user_info
+    new_user.password = auth_handler.get_password_hash(new_user.password)
+
+    user_dict = dict(new_user.dict())
+    try:
+        # insert into database
+        admins_collection.insert_one(user_dict)
+        users_collection.insert_one(user_dict)
+        logger.debug(f"New Admin inserted to DB: {new_user.username}")
+    except Exception as e:
+        logger.error(f"New Admin failed to be inserted to DB: {new_user.username}")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Failed to insert into database")
     return
 
 
 @app.post("/register/student", status_code=201)
-def register_student(new_student: Student):
-    if any(x["username"] == new_student.username for x in users):
+def register_student(new_user: Student):
+    search_count = students_collection.count_documents({"username": new_user.username})
+    if search_count > 0:
         raise HTTPException(status_code=400, detail="Student already exists")
-    hashed_password = auth_handler.get_password_hash(new_student.password)
-    users.append({"username": new_student.username, "password": hashed_password})
-    student_info = new_student.dict()
-    student_info.pop("password")
-    student_info["hashed_password"] = hashed_password
-    all_students[new_student.username] = student_info
-    all_user_info[new_student.username] = student_info
+
+    # hash user password
+    new_user.password = auth_handler.get_password_hash(new_user.password)
+
+    user_dict = dict(new_user.dict())
+    try:
+        # insert into database
+        students_collection.insert_one(user_dict)
+        users_collection.insert_one(user_dict)
+        logger.debug(f"New Student inserted to DB: {new_user.username}")
+    except Exception as e:
+        logger.error(f"New Student failed to be inserted to DB: {new_user.username}")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Failed to insert into database")
     return
 
 
 @app.post("/login")
 def login(auth_details: User):
-    user = None
-    for x in users:
-        if x["username"] == auth_details.username:
-            user = x
-            break
-
-    if (user is None) or (
-        not auth_handler.verify_password(auth_details.password, user["password"])
+    try:
+        user = users_collection.find_one({"username": auth_details.username})
+    except Exception as e:
+        logger.error("Failed to query user from database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+    if not user or not auth_handler.verify_password(
+        auth_details.password, user["password"]
     ):
         raise HTTPException(status_code=401, detail="Invalid username and/or password")
-    token = auth_handler.encode_token(user["username"])
+    token = auth_handler.encode_token(auth_details.username)
+    logger.debug(f"New JWT token generated for user: '{auth_details.username}'")
     return {"token": token}
 
 

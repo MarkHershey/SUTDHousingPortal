@@ -16,7 +16,7 @@ class TimePeriod(BaseModel):
 
 class ApplicationForm(BaseModel):
     uid: str = None
-    application_period_uid: str = None
+    application_period_uid: str  # every AF must belong to one AP
     created_at: datetime = None
     student_id: str
     room_profile: RoomProfile
@@ -37,6 +37,7 @@ class ApplicationPeriod(BaseModel):
     applicable_periods: List[TimePeriod]
     applicable_rooms: List[str]  # list of room IDs
     applicable_students: List[str]  # list of student IDs
+    application_forms: List[str] = []
 
     @validator("uid", pre=True, always=True)
     def default_created_at(cls, v):

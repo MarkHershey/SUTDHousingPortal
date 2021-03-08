@@ -1,4 +1,6 @@
 .vscode
+db_secrete.py
+
 
 ### Flask ###
 instance/*
