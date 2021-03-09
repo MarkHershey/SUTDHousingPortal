@@ -1,0 +1,13 @@
+export var room_type = "string";
+export var room_type_2nd = "string";
+export var block = "stirng";
+export var block_2nd = "string";
+export var level_range = "string";
+export var window_facing = "string";
+export var near_to_lift = false;
+export var near_to_washroom = false;
+export var level_has_pantry = false;
+export var level_has_mr = false;
+export var level_has_gsr = false;
+export var level_has_rr = false;
+export var weightage_order = []; // list of int

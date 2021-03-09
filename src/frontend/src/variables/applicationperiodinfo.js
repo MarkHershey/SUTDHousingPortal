@@ -1,0 +1,9 @@
+var uid = "string";
+var created_at = new Date();
+var created_by = "string";
+var application_window_open = new Date();
+var application_window_close = new Date();
+var applicable_periods = [] // list of time period objects
+var applicable_rooms = [] // list of room ids
+var applicable_students = []// list of student ids
+var application_forms = [] // list of application form objects

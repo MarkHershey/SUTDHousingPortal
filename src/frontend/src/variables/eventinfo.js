@@ -1,0 +1,9 @@
+var uid = "string";
+var title = "string";
+var event_type = "string";
+var description = "string";
+var start_time = new Date();
+var duration = 0;
+var count = false;
+var signups = []; // list of registered student ids
+var attendance = []; // list of attending student ids
