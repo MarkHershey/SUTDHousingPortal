@@ -12,5 +12,6 @@ services:
         environment:
             TZ: "Asia/Singapore"
             MODULE_NAME: "api.main"
+            GUNICORN_CONF: "/app/gunicorn_conf.py"
         volumes:
             - "./logs:/app/logs"
