@@ -46,6 +46,20 @@ Check API documentation after firing up local server
 
 -   Go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
+### Run backend server locally with Docker
+
+1. Build image
+
+```bash
+docker-compose build
+```
+
+2. Run Container
+
+```bash
+docker-compose up -d
+```
+
 ### Run tests
 
 ```bash
