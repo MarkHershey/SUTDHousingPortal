@@ -20,32 +20,20 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ApplicaitonOne(props) {
-    if(props.isSummary){
-        return(
-            <EventDiv>
-                <br/>
-                <h3>Personal Details</h3>
-                <ProfileData />
-
-            </EventDiv>
-        );
-    } else {
-        return(
-            <EventDiv>
-                <br/>
-                <h3>Personal Details</h3>
-                <ProfileData />
-                <ProfileBox>
-                    <bs.Container>
-                        <bs.Row>
-                            <bs.Col><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></bs.Col>
-                            <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
-                        </bs.Row>
-                    </bs.Container>
-                </ProfileBox>
-            </EventDiv>
-        );
-    }
-
+export default function ApplicaitonOne() {
+    return(
+        <EventDiv>
+            <br/>
+            <h3>Personal Details</h3>
+            <ProfileData />
+            <ProfileBox>
+                <bs.Container>
+                    <bs.Row>
+                        <bs.Col><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></bs.Col>
+                        <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
+                    </bs.Row>
+                </bs.Container>
+            </ProfileBox>
+        </EventDiv>
+    );
 };
