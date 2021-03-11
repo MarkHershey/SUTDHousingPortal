@@ -37,6 +37,29 @@ class Student(User):
         return values["username"]
 
 
+class StudentProfile(BaseModel):
+    student_id: str = None
+    full_name: str
+    gender: str  # Male / Female
+    enrollment_type: str
+    year_of_enrollment: int
+    sc_status: bool = False
+    pr_status: bool = False
+    nationality: str
+    phone_number: str
+    email_sutd: str
+    email_personal: str
+    local_addr_post_code: str
+    local_addr_street: str = None
+    local_addr_unit: str = None
+    attended_events: List[str] = []
+    disciplinary_records: List[str] = []
+    preference_roommate: List[str] = []
+    preference_room: RoomProfile = None
+    preference_lifestyle: LifestyleProfile = None
+    is_house_guardian: bool = False
+
+
 class StudentSettingsProfile(User):
     phone_number: str = None
     email_personal: str = None
