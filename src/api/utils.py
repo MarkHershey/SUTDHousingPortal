@@ -1,6 +1,7 @@
-from .database import admins_collection, students_collection
 from fastapi import HTTPException
 from markkk.logger import logger
+
+from .database import admins_collection, students_collection
 
 
 def clean_dict(data: dict) -> None:
