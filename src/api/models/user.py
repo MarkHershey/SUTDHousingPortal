@@ -12,4 +12,4 @@ class User(BaseModel):
 class Admin(User):
     full_name: str
     email_sutd: str
-    read_only_privilege: bool = False
+    read_only: bool = False

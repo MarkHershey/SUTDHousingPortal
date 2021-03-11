@@ -10,6 +10,8 @@ from .helpers import uid_gen
 class Event(BaseModel):
     uid: str = None
     title: str
+    created_by: str  # supply student_id or username
+    created_at: datetime = None  # backend auto generate this
     event_type: str  # example: FE, IBE, etc
     meetup_location: str
     block: str = "Any"
@@ -26,3 +28,7 @@ class Event(BaseModel):
     @validator("uid", pre=True, always=True)
     def default_created_at(cls, v):
         return v or uid_gen("E")
+
+    @validator("created_at", pre=True, always=True)
+    def default_created_at(cls, v):
+        return v or datetime.now()

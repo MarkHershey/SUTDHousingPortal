@@ -206,7 +206,7 @@ def update_student_info(
 
     try:
         admin = admins_collection.find_one({"username": username})
-        if admin and admin.read_only_privilege == False:
+        if admin and admin.read_only == False:
             permission_ok = True
     except Exception as e:
         logger.error("Failed to query database.")
@@ -241,7 +241,8 @@ def set_student_as_hg(student_id: str, username=Depends(auth_handler.auth_wrappe
     permission_ok = False
     try:
         admin = admins_collection.find_one({"username": username})
-        if admin and admin.read_only_privilege == False:
+        # TODO
+        if admin and admin.read_only == False:
             permission_ok = True
     except Exception as e:
         logger.error("Failed to query database.")

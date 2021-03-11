@@ -14,7 +14,7 @@ from ..models.student import (
     StudentSettingsProfile,
 )
 from ..models.user import Admin, User
-from ..utils import clean_dict
+from ..utils import Access, clean_dict
 
 router = APIRouter(prefix="/api/students", tags=["students"])
 auth_handler = AuthHandler()
@@ -28,6 +28,14 @@ async def get_all_student_info(
     Get all student info
     Require: Admin-read
     """
+    logger.debug(f"User({username}) trying fetching all students info.")
+    permission_ok: bool = Access.is_admin(username)
+    if not permission_ok:
+        logger.debug(f"User({username}) permission denied.")
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to read this."
+        )
+
     student_info_list = []
     count = 0
     try:
@@ -56,6 +64,17 @@ async def get_student_info(
     Set a particular Student info
     Require: Student-self or Admin-read
     """
+    logger.debug(f"User({username}) trying fetching student({student_id}) info.")
+    permission_ok = False
+    if student_id == username or Access.is_admin(username):
+        permission_ok = True
+
+    if not permission_ok:
+        logger.debug(f"User({username}) permission denied.")
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to read this."
+        )
+
     try:
         student_info = students_collection.find_one({"student_id": student_id})
     except Exception as e:
@@ -86,14 +105,8 @@ async def update_student_info(
     if username == student_id:
         permission_ok = True
 
-    try:
-        admin = admins_collection.find_one({"username": username})
-        if admin and admin.read_only_privilege == False:
-            permission_ok = True
-    except Exception as e:
-        logger.error("Failed to query database.")
-        logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+    if Access.is_admin_write(username):
+        permission_ok = True
 
     if not permission_ok:
         raise HTTPException(
@@ -123,14 +136,8 @@ async def set_student_as_hg(
     Require: Admin-write
     """
     permission_ok = False
-    try:
-        admin = admins_collection.find_one({"username": username})
-        if admin and admin.read_only_privilege == False:
-            permission_ok = True
-    except Exception as e:
-        logger.error("Failed to query database.")
-        logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+    if Access.is_admin_write(username):
+        permission_ok = True
 
     if not permission_ok:
         raise HTTPException(
@@ -158,14 +165,8 @@ async def revoke_student_as_hg(
     Require: Admin-write
     """
     permission_ok = False
-    try:
-        admin = admins_collection.find_one({"username": username})
-        if admin and admin.read_only_privilege == False:
-            permission_ok = True
-    except Exception as e:
-        logger.error("Failed to query database.")
-        logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+    if Access.is_admin_write(username):
+        permission_ok = True
 
     if not permission_ok:
         raise HTTPException(

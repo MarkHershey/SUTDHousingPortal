@@ -13,7 +13,7 @@ curl --header "Content-Type: application/json" --request POST --data '{"username
 ### Create a new admin
 
 ```bash
-curl --header "Content-Type: application/json" --request POST --data '{"username": "admin", "password": "pass1234", "full_name": "Bill Gates", "email_sutd": "bill_gates@sutd.edu.sg", "read_only_privilege": false}' localhost:8000/register/admin
+curl --header "Content-Type: application/json" --request POST --data '{"username": "admin", "password": "pass1234", "full_name": "Bill Gates", "email_sutd": "bill_gates@sutd.edu.sg", "read_only": false}' localhost:8000/register/admin
 ```
 
 ### Get a particular student profile without logging in
