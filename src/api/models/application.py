@@ -24,7 +24,7 @@ class ApplicationForm(BaseModel):
     stay_period: TimePeriod
 
     @validator("uid", pre=True, always=True)
-    def default_created_at(cls, v):
+    def default_uid(cls, v):
         return v or uid_gen("AF")
 
 
@@ -40,5 +40,5 @@ class ApplicationPeriod(BaseModel):
     application_forms: List[str] = []
 
     @validator("uid", pre=True, always=True)
-    def default_created_at(cls, v):
+    def default_uid(cls, v):
         return v or uid_gen("AP")

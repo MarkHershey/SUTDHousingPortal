@@ -56,7 +56,7 @@ async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
     event_info_list = []
     _now = datetime.now()
     try:
-        for event_dict in events_collection.find({"start_time": {"$lt": _now}}).sort(
+        for event_dict in events_collection.find({"start_time": {"$gte": _now}}).sort(
             "start_time"
         ):
             clean_dict(event_dict)

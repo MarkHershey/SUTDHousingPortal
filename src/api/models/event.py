@@ -26,7 +26,7 @@ class Event(BaseModel):
     attendance: List[str] = []  # list of attended student_id
 
     @validator("uid", pre=True, always=True)
-    def default_created_at(cls, v):
+    def default_uid(cls, v):
         return v or uid_gen("E")
 
     @validator("created_at", pre=True, always=True)
