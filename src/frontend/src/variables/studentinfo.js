@@ -1,21 +1,31 @@
-export var student_id = "string";
-export var full_name = "string";
-export var gender = "string";
-export var enrollment_type = "string";
-export var year_of_enrollment = 0;
-export var sc_status = false;
-export var pr_status = false;
-export var nationality = "string";
-export var phone_number =0;
-export var email_sutd= "string";
-export var email_personal = "string";
-export var local_addr_post_code = "string";
-export var local_addr_street = "string";
-export var local_addr_unit = "string";
-export var attended_events = []; //list of strings
-export var disciplinary_records = []; // list of record objects
-export var preference_roommate = []; //list of string
-export var preference_room = null; // RoomProfile object
-export var preference_lifestyle = null; // Lifestyle profile object
-export var is_house_guardian = false;
-export var travel_time = 0;
+class Student {
+    constructor(student_id,full_name,gender,enrollment_type,year_of_enrollment,
+        sc_status,pr_status,nationality,phone_number,email_sutd,email_personal,
+        local_addr_post_code,local_addr_street,local_addr_unit,attended_events,
+        disciplinary_records,preference_roommate,preference_room,preference_lifestyle,
+        is_house_guardian,travel_time){
+            
+        this.student_id=student_id;
+        this.full_name = full_name;
+        this.gender = gender;
+        this.enrollment_type =enrollment_type;
+        this.year_of_enrollment = year_of_enrollment;
+        this.sc_status = sc_status;
+        this.pr_status = pr_status;
+        this.nationality = nationality;
+        this.phone_number = phone_number;
+        this.email_sutd = email_sutd;
+        this.email_personal = email_personal;
+        this.local_addr_post_code = local_addr_post_code;
+        this.local_addr_street = local_addr_street;
+        this.local_addr_unit = local_addr_unit;
+        this.attended_events = attended_events;
+        this.disciplinary_records = disciplinary_records;
+        this.preference_roommate = preference_roommate;
+        this.preference_room = preference_room;
+        this.preference_lifestyle = preference_lifestyle;
+        this.is_house_guardian = is_house_guardian;
+        this.travel_time = travel_time; 
+    }
+}
+module.exports = Student;
