@@ -21,7 +21,7 @@ auth_handler = AuthHandler()
 
 
 @router.get("/")
-def get_all_events(username=Depends(auth_handler.auth_wrapper)):
+async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all Events
     Require: Any User
@@ -31,7 +31,7 @@ def get_all_events(username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/", status_code=201)
-def create_event(username=Depends(auth_handler.auth_wrapper)):
+async def create_event(username=Depends(auth_handler.auth_wrapper)):
     """
     Create an Event
     Require: Any User
@@ -41,7 +41,7 @@ def create_event(username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.get("/{uid}")
-def get_all_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def get_all_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Get an Event info
     Require: Any User

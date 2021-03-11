@@ -21,7 +21,7 @@ auth_handler = AuthHandler()
 
 
 @router.get("/")
-def get_all_applications(username=Depends(auth_handler.auth_wrapper)):
+async def get_all_applications(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all Application Forms
     Require: Admin-read
@@ -31,7 +31,7 @@ def get_all_applications(username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/", status_code=201)
-def submit_application(
+async def submit_application(
     application_form: ApplicationForm, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -43,7 +43,9 @@ def submit_application(
 
 
 @router.get("/{uid}")
-def get_an_application_info(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def get_an_application_info(
+    uid: str, username=Depends(auth_handler.auth_wrapper)
+):
     """
     Get an ApplicationForm info
     Require: Student-self or Admin-read
@@ -53,7 +55,7 @@ def get_an_application_info(uid: str, username=Depends(auth_handler.auth_wrapper
 
 
 @router.put("/{uid}")
-def update_application(
+async def update_application(
     uid: str,
     application_form: ApplicationForm,
     username=Depends(auth_handler.auth_wrapper),
@@ -67,7 +69,7 @@ def update_application(
 
 
 @router.delete("/{uid}")
-def delete_application(
+async def delete_application(
     uid: str,
     username=Depends(auth_handler.auth_wrapper),
 ):
@@ -80,7 +82,7 @@ def delete_application(
 
 
 @router.post("/{uid}/offer")
-def approve_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def approve_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Approve an Application
     Require: Admin-write
@@ -90,7 +92,7 @@ def approve_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/{uid}/waitlist")
-def waitlist_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def waitlist_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Waitlist an Application
     Require: Admin-write
@@ -100,7 +102,7 @@ def waitlist_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/{uid}/reject")
-def reject_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def reject_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Reject an Application
     Require: Admin-write

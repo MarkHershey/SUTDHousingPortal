@@ -21,7 +21,7 @@ auth_handler = AuthHandler()
 
 
 @router.get("/")
-def get_all_disciplinary_record(username=Depends(auth_handler.auth_wrapper)):
+async def get_all_disciplinary_record(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all Disciplinary Records
     Require: Admin-read
@@ -31,7 +31,7 @@ def get_all_disciplinary_record(username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/", status_code=201)
-def add_disciplinary_record(
+async def add_disciplinary_record(
     record: DisciplinaryRecord, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -43,7 +43,7 @@ def add_disciplinary_record(
 
 
 @router.get("/{uid}")
-def get_disciplinary_record(
+async def get_disciplinary_record(
     record: DisciplinaryRecord, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -55,7 +55,7 @@ def get_disciplinary_record(
 
 
 @router.put("/{uid}")
-def update_disciplinary_record(
+async def update_disciplinary_record(
     uid: str, record: DisciplinaryRecord, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -68,7 +68,9 @@ def update_disciplinary_record(
 
 
 @router.delete("/{uid}")
-def delete_disciplinary_record(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def delete_disciplinary_record(
+    uid: str, username=Depends(auth_handler.auth_wrapper)
+):
     """
     Delete a DisciplinaryRecord from database
     Require: Admin-write

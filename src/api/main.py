@@ -1,22 +1,17 @@
 from fastapi import Depends, FastAPI, HTTPException
 from markkk.logger import logger
 
-from . import routes
+from .routes import apexs, applications, auth, events, records, students
 
 app = FastAPI()
 
+app.include_router(auth.router)
+app.include_router(students.router)
+app.include_router(apexs.router)
+app.include_router(applications.router)
 
-app.include_router(routes.apexs.router)
-app.include_router(routes.applications.router)
-app.include_router(routes.auth.router)
-app.include_router(routes.events.router)
-app.include_router(routes.records.router)
-app.include_router(routes.students.router)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello Bigger Applications!"}
+app.include_router(events.router)
+app.include_router(records.router)
 
 
 @app.get("/")

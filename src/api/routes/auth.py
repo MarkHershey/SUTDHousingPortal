@@ -23,7 +23,7 @@ auth_handler = AuthHandler()
 
 
 @router.post("/register/user", status_code=201)
-def register(new_user: User):
+async def register(new_user: User):
     search_count = users_collection.count_documents({"username": new_user.username})
     if search_count > 0:
         raise HTTPException(status_code=400, detail="Username is taken")
@@ -42,7 +42,7 @@ def register(new_user: User):
 
 
 @router.post("/register/admin", status_code=201)
-def register_admin(new_user: Admin):
+async def register_admin(new_user: Admin):
     search_count = users_collection.count_documents({"username": new_user.username})
     if search_count > 0:
         raise HTTPException(status_code=400, detail="Username is taken")
@@ -62,7 +62,7 @@ def register_admin(new_user: Admin):
 
 
 @router.post("/register/student", status_code=201)
-def register_student(new_user: Student):
+async def register_student(new_user: Student):
     search_count = students_collection.count_documents({"username": new_user.username})
     if search_count > 0:
         raise HTTPException(status_code=400, detail="Student already exists")
@@ -84,7 +84,7 @@ def register_student(new_user: Student):
 
 
 @router.post("/login")
-def login(auth_details: User):
+async def login(auth_details: User):
     try:
         user = users_collection.find_one({"username": auth_details.username})
     except Exception as e:

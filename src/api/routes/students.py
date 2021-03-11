@@ -31,7 +31,7 @@ async def get_all_student_info(
     student_info_list = []
     count = 0
     try:
-        for student_info in users_collection.find():
+        for student_info in students_collection.find():
             count += 1
             clean_dict(student_info)
             student_info_list.append(student_info)
@@ -57,7 +57,7 @@ async def get_student_info(
     Require: Student-self or Admin-read
     """
     try:
-        student_info = users_collection.find_one({"student_id": student_id})
+        student_info = students_collection.find_one({"student_id": student_id})
     except Exception as e:
         logger.error("Failed to query database.")
         logger.error(e)

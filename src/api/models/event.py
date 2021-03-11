@@ -11,6 +11,9 @@ class Event(BaseModel):
     uid: str = None
     title: str
     event_type: str  # example: FE, IBE, etc
+    meetup_location: str
+    block: str = "Any"
+    floor: str = "Any"
     description: str = "None"  # long text description of the event
     start_time: datetime  # datetime object indicating event start time
     duration_mins: int = 60  # event duration in number of minutes
