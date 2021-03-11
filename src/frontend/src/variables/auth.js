@@ -1,9 +1,19 @@
-let token = "";
+let storage= window.localStorage;
 
 export function getToken(){
-    return token;
+    return storage["token"];
 }
 
 export function setToken(newToken){
-    token = newToken;
+    storage.setItem("token",newToken);
+    console.log(getToken());
+}
+
+export function checkValidity(){
+    return (typeof(storage["token"]) !== "undefined");
+}
+
+export function clearToken(){
+    storage.removeItem("token");
+    console.log(typeof(storage["token"]));
 }

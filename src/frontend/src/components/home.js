@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import container, {Container, Row, Col} from 'react-bootstrap';
-
+import {checkValidity, getToken} from "../variables/auth";
 const Homepage = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -26,6 +26,7 @@ const DashboardTitle = styled.p`
 export const Home = (props) => (
     <Homepage>
         <Welcome> Hi, Eric Smith! </Welcome>
+        <h4>{typeof(getToken())}</h4>
         <Container>
             <Row>
                 <Col><DashboardTitle>Position in Waiting List</DashboardTitle></Col>
