@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import avatar from "../avatar.png";
 import * as bs from 'react-bootstrap';
 import ProfileData from "./profile_data";
+import Student from "../variables/studentinfo";
 
 const ProfileBox = styled.div`
   background-color: #F3F6FA;
@@ -10,6 +11,11 @@ const ProfileBox = styled.div`
   padding: 20pt 20pt;
   border-radius: 20pt;
 `;
+
+var mockStudent = new Student("1005515","Eric Smith","Male","Undergraduate","2021",false,
+false,"Singaporean",98765432,"sutd@email.com","smith@gmail.com","500100","8 Somapah Rd",
+"#06-88",[],[],1004445,"Prefered Room OBJ","lifestyle OBJ",false,100);
+
 
 export default function Profile() {
     return (
@@ -19,7 +25,7 @@ export default function Profile() {
             <br/>
             <br/>
             <h4>Eric Smith</h4>
-            <ProfileData/>
+            <ProfileData userData={mockStudent}/>
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
