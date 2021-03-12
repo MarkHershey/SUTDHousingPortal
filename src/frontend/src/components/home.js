@@ -26,7 +26,6 @@ const DashboardTitle = styled.p`
 export const Home = (props) => (
     <Homepage>
         <Welcome> Hi, Eric Smith! </Welcome>
-        <h4>{typeof(getToken())}</h4>
         <Container>
             <Row>
                 <Col><DashboardTitle>Position in Waiting List</DashboardTitle></Col>

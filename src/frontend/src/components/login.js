@@ -16,7 +16,7 @@ export default function Login() {
         var data = JSON.stringify({"username":username,"password":password});
         var config = {
             method: 'post',
-            url: 'http://esc.dev.markhh.com/login',
+            url: 'http://esc.dev.markhh.com/api/auth/login',
             headers: {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export default function Login() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
-                console.log("Token: ")
+                console.log("Token: ");
                 console.log(getToken());
                 window.location.href="/";
             })
