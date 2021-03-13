@@ -3,10 +3,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken,clearToken} from "../variables/auth";
+import {getToken, setToken,clearToken, setUsername} from "../variables/auth";
 
 export default function Login() {
-    const [username, setUsername] = useState("");
+    const [username, setUsernameElement] = useState("");
     const [password, setPassword] = useState("");
     function validateForm() {
         return username.length > 0 && password.length > 0;
@@ -28,6 +28,7 @@ export default function Login() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
+                setUsername(username);
                 console.log("Token: ");
                 console.log(getToken());
                 window.location.href="/";
@@ -55,7 +56,7 @@ export default function Login() {
                         autoFocus
                         type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setUsernameElement(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group size="lg" controlId="password">

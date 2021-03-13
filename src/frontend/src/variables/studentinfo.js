@@ -1,10 +1,10 @@
 import axios from "axios";
 import {checkValidity,getToken} from "./auth";
-
+import {getUsername,setUserInfoJson} from "./auth";
 
 export class Student {
     constructor(student_data){
-        this.student_id=student_data.student_id;
+        this.student_id = student_data.student_id;
         this.full_name = student_data.full_name;
         this.gender = student_data.gender;
         this.enrollment_type = student_data.enrollment_type;
@@ -35,7 +35,7 @@ export async function getCurrentStudentInfo(){
     var student_data_json;
     const config = {
         method: 'get',
-        url: 'http://esc.dev.markhh.com/api/students/1004515',
+        url: 'http://esc.dev.markhh.com/api/students/' + getUsername(),
         headers: {
             'accept': 'application/json',
             'Authorization': 'Bearer ' + getToken(),
@@ -45,7 +45,9 @@ export async function getCurrentStudentInfo(){
     axios(config)
         .then(function (response) {
             student_data_json = response.data;
-            return new Student(student_data_json);
+            console.log("User Info JSON:");
+            console.log(student_data_json);
+            setUserInfoJson(student_data_json);
         })
         .catch(function (error) {
             console.log(error);
