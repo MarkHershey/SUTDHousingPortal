@@ -6,18 +6,7 @@ from markkk.logger import logger
 
 from ..auth import AuthHandler
 from ..database import *
-from ..models.application import ApplicationForm, ApplicationPeriod
-from ..models.event import Event
-from ..models.lifestyle import LifestyleProfile
-from ..models.record import DisciplinaryRecord
-from ..models.room import Room, RoomProfile
-from ..models.student import (
-    Student,
-    StudentIdentityProfile,
-    StudentProfile,
-    StudentSettingsProfile,
-)
-from ..models.user import Admin, User
+from ..models.event import Event, EventEditableInfo
 from ..utils import Access, clean_dict
 
 router = APIRouter(prefix="/api/events", tags=["events"])
@@ -75,7 +64,9 @@ async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/", status_code=201, response_model=Event)
-async def create_event(new_event: Event, username=Depends(auth_handler.auth_wrapper)):
+async def create_an_event(
+    new_event: Event, username=Depends(auth_handler.auth_wrapper)
+):
     """
     Create an Event
     Require: Student-HG or Admin-write
@@ -90,6 +81,7 @@ async def create_event(new_event: Event, username=Depends(auth_handler.auth_wrap
             status_code=401, detail="You don't have permission to update this."
         )
 
+    new_event.created_by = str(username)
     event_dict = dict(new_event.dict())
     try:
         events_collection.insert_one(event_dict)
@@ -120,3 +112,50 @@ async def get_an_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
         return event_dict
     else:
         raise HTTPException(status_code=404, detail="Event not found.")
+
+
+@router.put("/{uid}", response_model=Event)
+async def update_an_events(
+    uid: str,
+    event_editable_info: EventEditableInfo,
+    username=Depends(auth_handler.auth_wrapper),
+):
+    """
+    Update an Event info
+    Require: Student-HG or Admin-write
+    """
+    logger.debug(f"User({username}) trying updating Event({uid}) info.")
+    # Check access
+    permission_ok = False
+
+    if Access.is_admin_write(username):
+        permission_ok = True
+
+    if Access.is_student_hg(username):
+        try:
+            event_dict: dict = events_collection.find_one({"uid": uid})
+        except Exception as e:
+            logger.error("Failed to query database.")
+            logger.error(e)
+            raise HTTPException(status_code=500, detail="Databse Error.")
+
+        if event_dict and event_dict.get("created_by") == username:
+            permission_ok = True
+
+    if not permission_ok:
+        logger.debug(f"User({username}) permission denied.")
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to update this."
+        )
+
+    # Proceed to update event
+    event_dict = dict(event_editable_info.dict())
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"uid": uid}, update={"$set": event_dict}
+        )
+        return updated if updated else {"msg": "failed"}
+    except Exception as e:
+        logger.error("Failed to update database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
