@@ -35,14 +35,12 @@ class Event(BaseModel):
 
 
 class EventEditableInfo(BaseModel):
-    title: str
-    event_type: str  # example: FE, IBE, etc
-    meetup_location: str
-    block: str = "Any"
-    floor: str = "Any"
-    description: str = "None"  # long text description of the event
-    start_time: datetime  # datetime object indicating event start time
-    duration_mins: int = 60  # event duration in number of minutes
-    count_attendance: bool = (
-        True  # whether this event count towards housing residents's event participation
-    )
+    title: str = None
+    event_type: str = None
+    meetup_location: str = None
+    block: str = None
+    floor: str = None
+    description: str = None
+    start_time: datetime = None
+    duration_mins: int = None
+    count_attendance: bool = None

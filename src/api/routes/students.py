@@ -9,12 +9,12 @@ from ..models.record import DisciplinaryRecord
 from ..models.room import Room, RoomProfile
 from ..models.student import (
     Student,
+    StudentEditableProfile,
     StudentIdentityProfile,
     StudentProfile,
-    StudentSettingsProfile,
 )
 from ..models.user import Admin, User
-from ..utils import Access, clean_dict
+from ..utils import Access, clean_dict, remove_none_value_keys
 
 router = APIRouter(prefix="/api/students", tags=["students"])
 auth_handler = AuthHandler()
@@ -93,7 +93,7 @@ async def get_student_info(
 @router.put("/{student_id}")
 async def update_student_info(
     student_id: str,
-    student_settings: StudentSettingsProfile,
+    student_editable_profile: StudentEditableProfile,
     username=Depends(auth_handler.auth_wrapper),
 ):
     """
@@ -113,12 +113,15 @@ async def update_student_info(
             status_code=401, detail="You don't have permission to update this."
         )
 
+    student_update_dict = dict(student_editable_profile.dict())
+    remove_none_value_keys(student_update_dict)
+
     try:
         # NOTE: there is a potential bug here, need to distinguish cases where
         # A: user wants to clear certain field (supply 'None' as new value)
         # B: user wants to preserve the value of certain field (Not changing anything, so supplying 'None')
         updated = students_collection.find_one_and_update(
-            filter={"student_id": student_id}, update={"$set": student_settings}
+            filter={"student_id": student_id}, update={"$set": student_editable_profile}
         )
         return updated if updated else {"msg": "failed"}
     except Exception as e:

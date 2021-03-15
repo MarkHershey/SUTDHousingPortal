@@ -9,12 +9,7 @@ from ..models.application import ApplicationForm, ApplicationPeriod
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
 from ..models.room import Room, RoomProfile
-from ..models.student import (
-    Student,
-    StudentIdentityProfile,
-    StudentProfile,
-    StudentSettingsProfile,
-)
+from ..models.student import Student
 from ..models.user import Admin, User
 from ..utils import clean_dict
 

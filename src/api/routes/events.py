@@ -7,7 +7,7 @@ from markkk.logger import logger
 from ..auth import AuthHandler
 from ..database import *
 from ..models.event import Event, EventEditableInfo
-from ..utils import Access, clean_dict
+from ..utils import Access, clean_dict, remove_none_value_keys
 
 router = APIRouter(prefix="/api/events", tags=["events"])
 auth_handler = AuthHandler()
@@ -155,6 +155,7 @@ async def update_an_event(
 
     # Proceed to update event
     event_dict = dict(event_editable_info.dict())
+    remove_none_value_keys(event_dict)
     try:
         updated = students_collection.find_one_and_update(
             filter={"uid": uid}, update={"$set": event_dict}

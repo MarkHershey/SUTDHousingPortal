@@ -16,6 +16,18 @@ def clean_dict(data: dict) -> None:
     return
 
 
+def remove_none_value_keys(data: dict) -> None:
+    to_be_removed_keys = []
+    for key, value in data.items():
+        if value is None:
+            to_be_removed_keys.append(key)
+
+    for key in to_be_removed_keys:
+        data.pop(key, None)
+
+    return
+
+
 class Access:
     """
     Access Permission Levels:
