@@ -1,14 +1,17 @@
-import os
 import sys
+from pathlib import Path
+from pprint import pprint
 
 import pandas as pd
 
-sys.path.append(os.path.abspath("../models"))
-from student import Student
+api_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(api_dir))
+
+from models.student import Student
 
 
 def import_student(file):
-    student_data = pd.read_excel(file)  # read excel
+    student_data = pd.read_excel(file, engine="openpyxl")  # read excel
     student_data.fillna("", inplace=True)
     student_data = student_data.to_dict()
 
@@ -42,5 +45,8 @@ def import_student(file):
 
 
 if __name__ == "__main__":
-    studentInfo = import_student(r"./student_dummy_info.xlsx")
-    print(studentInfo)
+    STUDENT_DATA_FILEPATH = Path("templates/student_dummy_info.xlsx").resolve()
+    assert STUDENT_DATA_FILEPATH.is_file()
+
+    studentInfo = import_student(str(STUDENT_DATA_FILEPATH))
+    pprint(studentInfo)

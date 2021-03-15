@@ -17,6 +17,7 @@ auth_handler = AuthHandler()
 async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all Events
+
     Require: Any authenticated user
     """
 
@@ -41,6 +42,7 @@ async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
 async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
     """
     Get all upcoming Events
+
     Require: Any authenticated user
     """
     logger.debug(f"User({username}) fetching all upcoming events info")
@@ -69,6 +71,7 @@ async def create_an_event(
 ):
     """
     Create an Event
+
     Require: Student-HG or Admin-write
     """
     logger.debug(f"User({username}) trying creating new Event.")
@@ -94,9 +97,10 @@ async def create_an_event(
 
 
 @router.get("/{uid}", response_model=Event)
-async def get_an_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
+async def get_an_event(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Get an Event info
+
     Require: Any authenticated user
     """
     logger.debug(f"User({username}) fetching event({uid}) info")
@@ -115,13 +119,14 @@ async def get_an_events(uid: str, username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.put("/{uid}", response_model=Event)
-async def update_an_events(
+async def update_an_event(
     uid: str,
     event_editable_info: EventEditableInfo,
     username=Depends(auth_handler.auth_wrapper),
 ):
     """
     Update an Event info
+
     Require: Student-HG or Admin-write
     """
     logger.debug(f"User({username}) trying updating Event({uid}) info.")

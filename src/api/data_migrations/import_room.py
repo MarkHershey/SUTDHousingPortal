@@ -1,14 +1,17 @@
-import os
 import sys
+from pathlib import Path
+from pprint import pprint
 
 import pandas as pd
 
-sys.path.append(os.path.abspath("../models"))
-from room import Room
+api_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(api_dir))
+
+from models.room import Room
 
 
 def import_room(file):
-    room_info = pd.read_excel(file)
+    room_info = pd.read_excel(file, engine="openpyxl")
     room_info.fillna("", inplace=True)
     room_info = room_info.to_dict()
 
@@ -32,5 +35,8 @@ def import_room(file):
 
 
 if __name__ == "__main__":
-    room_list = import_room(r"./rooms_dummy_data.xlsx")
-    print(room_list)
+    STUDENT_DATA_FILEPATH = Path("templates/rooms_dummy_data.xlsx").resolve()
+    assert STUDENT_DATA_FILEPATH.is_file()
+
+    room_list = import_room(str(STUDENT_DATA_FILEPATH))
+    pprint(room_list)
