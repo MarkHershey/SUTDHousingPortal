@@ -165,3 +165,51 @@ async def update_an_event(
         logger.error("Failed to update database.")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
+
+
+@router.post("/{uid}/signup", response_model=Event)
+async def register_students_for_event(
+    uid: str, student_id_list: List[str], username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Sign a list of Students up for a specific event
+
+    This is done by student themselves, hence, len(student_id_list) == 1
+    """
+    pass
+
+
+@router.delete("/{uid}/signup", response_model=Event)
+async def deregister_students_for_event(
+    uid: str, student_id_list: List[str], username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    deregister a list of Students for a specific event
+
+    This can be done by self, admin-write, usually len(student_id_list) == 1
+    """
+    pass
+
+
+@router.post("/{uid}/attend", response_model=Event)
+async def add_students_attendance_for_event(
+    uid: str, student_id_list: List[str], username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Add a list of Students's attendence for a specific event
+
+    Require: HG or Admin-write, usually len(student_id_list) >= 1
+    """
+    pass
+
+
+@router.delete("/{uid}/attend", response_model=Event)
+async def remove_students_attendance_for_event(
+    uid: str, student_id_list: List[str], username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Remove a list of Students's attendence for a specific event
+
+    Require: HG or Admin-write, usually len(student_id_list) >= 1
+    """
+    pass

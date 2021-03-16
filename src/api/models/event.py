@@ -24,6 +24,8 @@ class Event(BaseModel):
     )
     signups: List[str] = []  # list of registered student_id
     attendance: List[str] = []  # list of attended student_id
+    signup_limit: int = 20  # maximum number of signups
+    signup_ddl: datetime = None  # deadline for sign up
 
     @validator("uid", pre=True, always=True)
     def default_uid(cls, v):
@@ -32,6 +34,10 @@ class Event(BaseModel):
     @validator("created_at", pre=True, always=True)
     def default_created_at(cls, v):
         return v or datetime.now()
+
+    @validator("signup_ddl", pre=True, always=True)
+    def default_signup_ddl(cls, v, *, values, **kwargs):
+        return v or values["start_time"]
 
 
 class EventEditableInfo(BaseModel):
@@ -44,3 +50,4 @@ class EventEditableInfo(BaseModel):
     start_time: datetime = None
     duration_mins: int = None
     count_attendance: bool = None
+    signup_limit: int = None
