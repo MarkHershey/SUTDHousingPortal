@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken,clearToken, setUsername} from "../variables/auth";
+import {getToken, setToken, setUsername} from "../variables/auth";
 
 export default function Login() {
     const [username, setUsernameElement] = useState("");
@@ -69,9 +69,6 @@ export default function Login() {
                 </Form.Group>
                 <Button block size="lg" type="submit" disabled={!validateForm()}>
                     Login
-                </Button>
-                <Button block size="lg" onClick={clearToken}>
-                    Clear Token
                 </Button>
             </Form>
         </div>

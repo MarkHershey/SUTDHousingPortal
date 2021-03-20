@@ -34,10 +34,7 @@ export default class Home extends React.Component{
     componentDidMount() {
         const fetchJSON = async () =>{
             getCurrentStudentInfo().then(r=>{
-                console.log("then?");
-                this.setState({
-                    full_name:getUserInfoJson().full_name,
-                });
+                this.setState({full_name:getUserInfoJson().full_name,});
             });
         }
         fetchJSON();
