@@ -1,6 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
+import {Student} from "../variables/studentinfo";
+import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {getUserInfoJson} from "../variables/auth";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -19,42 +22,50 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ProfileData() {
-    return(
-        <ProfileBox>
-            <bs.Container>
-                <bs.Row>
-                    <bs.Col><Field>Student ID:</Field></bs.Col>
-                    <bs.Col><Answer>1005555</Answer></bs.Col>
-                    <bs.Col><Field>Gender:</Field></bs.Col>
-                    <bs.Col><Answer>Male</Answer></bs.Col>
-                </bs.Row>
+export default class ProfileData extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = getUserInfoJson();
+    }
 
-                <bs.Row>
-                    <bs.Col><Field>Enrollment Year:</Field></bs.Col>
-                    <bs.Col><Answer>2021</Answer></bs.Col>
-                    <bs.Col><Field>Type of Enrollment:</Field></bs.Col>
-                    <bs.Col><Answer>Undergraduate</Answer></bs.Col>
-                </bs.Row>
-                <bs.Row>
-                    <bs.Col><Field>Mobile:</Field></bs.Col>
-                    <bs.Col><Answer>98765432</Answer></bs.Col>
-                    <bs.Col><Field>Nationality:</Field></bs.Col>
-                    <bs.Col><Answer>Singaporean</Answer></bs.Col>
-                </bs.Row>
-                <bs.Row>
-                    <bs.Col><Field>Disciplinary Record:</Field></bs.Col>
-                    <bs.Col><Answer>0</Answer></bs.Col>
-                    <bs.Col><Field>Housing Event:</Field></bs.Col>
-                    <bs.Col><Answer>1/2</Answer></bs.Col>
-                </bs.Row>
-                <bs.Row>
-                    <bs.Col><Field>Address: </Field></bs.Col>
-                    <bs.Col><Answer>8 Somapah Rd, Singapore 487372</Answer></bs.Col>
-                    <bs.Col><Field>Current Term:</Field></bs.Col>
-                    <bs.Col><Answer>Term 5</Answer></bs.Col>
-                </bs.Row>
-            </bs.Container>
-        </ProfileBox>
-    );
-};
+    render(){
+        return(
+            <ProfileBox>
+                <bs.Container>
+                    <bs.Row>
+                        <bs.Col><Field>Student ID:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.student_id}</Answer></bs.Col>
+                        <bs.Col><Field>Gender:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.gender}</Answer></bs.Col>
+                    </bs.Row>
+
+                    <bs.Row>
+                        <bs.Col><Field>Enrollment Year:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.year_of_enrollment}</Answer></bs.Col>
+                        <bs.Col><Field>Type of Enrollment:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.enrollment_type}</Answer></bs.Col>
+                    </bs.Row>
+                    <bs.Row>
+                        <bs.Col><Field>Mobile:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.phone_number}</Answer></bs.Col>
+                        <bs.Col><Field>Nationality:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.nationality}</Answer></bs.Col>
+                    </bs.Row>
+                    <bs.Row>
+                        <bs.Col><Field>Disciplinary Record:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.disciplinary_records}</Answer></bs.Col>
+                        <bs.Col><Field>Housing Event:</Field></bs.Col>
+                        <bs.Col><Answer>{this.state.attended_events}</Answer></bs.Col>
+                    </bs.Row>
+                    <bs.Row>
+                        <bs.Col><Field>Address: </Field></bs.Col>
+                        <bs.Col><Answer>{this.state.local_addr_street+" "+this.state.local_addr_unit+
+                        +" "+this.state.local_addr_post_code}</Answer></bs.Col>
+                        <bs.Col><Field>Current Term:</Field></bs.Col>
+                        <bs.Col><Answer>Term 5</Answer></bs.Col>
+                    </bs.Row>
+                </bs.Container>
+            </ProfileBox>
+        );
+    }
+}

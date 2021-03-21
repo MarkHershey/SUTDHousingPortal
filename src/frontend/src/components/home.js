@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import container, {Container, Row, Col} from 'react-bootstrap';
-
+import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {getUserInfoJson} from "../variables/auth";
 const Homepage = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -22,16 +23,36 @@ const DashboardTitle = styled.p`
   font-size: medium;
 `;
 
+export default class Home extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            full_name: "",
+        };
+    }
 
-export const Home = (props) => (
-    <Homepage>
-        <Welcome> Hi, Eric Smith! </Welcome>
-        <Container>
-            <Row>
-                <Col><DashboardTitle>Position in Waiting List</DashboardTitle></Col>
-                <Col><DashboardTitle>Announcements</DashboardTitle></Col>
-                <Col><DashboardTitle>Upcoming Floor Events</DashboardTitle></Col>
-            </Row>
-        </Container>
-    </Homepage>
-)
+    componentDidMount() {
+        const fetchJSON = async () =>{
+            getCurrentStudentInfo().then(r=>{
+                this.setState({full_name:getUserInfoJson().full_name,});
+            });
+        }
+        fetchJSON();
+    }
+
+
+    render(){
+        return(
+            <Homepage>
+                <Welcome> {"Hi! " + this.state.full_name} </Welcome>
+                <Container>
+                    <Row>
+                        <Col><DashboardTitle>Position in Waiting List</DashboardTitle></Col>
+                        <Col><DashboardTitle>Announcements</DashboardTitle></Col>
+                        <Col><DashboardTitle>Upcoming Floor Events</DashboardTitle></Col>
+                    </Row>
+                </Container>
+            </Homepage>
+        )
+    }
+}

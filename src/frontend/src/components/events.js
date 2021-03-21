@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
+import Event from '../variables/eventinfo';
 
 
 const useRowStyles = makeStyles({
@@ -43,7 +44,7 @@ const SubTitle = styled.p`
   font-size: medium;
 `;
 
-
+/*
 function createData(name, date, time, floor, summary, preparation) {
     return {
         name,
@@ -54,6 +55,7 @@ function createData(name, date, time, floor, summary, preparation) {
         preparation,
     };
 }
+*/
 
 function Row(props) {
     const { row } = props;
@@ -68,10 +70,10 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">{row.name}</TableCell>
+                <TableCell component="th" scope="row">{row.title}</TableCell>
                 <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.time}</TableCell>
-                <TableCell align="right">{row.floor}</TableCell>
+                <TableCell align="right">{row.start_time+" "+row.getEnd_time()}</TableCell>
+                <TableCell align="right">{row.block+" Lvl "+row.floor}</TableCell>
                 <TableCell align="right"><button type="button" class="btn btn-outline-primary">Join Now!</button></TableCell>
             </TableRow>
             <TableRow>
@@ -83,12 +85,8 @@ function Row(props) {
                             </Typography>
                             <bs.Container>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Summary:</SubTitle></bs.Col>
-                                    <bs.Col lg={9}>{row.summary}</bs.Col>
-                                </bs.Row>
-                                <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Preparation:</SubTitle></bs.Col>
-                                    <bs.Col lg={9}>{row.preparation}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Description:</SubTitle></bs.Col>
+                                    <bs.Col lg={9}>{row.description}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
                         </Box>
@@ -101,15 +99,35 @@ function Row(props) {
 
 Row.propTypes = {
     row: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        time: PropTypes.string.isRequired,
-        floor: PropTypes.string.isRequired,
-        summary: PropTypes.string.isRequired,
-        preparation: PropTypes.string.isRequired,
+        uid: PropTypes.string.isRequired,
+        tite: PropTypes.string.isRequired,
+        event_type: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        start_time: PropTypes.string.isRequired,
+        duration: PropTypes.number.isRequired,
+        count: PropTypes.bool.isRequired,
+        floor: PropTypes.number.isRequired,
+        block:PropTypes.string.isRequired,
+        signups:PropTypes.array.isRequired,
+        attendence:PropTypes.array.isRequired,
     }).isRequired,
 };
 
+var event1 = new Event("uid","Paper Work DIY!","Interest based event","This is a workshop session in which we will do paper works together. Be creative! 3 A4 white paper",
+"3-4-2021-17:00",120,true,9,"Block 55",[],[]);
+var event2 = new Event("uid2","LEGO ARTIST","Interest based event","This is a workshop session in which we will assemble LEGO together. Be creative!, 2 DAISO LEGO Blocks",
+"4-4-2021-20:00",120,true,9,"Block 55",[],[]);
+var event3 = new Event("uid3","E-GAME ONLINE!","Inter block","BOOST with SUTD gamers! We will play Valorant and CSGO together ,A good computer",
+"5-4-2021:20:00",120,false,9,"Block 55",[],[]);
+var event4 = new Event("uid4","Basketball is fun!","Inter block","Play 3V3 basketball game in groups and win!!,Nothing",
+"5-4-2021",120,true,9,"Block 55",[],[]);
+var event5 = new Event("uid5","Zen Zen Zen","Floor event","Sit together quietly, Nothing","7-4-2021",120,false,
+9,"Block 55",[],[]);
+
+const eventsArr = [event1,event2,event3,event4,event5];
+
+
+/*
 const rows = [
     createData('Paper Work DIY!', "3-4-2021", "17:00-19:00", "All",
         "This is a workshop session in which we will do paper works together. Be creative!", "3 A4 white paper"),
@@ -122,7 +140,7 @@ const rows = [
     createData('Zen Zen Zen', "7-4-2021", "17:00-19:00", "59L11",
         "Sit together quietly", "Nothing"),
 ];
-
+*/
 export default function Events() {
     return (
         <EventDiv>
@@ -140,8 +158,8 @@ export default function Events() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <Row key={row.name} row={row}/>
+                        {eventsArr.map((row) => (
+                            <Row key={row.uid} row={row}/>
                         ))}
                     </TableBody>
                 </Table>
