@@ -3,7 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken, setUsername} from "../variables/auth";
+import {getToken, setToken, setUsername} from "../variables/localstorage";
+import {url} from "../variables/url.js";
 
 export default function Login() {
     const [username, setUsernameElement] = useState("");
@@ -16,7 +17,7 @@ export default function Login() {
         var data = JSON.stringify({"username":username,"password":password});
         var config = {
             method: 'post',
-            url: 'http://esc.dev.markhh.com/api/auth/login',
+            url: url + '/api/auth/login',
             headers: {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -73,4 +74,26 @@ export default function Login() {
             </Form>
         </div>
     );
+}
+
+export async function getEvents(){
+    var config = {
+        method: 'get',
+        url: url + '/api/events/all',
+        headers: {
+            'accept': 'application/json'
+        }
+    };
+
+    axios(config)
+        .then(function (response) {
+            var response = JSON.stringify(response.data);
+
+
+
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }

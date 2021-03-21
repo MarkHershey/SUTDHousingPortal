@@ -20,7 +20,7 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ApplicaitonOne() {
+export default function ApplicationOne() {
     return(
         <EventDiv>
             <br/>

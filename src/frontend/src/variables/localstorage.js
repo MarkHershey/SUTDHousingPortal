@@ -1,4 +1,4 @@
-let storage= window.localStorage;
+let storage = window.localStorage;
 
 export function getToken(){
     return storage["token"];

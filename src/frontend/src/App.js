@@ -13,14 +13,14 @@ import {EventCreation} from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
 import ApplicationSummary from "./components/application_summary";
 import React from 'react';
-import {checkValidity} from "./variables/auth";
+import {checkValidity} from "./variables/localstorage";
 
 function App() {
     const GuardedRoute = ({component: Component, auth, ...rest}) => (
         <Route {...rest} render={(props) => (
             checkValidity()
                 ? <Component {...props} />
-                : <Redirect to='/logout'/>
+                : <Redirect to='/login'/>
         )}/>
     )
     return (
@@ -38,7 +38,7 @@ function App() {
                     <GuardedRoute path="/event_creation" component={EventCreation}/>
                     <GuardedRoute path="/application_status" component={ApplicationStatus}/>
                     <GuardedRoute path="/profile" component={Profile} auth={checkValidity()}/>
-                    <Route path="/logout" component={Login}/>
+                    <Route path="/login" component={Login}/>
                 </Switch>
             </Router>
         </React.Fragment>

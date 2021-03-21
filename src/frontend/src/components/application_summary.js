@@ -1,7 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import ApplicationOne from './application_part1';
+import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
 
 const EventDiv = styled.div`
@@ -13,6 +13,12 @@ const EventDiv = styled.div`
   grid-column: auto;
   text-align: center;
 `;
+
+
+
+
+
+
 
 export default function ApplicationSummary(){
     return (

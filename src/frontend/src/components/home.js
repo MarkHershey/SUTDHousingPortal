@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import container, {Container, Row, Col} from 'react-bootstrap';
 import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/auth";
+import {getUserInfoJson} from "../variables/localstorage";
 const Homepage = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -26,9 +26,7 @@ const DashboardTitle = styled.p`
 export default class Home extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {
-            full_name: "",
-        };
+        this.state = {full_name: "",};
     }
 
     componentDidMount() {

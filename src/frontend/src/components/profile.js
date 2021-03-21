@@ -5,7 +5,7 @@ import * as bs from 'react-bootstrap';
 import ProfileData from "./profile_data";
 import Student from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {checkValidity, getToken, getUserInfoJson, getUsername} from "../variables/auth";
+import {checkValidity, getToken, getUserInfoJson, getUsername} from "../variables/localstorage";
 import axios from "axios";
 
 const ProfileBox = styled.div`

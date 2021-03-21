@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/auth";
+import {getUserInfoJson} from "../variables/localstorage";
 
 const Field = styled.p`
   color: #3C64B1;
