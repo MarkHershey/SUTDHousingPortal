@@ -5,7 +5,7 @@ import {NavigationBar} from './components/navbar';
 import Login from './components/login';
 import ApplicationOne from './components/application_part1';
 import ApplicationTwo from "./components/application_part2";
-import {Home} from './components/home';
+import Home from './components/home';
 import Events from './components/events';
 import Profile from "./components/profile";
 import EventHistory from "./components/event_history";
