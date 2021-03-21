@@ -1,0 +1,16 @@
+version: "3"
+services:
+    backend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: housing-portal-dev
+        restart: unless-stopped
+        # restart: "no"
+        ports:
+            - "80:80"
+        environment:
+            TZ: "Asia/Singapore"
+            MODULE_NAME: "api.main"
+        volumes:
+            - "./logs:/app/logs"

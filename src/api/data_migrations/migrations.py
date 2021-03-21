@@ -48,14 +48,14 @@ def create_admin(
     password: str,
     full_name: str,
     email_sutd: str,
-    read_only_privilege: bool = False,
+    read_only: bool = False,
 ):
     payload = {
         "username": username,
         "password": password,
         "full_name": full_name,
         "email_sutd": email_sutd,
-        "read_only_privilege": read_only_privilege,
+        "read_only": read_only,
     }
     payload = json.dumps(payload)
     cmd = (

@@ -136,3 +136,44 @@ Step-by-step:
 4. Click right-side text "Reviewers" and select someone to be the reviewer
 5. Click the big green button "Create pull request"
 6. Done! Just wait for someone to review your code.
+
+## After some days
+
+You have been making contributions, but very soon you discovered an issue: Master branch has been updated by others, and you are still working on your outdate personal branch that does not contain those new changes made by others. You want to keep up to date with Master branch, what should you do?
+
+Simple, delete your branch then create your branch again from the latest Master branch.
+
+lets go through that step by step:
+
+first, you should only delete your branch if and only if there is no new information on your branch comparing to the master branch, which means that your PRs has been merged into Master branch already.
+
+To delete branch on Github
+
+1. Got to Github Project page: https://github.com/MarkHershey/SUTDHousingPortal
+2. Click the text `x branches`
+3. Double check that your branch has no commits ahead of master
+4. Click delete button for your branch
+
+To delete branch on your local machine
+
+1. lets switch to Master branch first
+
+    ```bash
+    git checkout master
+    ```
+
+2. delete your branch
+
+    ```bash
+    git branch -d "YOUR_BRANCH_NAME"
+    ```
+
+Now, you want to get the latest updates for Master branch
+
+Simply
+
+```bash
+git pull
+```
+
+Now, you are clean and up-to-date, you can repeat the same procedures above to create your branch again.

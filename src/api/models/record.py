@@ -13,5 +13,5 @@ class DisciplinaryRecord(BaseModel):
     description: str = None
 
     @validator("uid", pre=True, always=True)
-    def default_created_at(cls, v):
+    def default_uid(cls, v):
         return v or uid_gen("DR")

@@ -14,6 +14,7 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
     -   [React](https://reactjs.org/)
     -   [Bootstrap](https://getbootstrap.com/)
 -   Deployment
+    -   [Gunicorn](https://gunicorn.org/)
     -   [NGINX](https://www.nginx.com/)
     -   [Docker](https://www.docker.com/)
 -   Testing
@@ -44,7 +45,24 @@ $ uvicorn src.api.main:app --reload
 
 Check API documentation after firing up local server
 
--   Go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+-   Go to [http://0.0.0.0/docs](http://0.0.0.0/docs)
+
+### Run backend server locally with Docker
+
+0. Install [**docker**](https://docs.docker.com/engine/install/) & [**docker-compose**](https://docs.docker.com/compose/install/).
+
+1. Build
+    ```bash
+    docker-compose build
+    ```
+2. Run
+    ```bash
+    docker-compose up -d
+    ```
+3. Stop
+    ```bash
+    docker-compose down
+    ```
 
 ### Run tests
 
@@ -64,3 +82,7 @@ $ pytest
 
 -   [MIT License](LICENSE) Copyright (c) 2021
 -   This application is developed to fulfill the course requirement of SUTD 50.003 Elements of Software Construction (2021 Spring).
+
+## Acknowledgement
+
+-   Docker base image: [tiangolo / uvicorn-gunicorn-fastapi-docker](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
