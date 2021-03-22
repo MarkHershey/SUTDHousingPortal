@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import avatar from "../avatar.png";
 import * as bs from 'react-bootstrap';
 import ProfileData from "./profile_data";
-import Student from "../variables/studentinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {checkValidity, getToken, getUserInfoJson, getUsername} from "../variables/localstorage";
-import axios from "axios";
+import {getUserInfoJson} from "../variables/localstorage";
 
 const ProfileBox = styled.div`
   background-color: #F3F6FA;

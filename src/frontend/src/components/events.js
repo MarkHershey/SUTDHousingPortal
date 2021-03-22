@@ -17,7 +17,9 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import Event from '../variables/eventinfo';
+import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {getEventInfoJson, getUserInfoJson} from "../variables/localstorage";
+import {getEventInfo} from "../variables/eventinfo";
 
 
 const useRowStyles = makeStyles({
@@ -27,7 +29,6 @@ const useRowStyles = makeStyles({
         },
     },
 });
-
 const EventDiv = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -36,7 +37,6 @@ const EventDiv = styled.div`
   margin-right: 2em;
   grid-column: auto;
 `;
-
 const SubTitle = styled.p`
   text-align: right;
   color: #3C64B1;
@@ -44,18 +44,30 @@ const SubTitle = styled.p`
   font-size: medium;
 `;
 
-/*
-function createData(name, date, time, floor, summary, preparation) {
-    return {
-        name,
-        date,
-        time,
-        floor,
-        summary,
-        preparation,
+Date.prototype.format = function(fmt){
+    var o = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
     };
+
+    if(/(y+)/.test(fmt)){
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    }
+
+    for(var k in o){
+        if(new RegExp("("+ k +")").test(fmt)){
+            fmt = fmt.replace(
+                RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        }
+    }
+
+    return fmt;
 }
-*/
 
 function Row(props) {
     const { row } = props;
@@ -71,10 +83,10 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">{row.title}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.start_time+" "+row.getEnd_time()}</TableCell>
+                <TableCell align="right">{new Date(Date.parse(row.start_time)).toDateString()}</TableCell>
+                <TableCell align="right">{new Date(Date.parse(row.start_time)).format("hh:mm")}</TableCell>
                 <TableCell align="right">{row.block+" Lvl "+row.floor}</TableCell>
-                <TableCell align="right"><button type="button" class="btn btn-outline-primary">Join Now!</button></TableCell>
+                <TableCell align="right"><button type="button" class="btn btn-outline-primary" onClick = {eventHandler(row.uid)}>Join</button></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -88,6 +100,18 @@ function Row(props) {
                                     <bs.Col lg={3}><SubTitle>Description:</SubTitle></bs.Col>
                                     <bs.Col lg={9}>{row.description}</bs.Col>
                                 </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Duration:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.duration_mins + "mins"}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Location:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.meetup_location}</bs.Col>
+                                </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Signup DDL:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{new Date(Date.parse(row.signup_ddl)).format("dd/MM/yyyy hh:mm:ss")}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Max Signups:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.signup_limit}</bs.Col>
+                                </bs.Row>
                             </bs.Container>
                         </Box>
                     </Collapse>
@@ -97,10 +121,14 @@ function Row(props) {
     );
 }
 
+function eventHandler(uid){
+
+}
+
 Row.propTypes = {
     row: PropTypes.shape({
         uid: PropTypes.string.isRequired,
-        tite: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
         event_type: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         start_time: PropTypes.string.isRequired,
@@ -109,61 +137,51 @@ Row.propTypes = {
         floor: PropTypes.number.isRequired,
         block:PropTypes.string.isRequired,
         signups:PropTypes.array.isRequired,
-        attendence:PropTypes.array.isRequired,
+        attendance:PropTypes.array.isRequired,
     }).isRequired,
 };
 
-var event1 = new Event("uid","Paper Work DIY!","Interest based event","This is a workshop session in which we will do paper works together. Be creative! 3 A4 white paper",
-"3-4-2021-17:00",120,true,9,"Block 55",[],[]);
-var event2 = new Event("uid2","LEGO ARTIST","Interest based event","This is a workshop session in which we will assemble LEGO together. Be creative!, 2 DAISO LEGO Blocks",
-"4-4-2021-20:00",120,true,9,"Block 55",[],[]);
-var event3 = new Event("uid3","E-GAME ONLINE!","Inter block","BOOST with SUTD gamers! We will play Valorant and CSGO together ,A good computer",
-"5-4-2021:20:00",120,false,9,"Block 55",[],[]);
-var event4 = new Event("uid4","Basketball is fun!","Inter block","Play 3V3 basketball game in groups and win!!,Nothing",
-"5-4-2021",120,true,9,"Block 55",[],[]);
-var event5 = new Event("uid5","Zen Zen Zen","Floor event","Sit together quietly, Nothing","7-4-2021",120,false,
-9,"Block 55",[],[]);
+export default class Events extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {events: []};
+    }
 
-const eventsArr = [event1,event2,event3,event4,event5];
+    componentDidMount() {
+        const fetchJSON = async () =>{
+            getEventInfo().then(r=>{
+                this.setState({events: getEventInfoJson()});
+                console.log("Event Info JSON:");
+                console.log(getEventInfoJson());
+            });
+        }
+        fetchJSON();
+    }
 
-
-/*
-const rows = [
-    createData('Paper Work DIY!', "3-4-2021", "17:00-19:00", "All",
-        "This is a workshop session in which we will do paper works together. Be creative!", "3 A4 white paper"),
-    createData('LEGO ARTIST', "4-4-2021", "20:00-22:00", "59L11",
-        "This is a workshop session in which we will assemble LEGO together. Be creative!", "2 DAISO LEGO Blocks"),
-    createData('E-GAME ONLINE!', "5-4-2021", "14:00-16:00", "59L11",
-        "BOOST with SUTD gamers! We will play Valorant and CSGO together", "A good computer"),
-    createData('Basketball is fun!', "6-4-2021", "17:00-19:00", "59L11",
-        "Play 3V3 basketball game in groups and win!!!", "Nothing"),
-    createData('Zen Zen Zen', "7-4-2021", "17:00-19:00", "59L11",
-        "Sit together quietly", "Nothing"),
-];
-*/
-export default function Events() {
-    return (
-        <EventDiv>
-            <h3>Floor Events</h3>
-            <TableContainer component={Paper}>
-                <Table aria-label="collapsible table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell/>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Time</TableCell>
-                            <TableCell align="right">Floor</TableCell>
-                            <TableCell align="right">Join!</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {eventsArr.map((row) => (
-                            <Row key={row.uid} row={row}/>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </EventDiv>
-    );
+    render() {
+        return (
+            <EventDiv>
+                <h3>Floor Events</h3>
+                <TableContainer component={Paper}>
+                    <Table aria-label="collapsible table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell/>
+                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="right">Date</TableCell>
+                                <TableCell align="right">Time</TableCell>
+                                <TableCell align="right">Floor</TableCell>
+                                <TableCell align="right">Join!</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.events.map((row) => (
+                                <Row key={row.uid} row={row}/>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </EventDiv>
+        );
+    }
 }
