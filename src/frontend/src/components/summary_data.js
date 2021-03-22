@@ -1,6 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
+import { Typography, Slider, TextField } from '@material-ui/core';
 
 const Field = styled.p`
   color: #3C64B1;
@@ -95,6 +96,85 @@ export default function SummaryData(){
                     <bs.Col><Field>Room Type(2nd Choice)</Field></bs.Col>
                     <bs.Col><Answer>Double Room</Answer></bs.Col>
                 </bs.Row>
+                <hr/>
+                <h4>Lifestyle Preferences</h4>
+                <br/>
+                <Typography id="socialbility-slider">
+                    Socialbility
+                </Typography>
+                <Slider
+                    defaultValue={5}
+                    aria-labelledby="socialbility-slider"
+                    step={1}
+                    marks
+                    min={0}
+                    max={10}
+                    disabled={true}
+                    valueLabelDisplay="auto"
+                    />
+
+                <Typography id="cleanliness-slider">
+                    Cleanliness
+                </Typography>
+                <Slider
+                    defaultValue={4}
+                    aria-labelledby="cleanliness-slider"
+                    step={1}
+                    marks
+                    min={0}
+                    max={10}
+                    disabled={true}
+                    valueLabelDisplay="auto"
+                    />
+
+                <Typography id="noisiness-slider">
+                    Noisiness Level
+                </Typography>
+                <Slider
+                    defaultValue={3}
+                    aria-labelledby = "noisiness-slider"
+                    step={1}
+                    marks
+                    min={0}
+                    max={10}
+                    disabled={true}
+                    valueLabelDisplay="auto"
+                    />
+
+                <TextField
+                    id="time-sleep"
+                    label="Sleeping time"
+                    margin="normal"
+                    size="medium"
+                    type="time"
+                    disabled = {true}
+                    defaultValue="22:00"
+                    style={{width:'350px'}}
+                    InputLabelProps={{
+                    shrink: true,
+                    }}
+                    inputProps={{
+                    step: 300, // 5 min
+                    }}
+                />
+                <br/>
+                <TextField
+                    id="time-wake"
+                    label="Wake up time?"
+                    margin="normal"
+                    size="medium"
+                    type="time"
+                    disabled={true}
+                    defaultValue="07:00"
+                    style={{width:'350px'}}
+                    InputLabelProps={{
+                        shrink:true,
+                    }}
+                    inputProps={{
+                        step:300,
+                    }}
+                />
+
             </bs.Container>
         </ProfileBox>
     );
