@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import HTTPException
 from markkk.logger import logger
 
@@ -27,7 +29,12 @@ def remove_none_value_keys(data: dict) -> None:
     return
 
 
-# def push_item_to_array(dbref, items[])
+def deduct_list_from_list(host_list: List[str], deduct_list: List[str]) -> None:
+    for i in deduct_list:
+        # make sure no duplications
+        while i in host_list:
+            host_list.remove(i)
+    return
 
 
 class Access:
