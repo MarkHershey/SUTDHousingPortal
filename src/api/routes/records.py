@@ -190,6 +190,7 @@ async def delete_disciplinary_record(
 
     try:
         record_dict: dict = records_collection.find_one({"uid": uid})
+        record_target_student = record_dict.get("student_id")
     except Exception as e:
         logger.error("Failed to query database.")
         logger.error(e)
@@ -197,5 +198,11 @@ async def delete_disciplinary_record(
 
     if record_dict:
         records_collection.delete_one({"uid": uid})
+        _updated = students_collection.find_one_and_update(
+            filter={"student_id": record_target_student},
+            update={"$pull": {"disciplinary_records": uid}},
+            return_document=ReturnDocument.AFTER,
+        )
+        logger.debug(f"Updated: {str(_updated)}")
     else:
         raise HTTPException(status_code=404, detail="Record not found.")
