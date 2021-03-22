@@ -5,9 +5,11 @@ import {NavigationBar} from './components/navbar';
 import Login from './components/login';
 import ApplicationOne from './components/application_part1';
 import ApplicationTwo from "./components/application_part2";
+import ApplicationThree from "./components/application_part3";
 import Home from './components/home';
 import Events from './components/events';
 import Profile from "./components/profile";
+import PersonalDataEdit from "./components/personal_profile_edit";
 import EventHistory from "./components/event_history";
 import {EventCreation} from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
@@ -32,8 +34,10 @@ function App() {
                     <GuardedRoute path="/profile" component={Profile}/>
                     <GuardedRoute path="/event" component={Events}/>
                     <GuardedRoute path="/event_history" component={EventHistory}/>
+                    <GuardedRoute path="/profile_edit" component={PersonalDataEdit}/>
                     <GuardedRoute path="/apply" component={ApplicationOne}/>
                     <GuardedRoute path="/apply2" component={ApplicationTwo}/>
+                    <GuardedRoute path="/apply3" component={ApplicationThree}/>
                     <GuardedRoute path="/application_summary" component={ApplicationSummary}/>
                     <GuardedRoute path="/event_creation" component={EventCreation}/>
                     <GuardedRoute path="/application_status" component={ApplicationStatus}/>

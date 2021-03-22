@@ -62,7 +62,7 @@ export default function ApplicationTwo() {
         event.preventDefault();
         if(validateForm()){
             console.log("valid");
-            history.push("/application_summary");
+            history.push("/apply3");
         } else {
 
         }
