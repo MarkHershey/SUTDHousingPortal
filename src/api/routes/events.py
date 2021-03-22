@@ -117,10 +117,12 @@ async def create_an_event(
     new_event.created_by = str(username)
     event_dict = dict(new_event.dict())
     try:
-        events_collection.insert_one(event_dict)
-        logger.debug(f"New Event inserted to DB: {new_event.title}")
-        # TODO: find one and return
-        return event_dict
+        _inserted_id = events_collection.insert_one(event_dict).inserted_id
+        logger.debug(f"New Event inserted to DB with inserted_id: {_inserted_id}")
+        _event = events_collection.find_one({"_id": _inserted_id})
+        clean_dict(_event)
+        logger.debug(f"New Event info: {_event}")
+        return _event
     except Exception as e:
         logger.error(f"New Event failed to be inserted to DB: {new_event.title}")
         logger.error(e)
@@ -137,13 +139,13 @@ async def get_an_event(uid: str, username=Depends(auth_handler.auth_wrapper)):
     logger.debug(f"User({username}) fetching event({uid}) info")
     try:
         event_dict: dict = events_collection.find_one({"uid": uid})
+        clean_dict(event_dict)
     except Exception as e:
         logger.error("Failed to query database.")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
 
     if event_dict:
-        clean_dict(event_dict)
         return event_dict
     else:
         raise HTTPException(status_code=404, detail="Event not found.")
