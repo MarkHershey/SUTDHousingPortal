@@ -10,8 +10,8 @@ class DisciplinaryRecord(BaseModel):
     uid: str = None
     created_at: datetime = None  # backend auto generate this
     created_by: str = None  # supply student_id or username
-    student_id: str = None
-    record_type: str = None
+    student_id: str
+    record_type: str
     description: str = None
     points_deduction: int = 100  # >= 0
 

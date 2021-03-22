@@ -2,9 +2,10 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
+from pymongo import ReturnDocument
 
 from ..auth import AuthHandler
-from ..database import records_collection
+from ..database import records_collection, students_collection
 from ..models.record import DisciplinaryRecord, RecordEditable
 from ..utils import Access, clean_dict, remove_none_value_keys
 
@@ -63,17 +64,40 @@ async def add_disciplinary_record(
 
     record.created_by = str(username)
     records_dict = dict(record.dict())
+    target_student: str = record.student_id
+    # 0. check if student exists
+    if not target_student or not Access.is_student(target_student):
+        raise HTTPException(status_code=400, detail="Target student does not exist.")
+
+    # 1. add record
     try:
         _inserted_id = records_collection.insert_one(records_dict).inserted_id
-        logger.debug(f"New _inserted_id: {_inserted_id}")
+        logger.debug(
+            f"New DisciplinaryRecord inserted to DB with inserted_id: {_inserted_id}"
+        )
         _record = records_collection.find_one({"_id": _inserted_id})
+        logger.debug(f"Dev debug: {type(_record)}")
         clean_dict(_record)
-        logger.debug(f"New DisciplinaryRecord inserted to DB: {_record}")
-        return _record
+        logger.debug(f"New DisciplinaryRecord info: {_record}")
     except Exception as e:
         logger.error(f"New record failed to be inserted to DB")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Failed to insert into database")
+
+    # 2. add event uid to student attended_events list
+    try:
+        _updated = students_collection.find_one_and_update(
+            filter={"student_id": target_student},
+            update={"$push": {"disciplinary_records": record.uid}},
+            return_document=ReturnDocument.AFTER,
+        )
+        logger.debug(f"Updated: {str(_updated)}")
+    except Exception as e:
+        logger.error("Failed to update database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    return _record
 
 
 @router.get("/{uid}", response_model=DisciplinaryRecord)
@@ -175,6 +199,3 @@ async def delete_disciplinary_record(
         records_collection.delete_one({"uid": uid})
     else:
         raise HTTPException(status_code=404, detail="Record not found.")
-
-
-# TODO: Batch get

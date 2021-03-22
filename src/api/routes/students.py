@@ -269,3 +269,63 @@ async def get_participated_events(
         raise HTTPException(status_code=500, detail="Databse Error.")
 
     return event_info_list
+
+
+@router.get("/{student_id}/records", response_model=List[DisciplinaryRecord])
+async def get_disciplinary_records(
+    student_id: str, username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Get all DisciplinaryRecords that belong to the particular student
+
+    Require: Student-self or Admin-read
+    """
+    logger.debug(
+        f"User({username}) trying fetching Student({student_id})'s DisciplinaryRecords"
+    )
+
+    permission_ok = Access.is_admin(username)
+    if username == student_id:
+        permission_ok = True
+
+    if not permission_ok:
+        logger.debug(f"User({username}) permission denied.")
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to view this."
+        )
+
+    # get DisciplinaryRecord uids from student profile
+    try:
+        student_info = students_collection.find_one({"student_id": student_id})
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not student_info:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+    clean_dict(student_info)
+    record_uids: List[str] = student_info.get("disciplinary_records", [])
+    if not record_uids:
+        return []
+    else:
+        record_uids = list(set(record_uids))
+
+    event_info_list: List[dict] = []
+    try:
+        for uid in record_uids:
+            if isinstance(uid, str):
+                _record_dict: dict = records_collection.find_one({"uid": uid})
+                clean_dict(_record_dict)
+                if _record_dict:
+                    event_info_list.append(_record_dict)
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    logger.debug(
+        f"Fetched {len(event_info_list)} DisciplinaryRecord(s) that belong to Student({student_id})"
+    )
+    return event_info_list
