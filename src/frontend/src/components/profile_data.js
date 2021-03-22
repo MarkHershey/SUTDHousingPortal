@@ -53,9 +53,9 @@ export default class ProfileData extends React.Component{
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Disciplinary Record:</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.disciplinary_records}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.disciplinary_records.length}</Answer></bs.Col>
                         <bs.Col><Field>Housing Event:</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.attended_events}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.attended_events.length}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Address: </Field></bs.Col>

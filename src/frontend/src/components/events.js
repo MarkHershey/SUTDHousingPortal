@@ -17,10 +17,11 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getEventInfoJson, getUserInfoJson} from "../variables/localstorage";
+import {getEventInfoJson, getToken, getUserInfoJson} from "../variables/localstorage";
 import {getEventInfo} from "../variables/eventinfo";
-
+import {getUsername} from "../variables/localstorage";
+import axios from "axios";
+import {url} from "../variables/url";
 
 const useRowStyles = makeStyles({
     root: {
@@ -62,7 +63,7 @@ Date.prototype.format = function(fmt){
     for(var k in o){
         if(new RegExp("("+ k +")").test(fmt)){
             fmt = fmt.replace(
-                RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                RegExp.$1, (RegExp.$1.length===1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
         }
     }
 
@@ -85,14 +86,18 @@ function Row(props) {
                 <TableCell component="th" scope="row">{row.title}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).toDateString()}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).format("hh:mm")}</TableCell>
-                <TableCell align="right">{row.block+" Lvl "+row.floor}</TableCell>
-                <TableCell align="right"><button type="button" class="btn btn-outline-primary" onClick = {eventHandler(row.uid)}>Join</button></TableCell>
+                <TableCell align="right">{"Block " + row.block+" Lvl "+row.floor}</TableCell>
+                <TableCell align="right">
+                    <button type="button" class="btn btn-outline-primary"
+                            onClick = {async() => {await eventHandler(row.uid)}}
+                            disabled={joined(row)}>{joined(row)? "Signed Up" : "Join" }</button>
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <Typography variant="h6" gutterBottom component="div" text-align="center">
                                 Details
                             </Typography>
                             <bs.Container>
@@ -101,16 +106,22 @@ function Row(props) {
                                     <bs.Col lg={9}>{row.description}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Duration:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
                                     <bs.Col lg={3}>{row.duration_mins + "mins"}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Location:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
                                     <bs.Col lg={3}>{row.meetup_location}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Signup DDL:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}>{new Date(Date.parse(row.signup_ddl)).format("dd/MM/yyyy hh:mm:ss")}</bs.Col>
                                     <bs.Col lg={3}><SubTitle>Max Signups:</SubTitle></bs.Col>
                                     <bs.Col lg={3}>{row.signup_limit}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Remaining Slots:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.signup_limit - row.signups.length}</bs.Col>
+                                </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Signup Deadline:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{new Date(Date.parse(row.signup_ddl)).format("dd/MM/yyyy hh:mm:ss")}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Event Held by:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.created_by}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
                         </Box>
@@ -121,8 +132,35 @@ function Row(props) {
     );
 }
 
-function eventHandler(uid){
+async function eventHandler(uid){
+    var config = {
+        method: 'post',
+        url: url + '/api/events/' + uid + '/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : JSON.stringify([getUsername()])
+    };
 
+    axios(config)
+        .then(function (response) {
+            console.log("Signed Up");
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function joined(row){
+    console.log(row.signups)
+    var signed_up = false;
+    row.signups.forEach(function (item){
+        if (item.toString() === getUsername()) signed_up = true;
+    });
+    return signed_up
 }
 
 Row.propTypes = {
