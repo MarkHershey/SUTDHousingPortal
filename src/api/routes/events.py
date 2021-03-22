@@ -160,6 +160,8 @@ async def update_an_event(
         updated = students_collection.find_one_and_update(
             filter={"uid": uid}, update={"$set": event_dict}
         )
+        logger.debug(f"{str(updated)}")
+        clean_dict(updated)
         return updated if updated else {"msg": "failed"}
     except Exception as e:
         logger.error("Failed to update database.")

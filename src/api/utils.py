@@ -5,10 +5,9 @@ from .database import admins_collection, students_collection
 
 
 def clean_dict(data: dict) -> None:
-    if data is None:
-        return
     if not isinstance(data, dict):
-        raise TypeError("Not a dictionary.")
+        logger.warning("Not a dictionary.")
+        return
 
     data.pop("_id", None)
     data.pop("password", None)

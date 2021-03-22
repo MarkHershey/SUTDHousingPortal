@@ -98,6 +98,7 @@ async def update_student_info(
 ):
     """
     Update (Overwrite) a particular Student info
+
     Require: Student-self or Admin-write
     """
     permission_ok = False
@@ -121,8 +122,10 @@ async def update_student_info(
         # A: user wants to clear certain field (supply 'None' as new value)
         # B: user wants to preserve the value of certain field (Not changing anything, so supplying 'None')
         updated = students_collection.find_one_and_update(
-            filter={"student_id": student_id}, update={"$set": student_editable_profile}
+            filter={"student_id": student_id}, update={"$set": student_update_dict}
         )
+        logger.debug(f"{str(updated)}")
+        clean_dict(updated)
         return updated if updated else {"msg": "failed"}
     except Exception as e:
         logger.error("Failed to query database.")
@@ -152,6 +155,8 @@ async def set_student_as_hg(
             filter={"student_id": student_id},
             update={"$set": {"is_house_guardian": True}},
         )
+        logger.debug(f"{str(updated)}")
+        clean_dict(updated)
         return updated if updated else {"msg": "failed"}
     except Exception as e:
         logger.error("Failed to query database.")
@@ -181,6 +186,8 @@ async def revoke_student_as_hg(
             filter={"student_id": student_id},
             update={"$set": {"is_house_guardian": False}},
         )
+        logger.debug(f"{str(updated)}")
+        clean_dict(updated)
         return updated if updated else {"msg": "failed"}
     except Exception as e:
         logger.error("Failed to query database.")

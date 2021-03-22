@@ -60,7 +60,7 @@ class StudentProfile(BaseModel):
     is_house_guardian: bool = False
 
 
-class StudentEditableProfile(User):
+class StudentEditableProfile(BaseModel):
     phone_number: str = None
     email_personal: str = None
     local_addr_post_code: str = None
@@ -69,7 +69,7 @@ class StudentEditableProfile(User):
     preference_roommate: List[str] = None
 
 
-class StudentIdentityProfile(User):
+class StudentIdentityProfile(BaseModel):
     student_id: str = None
     full_name: str = None
     gender: str = None  # Male / Female
