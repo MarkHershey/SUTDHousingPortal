@@ -1,9 +1,12 @@
+from typing import Dict, List
+
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 
 from ..auth import AuthHandler
 from ..database import *
 from ..models.application import ApplicationForm, ApplicationPeriod
+from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
 from ..models.room import Room, RoomProfile
@@ -221,3 +224,48 @@ async def update_lifestyle_profile(
     """
     # TODO:
     pass
+
+
+@router.get("/{student_id}/events", response_model=List[Event])
+async def get_participated_events(
+    student_id: str, username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Get a list of Events that the student has signed up and/or attended.
+
+    Require: Any authenticated user
+    """
+    logger.debug(f"User({username}) fetching student({student_id})'s Event list.")
+
+    try:
+        student_info = students_collection.find_one({"student_id": student_id})
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    if not student_info:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+    clean_dict(student_info)
+    event_uids = student_info.get("registered_events", [])
+    if not event_uids:
+        return []
+    else:
+        event_uids = list(set(event_uids))
+
+    event_info_list: List[dict] = []
+
+    try:
+        for uid in event_uids:
+            if isinstance(uid, str):
+                event_dict: dict = events_collection.find_one({"uid": uid})
+                if event_dict:
+                    clean_dict(event_dict)
+                    event_info_list.append(event_dict)
+    except Exception as e:
+        logger.error("Failed to query database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    return event_info_list

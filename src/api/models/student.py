@@ -23,6 +23,7 @@ class Student(User):
     local_addr_post_code: str
     local_addr_street: str = None
     local_addr_unit: str = None
+    registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
     preference_roommate: List[str] = []
@@ -52,6 +53,7 @@ class StudentProfile(BaseModel):
     local_addr_post_code: str
     local_addr_street: str = None
     local_addr_unit: str = None
+    registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
     preference_roommate: List[str] = []
