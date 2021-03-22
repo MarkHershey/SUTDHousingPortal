@@ -119,6 +119,7 @@ async def create_an_event(
     try:
         events_collection.insert_one(event_dict)
         logger.debug(f"New Event inserted to DB: {new_event.title}")
+        # TODO: find one and return
         return event_dict
     except Exception as e:
         logger.error(f"New Event failed to be inserted to DB: {new_event.title}")
