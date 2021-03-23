@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import { instanceOf } from "prop-types";
 import { Redirect, useHistory } from "react-router";
-import { getUserInfoJson } from "../variables/auth";
+import { getUserInfoJson } from "../variables/localstorage";
 import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
 
 

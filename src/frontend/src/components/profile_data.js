@@ -38,7 +38,6 @@ export default class ProfileData extends React.Component{
                         <bs.Col><Field>Gender:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.gender}</Answer></bs.Col>
                     </bs.Row>
-
                     <bs.Row>
                         <bs.Col><Field>Enrollment Year:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.year_of_enrollment}</Answer></bs.Col>
@@ -46,21 +45,20 @@ export default class ProfileData extends React.Component{
                         <bs.Col><Answer>{this.state.enrollment_type}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
-                        <bs.Col><Field>Mobile:</Field></bs.Col>
+                        <bs.Col><Field>Mobile Number:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.phone_number}</Answer></bs.Col>
                         <bs.Col><Field>Nationality:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.nationality}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
-                        <bs.Col><Field>Disciplinary Record:</Field></bs.Col>
+                        <bs.Col><Field>Disciplinary Rec:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.disciplinary_records.length}</Answer></bs.Col>
-                        <bs.Col><Field>Attended Events:</Field></bs.Col>
+                        <bs.Col><Field>Event Rec:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.attended_events.length}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Address: </Field></bs.Col>
-                        <bs.Col><Answer>{this.state.local_addr_street+" "+this.state.local_addr_unit+
-                        +" "+this.state.local_addr_post_code}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.local_addr_street+" "+this.state.local_addr_unit+" "+this.state.local_addr_post_code}</Answer></bs.Col>
                         <bs.Col><Field>Current Term:</Field></bs.Col>
                         <bs.Col><Answer>Term 5</Answer></bs.Col>
                     </bs.Row>

@@ -1,4 +1,4 @@
-import {checkValidity, getToken, getUsername} from "./auth";
+import {checkValidity, getToken, getUsername} from "./localstorage";
 import axios from "axios";
 
 export var room_type = "string";
