@@ -57,8 +57,36 @@ export function clearEventInfoJson(){
     console.log(typeof(storage["eventinfojson"]));
 }
 
+export function getUpcomingEventInfoJson(){
+    return JSON.parse(storage["upcomingeventinfojson"]);
+}
+
+export function setUpcomingEventInfoJson(newEventInfoJson){
+    storage.setItem("upcomingeventinfojson",JSON.stringify(newEventInfoJson));
+}
+
+export function clearUpcomingEventInfoJson(){
+    storage.removeItem("personaleventinfojson");
+    console.log(typeof(storage["personaleventinfojson"]));
+}
+
+export function getPersonalEventInfoJson(){
+    return JSON.parse(storage["personaleventinfojson"]);
+}
+
+export function setPersonalEventInfoJson(newEventInfoJson){
+    storage.setItem("personaleventinfojson",JSON.stringify(newEventInfoJson));
+}
+
+export function clearPersonalEventInfoJson(){
+    storage.removeItem("personaleventinfojson");
+    console.log(typeof(storage["personaleventinfojson"]));
+}
+
 export function logout(){
     clearToken();
     clearEventInfoJson();
     clearUserInfoJson();
+    clearUpcomingEventInfoJson();
+    clearPersonalEventInfoJson();
 }

@@ -19,6 +19,7 @@ export class Student {
         this.local_addr_post_code = student_data.local_addr_post_code;
         this.local_addr_street = student_data.local_addr_street;
         this.local_addr_unit = student_data.local_addr_unit;
+        this.registered_events = student_data.registered_events;
         this.attended_events = student_data.attended_events;
         this.disciplinary_records = student_data.disciplinary_records;
         this.preference_roommate = student_data.preference_roommate;

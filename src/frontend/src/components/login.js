@@ -14,8 +14,8 @@ export default function Login() {
     }
 
     async function getDataAxios(username,password) {
-        var data = JSON.stringify({"username":username,"password":password});
-        var config = {
+        const data = JSON.stringify({"username":username,"password":password});
+        const config = {
             method: 'post',
             url: url + '/api/auth/login',
             headers: {
@@ -25,7 +25,7 @@ export default function Login() {
             data : data
         };
 
-        axios(config)
+        await axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
@@ -74,26 +74,4 @@ export default function Login() {
             </Form>
         </div>
     );
-}
-
-export async function getEvents(){
-    var config = {
-        method: 'get',
-        url: url + '/api/events/all',
-        headers: {
-            'accept': 'application/json'
-        }
-    };
-
-    axios(config)
-        .then(function (response) {
-            var response = JSON.stringify(response.data);
-
-
-
-
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
 }

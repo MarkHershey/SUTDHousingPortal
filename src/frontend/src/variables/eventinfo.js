@@ -1,4 +1,11 @@
-import {checkValidity, getEventInfoJson, getToken, setEventInfoJson, setUserInfoJson} from "./localstorage";
+import {
+    checkValidity,
+    getEventInfoJson, getPersonalEventInfoJson,
+    getToken, getUpcomingEventInfoJson, getUsername,
+    setEventInfoJson, setPersonalEventInfoJson,
+    setUpcomingEventInfoJson,
+    setUserInfoJson
+} from "./localstorage";
 import {url} from "./url";
 import axios from "axios";
 export class Event{
@@ -46,12 +53,56 @@ export async function getEventInfo(){
             setEventInfoJson(event_data_json);
             console.log("Event Info JSON:");
             console.log(getEventInfoJson());
-            return event_data_json.promise;
         })
         .catch(function (error) {
             console.log(error);
         });
-    console.log("Done");
-    return event_data_json.promise;
 }
 
+export async function getUpcomingEventInfo(){
+    if (!checkValidity()) return undefined;
+    var event_data_json;
+    const config = {
+        method: 'get',
+        url: url + '/api/events/upcoming',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    };
+
+    await axios(config)
+        .then(function (response) {
+            event_data_json = response.data;
+            setUpcomingEventInfoJson(event_data_json);
+            console.log("Upcoming Event Info JSON:");
+            console.log(getUpcomingEventInfoJson());
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export async function getPersonalEventInfo(){
+    if (!checkValidity()) return undefined;
+    var event_data_json;
+    const config = {
+        method: 'get',
+        url: url + '/api/students/' + getUsername() + '/events',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    };
+
+    await axios(config)
+        .then(function (response) {
+            event_data_json = response.data;
+            setPersonalEventInfoJson(event_data_json);
+            console.log("Personal Event Info JSON:");
+            console.log(getPersonalEventInfoJson());
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}

@@ -17,8 +17,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import {getEventInfoJson, getToken, getUserInfoJson} from "../variables/localstorage";
-import {getEventInfo} from "../variables/eventinfo";
+import {getEventInfoJson, getToken, getUpcomingEventInfoJson, getUserInfoJson} from "../variables/localstorage";
+import {getEventInfo, getUpcomingEventInfo} from "../variables/eventinfo";
 import {getUsername} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
@@ -43,6 +43,10 @@ const SubTitle = styled.p`
   color: #3C64B1;
   font-weight: bold;
   font-size: medium;
+`;
+
+const ButtonDiv = styled.div`
+  text-align: center;
 `;
 
 Date.prototype.format = function(fmt){
@@ -70,6 +74,75 @@ Date.prototype.format = function(fmt){
     return fmt;
 }
 
+async function eventHandler(uid){
+    var config = {
+        method: 'post',
+        url: url + '/api/events/' + uid + '/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : JSON.stringify([getUsername()])
+    };
+
+    axios(config)
+        .then(function (response) {
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function joined(row){
+    console.log(row.signups)
+    var signed_up = false;
+    row.signups.forEach(function (item){
+        if (item.toString() === getUsername()) signed_up = true;
+    });
+    return signed_up
+}
+
+async function quitEventHandler(event_id){
+    const data = JSON.stringify([getUsername()]);
+
+    const config = {
+        method: 'delete',
+        url: url + '/api/events/' + event_id +'/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+
+    axios(config)
+        .then(function (response) {
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+Row.propTypes = {
+    row: PropTypes.shape({
+        uid: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        event_type: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        start_time: PropTypes.string.isRequired,
+        duration: PropTypes.number.isRequired,
+        count: PropTypes.bool.isRequired,
+        floor: PropTypes.number.isRequired,
+        block:PropTypes.string.isRequired,
+        signups:PropTypes.array.isRequired,
+        attendance:PropTypes.array.isRequired,
+    }).isRequired,
+};
+
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -86,11 +159,11 @@ function Row(props) {
                 <TableCell component="th" scope="row">{row.title}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).toDateString()}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).format("hh:mm")}</TableCell>
-                <TableCell align="right">{"Block " + row.block+" Lvl "+row.floor}</TableCell>
+                <TableCell align="right">{"Block " + row.block+" Level "+row.floor}</TableCell>
                 <TableCell align="right">
                     <button type="button" class="btn btn-outline-primary"
                             onClick = {async() => {await eventHandler(row.uid)}}
-                            disabled={joined(row)}>{joined(row)? "Signed Up" : "Join" }</button>
+                            disabled={joined(row)}>{joined(row)? "Signed Up" : "Join Now!" }</button>
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -124,6 +197,22 @@ function Row(props) {
                                     <bs.Col lg={3}>{row.created_by}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
+                            <Typography variant="h6" gutterBottom component="div" text-align="center">
+                                Operations
+                            </Typography>
+                            <bs.Row>
+                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                       onClick={async () => {await quitEventHandler(row.uid)}}
+                                                       disabled={!joined(row)}>{"Quit Event"}</button></ButtonDiv></bs.Col>
+                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                       onClick={async () => {await eventHandler(row.uid)}}>{"View Attendance"}</button></ButtonDiv></bs.Col>
+                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                                  onClick={async () => {await eventHandler(row.uid)}}
+                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDiv></bs.Col>
+                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                                  onClick={async () => {await eventHandler(row.uid)}}
+                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Mark Attendance"}</button></ButtonDiv></bs.Col>
+                            </bs.Row>
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -131,53 +220,6 @@ function Row(props) {
         </React.Fragment>
     );
 }
-
-async function eventHandler(uid){
-    var config = {
-        method: 'post',
-        url: url + '/api/events/' + uid + '/signup',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer ' + getToken(),
-            'Content-Type': 'application/json'
-        },
-        data : JSON.stringify([getUsername()])
-    };
-
-    axios(config)
-        .then(function (response) {
-            console.log("Signed Up");
-            window.location.reload(true);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-function joined(row){
-    console.log(row.signups)
-    var signed_up = false;
-    row.signups.forEach(function (item){
-        if (item.toString() === getUsername()) signed_up = true;
-    });
-    return signed_up
-}
-
-Row.propTypes = {
-    row: PropTypes.shape({
-        uid: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        event_type: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        start_time: PropTypes.string.isRequired,
-        duration: PropTypes.number.isRequired,
-        count: PropTypes.bool.isRequired,
-        floor: PropTypes.number.isRequired,
-        block:PropTypes.string.isRequired,
-        signups:PropTypes.array.isRequired,
-        attendance:PropTypes.array.isRequired,
-    }).isRequired,
-};
 
 export default class Events extends React.Component {
     constructor(props) {
@@ -188,7 +230,7 @@ export default class Events extends React.Component {
     componentDidMount() {
         const fetchJSON = async () =>{
             getEventInfo().then(r=>{
-                this.setState({events: getEventInfoJson()});
+                this.setState({events: getEventInfoJson(), query_type: "all"});
                 console.log("Event Info JSON:");
                 console.log(getEventInfoJson());
             });
@@ -197,10 +239,28 @@ export default class Events extends React.Component {
         //window.location.reload(false)
     }
 
+    queryAll = () => {
+        this.setState({events: getEventInfoJson(), query_type: "all"});
+    }
+
+    queryUpcoming = () => {
+        getUpcomingEventInfo().then(r=>{
+            this.setState({events: getUpcomingEventInfoJson(), query_type: "upcoming"})
+        })
+    }
+
     render() {
         return (
             <EventDiv>
                 <h3>Floor Events</h3>
+                <div className= {"btn-group btn-group-toggle"} data-toggle="buttons">
+                    <label className={this.state.query_type === "all"?"btn btn-secondary active":"btn btn-secondary"}>
+                        <input type="radio" name="options" id="all_events" autoComplete="off" onClick={this.queryAll}/> All Floor Events
+                    </label>
+                    <label className={this.state.query_type === "upcoming"?"btn btn-secondary active":"btn btn-secondary"}>
+                        <input type="radio" name="options" id="upcoming_events" autoComplete="off" onClick={this.queryUpcoming}/> Upcoming Floor Events
+                    </label>
+                </div>
                 <TableContainer component={Paper}>
                     <Table aria-label="collapsible table">
                         <TableHead>
