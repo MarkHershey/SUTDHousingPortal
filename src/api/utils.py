@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import HTTPException
 from markkk.logger import logger
 
@@ -5,10 +7,9 @@ from .database import admins_collection, students_collection
 
 
 def clean_dict(data: dict) -> None:
-    if data is None:
-        return
     if not isinstance(data, dict):
-        raise TypeError("Not a dictionary.")
+        logger.warning("Not a dictionary.")
+        return
 
     data.pop("_id", None)
     data.pop("password", None)
@@ -25,6 +26,14 @@ def remove_none_value_keys(data: dict) -> None:
     for key in to_be_removed_keys:
         data.pop(key, None)
 
+    return
+
+
+def deduct_list_from_list(host_list: List[str], deduct_list: List[str]) -> None:
+    for i in deduct_list:
+        # make sure no duplications
+        while i in host_list:
+            host_list.remove(i)
     return
 
 

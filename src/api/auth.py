@@ -13,7 +13,7 @@ class AuthHandler:
     # openssl rand -hex 32
     SECRET_KEY = "replace_me_replace_me_replace_me"
     ALGORITHM = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES = 60
+    ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 
     def get_password_hash(self, password):
         return self.pwd_context.hash(password)
