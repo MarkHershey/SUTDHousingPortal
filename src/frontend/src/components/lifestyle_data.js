@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Typography, Slider, TextField } from '@material-ui/core';
 import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/auth";
+import {getUserInfoJson} from "../variables/localstorage";
 import { BsPrefixComponent } from "react-bootstrap/esm/helpers";
 
 

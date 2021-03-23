@@ -5,7 +5,7 @@ import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {updateStudentProfileInfo} from "../variables/studentprofileinfo";
 //import {} from "./auth";
-import {getUserInfoJson, getUsername} from "../variables/auth";
+import {getUserInfoJson, getUsername} from "../variables/localstorage";
 import { Typography, Slider, TextField } from '@material-ui/core';
 
 const Field = styled.p`
