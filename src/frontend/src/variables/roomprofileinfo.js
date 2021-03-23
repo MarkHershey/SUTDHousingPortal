@@ -38,7 +38,6 @@ export async function updateRoomProfileInfo(room_type,room_type_2nd,block,block_
     axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
-    console.log("success");
     })
     .catch(function (error) {
     console.log(error);

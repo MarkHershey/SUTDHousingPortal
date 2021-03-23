@@ -42,11 +42,12 @@ export default class RoomProfileEdit extends React.Component{
 
     handleChange(event) {
         const value = event.target.value;
-        console.log(value);
+        console.log(event.target.name);
         this.setState({
             ...this.state,
             [event.target.name]: value
         });
+        console.log(this.state);
     }
 
     handleSubmit(event) {
