@@ -25,7 +25,7 @@ const Question = styled.p`
 
 const Apply2BtnSet = styled.div`
   background-color: #F3F6FA;
-  margin: 20pt 0pt;
+  margin: 20pt 0;
   padding: 20pt 20pt;
   border-radius: 20pt;
 `;
@@ -47,25 +47,25 @@ export default function ApplicationTwo() {
     const [prefRoomType2, setRoomType2] = useState("");
     
     const requiredFields = [prefBlk,prefLvl,prefPantry,prefToilet,prefGsr,prefQsr,prefMr,prefRr,
-        prefWindow,prefShutters,prefRoomType1]
+        prefWindow,prefShutters,prefRoomType1,prefRoomType2]
 
     function validateForm(){
-        for(var i=0;i<requiredFields.length;i++){
-            if(requiredFields[i]==""){
+        for(let i=0; i<requiredFields.length; i++){
+            if(requiredFields[i]===""){
                 return false;
             }
         }
         return true;
     }
+
     function handleSubmit(event){
         event.preventDefault();
         if(validateForm()){
             console.log("valid");
-            history.push("/application_summary");
+            history.push("/apply3");
         } else {
 
         }
-        
     }
 
     return (
@@ -308,7 +308,7 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setRr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="rr"
-                            value="Yes"required/>
+                            value="Yes" required/>
                             <label className="form-check-label">
                                 Yes
                             </label>

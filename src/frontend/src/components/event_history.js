@@ -17,8 +17,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import Event from '../variables/eventinfo';
-import Student from '../variables/studentinfo'
 
 
 const useRowStyles = makeStyles({
@@ -121,7 +119,7 @@ Row.propTypes = {
     }).isRequired,
 };
 
-var event1 = new Event("uid","Paper Work DIY!","Interest based event","This is a workshop session in which we will do paper works together. Be creative! 3 A4 white paper",
+/*var event1 = new Event("uid","Paper Work DIY!","Interest based event","This is a workshop session in which we will do paper works together. Be creative! 3 A4 white paper",
 "3-4-2021-17:00",120,true,9,"Block 55",[],[]);
 var event2 = new Event("uid2","LEGO ARTIST","Interest based event","This is a workshop session in which we will assemble LEGO together. Be creative!, 2 DAISO LEGO Blocks",
 "4-4-2021-20:00",120,true,9,"Block 55",[],[]);
@@ -130,9 +128,9 @@ var event3 = new Event("uid3","E-GAME ONLINE!","Inter block","BOOST with SUTD ga
 var event4 = new Event("uid4","Basketball is fun!","Inter block","Play 3V3 basketball game in groups and win!!,Nothing",
 "5-4-2021",120,true,9,"Block 55",[],[]);
 var event5 = new Event("uid5","Zen Zen Zen","Floor event","Sit together quietly, Nothing","7-4-2021",120,false,
-9,"Block 55",[],[]);
+9,"Block 55",[],[]);*/
 
-const eventsArr = [event1,event2,event3,event4,event5];
+const eventsArr = [];
 /*
 const rows = [
     createData('Paper Work DIY!', "3-4-2021", "17:00-19:00", "All",

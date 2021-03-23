@@ -1,4 +1,4 @@
-let storage= window.localStorage;
+let storage = window.localStorage;
 
 export function getToken(){
     return storage["token"];
@@ -42,4 +42,17 @@ export function setUserInfoJson(newUserInfoJson){
 export function clearUserInfoJson(){
     storage.removeItem("userinfojson");
     console.log(typeof(storage["userinfojson"]));
+}
+
+export function getEventInfoJson(){
+    return JSON.parse(storage["eventinfojson"]);
+}
+
+export function setEventInfoJson(newEventInfoJson){
+    storage.setItem("eventinfojson",JSON.stringify(newEventInfoJson));
+}
+
+export function clearEventInfoJson(){
+    storage.removeItem("eventinfojson");
+    console.log(typeof(storage["eventinfojson"]));
 }

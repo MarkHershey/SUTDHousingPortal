@@ -1,6 +1,7 @@
 import axios from "axios";
-import {checkValidity,getToken} from "./auth";
-import {getUsername,setUserInfoJson} from "./auth";
+import {checkValidity,getToken} from "./localstorage";
+import {getUsername,setUserInfoJson} from "./localstorage";
+import {url} from "./url";
 
 export class Student {
     constructor(student_data){
@@ -35,7 +36,7 @@ export async function getCurrentStudentInfo(){
     var student_data_json;
     const config = {
         method: 'get',
-        url: 'http://esc.dev.markhh.com/api/students/' + getUsername(),
+        url: url + '/api/students/' + getUsername(),
         headers: {
             'accept': 'application/json',
             'Authorization': 'Bearer ' + getToken(),
