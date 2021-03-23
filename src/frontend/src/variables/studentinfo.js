@@ -43,7 +43,7 @@ export async function getCurrentStudentInfo(){
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             student_data_json = response.data;
             console.log("User Info JSON:");

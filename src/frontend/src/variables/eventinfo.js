@@ -40,15 +40,18 @@ export async function getEventInfo(){
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             event_data_json = response.data;
             setEventInfoJson(event_data_json);
             console.log("Event Info JSON:");
             console.log(getEventInfoJson());
+            return event_data_json.promise;
         })
         .catch(function (error) {
             console.log(error);
         });
+    console.log("Done");
+    return event_data_json.promise;
 }
 

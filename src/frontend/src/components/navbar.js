@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../SUTDLogo 1.png";
-import {clearToken} from "../variables/localstorage";
+import {logout} from "../variables/localstorage";
 
 const Styles = styled.div`
   .navbar {
@@ -54,7 +54,7 @@ export const NavigationBar = () => (
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/application_creation">Create Application</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Item><Nav.Link href="/login" onClick = {clearToken}>Logout</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/login" onClick = {logout}>Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>

@@ -56,3 +56,9 @@ export function clearEventInfoJson(){
     storage.removeItem("eventinfojson");
     console.log(typeof(storage["eventinfojson"]));
 }
+
+export function logout(){
+    clearToken();
+    clearEventInfoJson();
+    clearUserInfoJson();
+}

@@ -194,6 +194,7 @@ export default class Events extends React.Component {
             });
         }
         fetchJSON();
+        //window.location.reload(false)
     }
 
     render() {
