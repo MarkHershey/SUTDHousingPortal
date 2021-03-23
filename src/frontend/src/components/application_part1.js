@@ -29,7 +29,7 @@ export default function ApplicaitonOne() {
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></bs.Col>
+                        <bs.Col><a href="/profile_edit"><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
                         <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
                     </bs.Row>
                 </bs.Container>

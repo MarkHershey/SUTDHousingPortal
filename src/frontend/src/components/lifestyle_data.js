@@ -11,7 +11,23 @@ import { BsPrefixComponent } from "react-bootstrap/esm/helpers";
 export default class LifestyleData extends React.Component{
     constructor(props){
         super(props);
-        this.state = getUserInfoJson();
+        this.state = getUserInfoJson().preference_lifestyle;
+        console.log(this.state);
+        this.handleSubmit= this.handleSubmit.bind(this);
+        this.handleChange= this.handleChange.bind(this);
+    }
+    onTrigger = (event) => {
+        this.props.parentCallBack(this.state);
+    }
+    handleChange(name,value){
+        this.setState({
+            ...this.state,
+            [name]: value
+        });
+        console.log(this.state);
+    }
+    handleSubmit(){
+        console.log("submitted")
     }
 
     render(){
@@ -22,6 +38,7 @@ export default class LifestyleData extends React.Component{
                     Socialbility
                 </Typography>
                 <Slider
+                    name="socialbility"
                     defaultValue={0}
                     aria-labelledby="socialbility-slider"
                     step={1}
@@ -29,6 +46,7 @@ export default class LifestyleData extends React.Component{
                     min={0}
                     max={10}
                     valueLabelDisplay="auto"
+                    onChange = {(e,value) => this.handleChange("like_social",value)}
                     />
 
                 <Typography id="cleanliness-slider">
@@ -42,6 +60,7 @@ export default class LifestyleData extends React.Component{
                     min={0}
                     max={10}
                     valueLabelDisplay="auto"
+                    onChange = {(e,value) => this.handleChange("like_clean",value)}
                     />
 
                 <Typography id="noisiness-slider">
@@ -55,6 +74,7 @@ export default class LifestyleData extends React.Component{
                     min={0}
                     max={10}
                     valueLabelDisplay="auto"
+                    onChange = {(e,value) => this.handleChange("like_quite",value)}
                     />
 
                 <form noValidate>
