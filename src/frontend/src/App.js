@@ -10,6 +10,7 @@ import Home from './components/home';
 import Events from './components/events';
 import Profile from "./components/profile";
 import PersonalDataEdit from "./components/personal_profile_edit";
+import RoomProfileEdit from "./components/room_profile_edit";
 import EventHistory from "./components/event_history";
 import {EventCreation} from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
@@ -35,6 +36,7 @@ function App() {
                     <GuardedRoute path="/event" component={Events}/>
                     <GuardedRoute path="/event_history" component={EventHistory}/>
                     <GuardedRoute path="/profile_edit" component={PersonalDataEdit}/>
+                    <GuardedRoute path="/room_profile_edit" component={RoomProfileEdit}/>
                     <GuardedRoute path="/apply" component={ApplicationOne}/>
                     <GuardedRoute path="/apply2" component={ApplicationTwo}/>
                     <GuardedRoute path="/apply3" component={ApplicationThree}/>
