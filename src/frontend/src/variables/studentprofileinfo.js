@@ -1,6 +1,6 @@
 import {checkValidity, getToken, getUsername} from "./localstorage";
 import axios from "axios";
-
+import {url} from "./url";
 export var phone_number = "string";
 export var email_personal = "";
 export var local_addr_post_code = "";
@@ -19,10 +19,10 @@ export async function updateStudentProfileInfo(username,password,phone_number,
     
     var config = {
        method: 'put',
-       url: 'http://esc.dev.markhh.com/api/students/'+getUsername(),
+       url: url + '/api/students/' + getUsername(),
        headers: { 
           'accept': 'application/json', 
-          'Authorization': 'Bearer '+getToken(), 
+          'Authorization': 'Bearer ' + getToken(), 
           'Content-Type': 'application/json'
        },
        data : data
