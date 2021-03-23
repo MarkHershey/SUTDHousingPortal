@@ -26,7 +26,8 @@ const ProfileBox = styled.div`
 
 const Apply2BtnSet = styled.div`
   background-color: #F3F6FA;
-  margin: 20pt 0pt;
+  margin-left: 2em;
+  margin-right: 2em;
   padding: 20pt 20pt;
   border-radius: 20pt;
 `;
@@ -68,6 +69,7 @@ export default class PersonalDataEdit extends React.Component{
     render(){
         return(
             <EventDiv>
+                <h3 >Edit Personal Details</h3>
                 <ProfileBox>
                     <bs.Container>
                         <bs.Row>
@@ -97,9 +99,9 @@ export default class PersonalDataEdit extends React.Component{
                         </bs.Row>
                     </bs.Container>
                 </ProfileBox>
-                <Apply2BtnSet>  
+                <ProfileBox>
                     <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Save Changes</button></bs.Col>
-                </Apply2BtnSet>
+                </ProfileBox>
             </EventDiv>
         );
     }
