@@ -447,7 +447,7 @@ export default class RoomProfileEdit extends React.Component{
             <Apply2BtnSet>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleSubmit}>Save</button></bs.Col>
+                        <bs.Col><button type="submit" className="btn btn-outline-primary" onClick={this.handleSubmit}>Save</button></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </Apply2BtnSet>
