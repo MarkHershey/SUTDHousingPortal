@@ -59,41 +59,43 @@ export default class PersonalDataEdit extends React.Component{
 
     handleChange(event) {
         const value = event.target.value;
+        //console.log("value: "+value);
+        //console.log("target: "+event.target.name);
         this.setState({
             ...this.state,
             [event.target.name]: value
         });
-        console.log(this.state[event.target.name]);
+        console.log(this.state);
       }
     
     render(){
         return(
             <EventDiv>
-                <h3 >Edit Personal Details</h3>
+                <h3>Edit Personal Profile</h3>
                 <ProfileBox>
                     <bs.Container>
                         <bs.Row>
                             <bs.Col><Field>Password:</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder="New Password" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col><input name="password" type="text" placeholder="New Password" onChange={e => this.handleChange(e)} /></bs.Col>
                             <bs.Col><Field>Preferred Roommate</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.preference_roommate}/></bs.Col>
+                            <bs.Col><input name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
                         </bs.Row>
     
                         <bs.Row>
                             <bs.Col><Field>Phone Number:</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input name="phone_number"type="text" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Personal Email:</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input name="email_personal" type="text" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col><Field>Local Address Postal Code:</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Street</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col><Field>Local Address Unit Number:</Field></bs.Col>
-                            <bs.Col><input type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input name="local_addr_unit" type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col></bs.Col>
                             <bs.Col></bs.Col>
                         </bs.Row>

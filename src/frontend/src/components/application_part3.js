@@ -27,15 +27,17 @@ export default function ApplicationThree(){
     const history = useHistory();
     
     function handleSubmit(event){
-        event.preventDefault();
-        console.log("pressed submit button");
-        history.push("/application_summary")
+        lifestyleCallback()
+        //history.push("/application_summary")
+    }
+    function lifestyleCallback(e){
+        console.log(e);
     }
 
     return (
         <EventDiv>
             <bs.Container>
-                <LifestyleData/>
+                <LifestyleData parentCallBack={lifestyleCallback}/>
                 <br/>
                 < ProfileBox>
                     <bs.Row>
