@@ -69,6 +69,7 @@ export default function ApplicationTwo() {
                 prefGsr,prefRr,prefWeightage
                 );
             history.push("/apply3");
+            console.log("pushed");
         }
     }
     function handleSave(event){
