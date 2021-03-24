@@ -39,7 +39,7 @@ export default class LifestyleData extends React.Component{
                 </Typography>
                 <Slider
                     name="socialbility"
-                    defaultValue={0}
+                    defaultValue={this.state.like_social}
                     aria-labelledby="socialbility-slider"
                     step={1}
                     marks
@@ -53,7 +53,7 @@ export default class LifestyleData extends React.Component{
                     Cleanliness
                 </Typography>
                 <Slider
-                    defaultValue={0}
+                    defaultValue={this.state.like_clean}
                     aria-labelledby="cleanliness-slider"
                     step={1}
                     marks
@@ -67,7 +67,7 @@ export default class LifestyleData extends React.Component{
                     Noisiness Level
                 </Typography>
                 <Slider
-                    defaultValue={0}
+                    defaultValue={this.state.like_quite}
                     aria-labelledby = "noisiness-slider"
                     step={1}
                     marks
@@ -84,7 +84,7 @@ export default class LifestyleData extends React.Component{
                     margin="normal"
                     size="medium"
                     type="time"
-                    defaultValue="22:00"
+                    defaultValue={this.state.bedtime}
                     style={{width:'350px'}}
                     InputLabelProps={{
                     shrink: true,
@@ -100,7 +100,7 @@ export default class LifestyleData extends React.Component{
                     margin="normal"
                     size="medium"
                     type="time"
-                    defaultValue="07:00"
+                    defaultValue={this.state.wakeup_time}
                     style={{width:'350px'}}
                     InputLabelProps={{
                         shrink:true,
