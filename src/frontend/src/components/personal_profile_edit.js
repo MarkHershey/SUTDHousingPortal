@@ -47,7 +47,7 @@ export default class PersonalDataEdit extends React.Component{
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state = this.props.parentState;
+        this.state = getUserInfoJson();
     }
 
     handleSubmit(event) {

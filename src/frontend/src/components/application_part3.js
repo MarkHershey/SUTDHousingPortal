@@ -58,7 +58,6 @@ export default class ApplicationThree extends React.Component{
                     </ProfileBox>                    
                 </bs.Container>
             </EventDiv>
-            
         );
     }
     
