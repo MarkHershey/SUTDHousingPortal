@@ -32,7 +32,15 @@ export function clearUsername(){
 }
 
 export function getUserInfoJson(){
+    if (storage["userinfojson"] === undefined) return undefined;
     return JSON.parse(storage["userinfojson"]);
+}
+
+export function isHG(){
+    if (!checkValidity()) return false;
+    if (getUserInfoJson() === undefined) return false;
+    if (!getUserInfoJson().is_house_guardian) return false;
+    return true;
 }
 
 export function setUserInfoJson(newUserInfoJson){
@@ -45,6 +53,7 @@ export function clearUserInfoJson(){
 }
 
 export function getEventInfoJson(){
+    if (storage["eventinfojson"] === undefined) return undefined;
     return JSON.parse(storage["eventinfojson"]);
 }
 
@@ -58,6 +67,7 @@ export function clearEventInfoJson(){
 }
 
 export function getUpcomingEventInfoJson(){
+    if (storage["upcomingeventinfojson"] === undefined) return undefined;
     return JSON.parse(storage["upcomingeventinfojson"]);
 }
 
@@ -71,6 +81,7 @@ export function clearUpcomingEventInfoJson(){
 }
 
 export function getPersonalEventInfoJson(){
+    if (storage["personaleventinfojson"] === undefined) return undefined;
     return JSON.parse(storage["personaleventinfojson"]);
 }
 
