@@ -55,6 +55,8 @@ export default class PersonalDataEdit extends React.Component{
         updateStudentProfileInfo(getUsername(),this.state.password,this.state.phone_number,
         this.state.email_personal,this.state.local_addr_post_code,this.state.local_addr_street,
         this.state.local_addr_unit,this.state.preference_roommate)
+        getCurrentStudentInfo();
+        this.state = getUserInfoJson();
     }
 
     handleChange(event) {

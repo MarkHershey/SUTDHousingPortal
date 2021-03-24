@@ -30,14 +30,14 @@ export default function ApplicationThree(){
         lifestyleCallback()
         //history.push("/application_summary")
     }
-    function lifestyleCallback(e){
-        console.log(e);
+    function lifestyleCallback(childData){
+        console.log(childData);
     }
 
     return (
         <EventDiv>
             <bs.Container>
-                <LifestyleData parentCallBack={lifestyleCallback}/>
+                <LifestyleData parentCallBack={lifestyleCallback.bind(this)}/>
                 <br/>
                 < ProfileBox>
                     <bs.Row>

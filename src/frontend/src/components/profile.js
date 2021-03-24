@@ -27,7 +27,7 @@ export default class Profile extends React.Component{
                         <bs.Row>
                             <bs.Col><a href="/room_profile_edit"><button type="button" className="btn btn-outline-primary">Edit Room Preference</button></a></bs.Col>
                             <bs.Col><a href="/profile_edit"><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
-                            <bs.Col><a href=""><button type="button" className="btn btn-outline-primary">Edit Lifestyle Profile</button></a></bs.Col>
+                            <bs.Col><a href="/lifestyle_profile_edit"><button type="button" className="btn btn-outline-primary">Edit Lifestyle Profile</button></a></bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </ProfileBox>
