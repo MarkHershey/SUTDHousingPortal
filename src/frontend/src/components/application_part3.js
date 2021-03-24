@@ -1,9 +1,12 @@
 import * as bs from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import { instanceOf } from "prop-types";
 import { Redirect, useHistory } from "react-router";
 import LifestyleData from "./lifestyle_data";
+import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
+import { getUserInfoJson } from "../variables/localstorage";
+import {getCurrentStudentInfo} from "../variables/studentinfo";
 
 const EventDiv = styled.div`
   display: grid;
@@ -22,33 +25,41 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ApplicationThree(){
+export default class ApplicationThree extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = getUserInfoJson().preference_lifestyle;
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.lifestyleCallback = this.lifestyleCallback.bind(this);
+    }
 
-    const history = useHistory();
+    lifestyleCallback(childData){
+        this.state = childData;
+    }
+    handleSubmit(){
+        console.log("submitted")
+        updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
+            this.state.like_clean,this.state.like_quite);
+        getCurrentStudentInfo();
+        this.state = getUserInfoJson().preference_lifestyle;
+    }
+    render(){
+        return (
+            <EventDiv>
+                <bs.Container>
+                    <LifestyleData parentCallBack={this.lifestyleCallback} parentState={this.state}/>
+                    <br/>
+                    < ProfileBox>
+                        <bs.Row>
+                                <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
+                                <bs.Col><button type="button" className="btn btn-outline-primary">Save</button></bs.Col>
+                                <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
+                        </bs.Row>
+                    </ProfileBox>                    
+                </bs.Container>
+            </EventDiv>
+            
+        );
+    }
     
-    function handleSubmit(event){
-        lifestyleCallback()
-        //history.push("/application_summary")
-    }
-    function lifestyleCallback(childData){
-        console.log(childData);
-    }
-
-    return (
-        <EventDiv>
-            <bs.Container>
-                <LifestyleData parentCallBack={lifestyleCallback.bind(this)}/>
-                <br/>
-                < ProfileBox>
-                    <bs.Row>
-                            <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
-                            <bs.Col><button type="button" className="btn btn-outline-primary">Save</button></bs.Col>
-                            <bs.Col><button type="submit" onClick={handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
-                    </bs.Row>
-                </ProfileBox>
-                
-            </bs.Container>
-        </EventDiv>
-        
-    );
 }

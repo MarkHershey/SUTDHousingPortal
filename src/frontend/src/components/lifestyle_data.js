@@ -6,33 +6,29 @@ import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson} from "../variables/localstorage";
 import { BsPrefixComponent } from "react-bootstrap/esm/helpers";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
+
 
 
 export default class LifestyleData extends React.Component{
     constructor(props){
         super(props);
         this.state = getUserInfoJson().preference_lifestyle;
-        console.log(this.state);
-        this.handleSubmit= this.handleSubmit.bind(this);
+        //console.log(this.state);
+        //this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange= this.handleChange.bind(this);
     }
     handleChange(name,value){
-        console.log("name:" +name);
-        console.log("value: "+value);
+        //console.log("name:" +name);
+        //console.log("value: "+value);
         this.setState({
             ...this.state,
             [name]: value
         });
-        console.log(this.state);
-        this.props.parentCallBack(this.state);
+        //console.log(this.state);
+        var data = this.state;
+        this.props.parentCallBack(data);
     }
-    handleSubmit(){
-        console.log("submitted")
-        updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-            this.state.like_clean,this.state.like_quite);
 
-    }
 
     render(){
         return(
