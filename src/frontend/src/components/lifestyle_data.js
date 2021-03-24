@@ -6,6 +6,7 @@ import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson} from "../variables/localstorage";
 import { BsPrefixComponent } from "react-bootstrap/esm/helpers";
+import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
 
 
 export default class LifestyleData extends React.Component{
@@ -20,6 +21,8 @@ export default class LifestyleData extends React.Component{
         this.props.parentCallBack(this.state);
     }
     handleChange(name,value){
+        console.log("name:" +name);
+        console.log("value: "+value);
         this.setState({
             ...this.state,
             [name]: value
@@ -28,6 +31,9 @@ export default class LifestyleData extends React.Component{
     }
     handleSubmit(){
         console.log("submitted")
+        updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
+            this.state.like_clean,this.state.like_quite);
+
     }
 
     render(){
@@ -84,6 +90,7 @@ export default class LifestyleData extends React.Component{
                     margin="normal"
                     size="medium"
                     type="time"
+                    onChange = {(e)=> {this.handleChange("bedtime",e.target.value)}}
                     defaultValue={this.state.bedtime}
                     style={{width:'350px'}}
                     InputLabelProps={{
@@ -100,6 +107,7 @@ export default class LifestyleData extends React.Component{
                     margin="normal"
                     size="medium"
                     type="time"
+                    onChange = {(e)=>this.handleChange("wakeup_time",e.target.value)}
                     defaultValue={this.state.wakeup_time}
                     style={{width:'350px'}}
                     InputLabelProps={{

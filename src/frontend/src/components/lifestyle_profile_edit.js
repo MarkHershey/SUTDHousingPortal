@@ -26,7 +26,7 @@ export default function LifeStyleProfileEdit(){
 
     function handleSubmit(event){
         lifestyleCallback()
-        //history.push("/application_summary")
+        
     }
     function lifestyleCallback(e){
         console.log(e);
