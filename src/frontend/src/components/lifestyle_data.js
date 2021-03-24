@@ -17,9 +17,6 @@ export default class LifestyleData extends React.Component{
         this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange= this.handleChange.bind(this);
     }
-    onTrigger = (event) => {
-        this.props.parentCallBack(this.state);
-    }
     handleChange(name,value){
         console.log("name:" +name);
         console.log("value: "+value);
@@ -28,6 +25,7 @@ export default class LifestyleData extends React.Component{
             [name]: value
         });
         console.log(this.state);
+        this.props.parentCallBack(this.state);
     }
     handleSubmit(){
         console.log("submitted")
