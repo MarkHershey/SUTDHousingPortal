@@ -6,6 +6,7 @@ from pymongo import ReturnDocument
 
 from ..auth import AuthHandler
 from ..database import *
+from ..error_msg import ErrorMsg as MSG
 from ..models.application import ApplicationForm, ApplicationPeriod
 from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
@@ -36,10 +37,8 @@ async def get_all_student_info(
     logger.debug(f"User({username}) trying fetching all students info.")
     permission_ok: bool = Access.is_admin(username)
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to read this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     student_info_list = []
     count = 0
@@ -70,16 +69,15 @@ async def get_student_info(
 
     Require: Student-self or Admin-read
     """
+
     logger.debug(f"User({username}) trying fetching student({student_id}) info.")
     permission_ok = False
     if student_id == username or Access.is_admin(username):
         permission_ok = True
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to read this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     try:
         student_info = students_collection.find_one({"student_id": student_id})
@@ -96,8 +94,8 @@ async def get_student_info(
     return student_info
 
 
-@router.put("/{student_id}")
-async def update_student_info(
+@router.put("/{student_id}", response_model=StudentProfile)
+async def update_student_profile(
     student_id: str,
     student_editable_profile: StudentEditableProfile,
     username=Depends(auth_handler.auth_wrapper),
@@ -116,9 +114,8 @@ async def update_student_info(
         permission_ok = True
 
     if not permission_ok:
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     student_update_dict = dict(student_editable_profile.dict())
     remove_none_value_keys(student_update_dict)
@@ -139,6 +136,42 @@ async def update_student_info(
         raise HTTPException(status_code=500, detail="Databse Error.")
 
 
+@router.put("/{student_id}/identity", response_model=StudentProfile)
+async def update_student_identity(
+    student_id: str,
+    student_identity_profile: StudentIdentityProfile,
+    username=Depends(auth_handler.auth_wrapper),
+):
+    logger.debug(
+        f"User({username}) trying to update Student({student_id})'s identity profile."
+    )
+    permission_ok = Access.is_admin_write(username)
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    identity_dict = dict(student_identity_profile.dict())
+    remove_none_value_keys(identity_dict)
+
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": identity_dict},
+            return_document=ReturnDocument.AFTER,
+        )
+        clean_dict(updated)
+    except Exception as e:
+        logger.error(MSG.DB_UPDATE_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
+
+
 @router.put("/{student_id}/set_hg")
 async def set_student_as_hg(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
@@ -153,9 +186,8 @@ async def set_student_as_hg(
         permission_ok = True
 
     if not permission_ok:
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     try:
         updated = students_collection.find_one_and_update(
@@ -185,9 +217,8 @@ async def revoke_student_as_hg(
         permission_ok = True
 
     if not permission_ok:
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     try:
         updated = students_collection.find_one_and_update(
@@ -220,9 +251,8 @@ async def update_room_profile(
     if Access.is_admin_write(username):
         permission_ok = True
     if not permission_ok:
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     data = dict(room_profile.dict())
     try:
@@ -319,10 +349,8 @@ async def get_disciplinary_records(
         permission_ok = True
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to view this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # get DisciplinaryRecord uids from student profile
     try:

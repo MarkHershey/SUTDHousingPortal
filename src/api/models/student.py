@@ -72,12 +72,11 @@ class StudentEditableProfile(BaseModel):
 
 
 class StudentIdentityProfile(BaseModel):
-    student_id: str = None
     full_name: str = None
     gender: str = None  # Male / Female
     enrollment_type: str = None
     year_of_enrollment: int = None
-    sc_status: bool = False
-    pr_status: bool = False
-    nationality: str
-    email_sutd: str
+    sc_status: bool = None
+    pr_status: bool = None
+    nationality: str = None
+    email_sutd: str = None
