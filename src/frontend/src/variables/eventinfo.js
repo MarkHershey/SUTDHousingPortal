@@ -4,7 +4,6 @@ import {
     getToken, getUpcomingEventInfoJson, getUsername, isHG,
     setEventInfoJson, setPersonalEventInfoJson,
     setUpcomingEventInfoJson,
-    setUserInfoJson
 } from "./localstorage";
 import {url} from "./url";
 import axios from "axios";
@@ -120,4 +119,9 @@ export async function createEvent(json) {
         }).catch(error => {
             alert("Event Creation Failed");
         });
+}
+
+export async function deleteEvent(uid){
+    if (!checkValidity() || !isHG()) return undefined;
+
 }
