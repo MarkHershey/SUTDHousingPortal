@@ -6,6 +6,8 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
 
 ## Stack
 
+![](docs/deploy.png)
+
 -   Backend
     -   [FastAPI](https://fastapi.tiangolo.com/) (Python high performance web framework)
     -   [Uvicorn](https://www.uvicorn.org/) (Python asynchronous ASGI server)
