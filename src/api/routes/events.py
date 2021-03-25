@@ -62,9 +62,6 @@ async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
 
-    if len(event_info_list) == 0:
-        raise HTTPException(status_code=404, detail="No Events found.")
-
     return event_info_list
 
 
@@ -88,9 +85,6 @@ async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
         logger.error("Failed to query database.")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
-
-    if len(event_info_list) == 0:
-        raise HTTPException(status_code=404, detail="No upcoming Events found.")
 
     return event_info_list
 
