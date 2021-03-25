@@ -145,15 +145,9 @@ async def delete_an_application_period(
                 logger.debug(
                     f"User({username}) attempted to delete ApplicationPeriod({uid}) with reference count({ref_count}) > 0"
                 )
-            raise HTTPException(
-                status_code=400,
-                detail="Unable to delete due to non-zero reference count.",
-            )
+            raise HTTPException(status_code=400, detail=MSG.DEL_REF_COUNT_ERR)
     else:
-        raise HTTPException(
-            status_code=404,
-            detail=MSG.TARGET_ITEM_NOT_FOUND,
-        )
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.get("/{uid}", response_model=ApplicationPeriod)
