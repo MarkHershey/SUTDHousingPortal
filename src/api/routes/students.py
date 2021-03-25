@@ -7,13 +7,11 @@ from pymongo import ReturnDocument
 from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
-from ..models.application import ApplicationForm, ApplicationPeriod
 from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
 from ..models.room import Room, RoomProfile
 from ..models.student import (
-    Student,
     StudentEditableProfile,
     StudentIdentityProfile,
     StudentProfile,
@@ -50,12 +48,9 @@ async def get_all_student_info(
             if count >= num:
                 break
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
-
-    if len(student_info_list) == 0:
-        raise HTTPException(status_code=404, detail="No students found.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     return student_info_list
 
@@ -81,17 +76,17 @@ async def get_student_info(
 
     try:
         student_info = students_collection.find_one({"student_id": student_id})
+        clean_dict(student_info)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
-    if not student_info:
-        raise HTTPException(status_code=404, detail="Student not found.")
-
-    clean_dict(student_info)
-
-    return student_info
+    if student_info:
+        logger.debug(f"student_info: {student_info}")
+        return student_info
+    else:
+        raise HTTPException(status_code=404, detail=MSG.ITEM_NOT_FOUND)
 
 
 @router.put("/{student_id}", response_model=StudentProfile)
@@ -106,10 +101,8 @@ async def update_student_profile(
     Require: Student-self or Admin-write
     """
     permission_ok = False
-    # Check access
     if username == student_id:
         permission_ok = True
-
     if Access.is_admin_write(username):
         permission_ok = True
 
@@ -125,15 +118,22 @@ async def update_student_profile(
         # A: user wants to clear certain field (supply 'None' as new value)
         # B: user wants to preserve the value of certain field (Not changing anything, so supplying 'None')
         updated = students_collection.find_one_and_update(
-            filter={"student_id": student_id}, update={"$set": student_update_dict}
+            filter={"student_id": student_id},
+            update={"$set": student_update_dict},
+            return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"{str(updated)}")
         clean_dict(updated)
-        return updated if updated else {"msg": "failed"}
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.put("/{student_id}/identity", response_model=StudentProfile)
@@ -193,14 +193,20 @@ async def set_student_as_hg(
         updated = students_collection.find_one_and_update(
             filter={"student_id": student_id},
             update={"$set": {"is_house_guardian": True}},
+            return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"{str(updated)}")
         clean_dict(updated)
-        return updated if updated else {"msg": "failed"}
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.put("/{student_id}/revoke_sg")
@@ -224,14 +230,20 @@ async def revoke_student_as_hg(
         updated = students_collection.find_one_and_update(
             filter={"student_id": student_id},
             update={"$set": {"is_house_guardian": False}},
+            return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"{str(updated)}")
         clean_dict(updated)
-        return updated if updated else {"msg": "failed"}
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.put("/{student_id}/update_room_profile")
@@ -262,13 +274,16 @@ async def update_room_profile(
             return_document=ReturnDocument.AFTER,
         )
         clean_dict(updated)
-        logger.debug(f"Updated: {str(updated)}")
     except Exception as e:
-        logger.error("Failed to update room_profile to database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
-    return updated
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.put("/{student_id}/update_lifestyle_profile")
@@ -299,15 +314,15 @@ async def get_participated_events(
 
     try:
         student_info = students_collection.find_one({"student_id": student_id})
+        clean_dict(student_info)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     if not student_info:
-        raise HTTPException(status_code=404, detail="Student not found.")
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
-    clean_dict(student_info)
     event_uids = student_info.get("registered_events", [])
     if not event_uids:
         return []
@@ -320,13 +335,13 @@ async def get_participated_events(
         for uid in event_uids:
             if isinstance(uid, str):
                 event_dict: dict = events_collection.find_one({"uid": uid})
+                clean_dict(event_dict)
                 if event_dict:
-                    clean_dict(event_dict)
                     event_info_list.append(event_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     return event_info_list
 
@@ -355,16 +370,16 @@ async def get_disciplinary_records(
     # get DisciplinaryRecord uids from student profile
     try:
         student_info = students_collection.find_one({"student_id": student_id})
+        clean_dict(student_info)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     if not student_info:
-        raise HTTPException(status_code=404, detail="Student not found.")
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
-    clean_dict(student_info)
-    record_uids: List[str] = student_info.get("disciplinary_records", [])
+    record_uids: List[str] = student_info.get("disciplinary_records")
     if not record_uids:
         return []
     else:
@@ -379,9 +394,9 @@ async def get_disciplinary_records(
                 if _record_dict:
                     event_info_list.append(_record_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     logger.debug(
         f"Fetched {len(event_info_list)} DisciplinaryRecord(s) that belong to Student({student_id})"
