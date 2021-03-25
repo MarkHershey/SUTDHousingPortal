@@ -18,7 +18,7 @@ import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
 import {getEventInfoJson, getToken, getUpcomingEventInfoJson, getUserInfoJson} from "../variables/localstorage";
-import {getEventInfo, getUpcomingEventInfo} from "../variables/eventinfo";
+import {deleteEvent, getEventInfo, getUpcomingEventInfo} from "../variables/eventinfo";
 import {getUsername} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
@@ -127,6 +127,7 @@ async function quitEventHandler(event_id){
         });
 }
 
+
 Row.propTypes = {
     row: PropTypes.shape({
         uid: PropTypes.string.isRequired,
@@ -142,6 +143,10 @@ Row.propTypes = {
         attendance:PropTypes.array.isRequired,
     }).isRequired,
 };
+
+function viewAttendance() {
+
+}
 
 function Row(props) {
     const { row } = props;
@@ -207,17 +212,23 @@ function Row(props) {
                                 Operations
                             </Typography>
                             <bs.Row>
-                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
                                                        onClick={async () => {await quitEventHandler(row.uid)}}
                                                        disabled={!joined(row)}>{"Quit Event"}</button></ButtonDiv></bs.Col>
-                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
-                                                       onClick={async () => {await eventHandler(row.uid)}}>{"View Attendance"}</button></ButtonDiv></bs.Col>
-                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
+
+                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
                                                                   onClick={async () => {await eventHandler(row.uid)}}
                                                                   disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDiv></bs.Col>
-                                <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
-                                                                  onClick={async () => {await eventHandler(row.uid)}}
+
+                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                                  onClick={async () => {}}
                                                                   disabled={!getUserInfoJson().is_house_guardian}>{"Take Attendance"}</button></ButtonDiv></bs.Col>
+                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                                           onClick={async () => {await deleteEvent(row.uid)}}
+                                                           disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
+                                    {"Delete Event"}
+                                </button></ButtonDiv></bs.Col>
+
                             </bs.Row>
                         </Box>
                     </Collapse>

@@ -101,17 +101,10 @@ export default class EventCreation extends React.Component{
                         </bs.Row>
 
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Duration:</Field></bs.Col>
+                            <bs.Col lg={3}><Field>Event Duration:</Field></bs.Col>
                             <bs.Col lg={3}><input name="duration_mins" type="number" placeholder="minutes" onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col lg={3}><Field>Signup Limit:</Field></bs.Col>
                             <bs.Col lg={3}><input name="signup_limit" type="number" onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Location:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="meetup_location" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Start Time:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="start_time" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
 
                         <bs.Row>
@@ -122,10 +115,17 @@ export default class EventCreation extends React.Component{
                         </bs.Row>
 
                         <bs.Row>
+                            <bs.Col lg={3}><Field>Event Location:</Field></bs.Col>
+                            <bs.Col lg={3}><input name="meetup_location" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><Field>Event Start Time:</Field></bs.Col>
+                            <bs.Col lg={3}><input name="start_time" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
+                        </bs.Row>
+
+                        <bs.Row>
                             <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
                             <bs.Col lg={3}><Button name="count_attendance" className="btn btn-outline-light" onClick={this.handleButtonChange}>{this.state.count_attendance?"Yes":"No"}</Button></bs.Col>
                             <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="signup_ddl" type="datetime-local"  onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><input name="signup_ddl" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
