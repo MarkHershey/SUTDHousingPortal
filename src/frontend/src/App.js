@@ -12,7 +12,7 @@ import Profile from "./components/profile";
 import PersonalDataEdit from "./components/personal_profile_edit";
 import RoomProfileEdit from "./components/room_profile_edit";
 import EventHistory from "./components/event_history";
-import {EventCreation} from "./components/event_creation";
+import EventCreation from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
 import ApplicationSummary from "./components/application_summary";
 import React from 'react';

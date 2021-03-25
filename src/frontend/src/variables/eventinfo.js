@@ -1,7 +1,7 @@
 import {
     checkValidity,
     getEventInfoJson, getPersonalEventInfoJson,
-    getToken, getUpcomingEventInfoJson, getUsername,
+    getToken, getUpcomingEventInfoJson, getUsername, isHG,
     setEventInfoJson, setPersonalEventInfoJson,
     setUpcomingEventInfoJson,
     setUserInfoJson
@@ -26,12 +26,6 @@ export class Event{
         this.attendance = event_data.attendance;
         this.signup_limit = event_data.signup_limit;
         this.signup_ddl = event_data.signup_ddl;
-    }
-
-    getEnd_time = function(){
-        //To do
-        //uses start time and duration to get a end time
-        return "18:00";
     }
 }
 
@@ -104,5 +98,26 @@ export async function getPersonalEventInfo(){
         })
         .catch(function (error) {
             console.log(error);
+        });
+}
+
+export async function createEvent(json) {
+    if (!checkValidity() || !isHG()) return undefined;
+    const config = {
+        method: 'post',
+        url: url + '/api/events/',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(json)
+    };
+
+    await axios(config)
+        .then(function (response) {
+            alert("Event Created Successfully");
+        }).catch(error => {
+            alert("Event Creation Failed");
         });
 }

@@ -39,8 +39,8 @@ export function getUserInfoJson(){
 export function isHG(){
     if (!checkValidity()) return false;
     if (getUserInfoJson() === undefined) return false;
-    if (!getUserInfoJson().is_house_guardian) return false;
-    return true;
+    return getUserInfoJson().is_house_guardian;
+
 }
 
 export function setUserInfoJson(newUserInfoJson){

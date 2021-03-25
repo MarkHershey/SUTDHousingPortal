@@ -24,13 +24,6 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-const Apply2BtnSet = styled.div`
-  background-color: #F3F6FA;
-  margin-left: 2em;
-  margin-right: 2em;
-  padding: 20pt 20pt;
-  border-radius: 20pt;
-`;
 
 const EventDiv = styled.div`
   display: grid;
@@ -61,8 +54,6 @@ export default class PersonalDataEdit extends React.Component{
 
     handleChange(event) {
         const value = event.target.value;
-        //console.log("value: "+value);
-        //console.log("target: "+event.target.name);
         this.setState({
             ...this.state,
             [event.target.name]: value

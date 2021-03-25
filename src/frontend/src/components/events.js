@@ -196,6 +196,12 @@ function Row(props) {
                                     <bs.Col lg={3}><SubTitle>Event Held by:</SubTitle></bs.Col>
                                     <bs.Col lg={3}>{row.created_by}</bs.Col>
                                 </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Count Attendance:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.count_attendance?"Yes":"No"}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Enrollment Status</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{joined(row)?"Signed Up":"Not Joined"}</bs.Col>
+                                </bs.Row>
                             </bs.Container>
                             <Typography variant="h6" gutterBottom component="div" text-align="center">
                                 Operations
@@ -211,7 +217,7 @@ function Row(props) {
                                                                   disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDiv></bs.Col>
                                 <bs.Col lg={3}><ButtonDiv><button type="button" className="btn btn-outline-dark"
                                                                   onClick={async () => {await eventHandler(row.uid)}}
-                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Mark Attendance"}</button></ButtonDiv></bs.Col>
+                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Take Attendance"}</button></ButtonDiv></bs.Col>
                             </bs.Row>
                         </Box>
                     </Collapse>
