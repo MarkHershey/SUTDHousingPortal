@@ -13,7 +13,7 @@ from ..models.student import Student
 from ..models.user import Admin, User
 from ..utils import clean_dict
 
-router = APIRouter(prefix="/api/auth", tags=["authentication"])
+router = APIRouter(prefix="/api/auth", tags=["User Authentication"])
 auth_handler = AuthHandler()
 
 

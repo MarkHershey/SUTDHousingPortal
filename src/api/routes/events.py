@@ -10,7 +10,7 @@ from ..database import *
 from ..models.event import Event, EventEditableInfo
 from ..utils import Access, clean_dict, deduct_list_from_list, remove_none_value_keys
 
-router = APIRouter(prefix="/api/events", tags=["events"])
+router = APIRouter(prefix="/api/events", tags=["Housing Events"])
 auth_handler = AuthHandler()
 
 

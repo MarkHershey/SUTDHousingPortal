@@ -15,14 +15,16 @@ from ..models.room import Room, RoomProfile
 from ..models.user import Admin, User
 from ..utils import Access, clean_dict
 
-router = APIRouter(prefix="/api/application_periods", tags=["application_periods"])
+router = APIRouter(
+    prefix="/api/application_periods", tags=["Housing Application Periods"]
+)
 auth_handler = AuthHandler()
 
 
-@router.get("/", response_model=List[ApplicationPeriod])
+@router.get("/all", response_model=List[ApplicationPeriod])
 async def get_all_application_periods(username=Depends(auth_handler.auth_wrapper)):
     """
-    Get all Application Periods
+    Get ALL Application Periods
 
     Require: Admin-read
     """

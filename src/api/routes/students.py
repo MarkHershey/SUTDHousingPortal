@@ -19,7 +19,7 @@ from ..models.student import (
 from ..models.user import Admin, User
 from ..utils import Access, clean_dict, remove_none_value_keys
 
-router = APIRouter(prefix="/api/students", tags=["students"])
+router = APIRouter(prefix="/api/students", tags=["Students"])
 auth_handler = AuthHandler()
 
 
@@ -56,7 +56,7 @@ async def get_all_student_info(
 
 
 @router.get("/{student_id}", response_model=StudentProfile)
-async def get_student_info(
+async def get_a_student_info(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -90,7 +90,7 @@ async def get_student_info(
 
 
 @router.put("/{student_id}", response_model=StudentProfile)
-async def update_student_profile(
+async def update_a_student_profile(
     student_id: str,
     student_editable_profile: StudentEditableProfile,
     username=Depends(auth_handler.auth_wrapper),
@@ -137,7 +137,7 @@ async def update_student_profile(
 
 
 @router.put("/{student_id}/identity", response_model=StudentProfile)
-async def update_student_identity(
+async def update_a_student_identity(
     student_id: str,
     student_identity_profile: StudentIdentityProfile,
     username=Depends(auth_handler.auth_wrapper),
@@ -173,7 +173,7 @@ async def update_student_identity(
 
 
 @router.put("/{student_id}/set_hg")
-async def set_student_as_hg(
+async def set_a_student_as_hg(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -210,7 +210,7 @@ async def set_student_as_hg(
 
 
 @router.put("/{student_id}/revoke_sg")
-async def revoke_student_as_hg(
+async def revoke_a_student_as_hg(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -247,7 +247,7 @@ async def revoke_student_as_hg(
 
 
 @router.put("/{student_id}/update_room_profile")
-async def update_room_profile(
+async def update_one_room_profile(
     student_id: str,
     room_profile: RoomProfile,
     username=Depends(auth_handler.auth_wrapper),
@@ -287,7 +287,7 @@ async def update_room_profile(
 
 
 @router.put("/{student_id}/update_lifestyle_profile")
-async def update_lifestyle_profile(
+async def update_one_lifestyle_profile(
     student_id: str,
     lifestyle_profile: LifestyleProfile,
     username=Depends(auth_handler.auth_wrapper),
@@ -302,7 +302,7 @@ async def update_lifestyle_profile(
 
 
 @router.get("/{student_id}/events", response_model=List[Event])
-async def get_participated_events(
+async def get_student_participated_events(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
 ):
     """
@@ -347,7 +347,7 @@ async def get_participated_events(
 
 
 @router.get("/{student_id}/records", response_model=List[DisciplinaryRecord])
-async def get_disciplinary_records(
+async def get_student_disciplinary_records(
     student_id: str, username=Depends(auth_handler.auth_wrapper)
 ):
     """

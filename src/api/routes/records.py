@@ -9,7 +9,7 @@ from ..database import records_collection, students_collection
 from ..models.record import DisciplinaryRecord, RecordEditable
 from ..utils import Access, clean_dict, remove_none_value_keys
 
-router = APIRouter(prefix="/api/records", tags=["records (DisciplinaryRecord)"])
+router = APIRouter(prefix="/api/records", tags=["Disciplinary Records"])
 auth_handler = AuthHandler()
 
 
