@@ -9,7 +9,7 @@ sys.path.insert(0, str(src_dir))
 from api.models.room import RoomProfile
 
 
-class TestStudentCreation(unittest.TestCase):
+class TestRoomProfileCreation(unittest.TestCase):
     def test_creation_with_missing_data(self):
         with self.assertRaises(Exception):
             student = RoomProfile(
