@@ -31,16 +31,33 @@ export default class LifeStyleProfileEdit extends React.Component{
         this.state = getUserInfoJson().preference_lifestyle;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
+        this.checkValidation = this.checkValidation.bind(this);
     }
     lifestyleCallback(childData){
         this.state = childData;
     }
+    checkValidation(){
+        var stateNames = Object.keys(this.state);
+        var stateValues = Object.values(this.state);
+        for(var i=0;i<stateNames.length;i++){
+            if(stateValues==""){
+                console.log("ffailed");
+                return false;
+            }
+        }
+        return true;
+    }
     handleSubmit(){
-        console.log("submitted")
-        updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-            this.state.like_clean,this.state.like_quite);
-        getCurrentStudentInfo();
-        this.state = getUserInfoJson().preference_lifestyle;
+        if(this.checkValidation()){
+            console.log("submitted")
+            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
+                this.state.like_clean,this.state.like_quite);
+            getCurrentStudentInfo();
+            this.state = getUserInfoJson().preference_lifestyle;
+        } else {
+            console.log("invalid");
+        }
+        
     }
     render(){
     return (
