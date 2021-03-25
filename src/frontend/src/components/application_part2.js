@@ -61,7 +61,7 @@ export default function ApplicationTwo() {
         return true;
     }
 
-    function handleSubmit(event){
+    function handleSubmit(event){;
         event.preventDefault();
         if(validateForm()){
             updateRoomProfileInfo(prefRoomType1,prefRoomType2,
@@ -69,16 +69,15 @@ export default function ApplicationTwo() {
                 prefGsr,prefRr,prefWeightage
                 );
             history.push("/apply3");
+            console.log("pushed");
         }
     }
     function handleSave(event){
         event.preventDefault();
-        if(validateForm()){
-            updateRoomProfileInfo(prefRoomType1,prefRoomType2,
-                prefBlk,prefBlk2nd,prefLvl,prefWindow,prefLift,prefToilet,prefPantry,prefMr,
-                prefGsr,prefRr,prefWeightage
-                );
-        }
+        updateRoomProfileInfo(prefRoomType1,prefRoomType2,
+            prefBlk,prefBlk2nd,prefLvl,prefWindow,prefLift,prefToilet,prefPantry,prefMr,
+            prefGsr,prefRr,prefWeightage
+            );
     }
 
     return (
@@ -120,28 +119,28 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setBlock(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="Block 55" required/>
+                                    value="55" required/>
                                 <label className="form-check-label">
                                     Block 55
                                 </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block" 
-                                    value="Block 57"/>
+                                    value="57"/>
                             <label className="form-check-label">
                                 Block 57
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="Block 59"/>
+                                    value="59"/>
                             <label className="form-check-label">
                                 Block 59
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="No Preference"/>
+                                    value="ANY"/>
                                 <label className="form-check-label">
                                     No Preference
                                 </label>
@@ -150,28 +149,28 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setBlock2nd(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="Block 55" required/>
+                                    value="55" required/>
                                 <label className="form-check-label">
                                     Block 55
                                 </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock2nd(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block_2nd" 
-                                    value="Block 57"/>
+                                    value="57"/>
                             <label className="form-check-label">
                                 Block 57
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock2nd(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="Block 59"/>
+                                    value="59"/>
                             <label className="form-check-label">
                                 Block 59
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setBlock2nd(e.target.value)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="No Preference"/>
+                                    value="ANY"/>
                                 <label className="form-check-label">
                                     No Preference
                                 </label>
@@ -189,28 +188,28 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setLvl(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="Low Level" required/>
+                                    value="LOWER" required/>
                             <label className="form-check-label">
                                 Low Level(L1 - L4)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setLvl(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="Medium Level"/>
+                                    value="MIDDLE"/>
                             <label className="form-check-label">
                                 Medium Level(L5 - L7)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setLvl(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="High Level"/>
+                                    value="UPPER"/>
                             <label className="form-check-label">
                                 High Level(L8 - L12)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setLvl(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="No Preference"/>
+                                    value="ANY"/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -219,21 +218,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setLift(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value="Yes" required/>
+                            value={true} required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setLift(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setLift(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -251,21 +250,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setPantry(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value="Yes" required/>
+                            value={true} required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setPantry(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setPantry(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -274,21 +273,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setToilet(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value="Yes" required/>
+                            value={true} required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setToilet(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label" onChange={(e)=>setToilet(e.target.value)}>
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setToilet(e.target.value)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -306,21 +305,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setGsr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value="Yes"required/>
+                            value={true}required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setGsr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setGsr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -329,21 +328,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setRr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value="Yes"required/>
+                            value={true} required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -361,21 +360,21 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setMr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="Yes" required/>
+                            value={true} required/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setMr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="No"/>
+                            value={false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setMr(e.target.value)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="No Preference"/>
+                            value={null}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -384,21 +383,28 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setWindow(e.target.value)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value="Yes" required/>
+                            value="CAMPUS" required/>
                             <label className="form-check-label">
-                                Yes
+                                Campus
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setWindow(e.target.value)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value="No"/>
+                            value="AIRPORT"/>
                             <label className="form-check-label">
-                                No
+                                Airport
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setWindow(e.target.value)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value="No Preference"/>
+                            value="BUILDING"/>
+                            <label className="form-check-label">
+                                Building
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>setWindow(e.target.value)}>
+                            <input className="form-check-input" type="radio" name="window_facing"
+                            value="ANY"/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -416,48 +422,63 @@ export default function ApplicationTwo() {
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType1(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="Single Room" required/>
+                            value="SINGLE" required/>
                             <label className="form-check-label">
                                 Single Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType1(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="Double Room"/>
+                            value="DOUBLE"/>
                             <label className="form-check-label">
                                 Double Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType1(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="Single Studio"/>
+                            value="SINGLE_ENSUITE"/>
                             <label className="form-check-label">
                                 Single Studio
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>setRoomType1(e.target.value)}>
+                            <input className="form-check-input" type="radio" name="room_type"
+                            value="ANY"/>
+                            <label className="form-check-label">
+                                No Preference
                             </label>
                         </div>
                     </bs.Col>
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType2(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="Single Room"/>
+                            value="SINGLE"/>
                             <label className="form-check-label">
                                 Single Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType2(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="Double Room"/>
+                            value="DOUBLE"/>
                             <label className="form-check-label">
                                 Double Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>setRoomType2(e.target.value)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="Single Studio"/>
+                            value="SINGLE_ENSUITE"/>
                             <label className="form-check-label">
-                                Single Studio
+                                Single Ensuite
                             </label>
                         </div>
+                        <div className="form-check" align="left" onChange={(e)=>setRoomType2(e.target.value)}>
+                            <input className="form-check-input" type="radio" name="room_type_2nd"
+                            value="ANY"/>
+                            <label className="form-check-label">
+                                No Preference
+                            </label>
+                        </div>
+                        
                     </bs.Col>
                 </bs.Row>
                 
