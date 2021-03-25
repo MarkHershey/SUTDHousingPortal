@@ -25,6 +25,7 @@ export default class SummaryData extends React.Component{
     constructor(props){
         super(props);
         this.state = getUserInfoJson();
+        //test
     }
     render(){
         return(
