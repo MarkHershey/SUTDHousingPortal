@@ -23,7 +23,13 @@ class DisciplinaryRecord(BaseModel):
     def default_created_at(cls, v):
         return v or datetime.now()
 
-    # TODO: points_deduction validation, force positive
+    # points_deduction validation, force >= 0
+    @validator("points_deduction", pre=True, always=True)
+    def validate_points_deduction(cls, v):
+        if isinstance(v, int):
+            return abs(v)
+        else:
+            raise ValueError("Invalid 'points_deduction' value.")
 
 
 class RecordEditable(BaseModel):
