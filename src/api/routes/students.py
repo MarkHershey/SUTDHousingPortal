@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
+from pymongo import ReturnDocument
 
 from ..auth import AuthHandler
 from ..database import *
@@ -29,6 +30,7 @@ async def get_all_student_info(
 ):
     """
     Get all student info
+
     Require: Admin-read
     """
     logger.debug(f"User({username}) trying fetching all students info.")
@@ -65,6 +67,7 @@ async def get_student_info(
 ):
     """
     Set a particular Student info
+
     Require: Student-self or Admin-read
     """
     logger.debug(f"User({username}) trying fetching student({student_id}) info.")
@@ -142,6 +145,7 @@ async def set_student_as_hg(
 ):
     """
     Set a Student as House Guardian
+
     Require: Admin-write
     """
     permission_ok = False
@@ -173,6 +177,7 @@ async def revoke_student_as_hg(
 ):
     """
     Revoke a Student as House Guardian
+
     Require: Admin-write
     """
     permission_ok = False
@@ -206,10 +211,34 @@ async def update_room_profile(
 ):
     """
     Update (Overwrite) a student's prefered Room Profile
+
     Require: Student-self or Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    if username == student_id:
+        permission_ok = True
+    if Access.is_admin_write(username):
+        permission_ok = True
+    if not permission_ok:
+        raise HTTPException(
+            status_code=401, detail="You don't have permission to update this."
+        )
+
+    data = dict(room_profile.dict())
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": {"preference_room": data}},
+            return_document=ReturnDocument.AFTER,
+        )
+        clean_dict(updated)
+        logger.debug(f"Updated: {str(updated)}")
+    except Exception as e:
+        logger.error("Failed to update room_profile to database.")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail="Databse Error.")
+
+    return updated
 
 
 @router.put("/{student_id}/update_lifestyle_profile")
@@ -220,6 +249,7 @@ async def update_lifestyle_profile(
 ):
     """
     Update (Overwrite) a student's prefered Lifestyle Profile
+
     Require: Student-self or Admin-write
     """
     # TODO:
