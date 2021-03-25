@@ -61,7 +61,7 @@ export default function ApplicationTwo() {
         return true;
     }
 
-    function handleSubmit(event){;
+    function handleSubmit(event){
         event.preventDefault();
         if(validateForm()){
             updateRoomProfileInfo(prefRoomType1,prefRoomType2,
@@ -489,7 +489,7 @@ export default function ApplicationTwo() {
                     <bs.Row>
                         <bs.Col><a href="/apply"><button type="button" className="btn btn-outline-primary">Go To Previous Step</button></a></bs.Col>
                         <bs.Col><button onClick={handleSave} type="button" className="btn btn-outline-primary">Save</button></bs.Col>
-                        <bs.Col><button type="submit" className="btn btn-outline-primary" >Go to next step</button></bs.Col>
+                        <bs.Col><button onSubmit={handleSubmit} type="submit" className="btn btn-outline-primary" >Go to next step</button></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </Apply2BtnSet>
