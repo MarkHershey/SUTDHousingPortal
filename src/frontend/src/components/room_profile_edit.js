@@ -101,28 +101,28 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="55" required defaultChecked={this.state.block === "Block 55" ? true:false}/>
+                                    value="55" required defaultChecked={this.state.block === "55" ? true:false}/>
                                 <label className="form-check-label">
                                     Block 55
                                 </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block" 
-                                    value="57" defaultChecked={this.state.block==="Block 57" ? true:false}/>
+                                    value="57" defaultChecked={this.state.block==="57" ? true:false}/>
                             <label className="form-check-label">
                                 Block 57
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="59" defaultChecked={this.state.block==="Block 59" ? true:false}/>
+                                    value="59" defaultChecked={this.state.block==="59" ? true:false}/>
                             <label className="form-check-label">
                                 Block 59
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block"
-                                    value="ANY" defaultChecked={this.state.block==="No Preference" ? true:false}/>
+                                    value="ANY" defaultChecked={this.state.block==="ANY" ? true:false}/>
                                 <label className="form-check-label">
                                     No Preference
                                 </label>
@@ -131,28 +131,28 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="B55" required defaultChecked={this.state.block_2nd==="Block 55" ? true:false}/>
+                                    value="B55" required defaultChecked={this.state.block_2nd==="55" ? true:false}/>
                                 <label className="form-check-label">
                                     Block 55
                                 </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block_2nd" 
-                                    value="57" defaultChecked={this.state.block_2nd==="Block 57" ? true:false}/>
+                                    value="57" defaultChecked={this.state.block_2nd==="57" ? true:false}/>
                             <label className="form-check-label">
                                 Block 57
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="59" defaultChecked={this.state.block_2nd==="Block 59" ? true:false}/>
+                                    value="59" defaultChecked={this.state.block_2nd==="59" ? true:false}/>
                             <label className="form-check-label">
                                 Block 59
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="ANY" defaultChecked={this.state.block_2nd==="No Preference" ? true:false}/>
+                                    value="ANY" defaultChecked={this.state.block_2nd==="ANY" ? true:false}/>
                                 <label className="form-check-label">
                                     No Preference
                                 </label>
@@ -170,28 +170,28 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="LOWER" required defaultChecked={this.state.level_range==="Low Level" ? true:false}/>
+                                    value="LOWER" required defaultChecked={this.state.level_range==="LOWER" ? true:false}/>
                             <label className="form-check-label">
                                 Low Level(L1 - L4)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="MIDDLE" defaultChecked={this.state.level_range==="Medium Level" ? true:false}/>
+                                    value="MIDDLE" defaultChecked={this.state.level_range==="MIDDLE" ? true:false}/>
                             <label className="form-check-label">
                                 Medium Level(L5 - L7)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="UPPER" defaultChecked={this.state.level_range==="High Level" ? true:false}/>
+                                    value="UPPER" defaultChecked={this.state.level_range==="UPPER" ? true:false}/>
                             <label className="form-check-label">
                                 High Level(L8 - L12)
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_range"
-                                    value="ANY" defaultChecked={this.state.level_range==="No Preference" ? true:false}/>
+                                    value="ANY" defaultChecked={this.state.level_range==="ANY" ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -200,21 +200,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value={true} required defaultChecked={this.state.near_to_lift==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.near_to_lift===true ? true:false}/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value={false} defaultChecked={this.state.near_to_lift==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.near_to_lift===false ? true:false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value={null} defaultChecked={this.state.near_to_lift==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.near_to_lift===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -232,21 +232,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value={true} required defaultChecked={this.state.level_has_pantry==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.level_has_pantry===true ? true:false}/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value={false} defaultChecked={this.state.level_has_pantry==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.level_has_pantry===false ? true:false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value={null} defaultChecked={this.state.level_has_pantry==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.level_has_pantry===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -255,21 +255,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value={true} required defaultChecked={this.state.near_to_washroom==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.near_to_washroom===true ? true:false}/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value={false} defaultChecked={this.state.near_to_washroom==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.near_to_washroom===false ? true:false}/>
                             <label className="form-check-label" onChange={(e)=>this.handleChange(e)}>
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value={null} defaultChecked={this.state.near_to_washroom==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.near_to_washroom===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -287,21 +287,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value={true} required defaultChecked={this.state.level_has_gsr==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.level_has_gsr===true ? true:false}/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value={false} defaultChecked={this.state.level_has_gsr==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.level_has_gsr===false ? true:false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value={null} defaultChecked={this.state.level_has_gsr==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.level_has_gsr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -310,21 +310,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value={true} required defaultChecked={this.state.level_has_rr==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.level_has_rr===true ? true:false}/>
                             <label className="form-check-label">
                                 Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value={false} defaultChecked={this.state.level_has_rr==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.level_has_rr===false ? true:false}/>
                             <label className="form-check-label">
                                 No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value={null} defaultChecked={this.state.level_has_rr==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.level_has_rr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -342,28 +342,21 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="CAMPUS" required defaultChecked={this.state.level_has_mr==="Yes" ? true:false}/>
+                            value={true} required defaultChecked={this.state.level_has_mr===true ? true:false}/>
                             <label className="form-check-label">
-                                Campus
+                                Yes
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="AIRPORT" defaultChecked={this.state.level_has_mr==="No" ? true:false}/>
+                            value={false} defaultChecked={this.state.level_has_mr===false ? true:false}/>
                             <label className="form-check-label">
-                                Airport
+                                No
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="BUILDING" defaultChecked={this.state.level_has_mr==="No Preference" ? true:false}/>
-                            <label className="form-check-label">
-                                Building
-                            </label>
-                        </div>
-                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
-                            <input className="form-check-input" type="radio" name="level_has_mr"
-                            value="ANY" defaultChecked={this.state.level_has_mr==="No Preference" ? true:false}/>
+                            value={null} defaultChecked={this.state.level_has_mr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -372,26 +365,34 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value={true} required defaultChecked={this.state.window_facing==="Yes" ? true:false}/>
+                            value="CAMPUS" required defaultChecked={this.state.window_facing==="CAMPUS" ? true:false}/>
                             <label className="form-check-label">
-                                Yes
+                                Campus
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value={false} defaultChecked={this.state.window_facing==="No" ? true:false}/>
+                            value="AIRPORT" defaultChecked={this.state.window_facing==="AIRPORT" ? true:false}/>
                             <label className="form-check-label">
-                                No
+                                Airport
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="window_facing"
-                            value={null} defaultChecked={this.state.window_facing==="No Preference" ? true:false}/>
+                            value="BUILDING" defaultChecked={this.state.window_facing==="BUILDING" ? true:false}/>
+                            <label className="form-check-label">
+                                Building
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input className="form-check-input" type="radio" name="window_facing"
+                            value="ANY" defaultChecked={this.state.window_facing==="ANY" ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
                         </div>
                     </bs.Col>
+
                 </bs.Row>
 
                 <br/>
@@ -404,28 +405,28 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="SINGLE" required defaultChecked={this.state.room_type==="Single Room" ? true:false}/>
+                            value="SINGLE" required defaultChecked={this.state.room_type==="SINGLE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="DOUBLE" defaultChecked={this.state.room_type==="Double Room" ? true:false}/>
+                            value="DOUBLE" defaultChecked={this.state.room_type==="DOUBLE" ? true:false}/>
                             <label className="form-check-label">
                                 Double Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type==="Single Studio" ? true:false}/>
+                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type==="SINGLE_ENSUITE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Ensuite
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="ANY" defaultChecked={this.state.room_type==="Single Studio" ? true:false}/>
+                            value="ANY" defaultChecked={this.state.room_type==="ANY" ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -434,28 +435,28 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="SINGLE" defaultChecked={this.state.room_type_2nd==="Single Room" ? true:false}/>
+                            value="SINGLE" defaultChecked={this.state.room_type_2nd==="SINGLE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="DOUBLE" defaultChecked={this.state.room_type_2nd==="Double Room" ? true:false}/>
+                            value="DOUBLE" defaultChecked={this.state.room_type_2nd==="DOUBLE" ? true:false}/>
                             <label className="form-check-label">
                                 Double Room
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type_2nd==="Single Studio" ? true:false}/>
+                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type_2nd==="SINGLE_ENSUITE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Ensuite
                             </label>
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="ANY" defaultChecked={this.state.room_type_2nd==="Single Studio" ? true:false}/>
+                            value="ANY" defaultChecked={this.state.room_type_2nd==="ANY" ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
