@@ -4,7 +4,7 @@ from markkk.logger import logger
 
 from .routes import application_periods, applications, auth, events, records, students
 
-app = FastAPI()
+app = FastAPI(openapi_url="/api/openapi.json", docs_url="/api/docs")
 
 origins = ["http://localhost", "http://localhost:8080", "*"]
 
@@ -25,6 +25,6 @@ app.include_router(events.router)
 app.include_router(records.router)
 
 
-@app.get("/")
+@app.get("/api")
 async def index():
-    return {"message": "Hello from SUTD Housing Portal"}
+    return {"Hello": "SUTD Housing Portal"}
