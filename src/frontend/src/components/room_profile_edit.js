@@ -5,6 +5,7 @@ import { instanceOf } from "prop-types";
 import { Redirect, useHistory } from "react-router";
 import { getUserInfoJson } from "../variables/localstorage";
 import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
+import { getCurrentStudentInfo } from "../variables/studentinfo";
 
 
 const EventDiv = styled.div`
@@ -41,7 +42,16 @@ export default class RoomProfileEdit extends React.Component{
     }
 
     handleChange(event) {
-        const value = event.target.value;
+        let value = event.target.value;
+        if (value=="true"){
+            value=true;
+        }
+        if(value=="false"){
+            value=false;
+        }
+        if(value=="null"){
+            value=null;
+        }
         console.log(event.target.name);
         this.setState({
             ...this.state,
@@ -51,14 +61,14 @@ export default class RoomProfileEdit extends React.Component{
     }
 
     handleSubmit(event) {
-        console.log("clicked submit");
         updateRoomProfileInfo(this.state.room_type,this.state.room_type_2nd,
-            this.state.block,this.state.block_2nd,
-            this.state.level_range,this.state.window_facing,this.state.near_to_lift,
-            this.state.near_to_washroom,this.state.level_has_pantry,this.state.level_has_mr,
-            this.state.level_has_gsr,this.state.level_has_rr,this.state.weightage_order
+            this.state.block,this.state.block_2nd,this.state.level_range,this.state.window_facing,
+            this.state.near_to_lift,this.state.near_to_washroom,this.state.level_has_pantry,
+            this.state.level_has_mr,this.state.level_has_gsr,this.state.level_has_rr,[1,2,3,4,5,6,7,8,9]
             );
-
+        getCurrentStudentInfo();
+        this.state = getUserInfoJson().preference_room;
+        console.log(this.state);  
     }
 
     render() {
@@ -131,7 +141,7 @@ export default class RoomProfileEdit extends React.Component{
                     <bs.Col>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="block_2nd"
-                                    value="B55" required defaultChecked={this.state.block_2nd==="55" ? true:false}/>
+                                    value="55" required defaultChecked={this.state.block_2nd==="55" ? true:false}/>
                                 <label className="form-check-label">
                                     Block 55
                                 </label>
@@ -214,7 +224,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_lift"
-                            value={null} defaultChecked={this.state.near_to_lift===null ? true:false}/>
+                            value='null' defaultChecked={this.state.near_to_lift===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -246,7 +256,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_pantry"
-                            value={null} defaultChecked={this.state.level_has_pantry===null ? true:false}/>
+                            value='null' defaultChecked={this.state.level_has_pantry===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -269,7 +279,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="near_to_washroom"
-                            value={null} defaultChecked={this.state.near_to_washroom===null ? true:false}/>
+                            value='null' defaultChecked={this.state.near_to_washroom===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -301,7 +311,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_gsr"
-                            value={null} defaultChecked={this.state.level_has_gsr===null ? true:false}/>
+                            value='null' defaultChecked={this.state.level_has_gsr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -324,7 +334,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_rr"
-                            value={null} defaultChecked={this.state.level_has_rr===null ? true:false}/>
+                            value='null' defaultChecked={this.state.level_has_rr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -356,7 +366,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="level_has_mr"
-                            value={null} defaultChecked={this.state.level_has_mr===null ? true:false}/>
+                            value='null' defaultChecked={this.state.level_has_mr===null ? true:false}/>
                             <label className="form-check-label">
                                 No Preference
                             </label>
@@ -419,7 +429,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type"
-                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type==="SINGLE_ENSUITE" ? true:false}/>
+                            value="SINGLE_ENSUITE" defaultChecked={this.state.room_type==="SINGLE_ENSUITE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Ensuite
                             </label>
@@ -449,7 +459,7 @@ export default class RoomProfileEdit extends React.Component{
                         </div>
                         <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
                             <input className="form-check-input" type="radio" name="room_type_2nd"
-                            value="SINGLE ENSUITE" defaultChecked={this.state.room_type_2nd==="SINGLE_ENSUITE" ? true:false}/>
+                            value="SINGLE_ENSUITE" defaultChecked={this.state.room_type_2nd==="SINGLE_ENSUITE" ? true:false}/>
                             <label className="form-check-label">
                                 Single Ensuite
                             </label>

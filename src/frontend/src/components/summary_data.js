@@ -25,7 +25,6 @@ export default class SummaryData extends React.Component{
     constructor(props){
         super(props);
         this.state = getUserInfoJson();
-        //test
     }
     render(){
         return(
@@ -69,33 +68,48 @@ export default class SummaryData extends React.Component{
                     <br/>
                     <bs.Row>
                         <bs.Col><Field>Prefered Block</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.block}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.block == "55" ? "Block 55":
+                        this.state.preference_room.block == "57" ? "Block 57":
+                        this.state.preference_room.block == "59" ? "Block 59": "Any"  }</Answer></bs.Col>
                         <bs.Col><Field>Prefered Level</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.level_range}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.level_range == "LOWER" ? "Low Level(L1-L4)":
+                        this.state.preference_room.level_range == "MIDDLE" ? "Medium Level(L5-L7)":
+                        this.state.preference_room.level_range == "UPPER" ? "High Level(L8-L12)": "Any" }</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Near Pantry</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.level_has_pantry}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.level_has_pantry ==true ? "Yes" :
+                         this.state.preference_room.level_has_pantry ==false ? "No" : "Any"}</Answer></bs.Col>
                         <bs.Col><Field>Near Toilet</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.near_to_washroom}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.near_to_washroom ==true ? "Yes" :
+                         this.state.preference_room.near_to_washroom ==false ? "No" : "Any"}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Near Group Study Room</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.level_has_gsr}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.level_has_gsr ==true ? "Yes" :
+                         this.state.preference_room.level_has_gsr ==false ? "No" : "Any"}</Answer></bs.Col>
                         <bs.Col><Field>Facing Window</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.window_facing}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.window_facing =="CAMPUS" ? "Campus" :
+                         this.state.preference_room.windown_facing =="AIRPORT" ? "Airport" :
+                         this.state.preference_room.window_facing == "BUILDING" ? "Building" : "Any"}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Near Meeting Room</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.level_has_mr}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.level_has_mr ==true ? "Yes" :
+                         this.state.preference_room.level_has_mr ==false ? "No" : "Any"}</Answer></bs.Col>
                         <bs.Col><Field>Near Recreational Room</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.level_has_rr}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.level_has_rr ==true ? "Yes" :
+                         this.state.preference_room.level_has_rr ==false ? "No" : "Any"}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Room Type(1st Choice)</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.room_type}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.room_type =="SINGLE" ? "Single Room":
+                        this.state.preference_room.room_type == "DOUBLE" ? "Double Room" :
+                        this.state.preference_room.room_type == "SINGLE_ENSUITE" ? "Single Ensuite Room" : "Any"}</Answer></bs.Col>
                         <bs.Col><Field>Room Type(2nd Choice)</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.preference_room.room_type_2nd}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.preference_room.room_type_2nd =="SINGLE" ? "Single Room":
+                        this.state.preference_room.room_type_2nd == "DOUBLE" ? "Double Room" :
+                        this.state.preference_room.room_type_2nd == "SINGLE_ENSUITE" ? "Single Ensuite Room" : "Any"}</Answer></bs.Col>
                     </bs.Row>
                     <hr/>
                     <h4>Lifestyle Preferences</h4>
