@@ -28,7 +28,7 @@ export async function updateRoomProfileInfo(room_type,room_type_2nd,block,block_
       
       var config = {
          method: 'put',
-         url: 'http://esc.dev.markhh.com/api/students/1004000/update_room_profile',
+         url: url+'/api/students/'+getUsername()+'/update_room_profile',
          headers: { 
             'accept': 'application/json', 
             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTY3NDU4MzQsImlhdCI6MTYxNjY1OTQzNCwic3ViIjoiMTAwNDAwMCJ9.HYQSJ9VT-04DB6omjDSaryh2dh1FwUasJA8EU1Hy1Fg', 
