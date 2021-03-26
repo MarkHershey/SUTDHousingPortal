@@ -123,5 +123,21 @@ export async function createEvent(json) {
 
 export async function deleteEvent(uid){
     if (!checkValidity() || !isHG()) return undefined;
+    const config = {
+        method: 'delete',
+        url: url + '/api/events/' + uid,
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    };
 
+    axios(config)
+        .then(function (response) {
+            alert("Event deleted successfully");
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            alert("Event deletion failed");
+        });
 }

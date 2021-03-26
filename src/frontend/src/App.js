@@ -45,7 +45,6 @@ function App() {
                     <GuardedRoute path="/application_summary" component={ApplicationSummary}/>
                     <GuardedRoute path="/event_creation" component={EventCreation}/>
                     <GuardedRoute path="/application_status" component={ApplicationStatus}/>
-                    <GuardedRoute path="/profile" component={Profile} auth={checkValidity()}/>
                     <Route path="/login" component={Login}/>
                 </Switch>
             </Router>

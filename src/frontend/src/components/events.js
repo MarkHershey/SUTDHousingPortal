@@ -22,6 +22,8 @@ import {deleteEvent, getEventInfo, getUpcomingEventInfo} from "../variables/even
 import {getUsername} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
+import Modal from '@material-ui/core/Modal';
+import {CheckBox} from "@material-ui/icons";
 
 const useRowStyles = makeStyles({
     root: {
@@ -30,6 +32,7 @@ const useRowStyles = makeStyles({
         },
     },
 });
+
 const EventDiv = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -43,6 +46,10 @@ const SubTitle = styled.p`
   color: #3C64B1;
   font-weight: bold;
   font-size: medium;
+`;
+
+const CenterDiv = styled.div`
+    text-align: center;
 `;
 
 const ButtonDiv = styled.div`
@@ -96,7 +103,6 @@ async function eventHandler(uid){
 }
 
 function joined(row){
-    console.log(row.signups)
     var signed_up = false;
     row.signups.forEach(function (item){
         if (item.toString() === getUsername()) signed_up = true;
@@ -144,9 +150,31 @@ Row.propTypes = {
     }).isRequired,
 };
 
-function viewAttendance() {
-
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
 }
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
 
 function Row(props) {
     const { row } = props;
@@ -220,14 +248,16 @@ function Row(props) {
                                                                   onClick={async () => {await eventHandler(row.uid)}}
                                                                   disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDiv></bs.Col>
 
-                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
-                                                                  onClick={async () => {}}
-                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Take Attendance"}</button></ButtonDiv></bs.Col>
-                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
-                                                           onClick={async () => {await deleteEvent(row.uid)}}
-                                                           disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
-                                    {"Delete Event"}
-                                </button></ButtonDiv></bs.Col>
+                                <bs.Col><ButtonDiv>
+                                    <SimpleModal row = {row}/>
+                                </ButtonDiv></bs.Col>
+                                <bs.Col><ButtonDiv>
+                                    <button type="button" className="btn btn-outline-dark"
+                                            onClick={async () => {await deleteEvent(row.uid)}}
+                                            disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
+                                        {"Delete Event"}
+                                    </button>
+                                </ButtonDiv></bs.Col>
 
                             </bs.Row>
                         </Box>
@@ -238,11 +268,75 @@ function Row(props) {
     );
 }
 
+function SimpleModal(props) {
+    const classes = useStyles();
+    // getModalStyle is not a pure function, we roll the style only on the first render
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const IdList = (props) =>{
+        return (
+            <bs.Container>
+                <bs.Row>
+                    <bs.Col lg = {4}></bs.Col>
+                    <bs.Col lg = {1}><input type={"checkbox"}/></bs.Col>
+                    <bs.Col lg = {3}><p>{props.id}</p></bs.Col>
+                    <bs.Col lg = {4}></bs.Col>
+                </bs.Row>
+            </bs.Container>
+        );
+    }
+
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+            <CenterDiv>
+                <h3>Attendance</h3>
+                <h6>
+                    {props.row.title}
+                </h6>
+                <br/>
+                <div>
+                    {props.row.signups.map((id) => (
+                        <IdList id={id} />
+                    ))}
+                </div>
+                <Button variant="outline-dark">Update!</Button>
+            </CenterDiv>
+        </div>
+    );
+
+    return (
+        <div>
+            <button type="button" className="btn btn-outline-dark"
+                    onClick={handleOpen}
+                    disabled={!getUserInfoJson().is_house_guardian}>{"Take Attendance"}
+            </button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                {body}
+            </Modal>
+        </div>
+    );
+}
+
 export default class Events extends React.Component {
     constructor(props) {
         super(props);
         this.state = {events: []};
     }
+
 
     componentDidMount() {
         const fetchJSON = async () =>{

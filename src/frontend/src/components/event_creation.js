@@ -123,7 +123,7 @@ export default class EventCreation extends React.Component{
 
                         <bs.Row>
                             <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
-                            <bs.Col lg={3}><Button name="count_attendance" className="btn btn-outline-light" onClick={this.handleButtonChange}>{this.state.count_attendance?"Yes":"No"}</Button></bs.Col>
+                            <bs.Col lg={3}><Button id = "count_attendance_check" name="count_attendance" className="btn btn-outline-light" onClick={this.handleButtonChange}>{this.state.count_attendance?"Yes":"No"}</Button></bs.Col>
                             <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>
                             <bs.Col lg={3}><input name="signup_ddl" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
@@ -134,7 +134,7 @@ export default class EventCreation extends React.Component{
                     </bs.Container>
                 </EditBox>
                 <EditBox>
-                    <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Create Event</button></bs.Col>
+                    <bs.Col><button id = "create_event_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Create Event</button></bs.Col>
                 </EditBox>
             </EventDiv>
         );
