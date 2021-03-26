@@ -7,3 +7,4 @@
 |   C    |      `Contract`      |            |
 |   E    |       `Event`        |            |
 |   DR   | `DisciplinaryRecord` |            |
+|   R    |        `Room`        |            |

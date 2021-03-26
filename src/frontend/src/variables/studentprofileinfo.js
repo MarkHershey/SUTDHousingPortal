@@ -20,10 +20,11 @@ export async function updateStudentProfileInfo(username,password,phone_number,
     
     var config = {
        method: 'put',
-       url: url + '/api/students/'+getUsername(),
+
+       url: url + '/api/students/' + getUsername(),
        headers: { 
           'accept': 'application/json', 
-          'Authorization': 'Bearer '+ getToken(),
+          'Authorization': 'Bearer ' + getToken(), 
           'Content-Type': 'application/json'
        },
        data : data

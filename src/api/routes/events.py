@@ -4,13 +4,13 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
-
+from ..error_msg import ErrorMsg as MSG
 from ..auth import AuthHandler
 from ..database import *
 from ..models.event import Event, EventEditableInfo
 from ..utils import Access, clean_dict, deduct_list_from_list, remove_none_value_keys
 
-router = APIRouter(prefix="/api/events", tags=["events"])
+router = APIRouter(prefix="/api/events", tags=["Housing Events"])
 auth_handler = AuthHandler()
 
 
@@ -62,9 +62,6 @@ async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
 
-    if len(event_info_list) == 0:
-        raise HTTPException(status_code=404, detail="No Events found.")
-
     return event_info_list
 
 
@@ -88,9 +85,6 @@ async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
         logger.error("Failed to query database.")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
-
-    if len(event_info_list) == 0:
-        raise HTTPException(status_code=404, detail="No upcoming Events found.")
 
     return event_info_list
 
@@ -200,6 +194,54 @@ async def update_an_event(
         logger.error("Failed to update database.")
         logger.error(e)
         raise HTTPException(status_code=500, detail="Databse Error.")
+
+
+@router.delete("/{uid}")
+async def delete_an_event(uid: str, username=Depends(auth_handler.auth_wrapper)):
+    """
+    Delete an Event.
+
+    Deletion can be done if and only if nobody has signed up/ attended the event.
+
+    Require: HG or Admin-write
+    """
+
+    logger.debug(f"User({username}) trying to delete Event({uid}).")
+    permission_ok = Access.is_student_hg(username) or Access.is_admin_write(username)
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    try:
+        event_info = events_collection.find_one(filter={"uid": uid})
+        clean_dict(event_info)
+    except Exception as e:
+        logger.error(MSG.DB_QUERY_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
+
+    if not event_info:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
+
+    ref_count = len(event_info.get("signups", [])) + len(
+        event_info.get("attendance", [])
+    )
+
+    if ref_count != 0:
+        raise HTTPException(status_code=400, detail=MSG.DEL_REF_COUNT_ERR)
+
+    try:
+        _DeleteResult = events_collection.delete_one({"uid": uid})
+    except Exception as e:
+        logger.error(MSG.DB_UPDATE_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if _DeleteResult.deleted_count != 1:
+        logger.error(MSG.UNEXPECTED)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    return
 
 
 @router.post("/{uid}/signup", response_model=Event)
