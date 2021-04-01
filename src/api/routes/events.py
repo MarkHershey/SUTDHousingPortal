@@ -4,9 +4,10 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
-from ..error_msg import ErrorMsg as MSG
+
 from ..auth import AuthHandler
 from ..database import *
+from ..error_msg import ErrorMsg as MSG
 from ..models.event import Event, EventEditableInfo
 from ..utils import Access, clean_dict, deduct_list_from_list, remove_none_value_keys
 

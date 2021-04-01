@@ -1,7 +1,8 @@
 import sys
 import unittest
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+
 from pydantic.error_wrappers import ValidationError
 
 src_dir = Path(__file__).resolve().parent.parent.parent / "src"
