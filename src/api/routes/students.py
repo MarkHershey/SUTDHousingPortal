@@ -4,9 +4,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
 
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
+from ..functional import clean_dict, remove_none_value_keys
 from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
@@ -16,8 +18,6 @@ from ..models.student import (
     StudentIdentityProfile,
     StudentProfile,
 )
-from ..models.user import Admin, User
-from ..utils import Access, clean_dict, remove_none_value_keys
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 auth_handler = AuthHandler()

@@ -5,15 +5,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import DESCENDING
 
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
-from ..models.application import ApplicationForm, ApplicationPeriod
-from ..models.lifestyle import LifestyleProfile
-from ..models.record import DisciplinaryRecord
-from ..models.room import Room, RoomProfile
-from ..models.user import Admin, User
-from ..utils import Access, clean_dict
+from ..functional import clean_dict
+from ..models.application import ApplicationPeriod
 
 router = APIRouter(
     prefix="/api/application_periods", tags=["Housing Application Periods"]

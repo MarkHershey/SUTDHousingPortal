@@ -5,13 +5,8 @@ from markkk.logger import logger
 
 from ..auth import AuthHandler
 from ..database import *
-from ..models.application import ApplicationForm, ApplicationPeriod
-from ..models.lifestyle import LifestyleProfile
-from ..models.record import DisciplinaryRecord
-from ..models.room import Room, RoomProfile
 from ..models.student import Student
 from ..models.user import Admin, User
-from ..utils import clean_dict
 
 router = APIRouter(prefix="/api/auth", tags=["User Authentication"])
 auth_handler = AuthHandler()

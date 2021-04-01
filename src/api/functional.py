@@ -17,6 +17,13 @@ def uid_gen(prefix: str = "") -> str:
 
 
 def clean_dict(data: dict) -> None:
+    """
+    Remove key '_id' and 'password' from dictionary if any.
+
+    Return: None
+
+    Exceptions: Strictly NEVER cause/raise any Exception!
+    """
     if not isinstance(data, dict):
         logger.warning(f"Not a dictionary: {type(data)}")
         return
