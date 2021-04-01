@@ -6,10 +6,11 @@ from pymongo import ReturnDocument
 
 from ..access_utils import Access
 from ..auth import AuthHandler
+from ..constants import ApStatus
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
-from ..functional import clean_dict
-from ..models.application import ApplicationForm, ApplicationPeriod
+from ..functional import clean_dict, convert_date_to_datetime
+from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 
 router = APIRouter(prefix="/api/applications", tags=["Housing Applications"])
 auth_handler = AuthHandler()
@@ -66,11 +67,26 @@ async def submit_application(
         raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # TODO: validate application period
+    # TODO: make sure only one application per application period
     pass
 
-    # cast data to dict
+    stay_period: TimePeriod = application_form.stay_period
+    start_datetime = convert_date_to_datetime(stay_period.start_date)
+    end_datetime = convert_date_to_datetime(stay_period.end_date)
+    stay_period_dict = {
+        "start_date": start_datetime,
+        "end_date": end_datetime,
+    }
+    # TODO: validate stay period, cross check with allowable period
+    pass
+
+    # set values by this action
     application_form.created_by = str(username)
+    application_form.visible_status = ApStatus.SUBMIT
+    application_form.internal_status = ApStatus.SUBMIT
+    # cast data to dict
     application_dict = dict(application_form.dict())
+    application_dict["stay_period"] = stay_period_dict
 
     # start database transaction
     try:
@@ -96,35 +112,6 @@ async def submit_application(
         logger.error(f"New Application failed to be inserted to DB: {application_dict}")
         logger.error(e)
         raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
-
-    # # 1. add record
-    # try:
-    #     _inserted_id = applications_collection.insert_one(
-    #         application_form_dict
-    #     ).inserted_id
-    #     logger.debug(f"New Application inserted to DB with inserted_id: {_inserted_id}")
-    #     logger.debug(f"New Application info: {application_form_dict}")
-    #     # return application_form_dict
-    # except Exception as e:
-    #     logger.error(
-    #         f"New Application failed to be inserted to DB: {application_form_dict}"
-    #     )
-    #     logger.error(e)
-    #     raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
-
-    # # 2. add Application uid to student attended_events list
-    # try:
-    #     _updated = students_collection.find_one_and_update(
-    #         filter={"student_id": target_student},
-    #         update={"$push": {"applications": application_form.uid}},
-    #         return_document=ReturnDocument.AFTER,
-    #     )
-    #     logger.debug(f"Updated: {str(_updated)}")
-    # except Exception as e:
-    #     # NOTE: potential fail resulting in partial success
-    #     logger.error(MSG.DB_UPDATE_ERROR)
-    #     logger.error(e)
-    #     raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     return application_dict
 

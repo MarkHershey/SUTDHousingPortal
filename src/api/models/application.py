@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from ..functional import uid_gen
+from ..functional import convert_datetime_to_date, uid_gen
 from .lifestyle import LifestyleProfile
 from .room import RoomProfile
 
@@ -12,6 +12,20 @@ from .room import RoomProfile
 class TimePeriod(BaseModel):
     start_date: date
     end_date: date
+
+    @validator("start_date", pre=True, always=True)
+    def start_date_casting(cls, v):
+        if isinstance(v, datetime):
+            return convert_datetime_to_date(v)
+        else:
+            return v
+
+    @validator("end_date", pre=True, always=True)
+    def end_date_casting(cls, v):
+        if isinstance(v, datetime):
+            return convert_datetime_to_date(v)
+        else:
+            return v
 
 
 class ApplicationForm(BaseModel):
