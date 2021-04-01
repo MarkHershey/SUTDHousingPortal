@@ -1,15 +1,12 @@
 import sys
 import unittest
-from datetime import datetime
 from pathlib import Path
-
-from pydantic.error_wrappers import ValidationError
 
 src_dir = Path(__file__).resolve().parent.parent.parent / "src"
 
 sys.path.insert(0, str(src_dir))
 
-from api.functional import clean_dict
+from api.functional import clean_dict, remove_none_value_keys
 
 
 class TestDictUtils(unittest.TestCase):
@@ -104,6 +101,31 @@ class TestDictUtils(unittest.TestCase):
         test_bool_neg = False
         result = clean_dict(test_bool_neg)
         self.assertTrue(result is None)
+
+    def test_remove_none_value_keys(self):
+        some_dict = {
+            "A": 123,
+            "B": "haha",
+            "C": None,
+            "D": "",
+            "E": [],
+            "F": "None",
+            "G": 0,
+            "H": None,
+        }
+        remove_none_value_keys(some_dict)
+        self.assertTrue(isinstance(some_dict, dict))
+        self.assertTrue(some_dict.get("A") == 123)
+        self.assertTrue(some_dict.get("B") == "haha")
+        self.assertTrue(some_dict.get("D") == "")
+        self.assertTrue(some_dict.get("E") == [])
+        self.assertTrue(some_dict.get("F") == "None")
+        self.assertTrue(some_dict.get("G") == 0)
+
+        with self.assertRaises(KeyError):
+            some_dict["C"]
+        with self.assertRaises(KeyError):
+            some_dict["H"]
 
 
 if __name__ == "__main__":

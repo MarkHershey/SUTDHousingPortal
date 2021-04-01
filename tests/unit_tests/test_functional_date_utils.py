@@ -3,7 +3,6 @@ import unittest
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from random import randint
-from pydantic.error_wrappers import ValidationError
 
 src_dir = Path(__file__).resolve().parent.parent.parent / "src"
 
@@ -12,7 +11,7 @@ sys.path.insert(0, str(src_dir))
 from api.functional import convert_date_to_datetime, convert_datetime_to_date
 
 
-class TestDatetimeUtils(unittest.TestCase):
+class TestDateUtils(unittest.TestCase):
     def test_convert_date_to_datetime_0(self):
         dt_obj: date = date(2019, 12, 4)
         dtt_obj: datetime = datetime(2019, 12, 4)
@@ -37,12 +36,16 @@ class TestDatetimeUtils(unittest.TestCase):
         self.assertTrue(dtt_obj == converted_obj)
 
     def test_convert_date_to_datetime_2(self):
-        dt_obj: date = date(2023, 1, 1)
-        dtt_obj: datetime = datetime(2023, 1, 1)
+        for _ in range(5):
+            year = randint(1970, 2050)
+            month = randint(1, 12)
+            day = randint(1, 28)
+            dt_obj: date = date(year, month, day)
+            dtt_obj: datetime = datetime(year, month, day)
 
-        converted_obj = convert_date_to_datetime(dt_obj)
-        self.assertTrue(isinstance(converted_obj, datetime))
-        self.assertTrue(dtt_obj == converted_obj)
+            converted_obj = convert_date_to_datetime(dt_obj)
+            self.assertTrue(isinstance(converted_obj, datetime))
+            self.assertTrue(dtt_obj == converted_obj)
 
     def test_convert_date_to_datetime_exception(self):
         with self.assertRaises(AssertionError):
@@ -89,12 +92,16 @@ class TestDatetimeUtils(unittest.TestCase):
         self.assertTrue(dt_obj == converted_obj)
 
     def test_convert_datetime_to_date_2(self):
-        dt_obj: date = date(2045, 12, 31)
-        dtt_obj: datetime = datetime(2045, 12, 31)
+        for _ in range(5):
+            year = randint(1970, 2050)
+            month = randint(1, 12)
+            day = randint(1, 28)
+            dt_obj: date = date(year, month, day)
+            dtt_obj: datetime = datetime(year, month, day)
 
-        converted_obj = convert_datetime_to_date(dtt_obj)
-        self.assertTrue(isinstance(converted_obj, date))
-        self.assertTrue(dt_obj == converted_obj)
+            converted_obj = convert_datetime_to_date(dtt_obj)
+            self.assertTrue(isinstance(converted_obj, date))
+            self.assertTrue(dt_obj == converted_obj)
 
     def test_convert_datetime_to_date_with_time(self):
         # random number of seconds with length less than 24 hours
