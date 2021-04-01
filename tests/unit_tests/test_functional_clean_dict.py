@@ -12,7 +12,7 @@ sys.path.insert(0, str(src_dir))
 from api.functional import clean_dict
 
 
-class TestUtils(unittest.TestCase):
+class TestDictUtils(unittest.TestCase):
     def test_clean_dict_return_none(self):
         test_dict = {
             "A": 123,

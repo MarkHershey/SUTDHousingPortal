@@ -65,6 +65,9 @@ def convert_date_to_datetime(date_obj: date) -> datetime:
     """
     # REF: https://stackoverflow.com/a/11619200
     assert isinstance(date_obj, date), "Not a date object."
+    # return the original value if the input is a datetime object
+    if isinstance(date_obj, datetime):
+        return date_obj
     return datetime.combine(date_obj, time())
 
 
