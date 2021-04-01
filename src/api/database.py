@@ -19,10 +19,10 @@ logger.info(
 )
 
 
-_client = pymongo.MongoClient(
+client = pymongo.MongoClient(
     f"mongodb+srv://{_DB_USER}:{_DB_PASS}@clusteresc.xvunj.mongodb.net/{_DB_NAME}?retryWrites=true&w=majority"
 )
-db = _client[f"{_DB_NAME}"]
+db = client[f"{_DB_NAME}"]
 
 ### MongoDB Collection Reference ###
 # User

@@ -30,6 +30,7 @@ class Student(User):
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None
     is_house_guardian: bool = False
+    applications: List[str] = []
     # derived
     travel_time_hrs: float = None
 

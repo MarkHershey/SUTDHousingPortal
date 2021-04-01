@@ -15,17 +15,25 @@ class TimePeriod(BaseModel):
 
 
 class ApplicationForm(BaseModel):
-    uid: str = None
+    uid: str = None  # auto-generated on instantiation
     application_period_uid: str  # every AF must belong to one AP
-    created_at: datetime = None
+    created_at: datetime = None  # auto-generated on instantiation
+    created_by: str = None  # force populated by endpoint function
     student_id: str
     room_profile: RoomProfile
     lifestyle_profile: LifestyleProfile
     stay_period: TimePeriod
+    visible_status: str = None
+    internal_status: str = None
+    contract_uid: str = None
 
     @validator("uid", pre=True, always=True)
     def default_uid(cls, v):
         return v or uid_gen("AF")
+
+    @validator("created_at", pre=True, always=True)
+    def default_created_at(cls, v):
+        return v or datetime.now()
 
 
 class ApplicationPeriod(BaseModel):
@@ -47,7 +55,3 @@ class ApplicationPeriod(BaseModel):
     @validator("created_at", pre=True, always=True)
     def default_created_at(cls, v):
         return v or datetime.now()
-
-    @validator("reference_count", pre=True, always=True)
-    def default_reference_count(cls, v):
-        return 0
