@@ -1,6 +1,7 @@
 import {checkValidity, getToken, getUsername} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
+import {getCurrentStudentInfo} from "./studentinfo";
 
 export var phone_number = "string";
 export var email_personal = "";
@@ -31,6 +32,7 @@ export async function updateStudentProfileInfo(phone_number,
     axios(config)
     .then(function (response) {
        console.log(JSON.stringify(response.data));
+       getCurrentStudentInfo();
     })
     .catch(function (error) {
        console.log(error);

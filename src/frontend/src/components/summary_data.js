@@ -59,7 +59,8 @@ export default class SummaryData extends React.Component{
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Address: </Field></bs.Col>
-                        <bs.Col><Answer>8 Somapah Rd, Singapore 487372</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.local_addr_street+'\n'}+{this.state.local_addr_unit}
+                        , Singapore {this.state.local_addr_post_code}</Answer></bs.Col>
                         <bs.Col><Field>Current Term:</Field></bs.Col>
                         <bs.Col><Answer>Term 5</Answer></bs.Col>
                     </bs.Row>
