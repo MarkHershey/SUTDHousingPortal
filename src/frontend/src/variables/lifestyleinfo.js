@@ -1,4 +1,4 @@
-import {checkValidity, getToken, getUsername} from "./localstorage";
+import {getToken, getUsername} from "./localstorage";
 import axios from "axios";
 
 var bedtime = 0;

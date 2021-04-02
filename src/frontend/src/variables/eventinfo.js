@@ -1,12 +1,18 @@
 import {
     checkValidity,
-    getEventInfoJson, getPersonalEventInfoJson,
-    getToken, getUpcomingEventInfoJson, getUsername, isHG,
-    setEventInfoJson, setPersonalEventInfoJson,
+    getEventInfoJson,
+    getPersonalEventInfoJson,
+    getToken,
+    getUpcomingEventInfoJson,
+    getUsername,
+    isHG,
+    setEventInfoJson,
+    setPersonalEventInfoJson,
     setUpcomingEventInfoJson,
 } from "./localstorage";
 import {url} from "./url";
 import axios from "axios";
+
 export class Event{
     constructor(event_data){
         this.uid = event_data.uid;
@@ -139,5 +145,26 @@ export async function deleteEvent(uid){
         })
         .catch(function (error) {
             alert("Event deletion failed");
+        });
+}
+
+export async function eventHandler(uid){
+    var config = {
+        method: 'post',
+        url: url + '/api/events/' + uid + '/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : JSON.stringify([getUsername()])
+    };
+
+    axios(config)
+        .then(function (response) {
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
         });
 }

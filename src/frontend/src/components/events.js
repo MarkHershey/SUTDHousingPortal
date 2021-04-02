@@ -24,6 +24,10 @@ import axios from "axios";
 import {url} from "../variables/url";
 import Modal from '@material-ui/core/Modal';
 import {CheckBox} from "@material-ui/icons";
+import {forEach} from "react-bootstrap/ElementChildren";
+import {eventHandler} from "../variables/eventinfo";
+import "../variables/utilities"
+
 
 const useRowStyles = makeStyles({
     root: {
@@ -52,55 +56,9 @@ const CenterDiv = styled.div`
     text-align: center;
 `;
 
-const ButtonDiv = styled.div`
-  text-align: center;
-`;
+const ButtonDivEvent = styled.div`text-align: center;`;
 
-Date.prototype.format = function(fmt){
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
 
-    if(/(y+)/.test(fmt)){
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    }
-
-    for(var k in o){
-        if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(
-                RegExp.$1, (RegExp.$1.length===1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-        }
-    }
-
-    return fmt;
-}
-
-async function eventHandler(uid){
-    var config = {
-        method: 'post',
-        url: url + '/api/events/' + uid + '/signup',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer ' + getToken(),
-            'Content-Type': 'application/json'
-        },
-        data : JSON.stringify([getUsername()])
-    };
-
-    axios(config)
-        .then(function (response) {
-            window.location.reload(true);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 
 function joined(row){
     var signed_up = false;
@@ -240,24 +198,24 @@ function Row(props) {
                                 Operations
                             </Typography>
                             <bs.Row>
-                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
                                                        onClick={async () => {await quitEventHandler(row.uid)}}
-                                                       disabled={!joined(row)}>{"Quit Event"}</button></ButtonDiv></bs.Col>
+                                                       disabled={!joined(row)}>{"Quit Event"}</button></ButtonDivEvent></bs.Col>
 
-                                <bs.Col><ButtonDiv><button type="button" className="btn btn-outline-dark"
+                                <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
                                                                   onClick={async () => {await eventHandler(row.uid)}}
-                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDiv></bs.Col>
+                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
 
-                                <bs.Col><ButtonDiv>
+                                <bs.Col><ButtonDivEvent>
                                     <SimpleModal row = {row}/>
-                                </ButtonDiv></bs.Col>
-                                <bs.Col><ButtonDiv>
+                                </ButtonDivEvent></bs.Col>
+                                <bs.Col><ButtonDivEvent>
                                     <button type="button" className="btn btn-outline-dark"
                                             onClick={async () => {await deleteEvent(row.uid)}}
                                             disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
                                         {"Delete Event"}
                                     </button>
-                                </ButtonDiv></bs.Col>
+                                </ButtonDivEvent></bs.Col>
 
                             </bs.Row>
                         </Box>
@@ -273,21 +231,37 @@ function SimpleModal(props) {
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
+    const [attendances, setAttendances] = React.useState(props.row.attendance);
 
     const handleOpen = () => {
         setOpen(true);
+
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
+    const attended = (id) => {
+        let result = false;
+        props.row.attendance.forEach(function (item){if (item === id) result = true;});
+        return result;
+    }
+
     const IdList = (props) =>{
+        const [checked, setChecked] = React.useState(props.attended);
+        const handleClick = () =>{
+            setChecked(!checked);
+            console.log(checked);
+            const realChecked = !checked
+            var attendanceEdited;
+            if (realChecked)
+        }
         return (
             <bs.Container>
                 <bs.Row>
                     <bs.Col lg = {4}></bs.Col>
-                    <bs.Col lg = {1}><input type={"checkbox"}/></bs.Col>
+                    <bs.Col lg = {1}><input type={"checkbox"} checked={checked} onChange={handleClick}/></bs.Col>
                     <bs.Col lg = {3}><p>{props.id}</p></bs.Col>
                     <bs.Col lg = {4}></bs.Col>
                 </bs.Row>
@@ -305,7 +279,7 @@ function SimpleModal(props) {
                 <br/>
                 <div>
                     {props.row.signups.map((id) => (
-                        <IdList id={id} />
+                        <IdList id={id} attended={attended(id)}/>
                     ))}
                 </div>
                 <Button variant="outline-dark">Update!</Button>
