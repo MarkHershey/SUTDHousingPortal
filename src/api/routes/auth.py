@@ -7,6 +7,7 @@ from ..auth import AuthHandler
 from ..database import *
 from ..models.student import Student
 from ..models.user import Admin, User
+from ..access_utils import Access
 
 router = APIRouter(prefix="/api/auth", tags=["User Authentication"])
 auth_handler = AuthHandler()
@@ -87,4 +88,29 @@ async def login(auth_details: User):
         raise HTTPException(status_code=401, detail="Invalid username and/or password")
     token = auth_handler.encode_token(auth_details.username)
     logger.debug(f"New JWT token generated for user: '{auth_details.username}'")
-    return {"token": token}
+    is_student = Access.is_student(auth_details.username)
+    is_student_hg = Access.is_student_hg(auth_details.username)
+    is_admin = Access.is_admin(auth_details.username)
+    is_admin_write = Access.is_admin_write(auth_details.username)
+
+    return {
+        "token": token,
+        "is_student": is_student,
+        "is_student_hg": is_student_hg,
+        "is_admin": is_admin,
+        "is_admin_write": is_admin_write,
+    }
+
+
+@router.get("/access")
+def check_user_type(username=Depends(auth_handler.auth_wrapper)):
+    is_student = Access.is_student(username)
+    is_student_hg = Access.is_student_hg(username)
+    is_admin = Access.is_admin(username)
+    is_admin_write = Access.is_admin_write(username)
+    return {
+        "is_student": is_student,
+        "is_student_hg": is_student_hg,
+        "is_admin": is_admin,
+        "is_admin_write": is_admin_write,
+    }
