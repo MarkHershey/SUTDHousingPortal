@@ -7,6 +7,7 @@ from ..auth import AuthHandler
 from ..database import *
 from ..models.student import Student
 from ..models.user import Admin, User
+from ..models.misc import UserLoginResponse, UserAccessResponse
 from ..access_utils import Access
 
 router = APIRouter(prefix="/api/auth", tags=["User Authentication"])
@@ -74,7 +75,7 @@ async def register_student(new_user: Student):
     return
 
 
-@router.post("/login")
+@router.post("/login", response_model=UserLoginResponse)
 async def login(auth_details: User):
     try:
         user = users_collection.find_one({"username": auth_details.username})
@@ -102,7 +103,7 @@ async def login(auth_details: User):
     }
 
 
-@router.get("/access")
+@router.get("/access", response_model=UserAccessResponse)
 def check_user_type(username=Depends(auth_handler.auth_wrapper)):
     is_student = Access.is_student(username)
     is_student_hg = Access.is_student_hg(username)
