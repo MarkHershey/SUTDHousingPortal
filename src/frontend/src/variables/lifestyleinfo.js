@@ -1,5 +1,6 @@
 import {checkValidity, getToken, getUsername} from "./localstorage";
 import axios from "axios";
+import {url} from "./url";
 
 var bedtime = 0;
 var wakeup_time = 0;
@@ -14,7 +15,7 @@ export async function updateLifestyleProfileInfo(bedtime,wakeup_time,like_social
 
     var config = {
     method: 'put',
-    url: 'http://esc.dev.markhh.com/api/students/'+getUsername()+'/update_lifestyle_profile',
+    url: url+'/api/students/'+getUsername()+'/update_lifestyle_profile',
     headers: { 
         'accept': 'application/json', 
         'Authorization': 'Bearer '+getToken(), 

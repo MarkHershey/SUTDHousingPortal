@@ -57,18 +57,18 @@ export default class RoomProfileEdit extends React.Component{
             ...this.state,
             [event.target.name]: value
         });
-        console.log(this.state);
     }
 
     handleSubmit(event) {
+        console.log(this.state.block);
         updateRoomProfileInfo(this.state.room_type,this.state.room_type_2nd,
             this.state.block,this.state.block_2nd,this.state.level_range,this.state.window_facing,
             this.state.near_to_lift,this.state.near_to_washroom,this.state.level_has_pantry,
             this.state.level_has_mr,this.state.level_has_gsr,this.state.level_has_rr,[1,2,3,4,5,6,7,8,9]
             );
-        getCurrentStudentInfo();
-        this.state = getUserInfoJson().preference_room;
-        console.log(this.state);  
+        //getCurrentStudentInfo();
+        //this.state = getUserInfoJson().preference_room;
+        this.props.history.push("/");
     }
 
     render() {
@@ -479,7 +479,7 @@ export default class RoomProfileEdit extends React.Component{
             <Apply2BtnSet>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><button type="submit" className="btn btn-outline-primary" onSubmit={this.handleSubmit}>Save</button></bs.Col>
+                        <bs.Col><button type="submit" className="btn btn-outline-primary" onClick={this.handleSubmit}>Save</button></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </Apply2BtnSet>

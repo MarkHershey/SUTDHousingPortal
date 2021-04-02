@@ -52,11 +52,11 @@ export default class PersonalDataEdit extends React.Component{
 
     handleSubmit(event) {
         console.log("clicked submit");
-        updateStudentProfileInfo(getUsername(),this.state.password,this.state.phone_number,
+        console.log(this.state.phone_number);
+        updateStudentProfileInfo(this.state.phone_number,
         this.state.email_personal,this.state.local_addr_post_code,this.state.local_addr_street,
         this.state.local_addr_unit,this.state.preference_roommate)
-        getCurrentStudentInfo();
-        this.state = getUserInfoJson();
+        this.props.history.push("/");
     }
 
     handleChange(event) {
@@ -77,8 +77,8 @@ export default class PersonalDataEdit extends React.Component{
                 <ProfileBox>
                     <bs.Container>
                         <bs.Row>
-                            <bs.Col><Field>Password:</Field></bs.Col>
-                            <bs.Col><input name="password" type="password" placeholder="New Password" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col><Field>Personal Email:</Field></bs.Col>
+                            <bs.Col><input name="email_personal" type="email" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Preferred Roommate</Field></bs.Col>
                             <bs.Col><input name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
                         </bs.Row>
@@ -86,20 +86,15 @@ export default class PersonalDataEdit extends React.Component{
                         <bs.Row>
                             <bs.Col><Field>Phone Number:</Field></bs.Col>
                             <bs.Col><input name="phone_number"type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col><Field>Personal Email:</Field></bs.Col>
-                            <bs.Col><input name="email_personal" type="email" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                        <bs.Row>
-                            <bs.Col><Field>Local Address Postal Code:</Field></bs.Col>
-                            <bs.Col><input name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Street</Field></bs.Col>
                             <bs.Col><input name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col><Field>Local Address Unit Number:</Field></bs.Col>
                             <bs.Col><input name="local_addr_unit" type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col></bs.Col>
-                            <bs.Col></bs.Col>
+                            <bs.Col><Field>Local Address Postal Code:</Field></bs.Col>
+                            <bs.Col><input name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
+
                         </bs.Row>
                     </bs.Container>
                 </ProfileBox>
