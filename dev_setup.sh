@@ -64,7 +64,7 @@ printf ">>> \xE2\x9C\x94 OK \n"
 
 # install project dependencies
 printf "\n>>> pip install project dependencies...\n"
-pip install --upgrade bcrypt pyjwt fastapi markkk passlib requests pytest uvicorn dnspython pymongo 
+pip install --upgrade bcrypt pyjwt fastapi markkk passlib requests pytest uvicorn dnspython pymongo pytest-cov 
 
 printf ">>> \xE2\x9C\x94 OK \n"
 
