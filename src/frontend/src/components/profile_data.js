@@ -46,7 +46,7 @@ export default class ProfileData extends React.Component{
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Mobile Number:</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.phone_number}</Answer></bs.Col>
+                        <bs.Col><Answer id = "ppl_prof_phone_number_display">{this.state.phone_number}</Answer></bs.Col>
                         <bs.Col><Field>Nationality:</Field></bs.Col>
                         <bs.Col><Answer>{this.state.nationality}</Answer></bs.Col>
                     </bs.Row>
@@ -58,7 +58,7 @@ export default class ProfileData extends React.Component{
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Address: </Field></bs.Col>
-                        <bs.Col><Answer>{this.state.local_addr_street+" "+this.state.local_addr_unit+" "+this.state.local_addr_post_code}</Answer></bs.Col>
+                        <bs.Col><Answer id = "ppl_prof_address_display">{this.state.local_addr_street+" "+this.state.local_addr_unit+" "+this.state.local_addr_post_code}</Answer></bs.Col>
                         <bs.Col><Field>Current Term:</Field></bs.Col>
                         <bs.Col><Answer>Term 5</Answer></bs.Col>
                     </bs.Row>

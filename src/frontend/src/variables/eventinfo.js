@@ -1,13 +1,18 @@
 import {
     checkValidity,
-    getEventInfoJson, getPersonalEventInfoJson,
-    getToken, getUpcomingEventInfoJson, getUsername,
-    setEventInfoJson, setPersonalEventInfoJson,
+    getEventInfoJson,
+    getPersonalEventInfoJson,
+    getToken,
+    getUpcomingEventInfoJson,
+    getUsername,
+    isHG,
+    setEventInfoJson,
+    setPersonalEventInfoJson,
     setUpcomingEventInfoJson,
-    setUserInfoJson
 } from "./localstorage";
 import {url} from "./url";
 import axios from "axios";
+
 export class Event{
     constructor(event_data){
         this.uid = event_data.uid;
@@ -26,12 +31,6 @@ export class Event{
         this.attendance = event_data.attendance;
         this.signup_limit = event_data.signup_limit;
         this.signup_ddl = event_data.signup_ddl;
-    }
-
-    getEnd_time = function(){
-        //To do
-        //uses start time and duration to get a end time
-        return "18:00";
     }
 }
 
@@ -106,3 +105,98 @@ export async function getPersonalEventInfo(){
             console.log(error);
         });
 }
+
+export async function createEvent(json) {
+    if (!checkValidity() || !isHG()) return undefined;
+    const config = {
+        method: 'post',
+        url: url + '/api/events/',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(json)
+    };
+
+    await axios(config)
+        .then(function (response) {
+            alert("Event Created Successfully");
+        }).catch(error => {
+            alert("Event Creation Failed");
+        });
+}
+
+export async function deleteEvent(uid){
+    if (!checkValidity() || !isHG()) return undefined;
+    const config = {
+        method: 'delete',
+        url: url + '/api/events/' + uid,
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    };
+
+    axios(config)
+        .then(function (response) {
+            alert("Event deleted successfully");
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            alert("Event deletion failed");
+        });
+}
+
+export async function eventHandler(uid){
+    var config = {
+        method: 'post',
+        url: url + '/api/events/' + uid + '/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : JSON.stringify([getUsername()])
+    };
+
+    axios(config)
+        .then(function (response) {
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export async function editEvent(uid,title,event_type,meetup_location,
+    block,floor,description,start_time,duration_mins,count_attendance,signup_limit){
+    
+    if (!checkValidity() || !isHG()) return undefined;
+    var data = JSON.stringify({"title":title,
+    "event_type":event_type,"meetup_location":meetup_location,
+    "block":block,"floor":floor,"description":description,
+    "start_time":start_time,"duration_mins":duration_mins,
+    "count_attendance":count_attendance,"signup_limit":signup_limit});
+
+    var config = {
+       method: 'put',
+       url: url+'/api/events/'+uid,
+       headers: { 
+          'accept': 'application/json', 
+          'Authorization': 'Bearer '+getToken(), 
+          'Content-Type': 'application/json'
+       },
+       data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+       console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+       console.log(error);
+    });
+}
+
+

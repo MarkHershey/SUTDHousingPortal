@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../SUTDLogo 1.png";
-import {logout} from "../variables/localstorage";
+import {checkValidity, getUserInfoJson, isHG, logout} from "../variables/localstorage";
 
 const Styles = styled.div`
   .navbar {
@@ -42,19 +42,18 @@ export const NavigationBar = () => (
                 <Nav className="ml-auto">
                     <Nav.Item><Nav.Link href="/profile">Profile</Nav.Link></Nav.Item>
                     <NavDropdown title="Events">
-                        <NavDropdown.Item href="/event_history">Event History</NavDropdown.Item>
-                        <NavDropdown.Item href="/event">Upcoming Events</NavDropdown.Item>
+                        <NavDropdown.Item href="/event">Floor Events</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_history">Event Records</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/event_creation">Create Event</NavDropdown.Item>
-                        <NavDropdown.Item>View Event</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_creation" disabled={!isHG()}>Create Event</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Application">
                         <NavDropdown.Item href="/application_status">Check Status</NavDropdown.Item>
                         <NavDropdown.Item href="/apply">Housing Application</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/application_creation">Create Application</NavDropdown.Item>
+                        <NavDropdown.Item href="/application_creation" disabled={true}>Create Application</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Item><Nav.Link href="/login" onClick = {logout}>Logout</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>

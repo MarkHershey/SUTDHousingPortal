@@ -1,6 +1,5 @@
 import axios from "axios";
-import {checkValidity,getToken} from "./localstorage";
-import {getUsername,setUserInfoJson} from "./localstorage";
+import {checkValidity, getToken, getUsername, setUserInfoJson} from "./localstorage";
 import {url} from "./url";
 
 export class Student {

@@ -8,7 +8,7 @@ from .database import admins_collection, students_collection
 
 def clean_dict(data: dict) -> None:
     if not isinstance(data, dict):
-        logger.warning("Not a dictionary.")
+        logger.warning(f"Not a dictionary: {type(data)}")
         return
 
     data.pop("_id", None)

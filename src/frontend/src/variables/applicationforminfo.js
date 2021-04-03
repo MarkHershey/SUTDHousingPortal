@@ -9,7 +9,7 @@ export var room_profile = "room profile object";
 export var lifestyle_profile = "lifestyle_profile object";
 export var time_period = "Time period object";
 
-export async function submitApplication(){
+export default async function submitApplication(){
 
     var data = JSON.stringify({"uid":"string","application_period_uid":"string",
     "created_at":"2021-04-02T16:01:19.138Z","student_id":"string",

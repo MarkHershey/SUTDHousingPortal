@@ -24,13 +24,6 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-const Apply2BtnSet = styled.div`
-  background-color: #F3F6FA;
-  margin-left: 2em;
-  margin-right: 2em;
-  padding: 20pt 20pt;
-  border-radius: 20pt;
-`;
 
 const EventDiv = styled.div`
   display: grid;
@@ -61,8 +54,6 @@ export default class PersonalDataEdit extends React.Component{
 
     handleChange(event) {
         const value = event.target.value;
-        //console.log("value: "+value);
-        //console.log("target: "+event.target.name);
         this.setState({
             ...this.state,
             [event.target.name]: value
@@ -80,26 +71,26 @@ export default class PersonalDataEdit extends React.Component{
                             <bs.Col><Field>Personal Email:</Field></bs.Col>
                             <bs.Col><input name="email_personal" type="email" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Preferred Roommate</Field></bs.Col>
-                            <bs.Col><input name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
+                            <bs.Col><input id = "ppl_prof_roommate" name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
                         </bs.Row>
     
                         <bs.Row>
                             <bs.Col><Field>Phone Number:</Field></bs.Col>
                             <bs.Col><input name="phone_number"type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Street</Field></bs.Col>
-                            <bs.Col><input name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input id = "ppl_prof_local_addr_street" name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col><Field>Local Address Unit Number:</Field></bs.Col>
                             <bs.Col><input name="local_addr_unit" type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Postal Code:</Field></bs.Col>
                             <bs.Col><input name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
-
                         </bs.Row>
+                        
                     </bs.Container>
                 </ProfileBox>
                 <ProfileBox>
-                    <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Save Changes</button></bs.Col>
+                    <bs.Col><button type="submit" id = "ppl_prof_submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Save Changes</button></bs.Col>
                 </ProfileBox>
             </EventDiv>
         );
