@@ -213,3 +213,33 @@ export async function updateAttendance(eventId){
         });
     
 }
+
+export async function editEvent(uid,title,event_type,meetup_location,
+                                block,floor,description,start_time,duration_mins,count_attendance,signup_limit){
+
+    if (!checkValidity() || !isHG()) return undefined;
+    var data = JSON.stringify({"title":title,
+        "event_type":event_type,"meetup_location":meetup_location,
+        "block":block,"floor":floor,"description":description,
+        "start_time":start_time,"duration_mins":duration_mins,
+        "count_attendance":count_attendance,"signup_limit":signup_limit});
+
+    var config = {
+        method: 'put',
+        url: url+'/api/events/'+uid,
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer '+getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
