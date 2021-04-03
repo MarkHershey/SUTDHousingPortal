@@ -94,10 +94,58 @@ export function clearPersonalEventInfoJson(){
     console.log(typeof(storage["personaleventinfojson"]));
 }
 
+export function getAttendanceEditJson(){
+    return JSON.parse(storage["attendanceeditjson"]);
+}
+
+export function initAttendanceEditJson(){
+    console.log(storage["attendanceeditjson"]);
+    const Json = {
+        addition: [],
+        deletion: [],
+    }
+    storage.setItem("attendanceeditjson",JSON.stringify(Json));
+    console.log(storage["attendanceeditjson"]);
+}
+
+export function addAttendanceADDJson(id){
+    const Json = getAttendanceEditJson();
+    Json.addition.push(id);
+    storage.setItem("attendanceeditjson",JSON.stringify(Json));
+    console.log(getAttendanceEditJson());
+}
+
+export function addAttendanceDELJson(id){
+    const Json = getAttendanceEditJson();
+    Json.deletion.push(id);
+    storage.setItem("attendanceeditjson",JSON.stringify(Json));
+    console.log(getAttendanceEditJson());
+}
+
+export function deleteAttendanceADDJson(id){
+    const Json = getAttendanceEditJson();
+    for (let i = 0; i < Json.addition.length; i++) if(Json.addition[i] === id) Json.addition.splice(i,1);
+    storage.setItem("attendanceeditjson",JSON.stringify(Json));
+    console.log(getAttendanceEditJson());
+}
+
+export function deleteAttendanceDELJson(id){
+    const Json = getAttendanceEditJson();
+    for (let i = 0; i < Json.deletion.length; i++) if(Json.deletion[i] === id) Json.deletion.splice(i,1);
+    storage.setItem("attendanceeditjson",JSON.stringify(Json));
+    console.log(getAttendanceEditJson());
+}
+
+export function clearAttendanceEditJson(){
+    initAttendanceEditJson();
+    storage.removeItem("attendanceeditjson");
+    console.log(typeof(storage["attendanceeditjson"]));
+    console.log(getAttendanceEditJson());
+}
+
 export function logout(){
     clearToken();
     clearEventInfoJson();
     clearUserInfoJson();
     clearUpcomingEventInfoJson();
-    clearPersonalEventInfoJson();
 }

@@ -17,8 +17,16 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import {getEventInfoJson, getToken, getUpcomingEventInfoJson, getUserInfoJson} from "../variables/localstorage";
-import {deleteEvent, getEventInfo, getUpcomingEventInfo} from "../variables/eventinfo";
+import {
+    addAttendanceADDJson,
+    addAttendanceDELJson, deleteAttendanceADDJson,
+    deleteAttendanceDELJson,
+    getEventInfoJson,
+    getToken,
+    getUpcomingEventInfoJson,
+    getUserInfoJson, initAttendanceEditJson
+} from "../variables/localstorage";
+import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../variables/eventinfo";
 import {getUsername} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
@@ -235,7 +243,7 @@ function SimpleModal(props) {
 
     const handleOpen = () => {
         setOpen(true);
-
+        initAttendanceEditJson()
     };
 
     const handleClose = () => {
@@ -245,6 +253,7 @@ function SimpleModal(props) {
     const attended = (id) => {
         let result = false;
         props.row.attendance.forEach(function (item){if (item === id) result = true;});
+        console.log(result);
         return result;
     }
 
@@ -253,9 +262,11 @@ function SimpleModal(props) {
         const handleClick = () =>{
             setChecked(!checked);
             console.log(checked);
-            const realChecked = !checked
-            var attendanceEdited;
-            if (realChecked)
+            const realChecked = !checked;
+            if ( props.attended &&  realChecked) deleteAttendanceDELJson(props.id);
+            if ( props.attended && !realChecked) addAttendanceDELJson(props.id);
+            if (!props.attended &&  realChecked) addAttendanceADDJson(props.id);
+            if (!props.attended && !realChecked) deleteAttendanceADDJson(props.id);
         }
         return (
             <bs.Container>
@@ -278,11 +289,13 @@ function SimpleModal(props) {
                 </h6>
                 <br/>
                 <div>
-                    {props.row.signups.map((id) => (
-                        <IdList id={id} attended={attended(id)}/>
-                    ))}
+                    {props.row.signups.map((id) => (<IdList id={id} attended={attended(id)}/>))}
                 </div>
-                <Button variant="outline-dark">Update!</Button>
+                <Button variant="outline-dark" onClick={async () => {
+                    await updateAttendance(props.row.uid);
+                    handleClose();
+                    window.location.reload(false);
+                }}>Update!</Button>
             </CenterDiv>
         </div>
     );
@@ -321,7 +334,6 @@ export default class Events extends React.Component {
             });
         }
         fetchJSON();
-        //window.location.reload(false)
     }
 
     queryAll = () => {

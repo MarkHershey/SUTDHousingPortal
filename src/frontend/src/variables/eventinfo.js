@@ -1,5 +1,5 @@
 import {
-    checkValidity,
+    checkValidity, getAttendanceEditJson,
     getEventInfoJson,
     getPersonalEventInfoJson,
     getToken,
@@ -167,4 +167,49 @@ export async function eventHandler(uid){
         .catch(function (error) {
             console.log(error);
         });
+}
+
+export async function updateAttendance(eventId){
+    const addList = getAttendanceEditJson().addition;
+    const delList = getAttendanceEditJson().deletion;
+    console.log(addList);
+    console.log(delList);
+    let config = {
+        method: 'post',
+        url: url + '/api/events/' + eventId + '/attend',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(addList)
+    };
+
+    await axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    config = {
+        method: 'delete',
+        url: url + '/api/events/'+ eventId + '/attend',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : JSON.stringify(delList)
+    };
+
+    await axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    
 }
