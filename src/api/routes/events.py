@@ -181,16 +181,23 @@ async def update_an_event(
     event_dict = dict(event_editable_info.dict())
     remove_none_value_keys(event_dict)
     try:
-        updated = students_collection.find_one_and_update(
-            filter={"uid": uid}, update={"$set": event_dict}
+        updated = events_collection.find_one_and_update(
+            filter={"uid": uid},
+            update={"$set": event_dict},
+            return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"{str(updated)}")
         clean_dict(updated)
-        return updated if updated else {"msg": "failed"}
     except Exception as e:
         logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
         raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.delete("/{uid}")

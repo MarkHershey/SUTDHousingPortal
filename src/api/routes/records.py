@@ -132,7 +132,9 @@ async def get_disciplinary_record(
 
 @router.put("/{uid}", response_model=DisciplinaryRecord)
 async def update_disciplinary_record(
-    uid: str, record_edit: RecordEditable, username=Depends(auth_handler.auth_wrapper)
+    uid: str,
+    record_edit: RecordEditable,
+    username=Depends(auth_handler.auth_wrapper),
 ):
     """
     Update a DisciplinaryRecord
