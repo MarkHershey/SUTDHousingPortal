@@ -144,7 +144,7 @@ export async function deleteEvent(uid){
             window.location.reload(true);
         })
         .catch(function (error) {
-            alert("Event deletion failed");
+            alert("Event deletion rejected. Maybe there are students signed up already");
         });
 }
 

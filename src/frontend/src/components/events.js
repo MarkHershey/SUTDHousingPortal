@@ -232,7 +232,7 @@ function Row(props) {
                                                                             }
                                                                       });
                                                                   }}
-                                                                  disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
+                                                                  disabled={!getUserInfoJson().is_house_guardian|| (row.created_by !==getUsername())}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
 
                                 <bs.Col><ButtonDivEvent>
                                     <SimpleModal row = {row}/>
