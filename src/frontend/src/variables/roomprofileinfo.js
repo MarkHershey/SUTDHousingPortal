@@ -1,4 +1,4 @@
-import {getUsername} from "./localstorage";
+import {getUsername,checkValidity, getToken} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
 
@@ -20,7 +20,7 @@ export var weightage_order = []; // list of int
 export async function updateRoomProfileInfo(room_type,room_type_2nd,block,block_2nd,level_range,
     window_facing,near_to_lift,near_to_washroom,level_has_pantry,level_has_mr,level_has_gsr,
     level_has_rr,weightage_order){
-        
+      if (!checkValidity()) return undefined;
       var data = JSON.stringify({"room_type":room_type,"room_type_2nd":room_type_2nd,
       "block":block,"block_2nd":block_2nd,"level_range":level_range,"window_facing":window_facing,
       "near_to_lift":near_to_lift,"near_to_washroom":near_to_washroom,"level_has_pantry":level_has_pantry,"level_has_mr":level_has_mr,
@@ -31,7 +31,7 @@ export async function updateRoomProfileInfo(room_type,room_type_2nd,block,block_
          url: url+'/api/students/'+getUsername()+'/update_room_profile',
          headers: { 
             'accept': 'application/json', 
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTY3NDU4MzQsImlhdCI6MTYxNjY1OTQzNCwic3ViIjoiMTAwNDAwMCJ9.HYQSJ9VT-04DB6omjDSaryh2dh1FwUasJA8EU1Hy1Fg', 
+            'Authorization': 'Bearer '+getToken(), 
             'Content-Type': 'application/json'
          },
          data : data

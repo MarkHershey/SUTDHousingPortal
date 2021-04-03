@@ -54,6 +54,7 @@ export default class LifeStyleProfileEdit extends React.Component{
                 this.state.like_clean,this.state.like_quite);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
+            this.props.history.push("/");
         } else {
             console.log("invalid");
         }

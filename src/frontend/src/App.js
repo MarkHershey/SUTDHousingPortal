@@ -18,6 +18,7 @@ import ApplicationSummary from "./components/application_summary";
 import React from 'react';
 import {checkValidity} from "./variables/localstorage";
 import LifeStyleProfileEdit from './components/lifestyle_profile_edit';
+import EventEdit from './components/event_edit';
 
 function App() {
     const GuardedRoute = ({component: Component, auth, ...rest}) => (
@@ -36,6 +37,7 @@ function App() {
                     <GuardedRoute path="/profile" component={Profile}/>
                     <GuardedRoute path="/event" component={Events}/>
                     <GuardedRoute path="/event_history" component={EventHistory}/>
+                    <GuardedRoute path="/event_edit" component={EventEdit}/>
                     <GuardedRoute path="/profile_edit" component={PersonalDataEdit}/>
                     <GuardedRoute path="/room_profile_edit" component={RoomProfileEdit}/>
                     <GuardedRoute path="/lifestyle_profile_edit" component={LifeStyleProfileEdit}/>

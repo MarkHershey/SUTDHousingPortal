@@ -34,6 +34,7 @@ import Modal from '@material-ui/core/Modal';
 import {CheckBox} from "@material-ui/icons";
 import {forEach} from "react-bootstrap/ElementChildren";
 import {eventHandler} from "../variables/eventinfo";
+import {useHistory} from "react-router";
 import "../variables/utilities"
 
 
@@ -146,7 +147,7 @@ function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
-
+    let history = useHistory();
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
@@ -211,7 +212,26 @@ function Row(props) {
                                                        disabled={!joined(row)}>{"Quit Event"}</button></ButtonDivEvent></bs.Col>
 
                                 <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
-                                                                  onClick={async () => {await eventHandler(row.uid)}}
+                                                                  onClick={()=>{
+                                                                      history.push({
+                                                                          pathname:"/event_edit",
+                                                                          state: {
+                                                                              uid:row.uid,
+                                                                              title:row.title,
+                                                                              event_type: row.event_type,
+                                                                              meetup_location: row.meetup_location,
+                                                                              block:row.block,
+                                                                              floor:row.floor,
+                                                                              duration_mins:row.duration_mins,
+                                                                              signup_ddl: row.signup_ddl,
+                                                                              description:row.description,
+                                                                              count_attendance:row.count_attendance,
+                                                                              created_by:row.created_by,
+                                                                              start_time:row.start_time,
+                                                                              signup_limit:row.signup_limit
+                                                                            }
+                                                                      });
+                                                                  }}
                                                                   disabled={!getUserInfoJson().is_house_guardian}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
 
                                 <bs.Col><ButtonDivEvent>
