@@ -3,12 +3,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
+from ..models.misc import UserAccessResponse, UserLoginResponse
 from ..models.student import Student
 from ..models.user import Admin, User
-from ..models.misc import UserLoginResponse, UserAccessResponse
-from ..access_utils import Access
 
 router = APIRouter(prefix="/api/auth", tags=["User Authentication"])
 auth_handler = AuthHandler()

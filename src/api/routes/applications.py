@@ -11,6 +11,7 @@ from ..database import *
 from ..error_msg import ErrorMsg as MSG
 from ..functional import clean_dict, convert_date_to_datetime
 from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
+from .application_helpers import validate_AP
 
 router = APIRouter(prefix="/api/applications", tags=["Housing Applications"])
 auth_handler = AuthHandler()
@@ -66,10 +67,7 @@ async def submit_application(
         logger.debug(MSG.permission_denied_msg(username))
         raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
-    # TODO: validate application period
-    # TODO: make sure only one application per application period
-    pass
-
+    # get student's intended stay period
     stay_period: TimePeriod = application_form.stay_period
     start_datetime = convert_date_to_datetime(stay_period.start_date)
     end_datetime = convert_date_to_datetime(stay_period.end_date)
@@ -77,8 +75,12 @@ async def submit_application(
         "start_date": start_datetime,
         "end_date": end_datetime,
     }
-    # TODO: validate stay period, cross check with allowable period
-    pass
+    # validate application period
+    # make sure only one application per student for an application period
+    # validate stay period, cross check with allowable period
+    AP_uid: str = application_form.application_period_uid
+    if not validate_AP(AP_uid, target_student, stay_period):
+        raise HTTPException(status_code=400, detail=MSG.INVALID_APPLICATION)
 
     # set values by this action
     application_form.created_by = str(username)
@@ -92,8 +94,7 @@ async def submit_application(
     try:
         with client.start_session() as session:
             with session.start_transaction():
-                # TODO: increate application period reference count
-                pass
+
                 # insert application
                 _inserted_id = applications_collection.insert_one(
                     document=application_dict,
@@ -107,7 +108,24 @@ async def submit_application(
                     return_document=ReturnDocument.AFTER,
                     session=session,
                 )
-                logger.debug(f"Updated: {str(_updated)}")
+                logger.debug(f"Student Updated: {str(_updated)}")
+                # increate application period reference count
+                # add student to application map
+                _updated = application_periods_collection.find_one_and_update(
+                    filter={"uid": AP_uid},
+                    update={
+                        "$inc": {"reference_count": 1},
+                        "$set": {
+                            "application_forms_map": {
+                                target_student: application_form.uid
+                            }
+                        },
+                    },
+                    return_document=ReturnDocument.AFTER,
+                    session=session,
+                )
+                logger.debug(f"AP Updated: {str(_updated)}")
+
     except Exception as e:
         logger.error(f"New Application failed to be inserted to DB: {application_dict}")
         logger.error(e)

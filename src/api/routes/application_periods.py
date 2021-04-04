@@ -9,8 +9,12 @@ from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
-from ..functional import clean_dict
-from ..models.application import ApplicationPeriod
+from ..functional import clean_dict, convert_date_to_datetime
+from ..models.application import ApplicationPeriod, TimePeriod
+from .application_helpers import (
+    convert_from_applicable_periods,
+    convert_to_applicable_periods,
+)
 
 router = APIRouter(
     prefix="/api/application_periods", tags=["Housing Application Periods"]
@@ -38,6 +42,9 @@ async def get_all_application_periods(username=Depends(auth_handler.auth_wrapper
             "created_by", DESCENDING
         ):
             clean_dict(ap_dict)
+            ap_dict["applicable_periods"] = convert_to_applicable_periods(
+                ap_dict["applicable_periods"]
+            )
             ap_list.append(ap_dict)
     except Exception as e:
         logger.error(MSG.DB_QUERY_ERROR)
@@ -61,11 +68,14 @@ async def get_active_application_periods(username=Depends(auth_handler.auth_wrap
     try:
         for ap_dict in application_periods_collection.find(
             {
-                "application_window_open": {"$gte": _now},
-                "application_window_close": {"$lt": _now},
+                "application_window_open": {"$lt": _now},
+                "application_window_close": {"$gte": _now},
             }
         ).sort("application_window_open"):
             clean_dict(ap_dict)
+            ap_dict["applicable_periods"] = convert_to_applicable_periods(
+                ap_dict["applicable_periods"]
+            )
             ap_list.append(ap_dict)
     except Exception as e:
         logger.error(MSG.DB_QUERY_ERROR)
@@ -91,6 +101,10 @@ async def create_new_application_period(
 
     ap.created_by = str(username)
     ap_dict = dict(ap.dict())
+    ap_dict["applicable_periods"] = convert_from_applicable_periods(
+        ap.applicable_periods
+    )
+
     try:
         _inserted_id = application_periods_collection.insert_one(ap_dict).inserted_id
         logger.debug(
@@ -173,6 +187,9 @@ async def get_an_application_period(
         raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     if ap_info:
+        ap_info["applicable_periods"] = convert_to_applicable_periods(
+            ap_info["applicable_periods"]
+        )
         return ap_info
     else:
         raise HTTPException(status_code=404, detail=MSG.ITEM_NOT_FOUND)
