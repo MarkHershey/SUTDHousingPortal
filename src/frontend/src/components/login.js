@@ -29,6 +29,8 @@ export default function Login() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
+                setAdmin(response.data["is_admin"]);
+                setAdminWrite(response.data["is_admin_write"]);
                 setUsername(username);
                 console.log("Token: ");
                 console.log(getToken());

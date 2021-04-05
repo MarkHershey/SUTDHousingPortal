@@ -9,6 +9,24 @@ export function setToken(newToken){
     console.log(getToken());
 }
 
+export function getAdmin(){
+    return storage["admin"];
+}
+
+export function setAdmin(newAdmin){
+    storage.setItem("admin",newAdmin);
+    console.log(getAdmin());
+}
+
+export function getAdminWrite(){
+    return storage["adminWrite"];
+}
+
+export function setAdminWrite(newAdminWrite){
+    storage.setItem("adminWrite",newAdminWrite);
+    console.log(getAdminWrite());
+}
+
 export function checkValidity(){
     return (typeof(storage["token"]) !== "undefined");
 }
