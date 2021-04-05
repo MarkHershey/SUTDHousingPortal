@@ -161,6 +161,42 @@ export function clearAttendanceEditJson(){
     console.log(getAttendanceEditJson());
 }
 
+export function getApplicationPeriodInfoJson(){
+    if (storage["applicationperiodinfojson"]=== undefined) return undefined;
+    return JSON.parse(storage["applicationperiodinfojson"]);
+}
+
+export function setApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
+    storage.setItem("applicationperiodinfojson",JSON.stringify(newApplicationPeriodInfoJson))
+}
+
+export function getUpcomingApplicationPeriodInfoJson(){
+    if(storage["upcomingapplicationperiodinfojson"]=== undefined) return undefined;
+    return JSON.parse(storage["upcomingapplicationperiodjson"]);
+}
+
+export function setUpcomingApplicationPeriodInfoJson(newUpcomingApplicationPeriodInfoJson){
+   storage.setItem("upcomingapplicationperiodjson",JSON.stringify(newUpcomingApplicationPeriodInfoJson));
+}
+
+export function getPersonalApplicationPeriodInfoJson(){
+    if (storage["personalapplicationperiodinfojson"] === undefined) return undefined;
+    return JSON.parse(storage["personalapplicationeventinfojson"]);
+}
+
+export function setPersonalApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
+    storage.setItem("personalapplicationeventinfojson",JSON.stringify(newApplicationPeriodInfoJson));
+}
+
+export function getOngoingApplicationPeriodInfoJson(){
+    if (storage["ongoingapplicationperiodinfojson"] === undefined) return undefined;
+    return JSON.parse(storage["ongoingapplicationperiodinfojson"]);
+}
+
+export function setOngoingApplicationPeriodInfoJson(newOngoingApplicationPeriodInfoJson){
+    storage.setItem("ongoingapplicationperiodinfojson",JSON.stringify(newOngoingApplicationPeriodInfoJson));
+}
+
 export function logout(){
     clearToken();
     clearEventInfoJson();
