@@ -19,6 +19,9 @@ import React from 'react';
 import {checkValidity} from "./variables/localstorage";
 import LifeStyleProfileEdit from './components/lifestyle_profile_edit';
 import EventEdit from './components/event_edit';
+import ApplicationCreation from './components/admin/application_creation';
+import ApplicationManagement from './components/admin/application_management';
+import ApplicationViewing from './components/admin/application_viewing';
 
 function App() {
     const GuardedRoute = ({component: Component, auth, ...rest}) => (
@@ -47,6 +50,9 @@ function App() {
                     <GuardedRoute path="/application_summary" component={ApplicationSummary}/>
                     <GuardedRoute path="/event_creation" component={EventCreation}/>
                     <GuardedRoute path="/application_status" component={ApplicationStatus}/>
+                    <GuardedRoute path="/admin/application_creation" component={ApplicationCreation}/>
+                    <GuardedRoute path="/admin/application_management" component={ApplicationManagement}/>
+                    <GuardedRoute path="/admin/application_viewing" component={ApplicationViewing}/>
                     <Route path="/login" component={Login}/>
                 </Switch>
             </Router>
