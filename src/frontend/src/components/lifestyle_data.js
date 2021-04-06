@@ -50,6 +50,7 @@ export default class LifestyleData extends React.Component {
                         max={10}
                         valueLabelDisplay="auto"
                         onChange={(e, value) => this.handleChange("like_social", value)}
+                        color="secondary"
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
@@ -66,6 +67,7 @@ export default class LifestyleData extends React.Component {
                         min={0}
                         max={10}
                         valueLabelDisplay="auto"
+                        color="secondary"
                         onChange={(e, value) => this.handleChange("like_clean", value)}
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
@@ -83,6 +85,7 @@ export default class LifestyleData extends React.Component {
                         min={0}
                         max={10}
                         valueLabelDisplay="auto"
+                        color="secondary"
                         onChange={(e, value) => this.handleChange("like_quite", value)}
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>

@@ -2,6 +2,7 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {NavigationBar} from './components/navbar';
+import {AdminNavigationBar} from './components/admin/admin_navigationBar';
 import Login from './components/login';
 import ApplicationOne from './components/application_part1';
 import ApplicationTwo from "./components/application_part2";
@@ -16,7 +17,7 @@ import EventCreation from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
 import ApplicationSummary from "./components/application_part5";
 import React from 'react';
-import {checkValidity} from "./variables/localstorage";
+import {checkValidity, isAdmin} from "./variables/localstorage";
 import LifeStyleProfileEdit from './components/lifestyle_profile_edit';
 import EventEdit from './components/event_edit';
 import ApplicationCreation from './components/admin/application_creation';
@@ -35,7 +36,7 @@ function App() {
     return (
         <React.Fragment>
             <Router>
-                <NavigationBar/>
+                {isAdmin() ? <AdminNavigationBar/> : <NavigationBar/>}
                 <Switch>
                     <GuardedRoute exact path="/" component={Home}/>
                     <GuardedRoute path="/profile" component={Profile}/>
