@@ -1,7 +1,7 @@
 import {checkValidity, getToken, getUsername,
-    setApplicationPeriodInfo,
+    setApplicationPeriodInfoJson,
     getApplicationPeriodInfoJson,
-    setPersonalEventInfoJson,
+    setPersonalApplicationPeriodInfoJson,
     getPersonalApplicationPeriodInfoJson,
     getOngoingApplicationPeriodInfoJson,
     setOngoingApplicationPeriodInfoJson
@@ -65,7 +65,7 @@ export async function getAllApplicationPeriodInfo(){
      axios(config)
      .then(function (response) {
          application_data_json = response.data
-        setApplicationPeriodInfo(application_data_json);
+        setApplicationPeriodInfoJson(application_data_json);
         console.log("Application period Info JSON")
         console.log(getApplicationPeriodInfoJson());
      })
@@ -89,9 +89,9 @@ export async function getApplicationPeriodInfo(uid){
      axios(config)
      .then(function (response) {
         application_period_info_json = response.data;
-        setPersonalEventInfoJson(application_period_info_json);
+        setPersonalApplicationPeriodInfoJson(application_period_info_json);
         console.log("Personal Application Period Info Json");
-        console.log(getPersonalEventInfoJson());
+        console.log(getPersonalApplicationPeriodInfoJson());
      })
      .catch(function (error) {
         console.log(error);

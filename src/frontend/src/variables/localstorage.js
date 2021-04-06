@@ -170,22 +170,19 @@ export function setApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
     storage.setItem("applicationperiodinfojson",JSON.stringify(newApplicationPeriodInfoJson))
 }
 
-export function getUpcomingApplicationPeriodInfoJson(){
-    if(storage["upcomingapplicationperiodinfojson"]=== undefined) return undefined;
-    return JSON.parse(storage["upcomingapplicationperiodjson"]);
-}
-
-export function setUpcomingApplicationPeriodInfoJson(newUpcomingApplicationPeriodInfoJson){
-   storage.setItem("upcomingapplicationperiodjson",JSON.stringify(newUpcomingApplicationPeriodInfoJson));
-}
-
 export function getPersonalApplicationPeriodInfoJson(){
     if (storage["personalapplicationperiodinfojson"] === undefined) return undefined;
     return JSON.parse(storage["personalapplicationeventinfojson"]);
 }
 
 export function setPersonalApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
-    storage.setItem("personalapplicationeventinfojson",JSON.stringify(newApplicationPeriodInfoJson));
+    storage.setItem("personalapplicationeventinfojson",
+    JSON.stringify(newApplicationPeriodInfoJson));
+}
+
+export function clearPersonalApplicationPeriodInfoJson(){
+    storage.removeItem("personalapplicationperiodinfojson");
+    console.log(typeof(storage["personalapplicationperiodinfojson"]));
 }
 
 export function getOngoingApplicationPeriodInfoJson(){
@@ -196,6 +193,7 @@ export function getOngoingApplicationPeriodInfoJson(){
 export function setOngoingApplicationPeriodInfoJson(newOngoingApplicationPeriodInfoJson){
     storage.setItem("ongoingapplicationperiodinfojson",JSON.stringify(newOngoingApplicationPeriodInfoJson));
 }
+
 
 export function logout(){
     clearToken();
