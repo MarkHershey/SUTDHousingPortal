@@ -50,8 +50,6 @@ export const NavigationBar = () => (
                     <NavDropdown title="Application">
                         <NavDropdown.Item href="/application_status">Check Status</NavDropdown.Item>
                         <NavDropdown.Item href="/apply">Housing Application</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="/application_creation" disabled={true}>Create Application</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
