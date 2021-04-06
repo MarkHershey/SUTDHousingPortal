@@ -1,7 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import submitApplicationPeriod from "../../variables/applicationperiodinfo";
+import {submitApplicationPeriod} from "../../variables/applicationperiodinfo";
 import { InputLabel, MenuItem, Select} from '@material-ui/core'
 
 const Field = styled.p`
@@ -48,7 +48,7 @@ export default class ApplicationCreation extends React.Component{
             application_window_close: "",
             applicable_periods: [{"start_date":"","end_date":""}],
             applicable_rooms: [],
-            applicable_students: [{firstName:"",lastName:""}],
+            applicable_students: [],
         };
     }
 

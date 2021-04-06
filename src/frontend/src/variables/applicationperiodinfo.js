@@ -21,7 +21,7 @@ var applicable_students = []// list of student ids
 var application_forms = [] // list of application form objects
 
 
-export default async function submitApplicationPeriod(application_window_open,application_window_close,
+export async function submitApplicationPeriod(application_window_open,application_window_close,
     applicable_periods,applicable_rooms,applicable_students){
     var data = JSON.stringify({"application_window_open":application_window_open,
     "application_window_close":application_window_close,

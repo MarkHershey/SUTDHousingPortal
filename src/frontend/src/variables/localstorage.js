@@ -172,11 +172,11 @@ export function setApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
 
 export function getPersonalApplicationPeriodInfoJson(){
     if (storage["personalapplicationperiodinfojson"] === undefined) return undefined;
-    return JSON.parse(storage["personalapplicationeventinfojson"]);
+    return JSON.parse(storage["personalapplicationperiodinfojson"]);
 }
 
 export function setPersonalApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
-    storage.setItem("personalapplicationeventinfojson",
+    storage.setItem("personalapplicationperiodinfojson",
     JSON.stringify(newApplicationPeriodInfoJson));
 }
 
