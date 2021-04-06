@@ -7,6 +7,7 @@ import LifestyleData from "./lifestyle_data";
 import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
 import { getUserInfoJson } from "../variables/localstorage";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {ApplicationStep} from "./application_steps";
 
 const EventDiv = styled.div`
   display: grid;
@@ -42,7 +43,7 @@ export default class ApplicationThree extends React.Component{
         var stateValues = Object.values(this.state);
         for(var i=0;i<stateNames.length;i++){
             if(stateValues==""){
-                console.log("ffailed");
+                console.log("failed");
                 return false;
             }
         }
@@ -56,17 +57,18 @@ export default class ApplicationThree extends React.Component{
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
             //const history = useHistory();
-            this.props.history.push("/application_Summary");
+            this.props.history.push("/apply4");
         }
 
     }
     render(){
         return (
             <EventDiv>
+                <ApplicationStep i = {2}/>
                 <bs.Container>
                     <LifestyleData parentCallBack={this.lifestyleCallback} parentState={this.state}/>
                     <br/>
-                    < ProfileBox>
+                    <ProfileBox>
                         <bs.Row>
                                 <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
                                 <bs.Col><button type="button" className="btn btn-outline-primary">Save</button></bs.Col>

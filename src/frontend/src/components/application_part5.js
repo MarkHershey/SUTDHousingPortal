@@ -5,6 +5,7 @@ import {useHistory} from "react-router";
 import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
 import submitApplication from '../variables/applicationforminfo';
+import {ApplicationStep} from "./application_steps";
 
 const EventDiv = styled.div`
   display: grid;
@@ -31,6 +32,7 @@ export default function ApplicationSummary(){
 
     return (
         <EventDiv>
+            <ApplicationStep i ={4}/>
             <h3><u>Application Summary</u></h3>
             <SummaryData/>
             <bs.Row>

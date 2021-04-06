@@ -9,6 +9,7 @@ import {checkValidity, getToken, getUsername,
 } from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
+import {notification} from "antd";
 
 var uid = "string";
 var created_at = new Date();
@@ -111,12 +112,16 @@ export async function deleteApplicationPeriodInfo(uid){
      
      axios(config)
      .then(function (response) {
-        alert("Event deleted successfully");
+         notification.success({
+             message: "Application Period deleted successfully",
+         });
         window.location.reload(true);
         console.log(JSON.stringify(response.data));
      })
      .catch(function (error) {
-        alert("Application period deletion rejected")
+         notification.error({
+             message: "Application Period deleted failed",
+         });
      });
 }
 

@@ -2,6 +2,7 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import ProfileData from "./profile_data";
+import {ApplicationStep} from "./application_steps";
 
 const EventDiv = styled.div`
   display: grid;
@@ -23,8 +24,8 @@ const ProfileBox = styled.div`
 export default function ApplicationOne() {
     return(
         <EventDiv>
-            <br/>
-            <h3>Personal Details</h3>
+            <ApplicationStep i ={0}/>
+            <h3>Personal Information</h3>
             <ProfileData />
             <ProfileBox>
                 <bs.Container>

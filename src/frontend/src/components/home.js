@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import container, {Container, Row, Col} from 'react-bootstrap';
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson} from "../variables/localstorage";
+import { Card } from 'antd';
+import 'antd/dist/antd.css';
+
 const Homepage = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -44,9 +47,14 @@ export default class Home extends React.Component{
                 <Welcome> {"Hi! " + this.state.full_name} </Welcome>
                 <Container>
                     <Row>
-                        <Col><DashboardTitle>Position in Waiting List</DashboardTitle></Col>
+                        <Col><DashboardTitle>Application Status</DashboardTitle></Col>
                         <Col><DashboardTitle>Announcements</DashboardTitle></Col>
                         <Col><DashboardTitle>Upcoming Floor Events</DashboardTitle></Col>
+                    </Row>
+                    <Row>
+                        <Card title={"Floor Event Participation"}>
+                            ha
+                        </Card>
                     </Row>
                 </Container>
             </Homepage>

@@ -14,7 +14,7 @@ import RoomProfileEdit from "./components/room_profile_edit";
 import EventHistory from "./components/event_history";
 import EventCreation from "./components/event_creation";
 import {ApplicationStatus} from "./components/application_status";
-import ApplicationSummary from "./components/application_summary";
+import ApplicationSummary from "./components/application_part5";
 import React from 'react';
 import {checkValidity} from "./variables/localstorage";
 import LifeStyleProfileEdit from './components/lifestyle_profile_edit';
@@ -22,6 +22,7 @@ import EventEdit from './components/event_edit';
 import ApplicationCreation from './components/admin/application_creation';
 import ApplicationManagement from './components/admin/application_management';
 import ApplicationViewing from './components/admin/application_viewing';
+import ApplicationFour from "./components/application_part4";
 
 function App() {
     const GuardedRoute = ({component: Component, auth, ...rest}) => (
@@ -47,6 +48,7 @@ function App() {
                     <GuardedRoute path="/apply" component={ApplicationOne}/>
                     <GuardedRoute path="/apply2" component={ApplicationTwo}/>
                     <GuardedRoute path="/apply3" component={ApplicationThree}/>
+                    <GuardedRoute path="/apply4" component={ApplicationFour}/>
                     <GuardedRoute path="/application_summary" component={ApplicationSummary}/>
                     <GuardedRoute path="/event_creation" component={EventCreation}/>
                     <GuardedRoute path="/application_status" component={ApplicationStatus}/>

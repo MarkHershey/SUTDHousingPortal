@@ -5,6 +5,7 @@ import "./login.css";
 import axios from 'axios';
 import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../variables/localstorage";
 import {url} from "../variables/url.js";
+import {notification} from "antd";
 
 export default function Login() {
     const [username, setUsernameElement] = useState("");
@@ -38,7 +39,11 @@ export default function Login() {
             })
             .catch(function (error) {
                 console.log(error);
-                alert("Wrong ID or password!")
+                notification.error({
+                    message: 'Log in Failed',
+                    description:
+                        'Either username or password is incorrect',
+                });
             });
     }
 

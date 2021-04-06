@@ -12,6 +12,7 @@ import {
 } from "./localstorage";
 import {url} from "./url";
 import axios from "axios";
+import {notification} from "antd";
 
 export class Event{
     constructor(event_data){
@@ -121,9 +122,13 @@ export async function createEvent(json) {
 
     await axios(config)
         .then(function (response) {
-            alert("Event Created Successfully");
+            notification.success({
+                message: 'Event Created Successfully',
+            });
         }).catch(error => {
-            alert("Event Creation Failed");
+            notification.error({
+                message: 'Event Creation Failed',
+            });
         });
 }
 
@@ -138,13 +143,15 @@ export async function deleteEvent(uid){
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
-            alert("Event deleted successfully");
-            window.location.reload(true);
         })
         .catch(function (error) {
-            alert("Event deletion rejected. Maybe there are students signed up already");
+            notification.error({
+                message: '"Event Deletion Failed',
+                description:
+                    'There are students signed up already',
+            });
         });
 }
 

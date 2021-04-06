@@ -7,6 +7,7 @@ import {getUserInfoJson, getUsername} from "../variables/localstorage";
 import {editEvent} from "../variables/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
+import {notification} from "antd";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -50,7 +51,11 @@ export default class EventEdit extends React.Component{
             this.state.description === "" ||
             this.state.start_time === "" ||
             this.state.signup_limit === "") {
-            alert("Invalid Form!")
+            notification.error({
+                message: 'Event Edition Failed',
+                description:
+                    'Please do not keep certain field empty',
+            });
             return;
         }
         editEvent(this.state.uid,this.state.title,this.state.event_type,

@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import {submitApplicationPeriod} from "../../variables/applicationperiodinfo";
 import { InputLabel, MenuItem, Select} from '@material-ui/core'
+import {notification} from "antd";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -60,7 +61,10 @@ export default class ApplicationCreation extends React.Component{
             //this.state.applicable_rooms === "" ||
             //this.state.applicable_students === ""
             ) {
-            alert("Invalid Form!")
+            notification.error({
+                message: 'Invalid Form',
+                description: 'Fill in all the fields and retry'
+            });
             return;
         }
         submitApplicationPeriod(this.state.application_window_open,this.state.application_window_close,

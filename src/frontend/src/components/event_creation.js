@@ -7,6 +7,7 @@ import {getUserInfoJson, getUsername} from "../variables/localstorage";
 import {createEvent} from "../variables/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
+import {notification} from "antd";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -63,7 +64,10 @@ export default class EventCreation extends React.Component{
             this.state.description === "" ||
             this.state.start_time === "" ||
             this.state.signup_limit === "") {
-            alert("Invalid Form!")
+            notification.error({
+                message: 'Invalid Form',
+                description: 'Fill in all the fields and retry'
+            });
             return;
         }
         createEvent(this.state);
