@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken, setUsername} from "../variables/localstorage";
+import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../variables/localstorage";
 import {url} from "../variables/url.js";
 
 export default function Login() {
@@ -29,6 +29,8 @@ export default function Login() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
+                setAdmin(response.data["is_admin"]);
+                setAdminWrite(response.data["is_admin_write"]);
                 setUsername(username);
                 console.log("Token: ");
                 console.log(getToken());

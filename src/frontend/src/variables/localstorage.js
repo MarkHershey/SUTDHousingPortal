@@ -9,6 +9,24 @@ export function setToken(newToken){
     console.log(getToken());
 }
 
+export function getAdmin(){
+    return storage["admin"];
+}
+
+export function setAdmin(newAdmin){
+    storage.setItem("admin",newAdmin);
+    console.log(getAdmin());
+}
+
+export function getAdminWrite(){
+    return storage["adminWrite"];
+}
+
+export function setAdminWrite(newAdminWrite){
+    storage.setItem("adminWrite",newAdminWrite);
+    console.log(getAdminWrite());
+}
+
 export function checkValidity(){
     return (typeof(storage["token"]) !== "undefined");
 }
@@ -142,6 +160,40 @@ export function clearAttendanceEditJson(){
     console.log(typeof(storage["attendanceeditjson"]));
     console.log(getAttendanceEditJson());
 }
+
+export function getApplicationPeriodInfoJson(){
+    if (storage["applicationperiodinfojson"]=== undefined) return undefined;
+    return JSON.parse(storage["applicationperiodinfojson"]);
+}
+
+export function setApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
+    storage.setItem("applicationperiodinfojson",JSON.stringify(newApplicationPeriodInfoJson))
+}
+
+export function getPersonalApplicationPeriodInfoJson(){
+    if (storage["personalapplicationperiodinfojson"] === undefined) return undefined;
+    return JSON.parse(storage["personalapplicationperiodinfojson"]);
+}
+
+export function setPersonalApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
+    storage.setItem("personalapplicationperiodinfojson",
+    JSON.stringify(newApplicationPeriodInfoJson));
+}
+
+export function clearPersonalApplicationPeriodInfoJson(){
+    storage.removeItem("personalapplicationperiodinfojson");
+    console.log(typeof(storage["personalapplicationperiodinfojson"]));
+}
+
+export function getOngoingApplicationPeriodInfoJson(){
+    if (storage["ongoingapplicationperiodinfojson"] === undefined) return undefined;
+    return JSON.parse(storage["ongoingapplicationperiodinfojson"]);
+}
+
+export function setOngoingApplicationPeriodInfoJson(newOngoingApplicationPeriodInfoJson){
+    storage.setItem("ongoingapplicationperiodinfojson",JSON.stringify(newOngoingApplicationPeriodInfoJson));
+}
+
 
 export function logout(){
     clearToken();
