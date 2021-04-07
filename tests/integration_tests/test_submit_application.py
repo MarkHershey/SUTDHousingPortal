@@ -28,9 +28,14 @@ class TestApplicationCreation(unittest.TestCase):
         self.ignore = False
         # test connection
         request_url = str(self.url_local_root + "/api")
-        response = requests.get(url=request_url)
-        if response.status_code != 200:
-            logger.error("setUp: Failed to connect")
+        try:
+            response = requests.get(url=request_url)
+            if response.status_code != 200:
+                logger.error("setUp: Failed to connect")
+                self.ignore = True
+                return
+        except Exception as e:
+            logger.error(f"setUp: Failed to connect: {e}")
             self.ignore = True
             return
         # construct header
