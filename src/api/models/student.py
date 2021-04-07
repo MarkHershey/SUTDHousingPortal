@@ -26,11 +26,11 @@ class Student(User):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None
     is_house_guardian: bool = False
-    applications: List[str] = []
     # derived
     travel_time_hrs: float = None
 
@@ -57,6 +57,7 @@ class StudentProfile(BaseModel):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None

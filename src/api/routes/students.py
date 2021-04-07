@@ -18,6 +18,7 @@ from ..models.student import (
     StudentIdentityProfile,
     StudentProfile,
 )
+from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 auth_handler = AuthHandler()
@@ -359,10 +360,7 @@ async def get_student_disciplinary_records(
         f"User({username}) trying fetching Student({student_id})'s DisciplinaryRecords"
     )
 
-    permission_ok = Access.is_admin(username)
-    if username == student_id:
-        permission_ok = True
-
+    permission_ok = Access.is_admin(username) or (username == student_id)
     if not permission_ok:
         logger.debug(MSG.permission_denied_msg(username))
         raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
@@ -402,3 +400,56 @@ async def get_student_disciplinary_records(
         f"Fetched {len(event_info_list)} DisciplinaryRecord(s) that belong to Student({student_id})"
     )
     return event_info_list
+
+
+@router.get("/{student_id}/applications", response_model=Dict[str, ApplicationForm])
+async def get_student_submitted_applications(
+    student_id: str, username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Get a list of ApplicationForm that the student has submitted.
+
+    Require: Student-self or Admin-read
+    """
+    logger.debug(
+        f"User({username}) trying fetching Student({student_id})'s Applications"
+    )
+
+    permission_ok = Access.is_admin(username) or (username == student_id)
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    application_list = []
+    try:
+        student_info = students_collection.find_one({"student_id": student_id})
+        clean_dict(student_info)
+    except Exception as e:
+        logger.error(MSG.DB_QUERY_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
+
+    if not student_info:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
+
+    AP_uids = student_info.get("application_uids", [])
+    if not AP_uids:
+        return {}
+    else:
+        AP_uids = list(set(AP_uids))
+
+    submitted_applications: Dict[str, dict] = {}
+
+    try:
+        for uid in AP_uids:
+            if isinstance(uid, str):
+                ap_dict: dict = applications_collection.find_one({"uid": uid})
+                clean_dict(ap_dict)
+                if ap_dict:
+                    submitted_applications[uid] = ap_dict
+    except Exception as e:
+        logger.error(MSG.DB_QUERY_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
+
+    return submitted_applications

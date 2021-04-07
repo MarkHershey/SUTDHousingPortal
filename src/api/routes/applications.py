@@ -104,7 +104,7 @@ async def submit_application(
                 # add application uid to student profile
                 _updated = students_collection.find_one_and_update(
                     filter={"student_id": target_student},
-                    update={"$push": {"applications": application_form.uid}},
+                    update={"$push": {"application_uids": application_form.uid}},
                     return_document=ReturnDocument.AFTER,
                     session=session,
                 )
