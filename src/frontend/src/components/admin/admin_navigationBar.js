@@ -47,7 +47,7 @@ export const AdminNavigationBar = () => (
                         <NavDropdown.Item href="/admin/application_creation">Create Application</NavDropdown.Item>
                         <NavDropdown.Item href="/admin/application_viewing">View Applications</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/login" onClick = {logout} id="adminlogout">Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>

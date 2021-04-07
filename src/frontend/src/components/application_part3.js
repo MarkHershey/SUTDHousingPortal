@@ -70,9 +70,9 @@ export default class ApplicationThree extends React.Component{
                     <br/>
                     <ProfileBox>
                         <bs.Row>
-                                <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
-                                <bs.Col><button type="button" className="btn btn-outline-primary">Save</button></bs.Col>
-                                <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
+                                <bs.Col><a href="/apply2"><button id="application3_back_btn" type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
+                                <bs.Col><button id="application3_save_btn" type="button" className="btn btn-outline-primary">Save</button></bs.Col>
+                                <bs.Col><button id="application3_next_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
                         </bs.Row>
                     </ProfileBox>                    
                 </bs.Container>

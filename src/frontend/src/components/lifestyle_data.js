@@ -12,19 +12,15 @@ export default class LifestyleData extends React.Component {
     constructor(props) {
         super(props);
         this.state = getUserInfoJson().preference_lifestyle;
-        //console.log(this.state);
-        //this.handleSubmit= this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(name, value) {
-        //console.log("name:" +name);
-        //console.log("value: "+value);
+
         this.setState({
             ...this.state,
             [name]: value
         });
-        //console.log(this.state);
         var data = this.state;
         this.props.parentCallBack(data);
     }
@@ -35,12 +31,13 @@ export default class LifestyleData extends React.Component {
             <bs.Container>
                 <h3>Lifestyle Information</h3>
                 <br/>
-                <Typography id="socialbility-slider">
+                <Typography id="socialbility-slider_topo">
                     Sociability
                 </Typography>
                 <bs.Row>
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
+                        id="socialbility_slider"
                         name="socialbility"
                         defaultValue={this.state.like_social}
                         aria-labelledby="socialbility-slider"
@@ -54,12 +51,13 @@ export default class LifestyleData extends React.Component {
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
-                <Typography id="cleanliness-slider">
+                <Typography id="cleanliness-slider_topo">
                     Cleanliness
                 </Typography>
                 <bs.Row>
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
+                        id="cleanliness_slider"
                         defaultValue={this.state.like_clean}
                         aria-labelledby="cleanliness-slider"
                         step={1}
@@ -78,6 +76,7 @@ export default class LifestyleData extends React.Component {
                 <bs.Row>
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
+                        id="noisiness_slider"
                         defaultValue={this.state.like_quite}
                         aria-labelledby="noisiness-slider"
                         step={1}
