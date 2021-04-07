@@ -68,7 +68,7 @@ export default class LifeStyleProfileEdit extends React.Component{
                 <br/>
                 < ProfileBox>
                     <bs.Row>
-                        <bs.Col><button type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Save</button></bs.Col>
+                        <bs.Col><button id="lifestyle_save_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Save</button></bs.Col>
                     </bs.Row>
                 </ProfileBox>                    
             </bs.Container>

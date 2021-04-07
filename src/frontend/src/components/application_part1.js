@@ -30,8 +30,8 @@ export default function ApplicationOne() {
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><a href="/profile_edit"><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
-                        <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
+                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
+                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>

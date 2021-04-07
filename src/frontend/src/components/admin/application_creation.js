@@ -142,9 +142,9 @@ export default class ApplicationCreation extends React.Component{
                     <bs.Container>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col lg={3}><input id="app_period_window_open"name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
                             <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><input id="app_period_window_close" name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable periods:</Field></bs.Col>
@@ -152,7 +152,7 @@ export default class ApplicationCreation extends React.Component{
                             {this.createUI()}
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable Rooms:</Field></bs.Col>
-                            <bs.Col lg={3}><input name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><input id="app_period_applicable_rooms" name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable students:</Field></bs.Col>
@@ -171,7 +171,7 @@ export default class ApplicationCreation extends React.Component{
                 <Apply2BtnSet>
                     <bs.Container>
                         <bs.Row> 
-                            <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleSubmit}>Create Application Period</button></bs.Col>
+                            <bs.Col><button id="app_period_create_app_period" type="button" className="btn btn-outline-primary" onClick={this.handleSubmit}>Create Application Period</button></bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </Apply2BtnSet>
