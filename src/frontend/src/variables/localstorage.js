@@ -9,22 +9,37 @@ export function setToken(newToken){
     console.log(getToken());
 }
 
-export function getAdmin(){
-    return storage["admin"];
+export function isAdmin(){
+    if(!checkValidity) return false;
+    if(storage["admin"] === undefined){
+        return false;
+    } else {
+        return true;
+    }
 }
 
 export function setAdmin(newAdmin){
     storage.setItem("admin",newAdmin);
-    console.log(getAdmin());
+    console.log(isAdmin());
 }
 
-export function getAdminWrite(){
+export function clearAdmin(){
+    storage.removeItem("admin");
+    console.log(typeof(storage["admin"]));
+}
+
+export function isAdminWrite(){
     return storage["adminWrite"];
+}
+
+export function clearAdminWrite(){
+    storage.removeItem("adminWrite");
+    console.log(typeof(storage["adminWrite"]));
 }
 
 export function setAdminWrite(newAdminWrite){
     storage.setItem("adminWrite",newAdminWrite);
-    console.log(getAdminWrite());
+    console.log(isAdminWrite());
 }
 
 export function checkValidity(){
@@ -200,4 +215,6 @@ export function logout(){
     clearEventInfoJson();
     clearUserInfoJson();
     clearUpcomingEventInfoJson();
+    clearAdmin();
+    clearAdminWrite();
 }

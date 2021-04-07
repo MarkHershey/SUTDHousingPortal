@@ -76,12 +76,8 @@ function Row(props){
 export default class ApplicationManagement extends React.Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChangeArrays = this.handleChangeArrays.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.createUI = this.createUI.bind(this);
-        this.addClick = this.addClick.bind(this);
-        this.removeClick = this.removeClick.bind(this);
         this.handleDropdown = this.handleDropdown.bind(this);
         this.state = {
             application_window_open:"",
@@ -106,41 +102,10 @@ export default class ApplicationManagement extends React.Component{
         fetchJSON();
     }
 
-    handleSubmit() {
-        console.log("new event submit");
-        if (this.state.application_window_open === "" ||
-            this.state.application_window_close === "" ||
-            this.state.applicable_periods === "" 
-            //this.state.applicable_rooms === "" ||
-            //this.state.applicable_students === ""
-            ) {
-            notification.error({
-                message: 'Event Edition Failed',
-                description:
-                    'Please do not keep certain field empty',
-            });
-            return;
-        }
-        submitApplicationPeriod(this.state.application_window_open,this.state.application_window_close,
-            this.state.applicable_periods,this.state.applicable_rooms,this.state.applicable_students);
+    handleDelete() {
+        deleteApplicationPeriodInfo(this.props.location.state.uid);
+        this.props.history.push("/");
     }
-
-    handleChange(event) {
-        const value = event.target.value;
-        console.log(event);
-        this.setState({
-            ...this.state,
-            [event.target.name]: value
-        });
-        console.log(this.state);
-    }
-
-    handleChangeArrays(i, e) {
-        const { name, value } = e.target;
-        let applicable_periods = [...this.state.applicable_periods];
-        applicable_periods[i] = {...applicable_periods[i], [name]: value};
-        this.setState({ applicable_periods });
-     }
 
     createUI(){
         return this.state.applicable_periods.map((el, i) => 
@@ -149,30 +114,18 @@ export default class ApplicationManagement extends React.Component{
                     <bs.Row>
                         <bs.Col lg={3}><Field>Start Date:</Field></bs.Col>
                         <bs.Col lg={3}>
-                            <input type="date" name="start_date" value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                            <input type="date" name="start_date" value={el.start_date ||''} />
                         </bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col lg={3}><Field>End Date:</Field></bs.Col>
                         <bs.Col lg={3}>
-                            <input type="date" name="end_date" value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                            <input type="date" name="end_date" value={el.end_date ||''} />
                         </bs.Col>
                     </bs.Row>                    
                 </bs.Container>
             </EventDiv>          
         )
-    }
-    
-    addClick(){
-        this.setState(prevState => ({
-            applicable_periods: [...prevState.applicable_periods, {start_date:"",end_date:""}]
-        }))
-    }
-
-    removeClick(i){
-        let applicable_periods = [...this.state.applicable_periods];
-        applicable_periods.splice(i,1);
-        this.setState({ applicable_periods });
     }
 
     handleDropdown(event){
@@ -224,7 +177,7 @@ export default class ApplicationManagement extends React.Component{
                 <Apply2BtnSet>
                     <bs.Container>
                         <bs.Row> 
-                            <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleSubmit}>Edit Application Period</button></bs.Col>
+                            <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleDelete}>Delete Application Period</button></bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </Apply2BtnSet>

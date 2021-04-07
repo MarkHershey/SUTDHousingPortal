@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import container, {Container, Row, Col} from 'react-bootstrap';
 import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/localstorage";
+import {getUserInfoJson, isAdmin} from "../variables/localstorage";
 import { Card } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -37,7 +37,13 @@ export default class Home extends React.Component{
             await getCurrentStudentInfo();
             this.setState({full_name:getUserInfoJson().full_name,});
         }
-        fetchJSON();
+        if(isAdmin()){
+            this.setState({full_name: "Admin"});
+            console.log(isAdmin());
+        } else {
+            fetchJSON();
+        }
+        
     }
 
 
