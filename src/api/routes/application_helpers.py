@@ -94,3 +94,7 @@ def convert_from_applicable_periods(
     for period in applicable_periods:
         applicable_periods_dicts.append(period.to_datetime_dict())
     return applicable_periods_dicts
+
+
+def update_application_status(uid: str, new_status: str):
+    pass

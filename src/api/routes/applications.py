@@ -175,6 +175,7 @@ async def update_application(
 ):
     """
     Update (Overwrite) an ApplicationForm info
+
     Require: Admin-write
     """
     # TODO:
@@ -188,6 +189,7 @@ async def delete_application(
 ):
     """
     Delete an ApplicationForm info
+
     Require: Admin-write
     """
     # TODO:
@@ -198,6 +200,7 @@ async def delete_application(
 async def approve_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Approve an Application
+
     Require: Admin-write
     """
     # TODO:
@@ -208,6 +211,7 @@ async def approve_application(uid: str, username=Depends(auth_handler.auth_wrapp
 async def waitlist_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Waitlist an Application
+
     Require: Admin-write
     """
     # TODO:
@@ -218,6 +222,7 @@ async def waitlist_application(uid: str, username=Depends(auth_handler.auth_wrap
 async def reject_application(uid: str, username=Depends(auth_handler.auth_wrapper)):
     """
     Reject an Application
+
     Require: Admin-write
     """
     # TODO:
