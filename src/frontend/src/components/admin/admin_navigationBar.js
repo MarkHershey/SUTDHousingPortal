@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../../SUTDLogo 1.png";
 import {checkValidity, getUserInfoJson, isHG, logout,isAdmin} from "../../variables/localstorage";
@@ -40,6 +40,12 @@ export const AdminNavigationBar = () => (
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
+                    <NavDropdown title="Admin">
+                        <NavDropdown.Item href="/admin/house_guardian_add">Set House Guardians</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/house_guardian_remove">Remove House Guardians</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/disciplinary_record_create">Create Disciplinary Record</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/displinary_record_view_all">View Disciplinary Records</NavDropdown.Item>
+                    </NavDropdown>
                     <NavDropdown title="Events">
                         <NavDropdown.Item href="/event">Floor Events</NavDropdown.Item>
                     </NavDropdown>

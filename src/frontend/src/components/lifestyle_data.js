@@ -21,7 +21,6 @@ export default class LifestyleData extends React.Component {
         } else {
             value=false;
         }
-        console.log(value);
         this.setState({
             ...this.state,
             [name]: value
@@ -44,7 +43,7 @@ export default class LifestyleData extends React.Component {
                     <bs.Col lg={4}><Slider
                         id="socialbility_slider"
                         name="socialbility"
-                        defaultValue={this.state.like_social}
+                        defaultValue={this.state.like_social == true ? 1:0}
                         aria-labelledby="socialbility-slider"
                         step={1}
                         marks
@@ -62,13 +61,12 @@ export default class LifestyleData extends React.Component {
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
                         id="cleanliness_slider"
-                        defaultValue={this.state.like_clean}
+                        defaultValue={this.state.like_clean==true ? 1:0}
                         aria-labelledby="cleanliness-slider"
                         step={1}
                         marks
                         min={0}
                         max={1}
-                        valueLabelDisplay="auto"
                         color="primary"
                         onChange={(e, value) => this.handleChange("like_clean", value)}
                     /></bs.Col>
