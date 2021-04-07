@@ -44,7 +44,7 @@ export const AdminNavigationBar = () => (
                         <NavDropdown.Item href="/admin/house_guardian_add">Set House Guardians</NavDropdown.Item>
                         <NavDropdown.Item href="/admin/house_guardian_remove">Remove House Guardians</NavDropdown.Item>
                         <NavDropdown.Item href="/admin/disciplinary_record_create">Create Disciplinary Record</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/displinary_record_view_all">View Disciplinary Records</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/disciplinary_record_view_all">View Disciplinary Records</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Events">
                         <NavDropdown.Item href="/event">Floor Events</NavDropdown.Item>

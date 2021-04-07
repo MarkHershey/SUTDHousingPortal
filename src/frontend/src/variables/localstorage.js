@@ -209,6 +209,24 @@ export function setOngoingApplicationPeriodInfoJson(newOngoingApplicationPeriodI
     storage.setItem("ongoingapplicationperiodinfojson",JSON.stringify(newOngoingApplicationPeriodInfoJson));
 }
 
+export function setAllDisciplinaryRecordsInfoJson(newAllDisciplinaryRecordsInfoJson){
+    storage.setItem("alldisciplinaryrecords",JSON.stringify(newAllDisciplinaryRecordsInfoJson));
+}
+
+export function getAllDisciplinaryRecordsInfoJson(){
+    if(storage["alldisciplinaryrecords"]===undefined) return undefined;
+    return JSON.parse(storage["alldisciplinaryrecords"]);
+}
+
+export function setPersonalDisciplinaryRecordInfoJson(newInfoJson){
+    storage.setItem("personaldisciplinaryrecord",JSON.stringify(newInfoJson));
+}
+
+export function getPersonalDisciplinaryRecordInfoJson(){
+    if(storage["personaldisciplinaryrecord"]===undefined) return undefined;
+    return JSON.parse(storage["personaldisciplinaryrecord"]);
+}
+
 
 export function logout(){
     clearToken();
