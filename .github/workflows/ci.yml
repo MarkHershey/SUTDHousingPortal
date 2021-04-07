@@ -12,12 +12,18 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
             - name: Run Dev Env Setup Script
+              env:
+                  TERM: xterm-256color
               run: |
                   pwd
                   set -euo pipefail
                   export TERM=xterm-256color
                   ./dev_setup.sh
             - name: Run Unit Tests
+              env:
+                  _DB_USER: ${{ secrets._DB_USER }}
+                  _DB_PASS: ${{ secrets._DB_PASS }}
+                  _DB_NAME: ${{ secrets._DB_NAME }}
               run: |
                   source venv/bin/activate
                   pytest --cov=src tests --cov-report=xml
@@ -28,7 +34,7 @@ jobs:
                   files: ./coverage.xml
                   # directory: ./coverage/reports/
                   flags: unittests
-                  env_vars: OS,PYTHON
+                  # env_vars: OS,PYTHON
                   name: codecov-umbrella
                   # fail_ci_if_error: true
                   # path_to_write_report: ./coverage/codecov_resport.txt
