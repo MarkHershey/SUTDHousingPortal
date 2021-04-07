@@ -31,6 +31,7 @@ export default class ApplicationThree extends React.Component{
         super(props);
         this.state = getUserInfoJson().preference_lifestyle;
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSave = this.handleSave.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
     }
@@ -49,9 +50,21 @@ export default class ApplicationThree extends React.Component{
         }
         return true;
     }
+
+    handleSave(){
+        if(this.checkValidation()){
+            console.log("saved");
+            console.log("submitted");
+            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
+                this.state.like_clean,this.state.like_quite);
+            getCurrentStudentInfo();
+            this.state = getUserInfoJson().preference_lifestyle;
+        }
+    }
+
     handleSubmit(){
         if(this.checkValidation()){
-            console.log("submitted")
+            console.log("submitted");
             updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
                 this.state.like_clean,this.state.like_quite);
             getCurrentStudentInfo();
@@ -71,7 +84,7 @@ export default class ApplicationThree extends React.Component{
                     <ProfileBox>
                         <bs.Row>
                                 <bs.Col><a href="/apply2"><button id="application3_back_btn" type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
-                                <bs.Col><button id="application3_save_btn" type="button" className="btn btn-outline-primary">Save</button></bs.Col>
+                                <bs.Col><button id="application3_save_btn" type="button" onClick={this.handleSave} className="btn btn-outline-primary">Save</button></bs.Col>
                                 <bs.Col><button id="application3_next_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
                         </bs.Row>
                     </ProfileBox>                    

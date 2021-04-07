@@ -1,7 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {Typography, Slider, TextField} from '@material-ui/core';
+import {Typography, Slider, TextField, Checkbox } from '@material-ui/core';
 import {Student} from "../variables/studentinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson} from "../variables/localstorage";
@@ -16,7 +16,12 @@ export default class LifestyleData extends React.Component {
     }
 
     handleChange(name, value) {
-
+        if(value==1 && (name=="like_social" || name=="like_clean")){
+            value=true;
+        } else {
+            value=false;
+        }
+        console.log(value);
         this.setState({
             ...this.state,
             [name]: value
@@ -44,8 +49,7 @@ export default class LifestyleData extends React.Component {
                         step={1}
                         marks
                         min={0}
-                        max={10}
-                        valueLabelDisplay="auto"
+                        max={1}
                         onChange={(e, value) => this.handleChange("like_social", value)}
                         color="secondary"
                     /></bs.Col>
@@ -63,13 +67,14 @@ export default class LifestyleData extends React.Component {
                         step={1}
                         marks
                         min={0}
-                        max={10}
+                        max={1}
                         valueLabelDisplay="auto"
-                        color="secondary"
+                        color="primary"
                         onChange={(e, value) => this.handleChange("like_clean", value)}
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
+                {/*
                 <Typography id="noisiness-slider">
                     Noisiness Level
                 </Typography>
@@ -89,6 +94,7 @@ export default class LifestyleData extends React.Component {
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
+                */}
                 <form noValidate>
                     <TextField
                         id="time-sleep"

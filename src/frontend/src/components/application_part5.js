@@ -36,7 +36,7 @@ export default function ApplicationSummary(){
             <h3><u>Application Summary</u></h3>
             <SummaryData/>
             <bs.Row>
-                    <bs.Col><a href="/apply3"><button id="application5_back_btn" type="button" className="btn btn-outline-primary">Go to Previous Step</button></a></bs.Col>
+                    <bs.Col><a href="/apply4"><button id="application5_back_btn" type="button" className="btn btn-outline-primary">Go to Previous Step</button></a></bs.Col>
                     <bs.Col><button id="submit_application_btn" onClick={handleSubmit} type="button" className="btn btn-outline-primary">Submit</button></bs.Col>
             </bs.Row>
             <br/>

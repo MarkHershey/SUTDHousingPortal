@@ -7,6 +7,7 @@ import ReactDragListView from "react-drag-listview";
 import TestModal from "./draggable_modal.js";
 import * as bs from "react-bootstrap";
 import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
+import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson} from "../variables/localstorage";
 import { StarTwoTone } from '@ant-design/icons';
@@ -25,37 +26,43 @@ const ProfileBox = styled.div`
   text-align: center;
 `;
 
-const data = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9
-];
-
 export default class ApplicationFour extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {data};
+        this.handleSave = this.handleSave.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        var roomPreferences = getUserInfoJson().preference_room
+        this.state = roomPreferences;
     }
+
+    handleSave(){
+        updateRoomProfileInfo(this.state.room_type, this.state.room_type_2nd,
+            this.state.block, this.state.block_2nd, this.state.level_range, this.state.window_facing,
+            this.state.near_to_lift, this.state.near_to_washroom, this.state.level_has_pantry,
+            this.state.level_has_mr, this.state.level_has_gsr, this.state.level_has_rr, this.state.weightage_order
+        );
+        
+    }
+
     handleSubmit() {
         if (true) {
+            updateRoomProfileInfo(this.state.room_type, this.state.room_type_2nd,
+                this.state.block, this.state.block_2nd, this.state.level_range, this.state.window_facing,
+                this.state.near_to_lift, this.state.near_to_washroom, this.state.level_has_pantry,
+                this.state.level_has_mr, this.state.level_has_gsr, this.state.level_has_rr, this.state.weightage_order
+            );
             //Submit Data
-            //this.props.history.push("/application_summary");
+            this.props.history.push("/application_summary");
         }
     }
     onDragEnd = (fromIndex, toIndex) => {
         if (toIndex < 0) return; // Ignores if outside designated area
 
-        const items = [...this.state.data];
+        const items = [...this.state.weightage_order];
         const item = items.splice(fromIndex, 1)[0];
         items.splice(toIndex, 0, item);
-        this.setState({data: items});
-        console.log(this.state.data)
+        this.setState({"weightage_order": items});
+        console.log(this.state);
     };
 
     render() {
@@ -73,7 +80,7 @@ export default class ApplicationFour extends React.Component {
                             <List
                                 size="large"
                                 bordered
-                                dataSource={this.state.data}
+                                dataSource={this.state.weightage_order}
                                 renderItem={item => {
                                     const draggble = true;
 
@@ -107,7 +114,7 @@ export default class ApplicationFour extends React.Component {
                 <ProfileBox>
                     <bs.Row>
                         <bs.Col><a href="/apply3"><button id="application4_back_btn" type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
-                        <bs.Col><button id="application4_save_btn" type="button" className="btn btn-outline-primary">Save</button></bs.Col>
+                        <bs.Col><button id="application4_save_btn" type="button" onClick={this.handleSave} className="btn btn-outline-primary">Save</button></bs.Col>
                         <bs.Col><button id="application4_next_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
                     </bs.Row>
                 </ProfileBox>
