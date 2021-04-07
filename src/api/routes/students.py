@@ -432,16 +432,16 @@ async def get_student_submitted_applications(
     if not student_info:
         raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
-    AP_uids = student_info.get("application_uids", [])
-    if not AP_uids:
+    AF_uids = student_info.get("application_uids", [])
+    if not AF_uids:
         return {}
     else:
-        AP_uids = list(set(AP_uids))
+        AF_uids = list(set(AF_uids))
 
     submitted_applications: Dict[str, dict] = {}
 
     try:
-        for uid in AP_uids:
+        for uid in AF_uids:
             if isinstance(uid, str):
                 ap_dict: dict = applications_collection.find_one({"uid": uid})
                 clean_dict(ap_dict)
