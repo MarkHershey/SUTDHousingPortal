@@ -7,6 +7,11 @@ import {Card, Row, Col, Carousel} from 'antd';
 import 'antd/dist/antd.css';
 import {icons} from "antd/es/image/PreviewGroup";
 import {Statistic} from "antd/es";
+import SUTD1 from "../SUTD1.png";
+import SUTD2 from "../SUTD2.png";
+import SUTD3 from "../SUTD3.png";
+import SUTD4 from "../SUTD4.png";
+
 const {ArrowUpOutlined, ArrowDownOutlined} = icons;
 
 const Homepage = styled.div`
@@ -110,22 +115,43 @@ export default class Home extends React.Component {
                 <Carousel autoplay>
                     <div>
                         <h3 style={contentStyle}>
-                            <img src="../SUTD1.png" style={{
+                            <img src={SUTD1} style={{
                             display: "block",
                             width:"100%",
-                            height: "6.917rem",
+                            height: "600px",
                             objectFit: "cover",
                         }} alt={"SUTD1"}/>
                         </h3>
                     </div>
                     <div>
-                        <h3 style={contentStyle}>2</h3>
+                        <h3 style={contentStyle}>
+                            <img src={SUTD2} style={{
+                                display: "block",
+                                width:"100%",
+                                height: "600px",
+                                objectFit: "cover",
+                            }} alt={"SUTD1"}/>
+                        </h3>
                     </div>
                     <div>
-                        <h3 style={contentStyle}>3</h3>
+                        <h3 style={contentStyle}>
+                            <img src={SUTD3} style={{
+                                display: "block",
+                                width:"100%",
+                                height: "600px",
+                                objectFit: "cover",
+                            }} alt={"SUTD1"}/>
+                        </h3>
                     </div>
                     <div>
-                        <h3 style={contentStyle}>4</h3>
+                        <h3 style={contentStyle}>
+                            <img src={SUTD4} style={{
+                                display: "block",
+                                width:"100%",
+                                height: "600px",
+                                objectFit: "cover",
+                            }} alt={"SUTD1"}/>
+                        </h3>
                     </div>
                 </Carousel>
             </Homepage>
