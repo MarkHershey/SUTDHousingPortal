@@ -145,10 +145,11 @@ export async function deleteEvent(uid){
 
     await axios(config)
         .then(function (response) {
+            window.location.reload(true);
         })
         .catch(function (error) {
             notification.error({
-                message: '"Event Deletion Failed',
+                message: 'Event Deletion Failed',
                 description:
                     'There are students signed up already',
             });

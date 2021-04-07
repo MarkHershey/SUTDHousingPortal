@@ -209,7 +209,7 @@ function Row(props) {
                             <bs.Row>
                                 <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
                                                        onClick={async () => {await quitEventHandler(row.uid)}}
-                                                       disabled={!joined(row)}>{"Quit Event"}</button></ButtonDivEvent></bs.Col>
+                                                       disabled={!joined(row)}>Quit Event</button></ButtonDivEvent></bs.Col>
 
                                 <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
                                                                   onClick={()=>{
@@ -241,7 +241,7 @@ function Row(props) {
                                     <button type="button" className="btn btn-outline-dark"
                                             onClick={async () => {await deleteEvent(row.uid)}}
                                             disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
-                                        {"Delete Event"}
+                                        Delete Event
                                     </button>
                                 </ButtonDivEvent></bs.Col>
 
@@ -324,7 +324,7 @@ function SimpleModal(props) {
         <div>
             <button type="button" className="btn btn-outline-dark"
                     onClick={handleOpen}
-                    disabled={!getUserInfoJson().is_house_guardian}>{"Take Attendance"}
+                    disabled={!getUserInfoJson().is_house_guardian}>Take Attendance
             </button>
             <Modal
                 open={open}
