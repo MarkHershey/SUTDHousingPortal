@@ -53,7 +53,7 @@ export default class AddHouseGuardian extends React.Component{
         };
     }
 
-    handleSubmit() {
+    handleSubmit(id) {
         setHouseGuardian(id);
     }
 
