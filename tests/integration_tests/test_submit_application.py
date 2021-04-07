@@ -1,14 +1,15 @@
+import json
 import sys
+import time
 import unittest
-from pydantic.utils import Representation
-import requests
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from random import randint
-from markkk.logger import logger
+
+import requests
 from bson import json_util
-import json
-import time
+from markkk.logger import logger
+from pydantic.utils import Representation
 
 src_dir = Path(__file__).resolve().parent.parent.parent / "src"
 
@@ -29,7 +30,7 @@ class TestApplicationCreation(unittest.TestCase):
         # test connection
         request_url = str(self.url_local_root + "/api")
         try:
-            response = requests.get(url=request_url)
+            response = requests.get(url=request_url, timeout=1)
             if response.status_code != 200:
                 logger.error("setUp: Failed to connect")
                 self.ignore = True

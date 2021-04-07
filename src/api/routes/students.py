@@ -9,6 +9,7 @@ from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
 from ..functional import clean_dict, remove_none_value_keys
+from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
@@ -18,7 +19,6 @@ from ..models.student import (
     StudentIdentityProfile,
     StudentProfile,
 )
-from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 auth_handler = AuthHandler()

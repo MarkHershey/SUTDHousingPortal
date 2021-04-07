@@ -49,3 +49,7 @@ class TestListUtils(unittest.TestCase):
 
         deduct_list_from_list(host_list=A, deduct_list=B)
         self.assertEqual(A, delta)
+
+
+if __name__ == "__main__":
+    unittest.main()
