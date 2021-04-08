@@ -55,6 +55,8 @@ export default class ApplicationCreation extends React.Component{
         };
     }
 
+
+
     handleSubmit() {
         console.log("new event submit");
         if (this.state.application_window_open === "" ||

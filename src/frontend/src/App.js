@@ -14,7 +14,7 @@ import PersonalDataEdit from "./components/personal_profile_edit";
 import RoomProfileEdit from "./components/room_profile_edit";
 import EventHistory from "./components/event_history";
 import EventCreation from "./components/event_creation";
-import {ApplicationStatus} from "./components/application_status";
+import ApplicationStatus from "./components/application_status";
 import ApplicationSummary from "./components/application_part5";
 import React from 'react';
 import {checkValidity, isAdmin} from "./variables/localstorage";

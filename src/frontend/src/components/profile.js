@@ -12,6 +12,8 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
+
+
 export default class Profile extends React.Component{
     render() {
         return (
