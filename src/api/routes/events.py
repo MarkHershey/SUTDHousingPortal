@@ -4,11 +4,13 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
-from ..error_msg import ErrorMsg as MSG
+
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
+from ..error_msg import ErrorMsg as MSG
+from ..functional import clean_dict, deduct_list_from_list, remove_none_value_keys
 from ..models.event import Event, EventEditableInfo
-from ..utils import Access, clean_dict, deduct_list_from_list, remove_none_value_keys
 
 router = APIRouter(prefix="/api/events", tags=["Housing Events"])
 auth_handler = AuthHandler()
@@ -36,9 +38,9 @@ async def get_list_of_events(
                     clean_dict(event_dict)
                     event_info_list.append(event_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     return event_info_list
 
@@ -58,9 +60,9 @@ async def get_all_events(username=Depends(auth_handler.auth_wrapper)):
             clean_dict(event_dict)
             event_info_list.append(event_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     return event_info_list
 
@@ -82,9 +84,9 @@ async def get_upcoming_events(username=Depends(auth_handler.auth_wrapper)):
             clean_dict(event_dict)
             event_info_list.append(event_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     return event_info_list
 
@@ -101,12 +103,9 @@ async def create_an_event(
     logger.debug(f"User({username}) trying creating new Event.")
     # Check access
     permission_ok = Access.at_least_student_hg_write(username)
-
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     new_event.created_by = str(username)
     event_dict = dict(new_event.dict())
@@ -118,9 +117,9 @@ async def create_an_event(
         logger.debug(f"New Event info: {_event}")
         return _event
     except Exception as e:
-        logger.error(f"New Event failed to be inserted to DB: {new_event.title}")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Failed to insert into database")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
 
 @router.get("/{uid}", response_model=Event)
@@ -135,14 +134,14 @@ async def get_an_event(uid: str, username=Depends(auth_handler.auth_wrapper)):
         event_dict: dict = events_collection.find_one({"uid": uid})
         clean_dict(event_dict)
     except Exception as e:
-        logger.error("Failed to query database.")
+        logger.error(MSG.DB_QUERY_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     if event_dict:
         return event_dict
     else:
-        raise HTTPException(status_code=404, detail="Event not found.")
+        raise HTTPException(status_code=404, detail=MSG.ITEM_NOT_FOUND)
 
 
 @router.put("/{uid}", response_model=Event)
@@ -167,33 +166,38 @@ async def update_an_event(
         try:
             event_dict: dict = events_collection.find_one({"uid": uid})
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
         if event_dict and event_dict.get("created_by") == username:
             permission_ok = True
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # Proceed to update event
     event_dict = dict(event_editable_info.dict())
     remove_none_value_keys(event_dict)
     try:
-        updated = students_collection.find_one_and_update(
-            filter={"uid": uid}, update={"$set": event_dict}
+        updated = events_collection.find_one_and_update(
+            filter={"uid": uid},
+            update={"$set": event_dict},
+            return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"{str(updated)}")
         clean_dict(updated)
-        return updated if updated else {"msg": "failed"}
     except Exception as e:
-        logger.error("Failed to update database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.delete("/{uid}")
@@ -262,10 +266,8 @@ async def register_students_for_event(
         permission_ok = True
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # 0. validate student list first
     validated_students = []
@@ -281,9 +283,9 @@ async def register_students_for_event(
                 if uid not in _events:
                     validated_students.append(student_id)
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     # 1. add them into event's sign up list
     try:
@@ -294,12 +296,12 @@ async def register_students_for_event(
         )
         logger.debug(f"Updated: {str(updated)}")
     except Exception as e:
-        logger.error("Failed to update database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     if not updated:
-        raise HTTPException(status_code=404, detail="Event not found.")
+        raise HTTPException(status_code=400, detail=MSG.TARGET_ITEM_NOT_FOUND)
     else:
         clean_dict(updated)
 
@@ -316,9 +318,9 @@ async def register_students_for_event(
             )
             logger.debug(f"Updated: {str(_updated)}")
         except Exception as e:
-            logger.error("Failed to update database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     return updated
 
@@ -341,10 +343,8 @@ async def deregister_students_for_event(
         permission_ok = True
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # 0. validate student list first
     validated_students = []
@@ -360,9 +360,9 @@ async def deregister_students_for_event(
                 if uid in _events:
                     validated_students.append(student_id)
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     # 1. remove them from event's sign up list
     try:
@@ -381,14 +381,13 @@ async def deregister_students_for_event(
             return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"Updated: {str(event_info)}")
-
     except Exception as e:
-        logger.error("Failed to update database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     if not event_info:
-        raise HTTPException(status_code=404, detail="Event not found.")
+        raise HTTPException(status_code=400, detail=MSG.TARGET_ITEM_NOT_FOUND)
     else:
         clean_dict(event_info)
 
@@ -405,9 +404,9 @@ async def deregister_students_for_event(
             )
             logger.debug(f"Updated: {str(_updated)}")
         except Exception as e:
-            logger.error("Failed to update database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     return event_info
 
@@ -425,10 +424,8 @@ async def add_students_attendance_for_event(
     permission_ok = Access.is_admin_write(username) or Access.is_student_hg(username)
 
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # 0. validate student list first
     validated_students = []
@@ -444,9 +441,9 @@ async def add_students_attendance_for_event(
                 if uid in _events:
                     validated_students.append(student_id)
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     # 1. Add them into event's attendance list
     try:
@@ -465,14 +462,13 @@ async def add_students_attendance_for_event(
             return_document=ReturnDocument.AFTER,
         )
         logger.debug(f"Updated: {str(event_info)}")
-
     except Exception as e:
-        logger.error("Failed to update database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     if not event_info:
-        raise HTTPException(status_code=404, detail="Event not found.")
+        raise HTTPException(status_code=400, detail=MSG.TARGET_ITEM_NOT_FOUND)
     else:
         clean_dict(event_info)
 
@@ -486,9 +482,9 @@ async def add_students_attendance_for_event(
             )
             logger.debug(f"Updated: {str(_updated)}")
         except Exception as e:
-            logger.error("Failed to update database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     return event_info
 
@@ -504,12 +500,9 @@ async def remove_students_attendance_for_event(
     """
     logger.debug(f"User({username}) trying to remove attendance for Event({uid}).")
     permission_ok = Access.is_admin_write(username) or Access.is_student_hg(username)
-
     if not permission_ok:
-        logger.debug(f"User({username}) permission denied.")
-        raise HTTPException(
-            status_code=401, detail="You don't have permission to update this."
-        )
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
     # 0. validate student list first
     validated_students = []
@@ -525,9 +518,9 @@ async def remove_students_attendance_for_event(
                 if uid in _attended_events:
                     validated_students.append(student_id)
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     # 1. Remove them from event's attendance list
     try:
@@ -548,12 +541,12 @@ async def remove_students_attendance_for_event(
         logger.debug(f"Updated: {str(event_info)}")
 
     except Exception as e:
-        logger.error("Failed to update database.")
+        logger.error(MSG.DB_UPDATE_ERROR)
         logger.error(e)
-        raise HTTPException(status_code=500, detail="Databse Error.")
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     if not event_info:
-        raise HTTPException(status_code=404, detail="Event not found.")
+        raise HTTPException(status_code=400, detail=MSG.TARGET_ITEM_NOT_FOUND)
     else:
         clean_dict(event_info)
 
@@ -567,8 +560,8 @@ async def remove_students_attendance_for_event(
             )
             logger.debug(f"Updated: {str(_updated)}")
         except Exception as e:
-            logger.error("Failed to update database.")
+            logger.error(MSG.DB_UPDATE_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
 
     return event_info

@@ -1,40 +1,8 @@
-from typing import List
-
 from fastapi import HTTPException
 from markkk.logger import logger
 
 from .database import admins_collection, students_collection
-
-
-def clean_dict(data: dict) -> None:
-    if not isinstance(data, dict):
-        logger.warning(f"Not a dictionary: {type(data)}")
-        return
-
-    data.pop("_id", None)
-    data.pop("password", None)
-
-    return
-
-
-def remove_none_value_keys(data: dict) -> None:
-    to_be_removed_keys = []
-    for key, value in data.items():
-        if value is None:
-            to_be_removed_keys.append(key)
-
-    for key in to_be_removed_keys:
-        data.pop(key, None)
-
-    return
-
-
-def deduct_list_from_list(host_list: List[str], deduct_list: List[str]) -> None:
-    for i in deduct_list:
-        # make sure no duplications
-        while i in host_list:
-            host_list.remove(i)
-    return
+from .error_msg import ErrorMsg as MSG
 
 
 class Access:
@@ -55,9 +23,9 @@ class Access:
                 return True
             return False
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     @staticmethod
     def is_student_hg(username: str) -> bool:
@@ -68,9 +36,9 @@ class Access:
                 return True
             return False
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     @staticmethod
     def is_admin(username: str) -> bool:
@@ -80,9 +48,9 @@ class Access:
                 return True
             return False
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     @staticmethod
     def is_admin_write(username: str) -> bool:
@@ -92,9 +60,9 @@ class Access:
                 return True
             return False
         except Exception as e:
-            logger.error("Failed to query database.")
+            logger.error(MSG.DB_QUERY_ERROR)
             logger.error(e)
-            raise HTTPException(status_code=500, detail="Databse Error.")
+            raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     @staticmethod
     def at_least_student_hg_write(username: str) -> bool:

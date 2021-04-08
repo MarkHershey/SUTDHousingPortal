@@ -3,7 +3,7 @@ from datetime import datetime
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from .helpers import uid_gen
+from ..functional import uid_gen
 
 
 class DisciplinaryRecord(BaseModel):
