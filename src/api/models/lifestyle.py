@@ -12,7 +12,7 @@ class LifestyleProfile(BaseModel):
     like_clean: int # how tidy do they need their room to be? range from 1 to 5
     like_music: bool # do they like to have music in the room?
     relationship_scale: int # from 1 to 5
-    aircon: str # choice (often, occasionally, not at all) 
+    aircon_usage: str # choice (often, occasionally, not at all) 
     interests: List[str] = [] # select from given list, let them add on if they want (others)
     intended_pillar: str = "NA" # choice (ISTD, EPD, ESD, ASD, DAI, NA)
     diet: str = "None" # choice (halal, no beef, kosher, others)
@@ -29,22 +29,21 @@ class LifestyleProfile(BaseModel):
         else:
             return "AROUND MIDNIGHT"
 
-    @validator("social_habits", pre=True, always=True) 
-    # like_social boolean 
+    @validator("like_social", pre=True, always=True) 
     def validate_social_habits(cls, v):
         if isinstance(v, bool) or v is None:
             return v
         else:
             return None 
 
-    @validator("room_cleanliness", pre=True, always=True)
+    @validator("like_clean", pre=True, always=True)
     def validate_room_cleanliness(cls, v):
         if isinstance(v, int) and v <= 5 and v >= 0:
             return v
         else:
             return 3
 
-    @validator("music_volume", pre=True, always=True)
+    @validator("like_music", pre=True, always=True)
     def validate_music_volume(cls, v):
         if isinstance(v, bool) or v is None:
             return v
@@ -69,7 +68,7 @@ class LifestyleProfile(BaseModel):
         else:
             return "OCCASIONALLY"
 
-    @validator("interests_list", pre=True, always=True)
+    @validator("interests", pre=True, always=True)
     def validate_interests_list(cls, v):
         interests = ["kpop", "anime", "film", "reading", "photography", "art"] # random list of interests
         valid = []
@@ -104,7 +103,7 @@ class LifestyleProfile(BaseModel):
         else:
             return None
 
-    @validator("smoker", pre=True, always=True)
+    @validator("smoking", pre=True, always=True)
     def validate_smoker(cls, v):
         if isinstance(v, str) and v.upper() in (
             "ACTIVE SMOKER",
@@ -137,7 +136,7 @@ class RoommatePreference(BaseModel): # all options are set to None unless stated
         else:
             return "AROUND MIDNIGHT"
 
-    @validator("social_habits", pre=True, always=True) 
+    @validator("like_social", pre=True, always=True) 
     # like_social boolean 
     def validate_social_habits(cls, v):
         if isinstance(v, bool) or v is None:
@@ -145,14 +144,14 @@ class RoommatePreference(BaseModel): # all options are set to None unless stated
         else:
             return None 
 
-    @validator("music_volume", pre=True, always=True)
+    @validator("like_music", pre=True, always=True)
     def validate_music_volume(cls, v):
         if isinstance(v, bool) or v is None:
             return v
         else:
             return None 
 
-    @validator("interests_list", pre=True, always=True)
+    @validator("interests", pre=True, always=True)
     def validate_interests_list(cls, v):
         interests = ["kpop", "anime", "film", "reading", "photography", "art"] # random list of interests
         valid = []
@@ -187,7 +186,7 @@ class RoommatePreference(BaseModel): # all options are set to None unless stated
         else:
             return None
 
-    @validator("smoker", pre=True, always=True)
+    @validator("smoking", pre=True, always=True)
     def validate_smoker(cls, v):
         if isinstance(v, str) and v.upper() in (
             "ACTIVE SMOKER",
@@ -211,4 +210,3 @@ class RoommatePreference(BaseModel): # all options are set to None unless stated
             return v
         else:
             return None
-            
