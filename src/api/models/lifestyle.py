@@ -3,9 +3,6 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from api.data_migrations.import_student import import_student
-from ..data_migrations import import_student
-
 class LifestyleProfile(BaseModel):
     sleep_time: str # choice (before midnight/after midnight/around midnight)
     like_social: bool 
