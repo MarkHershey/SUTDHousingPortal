@@ -1,6 +1,8 @@
 import time
 from selenium import webdriver
 import unittest
+import random
+import string
 
 path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
 options = webdriver.ChromeOptions()

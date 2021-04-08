@@ -65,7 +65,10 @@ export default class EventCreation extends React.Component{
             this.state.floor === "" ||
             this.state.description === "" ||
             this.state.start_time === "" ||
-            this.state.signup_limit === "") {
+            this.state.signup_limit === "" ||
+            this.state.signup_limit <= 0 ||
+            this.state.duration_mins === "" ||
+            this.state.duration_mins <= 0) {
             notification.error({
                 message: 'Invalid Form',
                 description: 'Fill in all the fields and retry'

@@ -1,7 +1,6 @@
 import string
 
 from function import *
-import random
 
 
 class ProfileTest(unittest.TestCase):
