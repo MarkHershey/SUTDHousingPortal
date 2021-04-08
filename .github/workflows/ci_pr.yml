@@ -1,7 +1,7 @@
-name: CI
+name: CI-PR
 
 on:
-    push:
+    pull_request:
         branches:
             - master
 
@@ -28,15 +28,15 @@ jobs:
                   source venv/bin/activate
                   pytest --cov=src tests/unit_tests
                   coverage xml --omit="**/routes/*"
-            - name: Upload coverage report to Codecov
-              uses: codecov/codecov-action@v1
-              with:
-                  # token: ${{ secrets.CODECOV_TOKEN }}
-                  files: ./coverage.xml
-                  # directory: ./coverage/reports/
-                  flags: unittests
-                  # env_vars: OS,PYTHON
-                  name: codecov-umbrella
-                  # fail_ci_if_error: true
-                  # path_to_write_report: ./coverage/codecov_resport.txt
-                  verbose: true
+            # - name: Upload coverage report to Codecov
+            #   uses: codecov/codecov-action@v1
+            #   with:
+            #       # token: ${{ secrets.CODECOV_TOKEN }}
+            #       files: ./coverage.xml
+            #       # directory: ./coverage/reports/
+            #       flags: unittests
+            #       # env_vars: OS,PYTHON
+            #       name: codecov-umbrella
+            #       # fail_ci_if_error: true
+            #       # path_to_write_report: ./coverage/codecov_resport.txt
+            #       verbose: true
