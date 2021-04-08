@@ -22,9 +22,20 @@ logger.info(
 
 
 client = pymongo.MongoClient(
-    f"mongodb+srv://{_DB_USER}:{_DB_PASS}@clusteresc.xvunj.mongodb.net/{_DB_NAME}?retryWrites=true&w=majority"
+    f"mongodb+srv://{_DB_USER}:{_DB_PASS}@clusteresc.xvunj.mongodb.net/{_DB_NAME}?retryWrites=true&w=majority",
+    ssl=True,
 )
+
 db = client[f"{_DB_NAME}"]
+db_available = False
+
+try:
+    # The ismaster command is cheap and does not require auth.
+    db.command("ismaster")
+    logger.debug("DB Server OK")
+    db_available = True
+except pymongo.errors.ConnectionFailure:
+    logger.error("DB Server Not Available")
 
 ### MongoDB Collection Reference ###
 # User

@@ -9,13 +9,15 @@ src_dir = Path(__file__).resolve().parent.parent.parent / "src"
 sys.path.insert(0, str(src_dir))
 
 from api.access_utils import Access
-from api.database import _DB_USER
+from api.database import _DB_USER, db_available
 
 
 class TestAccessUtils(unittest.TestCase):
     def setUp(self):
         self.ignore = False
         if _DB_USER == "REPLACE_ME":
+            self.ignore = True
+        if not db_available:
             self.ignore = True
 
     def test_is_admin(self):
