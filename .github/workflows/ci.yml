@@ -26,7 +26,8 @@ jobs:
                   _DB_NAME: ${{ secrets._DB_NAME }}
               run: |
                   source venv/bin/activate
-                  pytest --cov=src tests --cov-report=xml
+                  pytest --cov=src tests
+                  coverage xml --omit="**/routes/*"
             - name: Upload coverage report to Codecov
               uses: codecov/codecov-action@v1
               with:
