@@ -1,16 +1,34 @@
 version: "3"
+
 services:
-    backend:
+    web:
         build:
-            context: .
+            context: ./src/frontend/
             dockerfile: Dockerfile
-        container_name: housing-portal-dev
+        container_name: housing-portal-web
         restart: unless-stopped
-        # restart: "no"
         ports:
-            - "80:80"
+            - 80:80
+            # - 443:443
         environment:
             TZ: "Asia/Singapore"
+        depends_on:
+            - api
+    api:
+        build:
+            context: ./src/api/
+            dockerfile: Dockerfile
+        container_name: housing-portal-api
+        restart: unless-stopped
+        ports:
+            - 8080:8080
+        environment:
+            TZ: "Asia/Singapore"
+            PORT: "8080"
             MODULE_NAME: "api.main"
-        volumes:
-            - "./logs:/app/logs"
+            LOG_LEVEL: "debug"
+            PRE_START_PATH: "/app/api/prestart.sh"
+            # Gunicorn workers
+            MAX_WORKERS: "1"
+        # volumes:
+        #     - "./logs:/app/logs"

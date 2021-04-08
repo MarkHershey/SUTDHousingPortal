@@ -17,11 +17,26 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
-import {getEventInfoJson, getToken, getUserInfoJson} from "../variables/localstorage";
-import {getEventInfo} from "../variables/eventinfo";
+import {
+    addAttendanceADDJson,
+    addAttendanceDELJson, deleteAttendanceADDJson,
+    deleteAttendanceDELJson,
+    getEventInfoJson,
+    getToken,
+    getUpcomingEventInfoJson,
+    getUserInfoJson, initAttendanceEditJson, isHG
+} from "../variables/localstorage";
+import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../variables/eventinfo";
 import {getUsername} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
+import Modal from '@material-ui/core/Modal';
+import {CheckBox} from "@material-ui/icons";
+import {forEach} from "react-bootstrap/ElementChildren";
+import {eventHandler} from "../variables/eventinfo";
+import {useHistory} from "react-router";
+import "../variables/utilities"
+
 
 const useRowStyles = makeStyles({
     root: {
@@ -30,6 +45,7 @@ const useRowStyles = makeStyles({
         },
     },
 });
+
 const EventDiv = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -45,36 +61,93 @@ const SubTitle = styled.p`
   font-size: medium;
 `;
 
-Date.prototype.format = function(fmt){
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
+const CenterDiv = styled.div`
+    text-align: center;
+`;
+
+const ButtonDivEvent = styled.div`text-align: center;`;
+
+
+
+function joined(row){
+    var signed_up = false;
+    row.signups.forEach(function (item){
+        if (item.toString() === getUsername()) signed_up = true;
+    });
+    return signed_up
+}
+
+async function quitEventHandler(event_id){
+    const data = JSON.stringify([getUsername()]);
+
+    const config = {
+        method: 'delete',
+        url: url + '/api/events/' + event_id +'/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data : data
     };
 
-    if(/(y+)/.test(fmt)){
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    }
-
-    for(var k in o){
-        if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(
-                RegExp.$1, (RegExp.$1.length===1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-        }
-    }
-
-    return fmt;
+    axios(config)
+        .then(function (response) {
+            window.location.reload(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
+
+
+Row.propTypes = {
+    row: PropTypes.shape({
+        uid: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        event_type: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        start_time: PropTypes.string.isRequired,
+        duration: PropTypes.number.isRequired,
+        count: PropTypes.bool.isRequired,
+        floor: PropTypes.number.isRequired,
+        block:PropTypes.string.isRequired,
+        signups:PropTypes.array.isRequired,
+        attendance:PropTypes.array.isRequired,
+    }).isRequired,
+};
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
 
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
-
+    let history = useHistory();
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
@@ -86,11 +159,11 @@ function Row(props) {
                 <TableCell component="th" scope="row">{row.title}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).toDateString()}</TableCell>
                 <TableCell align="right">{new Date(Date.parse(row.start_time)).format("hh:mm")}</TableCell>
-                <TableCell align="right">{"Block " + row.block+" Lvl "+row.floor}</TableCell>
+                <TableCell align="right">{"Block " + row.block+" Level "+row.floor}</TableCell>
                 <TableCell align="right">
                     <button type="button" class="btn btn-outline-primary"
                             onClick = {async() => {await eventHandler(row.uid)}}
-                            disabled={joined(row)}>{joined(row)? "Signed Up" : "Join" }</button>
+                            disabled={joined(row)}>{joined(row)? "Signed Up" : "Join Now!" }</button>
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -123,7 +196,56 @@ function Row(props) {
                                     <bs.Col lg={3}><SubTitle>Event Held by:</SubTitle></bs.Col>
                                     <bs.Col lg={3}>{row.created_by}</bs.Col>
                                 </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Count Attendance:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.count_attendance?"Yes":"No"}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Enrollment Status</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{joined(row)?"Signed Up":"Not Joined"}</bs.Col>
+                                </bs.Row>
                             </bs.Container>
+                            <Typography variant="h6" gutterBottom component="div" text-align="center">
+                                Operations
+                            </Typography>
+                            <bs.Row>
+                                <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
+                                                       onClick={async () => {await quitEventHandler(row.uid)}}
+                                                       disabled={!joined(row)}>Quit Event</button></ButtonDivEvent></bs.Col>
+
+                                <bs.Col><ButtonDivEvent><button type="button" className="btn btn-outline-dark"
+                                                                  onClick={()=>{
+                                                                      history.push({
+                                                                          pathname:"/event_edit",
+                                                                          state: {
+                                                                              uid:row.uid,
+                                                                              title:row.title,
+                                                                              event_type: row.event_type,
+                                                                              meetup_location: row.meetup_location,
+                                                                              block:row.block,
+                                                                              floor:row.floor,
+                                                                              duration_mins:row.duration_mins,
+                                                                              signup_ddl: row.signup_ddl,
+                                                                              description:row.description,
+                                                                              count_attendance:row.count_attendance,
+                                                                              created_by:row.created_by,
+                                                                              start_time:row.start_time,
+                                                                              signup_limit:row.signup_limit
+                                                                            }
+                                                                      });
+                                                                  }}
+                                                                  disabled={!isHG() || (row.created_by !==getUsername())}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
+
+                                <bs.Col><ButtonDivEvent>
+                                    <SimpleModal row = {row}/>
+                                </ButtonDivEvent></bs.Col>
+                                <bs.Col><ButtonDivEvent>
+                                    <button type="button" className="btn btn-outline-dark"
+                                            onClick={async () => {await deleteEvent(row.uid)}}
+                                            disabled={!isHG() || (row.created_by !==getUsername())}>
+                                        Delete Event
+                                    </button>
+                                </ButtonDivEvent></bs.Col>
+
+                            </bs.Row>
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -132,52 +254,89 @@ function Row(props) {
     );
 }
 
-async function eventHandler(uid){
-    var config = {
-        method: 'post',
-        url: url + '/api/events/' + uid + '/signup',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer ' + getToken(),
-            'Content-Type': 'application/json'
-        },
-        data : JSON.stringify([getUsername()])
+function SimpleModal(props) {
+    const classes = useStyles();
+    // getModalStyle is not a pure function, we roll the style only on the first render
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+    const [attendances, setAttendances] = React.useState(props.row.attendance);
+
+    const handleOpen = () => {
+        setOpen(true);
+        initAttendanceEditJson()
     };
 
-    axios(config)
-        .then(function (response) {
-            console.log("Signed Up");
-            window.location.reload(true);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-function joined(row){
-    console.log(row.signups)
-    var signed_up = false;
-    row.signups.forEach(function (item){
-        if (item.toString() === getUsername()) signed_up = true;
-    });
-    return signed_up
-}
+    const attended = (id) => {
+        let result = false;
+        props.row.attendance.forEach(function (item){if (item === id) result = true;});
+        console.log(result);
+        return result;
+    }
 
-Row.propTypes = {
-    row: PropTypes.shape({
-        uid: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        event_type: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        start_time: PropTypes.string.isRequired,
-        duration: PropTypes.number.isRequired,
-        count: PropTypes.bool.isRequired,
-        floor: PropTypes.number.isRequired,
-        block:PropTypes.string.isRequired,
-        signups:PropTypes.array.isRequired,
-        attendance:PropTypes.array.isRequired,
-    }).isRequired,
-};
+    const IdList = (props) =>{
+        const [checked, setChecked] = React.useState(props.attended);
+        const handleClick = () =>{
+            setChecked(!checked);
+            console.log(checked);
+            const realChecked = !checked;
+            if ( props.attended &&  realChecked) deleteAttendanceDELJson(props.id);
+            if ( props.attended && !realChecked) addAttendanceDELJson(props.id);
+            if (!props.attended &&  realChecked) addAttendanceADDJson(props.id);
+            if (!props.attended && !realChecked) deleteAttendanceADDJson(props.id);
+        }
+        return (
+            <bs.Container>
+                <bs.Row>
+                    <bs.Col lg = {4}></bs.Col>
+                    <bs.Col lg = {1}><input type={"checkbox"} checked={checked} onChange={handleClick}/></bs.Col>
+                    <bs.Col lg = {3}><p>{props.id}</p></bs.Col>
+                    <bs.Col lg = {4}></bs.Col>
+                </bs.Row>
+            </bs.Container>
+        );
+    }
+
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+            <CenterDiv>
+                <h3>Attendance</h3>
+                <h6>
+                    {props.row.title}
+                </h6>
+                <br/>
+                <div>
+                    {props.row.signups.map((id) => (<IdList id={id} attended={attended(id)}/>))}
+                </div>
+                <Button variant="outline-dark" onClick={async () => {
+                    await updateAttendance(props.row.uid);
+                    handleClose();
+                    window.location.reload(false);
+                }}>Update!</Button>
+            </CenterDiv>
+        </div>
+    );
+
+    return (
+        <div>
+            <button type="button" className="btn btn-outline-dark"
+                    onClick={handleOpen}
+                    disabled={!isHG()}>Take Attendance
+            </button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                {body}
+            </Modal>
+        </div>
+    );
+}
 
 export default class Events extends React.Component {
     constructor(props) {
@@ -185,10 +344,11 @@ export default class Events extends React.Component {
         this.state = {events: []};
     }
 
+
     componentDidMount() {
         const fetchJSON = async () =>{
             getEventInfo().then(r=>{
-                this.setState({events: getEventInfoJson()});
+                this.setState({events: getEventInfoJson(), query_type: "all"});
                 console.log("Event Info JSON:");
                 console.log(getEventInfoJson());
             });
@@ -196,10 +356,28 @@ export default class Events extends React.Component {
         fetchJSON();
     }
 
+    queryAll = () => {
+        this.setState({events: getEventInfoJson(), query_type: "all"});
+    }
+
+    queryUpcoming = () => {
+        getUpcomingEventInfo().then(r=>{
+            this.setState({events: getUpcomingEventInfoJson(), query_type: "upcoming"})
+        })
+    }
+
     render() {
         return (
             <EventDiv>
                 <h3>Floor Events</h3>
+                <div className= {"btn-group btn-group-toggle"} data-toggle="buttons">
+                    <label className={this.state.query_type === "all"?"btn btn-secondary active":"btn btn-secondary"}>
+                        <input type="radio" name="options" id="all_events" autoComplete="off" onClick={this.queryAll}/> All Floor Events
+                    </label>
+                    <label className={this.state.query_type === "upcoming"?"btn btn-secondary active":"btn btn-secondary"}>
+                        <input type="radio" name="options" id="upcoming_events" autoComplete="off" onClick={this.queryUpcoming}/> Upcoming Floor Events
+                    </label>
+                </div>
                 <TableContainer component={Paper}>
                     <Table aria-label="collapsible table">
                         <TableHead>

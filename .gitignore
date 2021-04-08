@@ -1,6 +1,10 @@
-.vscode
+# project-specifc secrete
 db_secrete.py
 
+# IDE configs
+.vscode
+.idea
+**/.idea/*
 
 ### Flask ###
 instance/*

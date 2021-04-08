@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../SUTDLogo 1.png";
-import {clearToken} from "../variables/localstorage";
+import {checkValidity, getUserInfoJson, isHG, logout} from "../variables/localstorage";
 
 const Styles = styled.div`
   .navbar {
@@ -40,21 +40,18 @@ export const NavigationBar = () => (
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
-                    <Nav.Item><Nav.Link href="/profile">Profile</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/profile" id="dropdown_profile">Profile</Nav.Link></Nav.Item>
                     <NavDropdown title="Events">
-                        <NavDropdown.Item href="/event_history">Event History</NavDropdown.Item>
-                        <NavDropdown.Item href="/event">Upcoming Events</NavDropdown.Item>
+                        <NavDropdown.Item href="/event" id="dropdown_events">Floor Events</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_history" id="dropdown_event_records">Event Records</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/event_creation">Create Event</NavDropdown.Item>
-                        <NavDropdown.Item>View Event</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_creation" disabled={!isHG()} id="dropdown_create_event">Create Event</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Application">
-                        <NavDropdown.Item href="/application_status">Check Status</NavDropdown.Item>
-                        <NavDropdown.Item href="/apply">Housing Application</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="/application_creation">Create Application</NavDropdown.Item>
+                        <NavDropdown.Item href="/application_status" id="dropdown_status">Check Status</NavDropdown.Item>
+                        <NavDropdown.Item href="/apply" id="dropdown_apply">Housing Application</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Item><Nav.Link href="/login" onClick = {clearToken}>Logout</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>

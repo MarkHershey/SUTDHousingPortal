@@ -12,16 +12,16 @@ class AuthHandler:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     # openssl rand -hex 32
     SECRET_KEY = "replace_me_replace_me_replace_me"
-    ALGORITHM = "HS256"
+    ALGORITHM = "HS256"  # HS256 (HMAC with SHA-256)
     ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 
-    def get_password_hash(self, password):
+    def get_password_hash(self, password: str) -> str:
         return self.pwd_context.hash(password)
 
-    def verify_password(self, plain_password, hashed_password):
+    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return self.pwd_context.verify(plain_password, hashed_password)
 
-    def encode_token(self, user_id):
+    def encode_token(self, user_id: str) -> str:
         payload = {
             "exp": datetime.utcnow()
             + timedelta(days=0, minutes=self.ACCESS_TOKEN_EXPIRE_MINUTES),
@@ -30,7 +30,7 @@ class AuthHandler:
         }
         return jwt.encode(payload, self.SECRET_KEY, algorithm=self.ALGORITHM)
 
-    def decode_token(self, token):
+    def decode_token(self, token: str) -> str:
         try:
             payload = jwt.decode(token, self.SECRET_KEY, algorithms=[self.ALGORITHM])
             return payload["sub"]

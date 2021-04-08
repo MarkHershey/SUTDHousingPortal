@@ -2,6 +2,7 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import ProfileData from "./profile_data";
+import {ApplicationStep} from "./application_steps";
 
 const EventDiv = styled.div`
   display: grid;
@@ -23,14 +24,14 @@ const ProfileBox = styled.div`
 export default function ApplicationOne() {
     return(
         <EventDiv>
-            <br/>
-            <h3>Personal Details</h3>
+            <ApplicationStep i ={0}/>
+            <h3>Personal Information</h3>
             <ProfileData />
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><button type="button" className="btn btn-outline-primary">Edit Personal Profile</button></bs.Col>
-                        <bs.Col><a href="/apply2"><button type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
+                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
+                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>
