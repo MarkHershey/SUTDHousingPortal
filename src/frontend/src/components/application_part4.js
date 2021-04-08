@@ -33,6 +33,8 @@ export default class ApplicationFour extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         var roomPreferences = getUserInfoJson().preference_room
         this.state = roomPreferences;
+        console.log("HEREE");
+        console.log(this.props.location.state.applicable_period);
     }
 
     handleSave(){
@@ -52,7 +54,13 @@ export default class ApplicationFour extends React.Component {
                 this.state.level_has_mr, this.state.level_has_gsr, this.state.level_has_rr, this.state.weightage_order
             );
             //Submit Data
-            this.props.history.push("/application_summary");
+            this.props.history.push({
+                pathname:"/application_summary",
+                state: {
+                    application_period_uid: this.props.location.state.application_period_uid,
+                    applicable_period : this.props.location.state.applicable_period
+                }
+            });
         }
     }
     onDragEnd = (fromIndex, toIndex) => {

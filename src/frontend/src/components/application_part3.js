@@ -34,6 +34,8 @@ export default class ApplicationThree extends React.Component{
         this.handleSave = this.handleSave.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
+        console.log("HEREE");
+        console.log(this.props.location.state.applicable_period);
     }
 
     lifestyleCallback(childData){
@@ -70,7 +72,13 @@ export default class ApplicationThree extends React.Component{
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
             //const history = useHistory();
-            this.props.history.push("/apply4");
+            this.props.history.push({
+                pathname: "/apply4",
+                state: {
+                    application_period_uid: this.props.location.state.application_period_uid,
+                    applicable_period : this.props.location.state.applicable_period
+                }
+            });
         }
 
     }

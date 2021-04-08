@@ -60,6 +60,7 @@ export default class CreateDisciplinaryRecord extends React.Component{
         }
         createDisciplinaryRecord(this.state.student_id,this.state.record_type,
             this.state.description,this.state.points_deduction);
+        this.props.history.push("/")
     }
 
     handleChange(event) {

@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import ProfileData from "./profile_data";
 import {ApplicationStep} from "./application_steps";
+import {useHistory} from "react-router";
 
 const EventDiv = styled.div`
   display: grid;
@@ -21,7 +22,23 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ApplicationOne() {
+export default function ApplicationOne(props) {
+    
+    let history = useHistory();
+    function handleSubmit(){
+        console.log("this is my "+props.location.state.application_period_uid);
+        console.log(props.location.state.applicable_period);
+        
+        history.push({
+            pathname: "/apply2",
+            state: {
+                application_period_uid: props.location.state.application_period_uid,
+                applicable_period : props.location.state.applicable_period,
+            }
+        });
+        
+    }
+
     return(
         <EventDiv>
             <ApplicationStep i ={0}/>
@@ -31,7 +48,7 @@ export default function ApplicationOne() {
                 <bs.Container>
                     <bs.Row>
                         <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
-                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
+                        <bs.Col><button id="application1_next_btn" onclick={handleSubmit()} type="button" className="btn btn-outline-primary">Go To Next Step</button></bs.Col>
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>

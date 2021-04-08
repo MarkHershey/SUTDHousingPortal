@@ -49,7 +49,7 @@ export const NavigationBar = () => (
                     </NavDropdown>
                     <NavDropdown title="Application">
                         <NavDropdown.Item href="/application_status" id="dropdown_status">Check Status</NavDropdown.Item>
-                        <NavDropdown.Item href="/apply" id="dropdown_apply">Housing Application</NavDropdown.Item>
+                        <NavDropdown.Item href="/apply0" id="dropdown_apply">Housing Application</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>

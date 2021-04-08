@@ -9,20 +9,17 @@ export var room_profile = "room profile object";
 export var lifestyle_profile = "lifestyle_profile object";
 export var time_period = "Time period object";
 
-export default async function submitApplication(){
+export default async function submitApplication(application_period_uid,student_id,room_profile,
+    lifestyle_profile,applicable_period){
+    //var stay_period = {start_date: start_date, end_date:end_date}
+    var data = JSON.stringify({"application_period_uid":application_period_uid,
+    "student_id":student_id,
+    "room_profile":room_profile,
+    "lifestyle_profile":lifestyle_profile,
+    "stay_period":applicable_period});
 
-    var data = JSON.stringify({"uid":"string","application_period_uid":"string",
-    "created_at":"2021-04-02T16:01:19.138Z","student_id":"string",
-    "room_profile":{"room_type":"string","room_type_2nd":"string","block":"ANY",
-    "block_2nd":"ANY","level_range":"ANY","window_facing":"ANY","near_to_lift":true,
-    "near_to_washroom":true,"level_has_pantry":true,"level_has_mr":true,"level_has_gsr":true,
-    "level_has_rr":true,"weightage_order":[1,2,3,4,5,6,7,8,9]},
-    
-    "lifestyle_profile":{"bedtime":0,"wakeup_time":0,"like_social":true,
-    "like_clean":true},
-    
-    "stay_period":{"start_date":"2021-04-02","end_date":"2021-04-02"}});
-
+    console.log("DATAAAA");
+    console.log(data);
     var config = {
     method: 'post',
     url: url+'/api/applications/',

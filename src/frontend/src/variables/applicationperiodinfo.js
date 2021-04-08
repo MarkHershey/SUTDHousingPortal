@@ -27,7 +27,7 @@ export async function submitApplicationPeriod(application_window_open,applicatio
     var data = JSON.stringify({"application_window_open":application_window_open,
     "application_window_close":application_window_close,
     "applicable_periods":applicable_periods,
-    "applicable_rooms":["string"],"applicable_students":["string"]
+    "applicable_rooms":["string"],"applicable_students":["1004000","1000000","1003432","1004515","1004234","justinHG"]
     });
     if (!checkValidity()) return undefined;
     var config = {

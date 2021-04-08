@@ -4,8 +4,9 @@ import styled from "styled-components";
 import {useHistory} from "react-router";
 import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
-import submitApplication from '../variables/applicationforminfo';
+import submitApplication, { application_period_uid, room_profile, student_id } from '../variables/applicationforminfo';
 import {ApplicationStep} from "./application_steps";
+import { getUserInfoJson, getUsername } from "../variables/localstorage";
 
 const EventDiv = styled.div`
   display: grid;
@@ -23,11 +24,20 @@ const EventDiv = styled.div`
 
 
 
-export default function ApplicationSummary(){
+export default function ApplicationSummary(props){
     let history = useHistory();
+    let data = getUserInfoJson();
+    let username = getUsername();
+    let applicable_period = props.location.state.applicable_period;
+    let application_period_uid = props.location.state.application_period_uid;
     function handleSubmit(){
-        submitApplication();
+        console.log(application_period_uid);
+        console.log("HERE");
+        console.log(applicable_period);
+        submitApplication(application_period_uid,username,
+            data.preference_room,data.preference_lifestyle,applicable_period);
         history.push("/");
+        
     }
 
     return (
