@@ -14,7 +14,7 @@ export var preference_roommate = []; //list of string
 export async function updateStudentProfileInfo(phone_number,
     email_personal,post_code,street,unit,preferredRoommate){
     if(!checkValidity()) return undefined;
-    var data = JSON.stringify({"phone_number":phone_number,"email_personal":email_personal,
+    var data = JSON.stringify({"phone_number":phone_number+"","email_personal":email_personal,
     "local_addr_post_code":post_code,"local_addr_street":street,
     "local_addr_unit":unit,"preference_roommate":preferredRoommate});
 

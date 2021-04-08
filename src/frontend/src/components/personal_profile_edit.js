@@ -76,7 +76,7 @@ export default class PersonalDataEdit extends React.Component{
     
                         <bs.Row>
                             <bs.Col><Field>Phone Number:</Field></bs.Col>
-                            <bs.Col><input id="ppl_prof_phone_number" name="ppl_prof_phone_number" type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><input id="phone_number" name="phone_number" type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Street</Field></bs.Col>
                             <bs.Col><input id = "ppl_prof_local_addr_street" name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
