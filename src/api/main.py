@@ -1,3 +1,6 @@
+import datetime
+import os
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from markkk.logger import logger
@@ -23,6 +26,14 @@ app.include_router(applications.router)
 
 app.include_router(events.router)
 app.include_router(records.router)
+
+
+# print timezone and current time
+print()
+logger.info(f"Environ 'TZ'    : {os.environ.get('TZ', 'N.A.')}")
+logger.info(f"Current Time    : {datetime.datetime.now()}")
+logger.info(f"Current UTC Time: {datetime.datetime.utcnow()}")
+print()
 
 
 @app.get("/api")

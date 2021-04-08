@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 
 import jwt
@@ -11,7 +12,9 @@ class AuthHandler:
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     # openssl rand -hex 32
-    SECRET_KEY = "replace_me_replace_me_replace_me"
+    SECRET_KEY = os.environ.get("JWT_SECRET_KEY_PROD")
+    if SECRET_KEY in (None, "None", "NA", "N.A.", ""):
+        SECRET_KEY = "replace_me_replace_me_replace_me"
     ALGORITHM = "HS256"  # HS256 (HMAC with SHA-256)
     ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 

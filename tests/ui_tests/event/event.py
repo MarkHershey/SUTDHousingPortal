@@ -2,12 +2,10 @@
 from datetime import datetime
 
 from datetime_selenium import send_datetime
-
 from function import *
 
 
 class EventTest(unittest.TestCase):
-
     def test_event_creation_normal(self):
         # login
         driver.get("http://localhost:3000")
@@ -17,19 +15,36 @@ class EventTest(unittest.TestCase):
         time.sleep(1)
 
         # submit form with some fields unfilled
-        title = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        event_type = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        title = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        event_type = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
         duration_mins = random.randint(1, 100)
         signup_limit = random.randint(1, 100)
-        block = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        floor = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        meetup_location = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        start_time = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        signup_ddl = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        block = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        floor = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        meetup_location = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        start_time = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        signup_ddl = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
 
         driver.get("http://localhost:3000/event_creation")
         input_text_by_name(driver, "title", title)
@@ -42,11 +57,11 @@ class EventTest(unittest.TestCase):
         datetime_ = datetime.utcnow()
 
         css_selectors = (
-            'input[type=date]',
-            'input[type=datetime-local]',
-            'input[type=month]',
-            'input[type=time]',
-            'input[type=week]'
+            "input[type=date]",
+            "input[type=datetime-local]",
+            "input[type=month]",
+            "input[type=time]",
+            "input[type=week]",
         )
         for selector in css_selectors:
             input_ = driver.find_element_by_css_selector(selector)
