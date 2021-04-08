@@ -45,7 +45,10 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.3",
+    "antd": "^4.15.0",
     "axios": "^0.21.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-drag-listview": "^0.1.8",
+    "reactjs-popup": "^2.0.4"
   }
 }

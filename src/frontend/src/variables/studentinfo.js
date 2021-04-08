@@ -1,6 +1,5 @@
 import axios from "axios";
-import {checkValidity,getToken} from "./localstorage";
-import {getUsername,setUserInfoJson} from "./localstorage";
+import {checkValidity, getToken, getUsername, setUserInfoJson} from "./localstorage";
 import {url} from "./url";
 
 export class Student {
@@ -19,6 +18,7 @@ export class Student {
         this.local_addr_post_code = student_data.local_addr_post_code;
         this.local_addr_street = student_data.local_addr_street;
         this.local_addr_unit = student_data.local_addr_unit;
+        this.registered_events = student_data.registered_events;
         this.attended_events = student_data.attended_events;
         this.disciplinary_records = student_data.disciplinary_records;
         this.preference_roommate = student_data.preference_roommate;
@@ -43,7 +43,7 @@ export async function getCurrentStudentInfo(){
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             student_data_json = response.data;
             console.log("User Info JSON:");
