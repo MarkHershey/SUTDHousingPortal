@@ -24,7 +24,7 @@ import {
     getEventInfoJson,
     getToken,
     getUpcomingEventInfoJson,
-    getUserInfoJson, initAttendanceEditJson
+    getUserInfoJson, initAttendanceEditJson, isHG
 } from "../variables/localstorage";
 import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../variables/eventinfo";
 import {getUsername} from "../variables/localstorage";
@@ -232,7 +232,7 @@ function Row(props) {
                                                                             }
                                                                       });
                                                                   }}
-                                                                  disabled={!getUserInfoJson().is_house_guardian|| (row.created_by !==getUsername())}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
+                                                                  disabled={!isHG() || (row.created_by !==getUsername())}>{"Edit Event"}</button></ButtonDivEvent></bs.Col>
 
                                 <bs.Col><ButtonDivEvent>
                                     <SimpleModal row = {row}/>
@@ -240,7 +240,7 @@ function Row(props) {
                                 <bs.Col><ButtonDivEvent>
                                     <button type="button" className="btn btn-outline-dark"
                                             onClick={async () => {await deleteEvent(row.uid)}}
-                                            disabled={!getUserInfoJson().is_house_guardian || (row.created_by !==getUsername())}>
+                                            disabled={!isHG() || (row.created_by !==getUsername())}>
                                         Delete Event
                                     </button>
                                 </ButtonDivEvent></bs.Col>
@@ -324,7 +324,7 @@ function SimpleModal(props) {
         <div>
             <button type="button" className="btn btn-outline-dark"
                     onClick={handleOpen}
-                    disabled={!getUserInfoJson().is_house_guardian}>Take Attendance
+                    disabled={!isHG()}>Take Attendance
             </button>
             <Modal
                 open={open}

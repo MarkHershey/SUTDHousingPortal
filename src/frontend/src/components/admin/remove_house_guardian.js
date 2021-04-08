@@ -8,12 +8,13 @@ import {revokeHouseGuardian} from "../../variables/houseguardianinfo";
 import {createEvent} from "../../variables/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
-import {notification} from "antd";
+import {Input, notification} from "antd";
 import { student_id } from "../../variables/applicationforminfo";
+import {CloseCircleTwoTone, PlusCircleTwoTone} from "@ant-design/icons";
 
 const Field = styled.p`
   color: #3C64B1;
-  text-align: right;
+  text-align: center;
 `;
 
 const EditBox = styled.div`
@@ -73,18 +74,20 @@ export default class RemoveHouseGuardian extends React.Component{
             <EventDiv key={i}>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col lg={3}>
-                            <input type="text" name="student_id" value={el.student_id ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                        <bs.Col lg={4}></bs.Col>
+                        <bs.Col lg={4}>
+                            <Input type="text" name="student_id" value={el.student_id ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
+                        <bs.Col lg={1}>
+                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
+                        </bs.Col>
+                        <bs.Col lg={1}>
+                            <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
+                        </bs.Col>
+                        <bs.Col lg={2}></bs.Col>
                     </bs.Row>
-                    <bs.Row>
-                        <bs.Col lg={3}></bs.Col>
-                        <bs.Col lg={3}>
-                            <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>
-                            <input type='button' value='add more' onClick={this.addClick.bind(this)}/>    
-                        </bs.Col>   
-                    </bs.Row>                    
                 </bs.Container>
+                <br/>
             </EventDiv>          
         )
     }
@@ -105,10 +108,10 @@ export default class RemoveHouseGuardian extends React.Component{
         return (
             <EventDiv>
                 <h3>Revoke House Guardians</h3>
+                <Field>Student IDs of existing house guardians</Field>
                 <EditBox>
                     <bs.Container>
                         <bs.Row>
-                            <bs.Col><Field>Student IDs of revoked house guardians</Field></bs.Col>
                             <bs.Col>{this.createUI()}</bs.Col>
                         </bs.Row>
                     </bs.Container>

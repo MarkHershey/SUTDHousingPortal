@@ -25,13 +25,6 @@ import {
 import {
     getAllDisciplinaryRecords,
 } from "../../variables/disciplinaryrecordinfo"
-import {getUsername} from "../../variables/localstorage";
-import axios from "axios";
-import {url} from "../../variables/url";
-import Modal from '@material-ui/core/Modal';
-import {CheckBox} from "@material-ui/icons";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../../variables/eventinfo";
 import {useHistory} from "react-router";
 import "../../variables/utilities"
 
@@ -139,7 +132,12 @@ function Row(props) {
 export default class ViewIndividualDisciplinaryRecord extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {events: []};
+        this.state = {events: [{
+                student_id: "",
+                record_type: "",
+                description: "",
+                points_deduction: "",
+            }]};
     }
 
 

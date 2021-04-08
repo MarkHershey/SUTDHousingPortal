@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import container, {Container} from 'react-bootstrap';
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {getUserInfoJson, isAdmin} from "../variables/localstorage";
 import {Card, Row, Col, Carousel} from 'antd';
 import 'antd/dist/antd.css';
-import {icons} from "antd/es/image/PreviewGroup";
 import {Statistic} from "antd/es";
 import SUTD1 from "../SUTD1.png";
 import SUTD2 from "../SUTD2.png";
@@ -33,12 +31,6 @@ const contentStyle = {
     background: '#364d79',
 };
 
-const DashboardTitle = styled.p`
-  text-align: center;
-  color: #3C64B1;
-  font-weight: bold;
-  font-size: medium;
-`;
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -59,11 +51,14 @@ export default class Home extends React.Component {
                 registered_events_num: getUserInfoJson().registered_events.length,
                 year_of_enrollment: getUserInfoJson().year_of_enrollment.toString() + " ",
                 disciplinary_records_num: getUserInfoJson().disciplinary_records.length,
-                                });
+            });
         }
         if (isAdmin()) {
-            this.setState({full_name: "Admin"});
-            console.log(isAdmin());
+            this.setState({full_name: "Administrator",
+                attended_events_num: 0,
+                registered_events_num: 0,
+                year_of_enrollment: "N/A",
+                disciplinary_records_num: 0});
         } else {
             fetchJSON();
         }
