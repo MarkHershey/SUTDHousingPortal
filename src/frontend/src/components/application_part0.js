@@ -118,15 +118,15 @@ function CreateUI(props,uid){
         <EventDiv key={i}>
             <bs.Container>
                 <bs.Row>
-                    <bs.Col lg={3}><Field>Start Date:</Field></bs.Col>
-                    <bs.Col lg={3}>
+                    <bs.Col lg={2}><Field>Start Date:</Field></bs.Col>
+                    <bs.Col lg={2}>
                         <input disabled="true" type="date" name="start_date" value={el.start_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Field>End Date:</Field></bs.Col>
-                    <bs.Col lg={3}>
+                    <bs.Col lg={2}><Field>End Date:</Field></bs.Col>
+                    <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col><Button class="btn btn-outline-primary" onClick={()=>{
+                    <bs.Col lg={3}><Button class="btn btn-outline-primary" onClick={()=>{
                         console.log(el);
                         
                         history.push({

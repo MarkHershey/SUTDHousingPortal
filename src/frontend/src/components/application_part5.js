@@ -19,11 +19,6 @@ const EventDiv = styled.div`
 `;
 
 
-
-
-
-
-
 export default function ApplicationSummary(props){
     let history = useHistory();
     let data = getUserInfoJson();
