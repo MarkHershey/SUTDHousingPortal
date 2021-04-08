@@ -24,7 +24,7 @@ export async function updateRoomProfileInfo(room_type,room_type_2nd,block,block_
       var data = JSON.stringify({"room_type":room_type,"room_type_2nd":room_type_2nd,
       "block":block,"block_2nd":block_2nd,"level_range":level_range,"window_facing":window_facing,
       "near_to_lift":near_to_lift,"near_to_washroom":near_to_washroom,"level_has_pantry":level_has_pantry,"level_has_mr":level_has_mr,
-      "level_has_gsr":level_has_gsr,"level_has_rr":level_has_rr,"weightage_order":[1,2,3,4,5,6,7,8,9]});
+      "level_has_gsr":level_has_gsr,"level_has_rr":level_has_rr,"weightage_order":weightage_order});
       
       var config = {
          method: 'put',
