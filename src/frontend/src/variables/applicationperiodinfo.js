@@ -45,9 +45,16 @@ export async function submitApplicationPeriod(application_window_open,applicatio
     axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
+        notification.success({
+            message: 'New Application Created Successfully',
+        });
     })
     .catch(function (error) {
     console.log(error);
+        notification.error({
+            message: 'New Application Creation Failed',
+            description: 'Please try again'
+        });
     });
 }
 

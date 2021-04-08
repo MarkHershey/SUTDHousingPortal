@@ -109,8 +109,8 @@ export function setUpcomingEventInfoJson(newEventInfoJson){
 }
 
 export function clearUpcomingEventInfoJson(){
-    storage.removeItem("personaleventinfojson");
-    console.log(typeof(storage["personaleventinfojson"]));
+    storage.removeItem("upcomingeventinfojson");
+    console.log(typeof(storage["upcomingeventinfojson"]));
 }
 
 export function getPersonalEventInfoJson(){

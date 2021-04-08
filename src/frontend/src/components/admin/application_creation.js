@@ -2,9 +2,11 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import {submitApplicationPeriod} from "../../variables/applicationperiodinfo";
-import { InputLabel, MenuItem, Select} from '@material-ui/core'
+import {Input, Select} from 'antd';
 import {notification} from "antd";
+import {CloseCircleTwoTone, PlusCircleTwoTone,MinusOutlined} from "@ant-design/icons";
 
+const { Option } = Select;
 const Field = styled.p`
   color: #3C64B1;
   text-align: right;
@@ -93,25 +95,23 @@ export default class ApplicationCreation extends React.Component{
             <EventDiv key={i}>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col lg={3}><Field>Start Date:</Field></bs.Col>
+                        <bs.Col lg={3} style={{textAlign:"right"}}><h4>{i + 1}</h4></bs.Col>
                         <bs.Col lg={3}>
-                            <input type="date" name="start_date" value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                            <Input type="date" name="start_date" value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                        </bs.Col>
+                        <bs.Col lg={1}><MinusOutlined style={{ fontSize: '30px' }}/></bs.Col>
+                        <bs.Col lg={3}>
+                            <Input type="date" name="end_date" value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                        </bs.Col>
+                        <bs.Col lg={1}>
+                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
+                        </bs.Col>
+                        <bs.Col lg={1}>
+                            <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
                         </bs.Col>
                     </bs.Row>
-                    <bs.Row>
-                        <bs.Col lg={3}><Field>End Date:</Field></bs.Col>
-                        <bs.Col lg={3}>
-                            <input type="date" name="end_date" value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
-                        </bs.Col>
-                    </bs.Row>
-                    <bs.Row>
-                        <bs.Col lg={3}></bs.Col>
-                        <bs.Col lg={3}>
-                            <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>
-                            <input type='button' value='add more' onClick={this.addClick.bind(this)}/>    
-                        </bs.Col>   
-                    </bs.Row>                    
                 </bs.Container>
+                <br/>
             </EventDiv>          
         )
     }
@@ -142,27 +142,27 @@ export default class ApplicationCreation extends React.Component{
                     <bs.Container>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
-                            <bs.Col lg={3}><input id="app_period_window_open"name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col lg={3}><Input id="app_period_window_open"name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
                             <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col lg={3}><input id="app_period_window_close" name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><Input id="app_period_window_close" name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
+                        <br/>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Applicable periods:</Field></bs.Col>
+                            <bs.Col lg={3}><Field>Applicable Periods:</Field></bs.Col>
                         </bs.Row>
+                        <br/>
                             {this.createUI()}
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable Rooms:</Field></bs.Col>
-                            <bs.Col lg={3}><input id="app_period_applicable_rooms" name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                        <bs.Row>
+                            <bs.Col lg={3}><Input id="app_period_applicable_rooms" name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col lg={3}><Field>Applicable students:</Field></bs.Col>
                             <bs.Col lg={3}>
-                                <select name="applicable_students" id="applicable_students">
-                                    <option value="Freshmore">Freshmore</option>
-                                    <option value="Undergraduate">Undergraduate</option>
-                                    <option value="Master's">Master's</option>
-                                    <option value="PhD">PhD</option>
-                                </select>
+                                <Select name="applicable_students" id="applicable_students" defaultValue="Undergraduate" style={{ width: 200 }}>
+                                    <Option value="Freshmore">Freshmore</Option>
+                                    <Option value="Undergraduate">Undergraduate</Option>
+                                    <Option value="Master's">Master's</Option>
+                                    <Option value="PhD">PhD</Option>
+                                </Select>
                             </bs.Col>
                         </bs.Row>
                     </bs.Container>
