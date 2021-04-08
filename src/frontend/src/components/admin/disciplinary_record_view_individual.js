@@ -3,12 +3,13 @@ import React from "react";
 import styled from "styled-components";
 import {getCurrentStudentInfo} from "../../variables/studentinfo";
 import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {getDisciplinaryRecord,deleteDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
-import {getUserInfoJson, getUsername,getPersonalDisciplinaryRecordInfoJson} from "../../variables/localstorage";
+import {getDisciplinaryRecord, deleteDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
+import {getUserInfoJson, getUsername, getPersonalDisciplinaryRecordInfoJson} from "../../variables/localstorage";
 import {createEvent} from "../../variables/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
 import {notification} from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -32,8 +33,8 @@ const EventDiv = styled.div`
   text-align: center;
 `;
 
-export default class ViewIndividualDisciplinaryRecord extends React.Component{
-    constructor(props){
+export default class ViewIndividualDisciplinaryRecord extends React.Component {
+    constructor(props) {
         super(props);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -48,7 +49,7 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component{
 
     componentDidMount() {
         const fetchJSON = async () => {
-            getDisciplinaryRecord(this.props.location.state.uid).then(r=>{
+            getDisciplinaryRecord(this.props.location.state.uid).then(r => {
                 this.setState(getPersonalDisciplinaryRecordInfoJson());
                 console.log("current disciplinary record info json");
                 console.log(getPersonalDisciplinaryRecordInfoJson());
@@ -58,13 +59,13 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component{
         fetchJSON();
     }
 
-    handleEdit(){
+    handleEdit() {
         this.props.history.push({
-            pathname:"/admin/disciplinary_record_edit",
-            state: {
-                uid: this.state.uid
+                pathname: "/admin/disciplinary_record_edit",
+                state: {
+                    uid: this.state.uid
+                }
             }
-        }
         );
     }
 
@@ -84,34 +85,45 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component{
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <EventDiv>
                 <h3>View Disciplinary Record</h3>
                 <EditBox>
                     <bs.Container>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Student ID:</Field></bs.Col>
-                            <bs.Col lg={3}><Field>{this.state.student_id}</Field></bs.Col>
+                            <bs.Col lg={3}>{this.state.student_id}</bs.Col>
 
                             <bs.Col lg={3}><Field>Record Type:</Field></bs.Col>
-                            <bs.Col lg={3}><Field>{this.state.record_type}</Field></bs.Col>
-                           
+                            <bs.Col lg={3}>{this.state.record_type}</bs.Col>
+
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Description:</Field></bs.Col>
-                            <bs.Col lg={6}><textarea disabled="true" id="view_disciplinary_description" name="description" cols="55" rows="5" value={this.state.description}/></bs.Col>
-                            </bs.Row>
+                            <bs.Col lg={9}><textarea disabled="true" id="view_disciplinary_description"
+                                                     name="description" cols="100" rows="8"
+                                                     value={this.state.description}/></bs.Col>
+                        </bs.Row>
+                        <br/>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Points Deduction</Field></bs.Col>
-                            <bs.Col lg={3}><Field>{this.state.points_deduction}</Field></bs.Col>
+                            <bs.Col lg={3}><Field>Points Deduction:</Field></bs.Col>
+                            <bs.Col lg={3}>{this.state.points_deduction}</bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </EditBox>
                 <EditBox>
                     <bs.Row>
-                        <bs.Col><button id = "delete_disciplinary_record_btn" type="submit" onClick={this.handleDelete} className="btn btn-outline-primary" >Delete Disciplinary Record</button></bs.Col>
-                        <bs.Col><button id = "edit_disciplinary_record_btn" type="submit" onClick={this.handleEdit} className="btn btn-outline-primary" >Edit Disciplinary Record</button></bs.Col>
+                        <bs.Col>
+                            <button id="delete_disciplinary_record_btn" type="submit" onClick={this.handleDelete}
+                                    className="btn btn-outline-primary">Delete Disciplinary Record
+                            </button>
+                        </bs.Col>
+                        <bs.Col>
+                            <button id="edit_disciplinary_record_btn" type="submit" onClick={this.handleEdit}
+                                    className="btn btn-outline-primary">Edit Disciplinary Record
+                            </button>
+                        </bs.Col>
                     </bs.Row>
                 </EditBox>
             </EventDiv>
