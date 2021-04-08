@@ -24,6 +24,7 @@ export async function createDisciplinaryRecord(id,record_type,description,points
     axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
+    getAllDisciplinaryRecords();
     })
     .catch(function (error) {
     console.log(error);
@@ -77,7 +78,7 @@ export async function getDisciplinaryRecord(uid){
 }
 
 export async function updateDisciplinaryRecord(uid,description,points_deduction){
-    var data = JSON.stringify({"description":"string","points_deduction":100});
+    var data = JSON.stringify({"description":description,"points_deduction":points_deduction});
 
     var config = {
     method: 'put',
@@ -93,6 +94,7 @@ export async function updateDisciplinaryRecord(uid,description,points_deduction)
     axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
+    getAllDisciplinaryRecords();
     })
     .catch(function (error) {
     console.log(error);
@@ -112,6 +114,7 @@ export async function deleteDisciplinaryRecord(uid){
     axios(config)
     .then(function (response) {
         console.log(JSON.stringify(response.data));
+        getAllDisciplinaryRecords();
     })
     .catch(function (error) {
         console.log(error);

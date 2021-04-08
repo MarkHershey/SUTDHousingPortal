@@ -35,7 +35,8 @@ const EventDiv = styled.div`
 export default class ViewIndividualDisciplinaryRecord extends React.Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             student_id: "",
@@ -57,21 +58,19 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component{
         fetchJSON();
     }
 
-    handleSubmit() {
-        console.log("new event submit");
-        if (this.state.student_id ==="" ||
-            this.state.record_type ==="" ||
-            this.state.description ==="" ||
-            this.state.points_deduction == 0
-        ) {
-            notification.error({
-                message: 'Invalid Form',
-                description: 'Fill in all the fields and retry'
-            });
-            return;
+    handleEdit(){
+        this.props.history.push({
+            pathname:"/admin/disciplinary_record_edit",
+            state: {
+                uid: this.state.uid
+            }
         }
-        deleteDisciplinaryRecord(this.state.student_id,this.state.record_type,
-            this.state.description,this.state.points_deduction);
+        );
+    }
+
+    handleDelete() {
+        deleteDisciplinaryRecord(this.props.location.state.uid);
+        this.props.history.push("/");
     }
 
     handleChange(event) {
@@ -111,8 +110,8 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component{
                 </EditBox>
                 <EditBox>
                     <bs.Row>
-                        <bs.Col><button id = "delete_disciplinary_record_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Delete Disciplinary Record</button></bs.Col>
-                        <bs.Col><button id = "delete_disciplinary_record_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Edit Disciplinary Record</button></bs.Col>
+                        <bs.Col><button id = "delete_disciplinary_record_btn" type="submit" onClick={this.handleDelete} className="btn btn-outline-primary" >Delete Disciplinary Record</button></bs.Col>
+                        <bs.Col><button id = "edit_disciplinary_record_btn" type="submit" onClick={this.handleEdit} className="btn btn-outline-primary" >Edit Disciplinary Record</button></bs.Col>
                     </bs.Row>
                 </EditBox>
             </EventDiv>

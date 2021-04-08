@@ -28,6 +28,7 @@ import RemoveHouseGuardian from './components/admin/remove_house_guardian';
 import CreateDisciplinaryRecord from './components/admin/create_disciplinary_record';
 import ViewAllDisciplinaryRecord from './components/admin/view_all_disciplinary_record';
 import ViewIndividualDisciplinaryRecord from './components/admin/disciplinary_record_view_individual';
+import EditDisciplinaryRecord from './components/admin/disciplinary_record_edit';
 import ApplicationFour from "./components/application_part4";
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
                     <GuardedRoute path="/admin/disciplinary_record_create" component={CreateDisciplinaryRecord}/>
                     <GuardedRoute path="/admin/disciplinary_record_view_all" component={ViewAllDisciplinaryRecord}/>
                     <GuardedRoute path="/admin/disciplinary_record_view_individual" component={ViewIndividualDisciplinaryRecord}/>
+                    <GuardedRoute path="/admin/disciplinary_record_edit" component={EditDisciplinaryRecord}/>
                     <Route path="/login" component={Login}/>
                 </Switch>
             </Router>

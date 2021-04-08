@@ -2,9 +2,8 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {createDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
-import {getUserInfoJson, getUsername} from "../../variables/localstorage";
+import {getDisciplinaryRecord, updateDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
+import {getPersonalDisciplinaryRecordInfoJson, getUserInfoJson, getUsername} from "../../variables/localstorage";
 import {createEvent} from "../../variables/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
@@ -32,10 +31,10 @@ const EventDiv = styled.div`
   text-align: center;
 `;
 
-export default class CreateDisciplinaryRecord extends React.Component{
+export default class EditDisciplinaryRecord extends React.Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             student_id: "",
@@ -44,8 +43,18 @@ export default class CreateDisciplinaryRecord extends React.Component{
             points_deduction: 0
         };
     }
+    componentDidMount(){
+        const fetchJSON = async () => {
+            getDisciplinaryRecord(this.props.location.state.uid).then(r=>{
+                this.setState(getPersonalDisciplinaryRecordInfoJson());
+                console.log("current disciplinary record info json");
+                console.log(getPersonalDisciplinaryRecordInfoJson());
+            });
+        }
+        fetchJSON();
+    }
 
-    handleSubmit() {
+    handleUpdate() {
         console.log("new event submit");
         if (this.state.student_id ==="" ||
             this.state.record_type ==="" ||
@@ -58,14 +67,18 @@ export default class CreateDisciplinaryRecord extends React.Component{
             });
             return;
         }
-        createDisciplinaryRecord(this.state.student_id,this.state.record_type,
-            this.state.description,this.state.points_deduction);
+        updateDisciplinaryRecord(this.props.location.state.uid,this.state.description,
+            this.state.points_deduction);
+        this.props.history.push({
+            pathname:"/",
+        }
+        );
     }
 
     handleChange(event) {
         let value = event.target.value;
-        if(event.target.name=="points_deduction"){
-            value= parseInt(value);
+        if(event.target.name == "points_deduction"){
+            value = parseInt(value);
         }
         console.log(event);
         this.setState({
@@ -79,27 +92,27 @@ export default class CreateDisciplinaryRecord extends React.Component{
     render(){
         return(
             <EventDiv>
-                <h3>Create Disciplinary Record</h3>
+                <h3>Edit Disciplinary Record</h3>
                 <EditBox>
                     <bs.Container>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Student ID:</Field></bs.Col>
-                            <bs.Col lg={3}><input id="create_disciplinary_record_id" name="student_id" type="text" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col lg={3}><input disabled="true" value={this.state.student_id} id="create_disciplinary_record_id" name="student_id" type="text" onChange={e => this.handleChange(e)} /></bs.Col>
                             <bs.Col lg={3}><Field>Record Type:</Field></bs.Col>
-                            <bs.Col lg={3}><input id="create_disciplinary_record_type" name="record_type" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><input disabled="true" value={this.state.record_type} id="create_disciplinary_record_type" name="record_type" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
-                            <bs.Col lg={6}><textarea id="create_event_description" name="description" cols="55" rows="5" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={6}><textarea value={this.state.description} id="create_event_description" name="description" cols="55" rows="5" onChange={e => this.handleChange(e)}/></bs.Col>
                             </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Points Deduction</Field></bs.Col>
-                            <bs.Col lg={3}><input id="create_disciplinary_points_deduction" name="points_deduction" type="number" onChange={ e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col lg={3}><input value={this.state.points_deduction} id="create_disciplinary_points_deduction" name="points_deduction" type="number" onChange={ e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </EditBox>
                 <EditBox>
-                    <bs.Col><button id = "create_disciplinary_record_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Create Disciplinary Record</button></bs.Col>
+                    <bs.Col><button id = "create_disciplinary_record_btn" type="submit" onClick={this.handleUpdate} className="btn btn-outline-primary" >Update</button></bs.Col>
                 </EditBox>
             </EventDiv>
         );
