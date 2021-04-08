@@ -94,13 +94,13 @@ class TestProfileCreation(unittest.TestCase):
         lifestyleProfile = LifestyleProfile(
             sleep_time="12am",
             like_social="kjdfnsd",
-            like_clean=432,
+            like_clean=87987,
             like_music="ddvsd",
             relationship_scale=23,
             aircon_usage="gsdfvdf",
             smoking="adscmkjads",
             intended_pillar="lkdcmalksam",
-            diet="lkdsmclkamc",
+            diet=7367862,
             interests="jknsjcn",
         )
         self.assertTrue(isinstance(lifestyleProfile, LifestyleProfile))
@@ -144,7 +144,7 @@ class TestProfileCreation(unittest.TestCase):
         lifestyleProfile = LifestyleProfile(
             sleep_time=True,
             like_social="NONE",
-            like_clean=True,
+            like_clean="TRUE",
             like_music="NONE",
             relationship_scale="NONE",
             aircon_usage=True,
