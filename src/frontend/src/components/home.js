@@ -11,8 +11,7 @@ import SUTD1 from "../SUTD1.png";
 import SUTD2 from "../SUTD2.png";
 import SUTD3 from "../SUTD3.png";
 import SUTD4 from "../SUTD4.png";
-
-const {ArrowUpOutlined, ArrowDownOutlined} = icons;
+import {AuditOutlined, ExclamationCircleOutlined, FormOutlined, ScheduleOutlined} from '@ant-design/icons';
 
 const Homepage = styled.div`
   margin-top: 1em;
@@ -44,13 +43,23 @@ const DashboardTitle = styled.p`
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {full_name: "",};
+        this.state = {full_name: "",
+            attended_events_num: 0,
+            registered_events_num: 0,
+            year_of_enrollment: " ",
+            disciplinary_records_num: 0,};
     }
 
     componentDidMount() {
         const fetchJSON = async () => {
             await getCurrentStudentInfo();
-            this.setState({full_name: getUserInfoJson().full_name,});
+            this.setState({
+                full_name: getUserInfoJson().full_name,
+                attended_events_num: getUserInfoJson().attended_events.length,
+                registered_events_num: getUserInfoJson().registered_events.length,
+                year_of_enrollment: getUserInfoJson().year_of_enrollment.toString() + " ",
+                disciplinary_records_num: getUserInfoJson().disciplinary_records.length,
+                                });
         }
         if (isAdmin()) {
             this.setState({full_name: "Admin"});
@@ -72,8 +81,9 @@ export default class Home extends React.Component {
                             <Card>
                                 <Statistic
                                     title="Attended Floor Events"
-                                    value={getUserInfoJson().attended_events.length}
+                                    value={this.state.attended_events_num}
                                     precision={0}
+                                    prefix={<AuditOutlined />}
                                     valueStyle={{ color: '#3f8600' }}
                                     suffix="/3"
                                 />
@@ -83,8 +93,9 @@ export default class Home extends React.Component {
                             <Card>
                                 <Statistic
                                     title="Registered Floor Events"
-                                    value={getUserInfoJson().registered_events.length}
+                                    value={this.state.registered_events_num}
                                     precision={0}
+                                    prefix={<FormOutlined />}
                                     valueStyle={{ color: '#c69f54' }}
                                     suffix=""
                                 />
@@ -94,7 +105,8 @@ export default class Home extends React.Component {
                             <Card>
                                 <Statistic
                                     title="Enrollment Year"
-                                    value={getUserInfoJson().year_of_enrollment.toString() + " "}
+                                    value={this.state.year_of_enrollment}
+                                    prefix={<ScheduleOutlined />}
                                     valueStyle={{ color: '#1368cf' }}
                                 />
                             </Card>
@@ -103,8 +115,9 @@ export default class Home extends React.Component {
                             <Card>
                                 <Statistic
                                     title="Disciplinary Records"
-                                    value={getUserInfoJson().disciplinary_records.length}
+                                    value={this.state.disciplinary_records_num}
                                     precision={0}
+                                    prefix={<ExclamationCircleOutlined />}
                                     valueStyle={{ color: '#cf1322' }}
                                 />
                             </Card>
