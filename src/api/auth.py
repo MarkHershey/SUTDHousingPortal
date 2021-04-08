@@ -12,7 +12,7 @@ class AuthHandler:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     # openssl rand -hex 32
     SECRET_KEY = "replace_me_replace_me_replace_me"
-    ALGORITHM = "HS256"
+    ALGORITHM = "HS256"  # HS256 (HMAC with SHA-256)
     ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 
     def get_password_hash(self, password: str) -> str:

@@ -56,7 +56,7 @@ class TestAuthHandler(unittest.TestCase):
 
     def test_3_random_password_verification(self):
         password_hash = auth_handler.get_password_hash(self.password)
-        for i in random_N_strings(N=30):
+        for i in random_N_strings(N=20):
             logger.debug(f"Testing Random Password: {i}")
             verified = auth_handler.verify_password(
                 plain_password=i,
@@ -73,6 +73,11 @@ class TestAuthHandler(unittest.TestCase):
             logger.debug(f"Testing Random Username: {i}")
             token = auth_handler.encode_token(user_id=i)
             self.assertEqual(auth_handler.decode_token(token), i)
+
+    def test_invalid_token_random(self):
+        for i in random_N_strings(N=5, min_length=147, max_length=149):
+            with self.assertRaises(Exception):
+                auth_handler.decode_token(token=i)
 
 
 if __name__ == "__main__":
