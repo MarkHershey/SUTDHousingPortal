@@ -3,8 +3,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken, setUsername} from "../variables/localstorage";
+import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../variables/localstorage";
 import {url} from "../variables/url.js";
+import {notification} from "antd";
 
 export default function Login() {
     const [username, setUsernameElement] = useState("");
@@ -12,10 +13,10 @@ export default function Login() {
     function validateForm() {
         return username.length > 0 && password.length > 0;
     }
-
+    //test
     async function getDataAxios(username,password) {
-        var data = JSON.stringify({"username":username,"password":password});
-        var config = {
+        const data = JSON.stringify({"username":username,"password":password});
+        const config = {
             method: 'post',
             url: url + '/api/auth/login',
             headers: {
@@ -25,10 +26,12 @@ export default function Login() {
             data : data
         };
 
-        axios(config)
+        await axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setToken(response.data["token"]);
+                if(response.data["is_admin"] === true){setAdmin(response.data["is_admin"])};
+                if(response.data["is_admin_write"] === true){setAdminWrite(response.data["is_admin_write"])};
                 setUsername(username);
                 console.log("Token: ");
                 console.log(getToken());
@@ -36,7 +39,11 @@ export default function Login() {
             })
             .catch(function (error) {
                 console.log(error);
-                alert("Wrong ID or password!")
+                notification.error({
+                    message: 'Log in Failed',
+                    description:
+                        'Either username or password is incorrect',
+                });
             });
     }
 
@@ -68,32 +75,10 @@ export default function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-                <Button block size="lg" type="submit" disabled={!validateForm()}>
+                <Button id = "loginbtn" block size="lg" type="submit" disabled={!validateForm()}>
                     Login
                 </Button>
             </Form>
         </div>
     );
-}
-
-export async function getEvents(){
-    var config = {
-        method: 'get',
-        url: url + '/api/events/all',
-        headers: {
-            'accept': 'application/json'
-        }
-    };
-
-    axios(config)
-        .then(function (response) {
-            var response = JSON.stringify(response.data);
-
-
-
-
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
 }

@@ -1,12 +1,14 @@
+import os
+
 import pymongo
 from markkk.logger import logger
 
 try:
     from .db_secrete import _DB_NAME, _DB_PASS, _DB_USER
 except ImportError:
-    _DB_USER = "REPLACE_ME"
-    _DB_PASS = "REPLACE_ME"
-    _DB_NAME = "REPLACE_ME"
+    _DB_USER = os.environ.get("_DB_USER", "REPLACE_ME")
+    _DB_PASS = os.environ.get("_DB_PASS", "REPLACE_ME")
+    _DB_NAME = os.environ.get("_DB_NAME", "REPLACE_ME")
 
 logger.info(
     f"""-----------------------------------
@@ -19,10 +21,21 @@ logger.info(
 )
 
 
-_client = pymongo.MongoClient(
-    f"mongodb+srv://{_DB_USER}:{_DB_PASS}@clusteresc.xvunj.mongodb.net/{_DB_NAME}?retryWrites=true&w=majority"
+client = pymongo.MongoClient(
+    f"mongodb+srv://{_DB_USER}:{_DB_PASS}@clusteresc.xvunj.mongodb.net/{_DB_NAME}?retryWrites=true&w=majority",
+    ssl=True,
 )
-db = _client[f"{_DB_NAME}"]
+
+db = client[f"{_DB_NAME}"]
+db_available = False
+
+try:
+    # The ismaster command is cheap and does not require auth.
+    db.command("ismaster")
+    logger.debug("DB Server OK")
+    db_available = True
+except pymongo.errors.ConnectionFailure:
+    logger.error("DB Server Not Available")
 
 ### MongoDB Collection Reference ###
 # User

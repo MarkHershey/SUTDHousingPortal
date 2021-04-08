@@ -15,9 +15,15 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
+import "../variables/utilities";
 
+import {
+    getPersonalEventInfoJson,
+    getUserInfoJson
+} from "../variables/localstorage";
+import {getPersonalEventInfo} from "../variables/eventinfo";
+import {getUsername} from "../variables/localstorage";
 
 const useRowStyles = makeStyles({
     root: {
@@ -26,7 +32,6 @@ const useRowStyles = makeStyles({
         },
     },
 });
-
 const EventDiv = styled.div`
   display: grid;
   grid-gap: 20px;
@@ -35,7 +40,6 @@ const EventDiv = styled.div`
   margin-right: 2em;
   grid-column: auto;
 `;
-
 const SubTitle = styled.p`
   text-align: right;
   color: #3C64B1;
@@ -44,25 +48,40 @@ const SubTitle = styled.p`
 `;
 
 const SubTitle2 = styled.p`
-  text-align: left;
+  text-align: center;
   color: #3C64B1;
   font-weight: bold;
   font-size: medium;
   margin: 0 0 0 0;
 `;
-/*
-function createData(name, date, time, floor, summary, preparation,status) {
-    return {
-        name,
-        date,
-        time,
-        floor,
-        summary,
-        preparation,
-        status
-    };
+
+
+
+Row.propTypes = {
+    row: PropTypes.shape({
+        uid: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        event_type: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        start_time: PropTypes.string.isRequired,
+        duration: PropTypes.number.isRequired,
+        count: PropTypes.bool.isRequired,
+        floor: PropTypes.number.isRequired,
+        block:PropTypes.string.isRequired,
+        signups:PropTypes.array.isRequired,
+        attendance:PropTypes.array.isRequired,
+    }).isRequired,
+};
+
+function attended(attendance){
+    var attended = false;
+    attendance.forEach(function (item,row,array){
+        console.log(item);
+        if (item === getUsername()) attended = true;
+    });
+    return attended;
 }
-*/
+
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -77,22 +96,28 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">{row.title}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.start_time+" "+row.getEnd_time()}</TableCell>
-                <TableCell align="right">{row.block+" Lvl "+row.floor}</TableCell>
-                <TableCell align="right"><button type="button" class="btn btn-outline-primary">Join Now!</button></TableCell>
+                <TableCell align="right">{new Date(Date.parse(row.start_time)).toDateString()}</TableCell>
+                <TableCell align="right">{new Date(Date.parse(row.start_time)).format("hh:mm")}</TableCell>
+                <TableCell align="right">{"Block " + row.block+" Level "+row.floor}</TableCell>
+                <TableCell align="right" ><div style={{color: attended(row.attendance)?"green" : "grey"}}>{attended(row.attendance)?"Attended" : "Registered"}</div></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <Typography variant="h6" gutterBottom component="div" text-align="center">
                                 Details
                             </Typography>
                             <bs.Container>
                                 <bs.Row>
                                     <bs.Col lg={3}><SubTitle>Description:</SubTitle></bs.Col>
                                     <bs.Col lg={9}>{row.description}</bs.Col>
+                                </bs.Row>
+                                <bs.Row>
+                                    <bs.Col lg={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.duration_mins + "mins"}</bs.Col>
+                                    <bs.Col lg={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
+                                    <bs.Col lg={3}>{row.meetup_location}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
                         </Box>
@@ -103,69 +128,50 @@ function Row(props) {
     );
 }
 
-Row.propTypes = {
-    row: PropTypes.shape({
-        uid: PropTypes.string.isRequired,
-        tite: PropTypes.string.isRequired,
-        event_type: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        start_time: PropTypes.string.isRequired,
-        duration: PropTypes.number.isRequired,
-        count: PropTypes.bool.isRequired,
-        floor: PropTypes.number.isRequired,
-        block:PropTypes.string.isRequired,
-        signups:PropTypes.array.isRequired,
-        attendence:PropTypes.array.isRequired,
-    }).isRequired,
-};
+export default class Events extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {events: []};
+    }
 
-/*var event1 = new Event("uid","Paper Work DIY!","Interest based event","This is a workshop session in which we will do paper works together. Be creative! 3 A4 white paper",
-"3-4-2021-17:00",120,true,9,"Block 55",[],[]);
-var event2 = new Event("uid2","LEGO ARTIST","Interest based event","This is a workshop session in which we will assemble LEGO together. Be creative!, 2 DAISO LEGO Blocks",
-"4-4-2021-20:00",120,true,9,"Block 55",[],[]);
-var event3 = new Event("uid3","E-GAME ONLINE!","Inter block","BOOST with SUTD gamers! We will play Valorant and CSGO together ,A good computer",
-"5-4-2021:20:00",120,false,9,"Block 55",[],[]);
-var event4 = new Event("uid4","Basketball is fun!","Inter block","Play 3V3 basketball game in groups and win!!,Nothing",
-"5-4-2021",120,true,9,"Block 55",[],[]);
-var event5 = new Event("uid5","Zen Zen Zen","Floor event","Sit together quietly, Nothing","7-4-2021",120,false,
-9,"Block 55",[],[]);*/
+    componentDidMount() {
+        const fetchJSON = async () =>{
+            getPersonalEventInfo().then(r=>{
+                this.setState({events: getPersonalEventInfoJson()});
+                console.log("Personal Event Info JSON:");
+                console.log(getPersonalEventInfoJson());
+            });
+        }
+        fetchJSON();
+    }
 
-const eventsArr = [];
-/*
-const rows = [
-    createData('Paper Work DIY!', "3-4-2021", "17:00-19:00", "All",
-        "This is a workshop session in which we will do paper works together. Be creative!", "3 A4 white paper", "Signed Up"),
-    createData('LEGO ARTIST', "4-4-2021", "20:00-22:00", "59L11",
-        "This is a workshop session in which we will assemble LEGO together. Be creative!", "2 DAISO LEGO Blocks","Completed"),
-    createData('E-GAME ONLINE!', "5-4-2021", "14:00-16:00", "59L11",
-        "BOOST with SUTD gamers! We will play Valorant and CSGO together", "A good computer","Completed"),
-];
-*/
-export default function EventHistory() {
-    return (
-        <EventDiv>
-            <h3>Floor Event History</h3>
-            <SubTitle2>Current Term: <font color = "black">Term 5</font></SubTitle2>
-            <SubTitle2>Attended Event Number: <font color = "black">2</font></SubTitle2>
-            <TableContainer component={Paper}>
-                <Table aria-label="collapsible table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell/>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Time</TableCell>
-                            <TableCell align="right">Floor</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {eventsArr.map((row) => (
-                            <Row key={row.uid} row={row}/>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </EventDiv>
-    );
+    render() {
+        return (
+            <EventDiv>
+                <h3>My Floor Events</h3>
+                <bs.Row>
+                    <bs.Col><SubTitle2>Current Term: <font color = "black">Term 5</font></SubTitle2></bs.Col>
+                    <bs.Col><SubTitle2>Registered Event Number: <font color = "black">{getUserInfoJson().registered_events.length}</font></SubTitle2></bs.Col>
+                    <bs.Col><SubTitle2>Attended Event Number: <font color = "black">{getUserInfoJson().attended_events.length}</font></SubTitle2></bs.Col>
+                </bs.Row>
+                <TableContainer component={Paper}>
+                    <Table aria-label="collapsible table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell/>
+                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="right">Date</TableCell>
+                                <TableCell align="right">Time</TableCell>
+                                <TableCell align="right">Floor</TableCell>
+                                <TableCell align="right">Status</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.events.map((row) => (<Row key={row.uid} row={row}/>))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </EventDiv>
+        );
+    }
 }

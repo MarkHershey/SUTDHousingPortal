@@ -3,24 +3,127 @@ from typing import Dict, List, Optional
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
+from ..functional import uid_gen
+
+LEVEL_MIN = 1
+LEVEL_MAX = 15
+INDEX_MIN = 0
+INDEX_MAX = 30
+LIFT_INDEX = 7
+WASHROOM_INDEX = 24
+NEAR_LIFT_THRESHOLD = 3
+NEAR_WASHROOM_THRESHOLD = 5
+
 
 class Room(BaseModel):
-    uid: str
+    uid: str = None
+    room_number: str
     room_type: str
     block: str
     level: int
+    window_facing: str
     location_idx: int = 0
     # derived
     dist_to_lift: int = None
     dist_to_washroom: int = None
     near_to_lift: bool = None
     near_to_washroom: bool = None
-    window_facing: str = "NA"
     face_campus: bool = None
     face_airport: bool = None
     face_building: bool = None
     current_effective_contract_count: int = 0
     all_contracts: List[str] = []  # list of Contract UIDs
+
+    @validator("uid", pre=True, always=True)
+    def default_uid(cls, v):
+        return v or uid_gen("R")
+
+    @validator("room_type", pre=True, always=True)
+    def validate_room_type(cls, v):
+        if isinstance(v, str) and v.upper() in (
+            "DOUBLE",
+            "SINGLE",
+            "SINGLE_ENSUITE",
+        ):
+            return v.upper()
+        else:
+            raise ValueError("Invalid 'room_type' value for Room instantiation.")
+
+    @validator("block", pre=True, always=True)
+    def validate_block(cls, v):
+        if isinstance(v, str) and v.upper() in ("59", "57", "55", "ANY"):
+            return v.upper()
+        else:
+            raise ValueError("Invalid 'block' value for Room instantiation.")
+
+    @validator("level", pre=True, always=True)
+    def validate_level(cls, v):
+        if isinstance(v, int) and LEVEL_MIN <= v <= LEVEL_MAX:
+            return v
+        else:
+            raise ValueError("Invalid 'level' value for Room instantiation.")
+
+    @validator("window_facing", pre=True, always=True)
+    def validate_window_facing(cls, v):
+        if isinstance(v, str) and v.upper() in ("CAMPUS", "AIRPORT", "BUILDING", "ANY"):
+            return v.upper()
+        else:
+            raise ValueError("Invalid 'window_facing' value for Room instantiation.")
+
+    @validator("location_idx", pre=True, always=True)
+    def validate_location_idx(cls, v):
+        if isinstance(v, int) and INDEX_MIN <= v <= INDEX_MAX:
+            return v
+        else:
+            raise ValueError("Invalid 'location_idx' value for Room instantiation.")
+
+    ########################################################
+
+    @validator("dist_to_lift", pre=True, always=True)
+    def derive_dist_to_lift(cls, v, *, values, **kwargs):
+        location_idx = values.get("location_idx")
+        return abs(location_idx - LIFT_INDEX)
+
+    @validator("dist_to_washroom", pre=True, always=True)
+    def derive_dist_to_washroom(cls, v, *, values, **kwargs):
+        location_idx = values.get("location_idx")
+        return abs(location_idx - WASHROOM_INDEX)
+
+    @validator("near_to_lift", pre=True, always=True)
+    def derive_near_to_lift(cls, v, *, values, **kwargs):
+        dist_to_lift = values.get("dist_to_lift")
+        return dist_to_lift <= NEAR_LIFT_THRESHOLD
+
+    @validator("near_to_washroom", pre=True, always=True)
+    def derive_near_to_washroom(cls, v, *, values, **kwargs):
+        dist_to_washroom = values.get("dist_to_washroom")
+        return dist_to_washroom <= NEAR_WASHROOM_THRESHOLD
+
+    ########################################################
+
+    @validator("face_campus", pre=True, always=True)
+    def derive_face_campus(cls, v, *, values, **kwargs):
+        window_facing = values.get("window_facing")
+        if isinstance(window_facing, str) and window_facing.upper() == "CAMPUS":
+            return True
+        else:
+            return False
+
+    @validator("face_airport", pre=True, always=True)
+    def derive_face_airport(cls, v, *, values, **kwargs):
+        window_facing = values.get("window_facing")
+        if isinstance(window_facing, str) and window_facing.upper() == "AIRPORT":
+            return True
+        else:
+            return False
+
+    @validator("face_building", pre=True, always=True)
+    def derive_face_building(cls, v, *, values, **kwargs):
+        window_facing = values.get("window_facing")
+        if isinstance(window_facing, str) and window_facing.upper() == "BUILDING":
+            return True
+        else:
+            return False
 
 
 class RoomProfile(BaseModel):

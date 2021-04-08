@@ -1,10 +1,14 @@
 # SUTD HousingPortal
 
 ![](https://github.com/MarkHershey/SUTDHousingPortal/workflows/CI/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/MarkHershey/SUTDHousingPortal/branch/master/graph/badge.svg?token=CUDPJZRG4Y)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal)
+![](https://img.shields.io/badge/license-MIT-blue)
 
 Focusing on transparent application process and easy-to-use UI, this is the proposed web-based Housing Portal MVP for SUTD.
 
 ## Stack
+
+![](docs/deploy.png)
 
 -   Backend
     -   [FastAPI](https://fastapi.tiangolo.com/) (Python high performance web framework)
@@ -14,9 +18,9 @@ Focusing on transparent application process and easy-to-use UI, this is the prop
     -   [React](https://reactjs.org/)
     -   [Bootstrap](https://getbootstrap.com/)
 -   Deployment
-    -   [Gunicorn](https://gunicorn.org/)
-    -   [NGINX](https://www.nginx.com/)
-    -   [Docker](https://www.docker.com/)
+    -   [Gunicorn](https://gunicorn.org/) to spin up multiple Uvicorn workers
+    -   [NGINX](https://www.nginx.com/) serve as reverse proxy server
+    -   [Docker](https://www.docker.com/) containerize everything
 -   Testing
     -   [pytest](https://docs.pytest.org/en/stable/)
     -   [selenium](https://selenium-python.readthedocs.io/)
@@ -85,4 +89,6 @@ $ pytest
 
 ## Acknowledgement
 
--   Docker base image: [tiangolo / uvicorn-gunicorn-fastapi-docker](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
+-   Docker base images
+    -   [tiangolo / uvicorn-gunicorn-fastapi-docker](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
+    -   [tiangolo / node-frontend](https://github.com/tiangolo/node-frontend)

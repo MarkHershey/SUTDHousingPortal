@@ -4,7 +4,7 @@ from typing import List
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from .helpers import uid_gen
+from ..functional import uid_gen
 
 
 class Event(BaseModel):
@@ -26,6 +26,7 @@ class Event(BaseModel):
     attendance: List[str] = []  # list of attended student_id
     signup_limit: int = 20  # maximum number of signups
     signup_ddl: datetime = None  # deadline for sign up
+    archived: bool = False
 
     @validator("uid", pre=True, always=True)
     def default_uid(cls, v):
@@ -38,6 +39,10 @@ class Event(BaseModel):
     @validator("signup_ddl", pre=True, always=True)
     def default_signup_ddl(cls, v, *, values, **kwargs):
         return v or values["start_time"]
+
+    @validator("archived", pre=True, always=True)
+    def default_archived(cls, v):
+        return False
 
 
 class EventEditableInfo(BaseModel):

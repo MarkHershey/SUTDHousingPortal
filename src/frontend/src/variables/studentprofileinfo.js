@@ -1,5 +1,7 @@
 import {checkValidity, getToken, getUsername} from "./localstorage";
 import axios from "axios";
+import {url} from "./url";
+import {getCurrentStudentInfo} from "./studentinfo";
 
 export var phone_number = "string";
 export var email_personal = "";
@@ -9,17 +11,16 @@ export var local_addr_unit ="";
 export var preference_roommate = []; //list of string
 
 
-export async function updateStudentProfileInfo(username,password,phone_number,
+export async function updateStudentProfileInfo(phone_number,
     email_personal,post_code,street,unit,preferredRoommate){
     if(!checkValidity()) return undefined;
-    var data = JSON.stringify({"username":username,"password":password,
-    "phone_number":phone_number,"email_personal":email_personal,
+    var data = JSON.stringify({"phone_number":phone_number+"","email_personal":email_personal,
     "local_addr_post_code":post_code,"local_addr_street":street,
-    "local_addr_unit":unit,"preference_roommate": preferredRoommate});
-    
+    "local_addr_unit":unit,"preference_roommate":preferredRoommate});
+
     var config = {
        method: 'put',
-       url: 'http://esc.dev.markhh.com/api/students/'+getUsername(),
+       url: url+'/api/students/'+getUsername(),
        headers: { 
           'accept': 'application/json', 
           'Authorization': 'Bearer '+getToken(), 
@@ -31,6 +32,7 @@ export async function updateStudentProfileInfo(username,password,phone_number,
     axios(config)
     .then(function (response) {
        console.log(JSON.stringify(response.data));
+       getCurrentStudentInfo();
     })
     .catch(function (error) {
        console.log(error);

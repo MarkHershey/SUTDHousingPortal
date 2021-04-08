@@ -26,6 +26,7 @@ class Student(User):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None
@@ -56,6 +57,7 @@ class StudentProfile(BaseModel):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None
@@ -72,12 +74,11 @@ class StudentEditableProfile(BaseModel):
 
 
 class StudentIdentityProfile(BaseModel):
-    student_id: str = None
     full_name: str = None
     gender: str = None  # Male / Female
     enrollment_type: str = None
     year_of_enrollment: int = None
-    sc_status: bool = False
-    pr_status: bool = False
-    nationality: str
-    email_sutd: str
+    sc_status: bool = None
+    pr_status: bool = None
+    nationality: str = None
+    email_sutd: str = None
