@@ -41,6 +41,7 @@ export default class ApplicationPartTwo extends React.Component {
         this.handleSave = this.handleSave.bind(this);
         var roomPreferences = getUserInfoJson().preference_room
         this.state = roomPreferences;
+        console.log(this.props.location.state.applicable_period);
     }
 
     handleChange(event) {
@@ -83,7 +84,13 @@ export default class ApplicationPartTwo extends React.Component {
         getCurrentStudentInfo();
         this.state = getUserInfoJson().preference_room;
         console.log(this.state);
-        this.props.history.push("/apply3");
+        this.props.history.push({
+            pathname: "/apply3",
+            state: {
+                application_period_uid: this.props.location.state.application_period_uid,
+                applicable_period : this.props.location.state.applicable_period
+            }
+        });
     }
 
     render() {

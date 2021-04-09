@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import {NavigationBar} from './components/navbar';
 import {AdminNavigationBar} from './components/admin/admin_navigationBar';
 import Login from './components/login';
+import ApplicationZero from './components/application_part0';
 import ApplicationOne from './components/application_part1';
 import ApplicationTwo from "./components/application_part2";
 import ApplicationThree from "./components/application_part3";
@@ -52,6 +53,7 @@ function App() {
                     <GuardedRoute path="/profile_edit" component={PersonalDataEdit}/>
                     <GuardedRoute path="/room_profile_edit" component={RoomProfileEdit}/>
                     <GuardedRoute path="/lifestyle_profile_edit" component={LifeStyleProfileEdit}/>
+                    <GuardedRoute path="/apply0" component={ApplicationZero}/>
                     <GuardedRoute path="/apply" component={ApplicationOne}/>
                     <GuardedRoute path="/apply2" component={ApplicationTwo}/>
                     <GuardedRoute path="/apply3" component={ApplicationThree}/>
