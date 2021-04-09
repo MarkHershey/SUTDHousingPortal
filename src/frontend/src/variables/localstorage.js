@@ -227,6 +227,23 @@ export function getPersonalDisciplinaryRecordInfoJson(){
     return JSON.parse(storage["personaldisciplinaryrecord"]);
 }
 
+export function setPersonalApplicablePeriodUidInfoJson(newjson){
+    storage.setItem("personalApplicationPeriodUid",JSON.stringify(newjson));
+}
+
+export function getPersonalApplicablePeriodUidInfoJson(){
+    if(storage["personalApplicationPeriodUid"]===undefined) return undefined;
+    return JSON.parse(storage["personalApplicationPeriodUid"]);
+}
+
+export function setPersonalApplicablePeriodInfoJson(newjson){
+    storage.setItem("personalApplicablePeriodInfoJson",JSON.stringify(newjson));
+}
+
+export function getPersonalApplicablePeriodInfoJson(){
+    if(storage["personalApplicablePeriodInfoJson"]===undefined) return undefined;
+    return JSON.parse(storage["personalApplicablePeriodInfoJson"]);
+}
 
 export function logout(){
     clearToken();

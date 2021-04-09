@@ -25,19 +25,7 @@ const ProfileBox = styled.div`
 export default function ApplicationOne(props) {
     
     let history = useHistory();
-    function handleSubmit(){
-        console.log("this is my "+props.location.state.application_period_uid);
-        console.log(props.location.state.applicable_period);
-        
-        history.push({
-            pathname: "/apply2",
-            state: {
-                application_period_uid: props.location.state.application_period_uid,
-                applicable_period : props.location.state.applicable_period,
-            }
-        });
-        
-    }
+    
 
     return(
         <EventDiv>
@@ -47,8 +35,11 @@ export default function ApplicationOne(props) {
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
+                        <bs.Col><a href="/apply0"><button id="application1_prev_btn" type="button" className="btn-btn-outline-primary">Go to Previous Step</button></a></bs.Col>
                         <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
-                        <bs.Col><button id="application1_next_btn" onclick={handleSubmit()} type="button" className="btn btn-outline-primary">Go To Next Step</button></bs.Col>
+                        
+                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="form" className="btn btn-outline-primary">Go to next step</button></a></bs.Col>
+                        
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>

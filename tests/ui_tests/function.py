@@ -9,7 +9,7 @@ import string
 
 from selenium.webdriver.common.by import By
 
-path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
+path = "C:/Users/user/seleniumstuff/chromedriver"
 url = "http://localhost:3000"
 
 options = webdriver.ChromeOptions()

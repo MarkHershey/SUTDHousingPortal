@@ -22,13 +22,13 @@ import {
     getApplicationPeriodInfoJson,
     getToken,
     getOngoingApplicationPeriodInfoJson,
-    getUserInfoJson, initAttendanceEditJson
+    getUserInfoJson, initAttendanceEditJson, setApplicationPeriodInfoJson
 } from "../variables/localstorage";
 import {
     getOngoingApplicationPeriodInfo,
     
 } from "../variables/applicationperiodinfo"
-import {getUsername} from "../variables/localstorage";
+import {getUsername,setPersonalApplicablePeriodUidInfoJson,setPersonalApplicablePeriodInfoJson} from "../variables/localstorage";
 import axios from "axios";
 import {url} from "../variables/url";
 import Modal from '@material-ui/core/Modal';
@@ -126,11 +126,13 @@ function CreateUI(props,uid){
                     <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button class="btn btn-outline-primary" onClick={()=>{
+                    <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" onClick={()=>{
                         console.log(el);
-                        
+                        //store el and uid into storage
+                        setApplicationPeriodInfoJson(el);
+                        setPersonalApplicablePeriodUidInfoJson(uid);
                         history.push({
-                            pathname: "/apply",
+                            pathname: "/apply1",
                             state: {
                                 applicable_period : el,
                                 application_period_uid : uid
@@ -186,7 +188,17 @@ function Row(props) {
 export default class ApplicationZero extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {events: []};
+        this.state = {events: [{
+            uid: "",
+            created_at: "",
+            created_by: "",
+            application_window_open: "",
+            application_window_close: "",
+            applicable_periods: [{
+                start_date:"",
+                end_date : ""
+            }], 
+        }]};
     }
 
 

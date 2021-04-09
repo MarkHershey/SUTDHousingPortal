@@ -31,6 +31,7 @@ export default class ApplicationThree extends React.Component{
         super(props);
         this.state = getUserInfoJson().preference_lifestyle;
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
@@ -51,6 +52,16 @@ export default class ApplicationThree extends React.Component{
             }
         }
         return true;
+    }
+
+    handlePrev(){
+        this.props.history.push({
+            pathname: "/apply3",
+            state: {
+                application_period_uid: this.props.location.state.application_period_uid,
+                applicable_period : this.props.location.state.applicable_period
+            }
+        });
     }
 
     handleSave(){
@@ -91,7 +102,7 @@ export default class ApplicationThree extends React.Component{
                     <br/>
                     <ProfileBox>
                         <bs.Row>
-                                <bs.Col><a href="/apply2"><button id="application3_back_btn" type="button" className="btn btn-outline-primary">Go Previous Step</button></a></bs.Col>
+                                <bs.Col><button onClick={this.handlePrev} id="application3_back_btn" type="button" className="btn btn-outline-primary">Go Previous Step</button></bs.Col>
                                 <bs.Col><button id="application3_save_btn" type="button" onClick={this.handleSave} className="btn btn-outline-primary">Save</button></bs.Col>
                                 <bs.Col><button id="application3_next_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary">Go to next Step</button></bs.Col>
                         </bs.Row>
