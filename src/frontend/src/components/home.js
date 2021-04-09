@@ -80,7 +80,6 @@ export default class Home extends React.Component {
                                     precision={0}
                                     prefix={<AuditOutlined />}
                                     valueStyle={{ color: '#3f8600' }}
-                                    suffix="/3"
                                 />
                             </Card>
                         </Col>

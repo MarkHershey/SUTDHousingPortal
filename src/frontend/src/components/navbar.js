@@ -40,19 +40,19 @@ export const NavigationBar = () => (
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
+                    <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/profile" id="dropdown_profile">Profile</Nav.Link></Nav.Item>
                     <NavDropdown title="Events">
                         <NavDropdown.Item href="/event" id="dropdown_events">Floor Events</NavDropdown.Item>
-                        <NavDropdown.Item href="/event_history" id="dropdown_event_records">Event Records</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_history" id="dropdown_event_records">My Event Records</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/event_creation" disabled={!isHG()} id="dropdown_create_event">Create Event</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Application">
                         <NavDropdown.Item href="/application_status" id="dropdown_status">Check Status</NavDropdown.Item>
-                        <NavDropdown.Item href="/apply" id="dropdown_apply">Housing Application</NavDropdown.Item>
+                        <NavDropdown.Item href="/apply0" id="dropdown_apply">Housing Application</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
-                    <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
