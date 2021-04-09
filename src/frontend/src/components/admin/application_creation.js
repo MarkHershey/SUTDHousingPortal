@@ -69,6 +69,7 @@ export default class ApplicationCreation extends React.Component{
         }
         submitApplicationPeriod(this.state.application_window_open,this.state.application_window_close,
             this.state.applicable_periods,this.state.applicable_rooms,this.state.applicable_students);
+        this.props.history.push("/");
     }
 
     handleChange(event) {
