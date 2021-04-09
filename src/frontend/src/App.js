@@ -54,7 +54,7 @@ function App() {
                     <GuardedRoute path="/room_profile_edit" component={RoomProfileEdit}/>
                     <GuardedRoute path="/lifestyle_profile_edit" component={LifeStyleProfileEdit}/>
                     <GuardedRoute path="/apply0" component={ApplicationZero}/>
-                    <GuardedRoute path="/apply" component={ApplicationOne}/>
+                    <GuardedRoute path="/apply1" component={ApplicationOne}/>
                     <GuardedRoute path="/apply2" component={ApplicationTwo}/>
                     <GuardedRoute path="/apply3" component={ApplicationThree}/>
                     <GuardedRoute path="/apply4" component={ApplicationFour}/>
