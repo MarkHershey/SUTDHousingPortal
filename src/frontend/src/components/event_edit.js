@@ -120,7 +120,7 @@ export default class EventEdit extends React.Component{
 
                         <bs.Row>
                             <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
-                            <bs.Col lg={3} style = {{textAlign:"center"}}><Switch checkedChildren="Yes" id = "event_count_attendance" unCheckedChildren="No" onClick={this.handleButtonChange} defaultChecked = {this.state.count_attendance}/></bs.Col>
+                            <bs.Col lg={3} style = {{textAlign:"left"}}><Switch checkedChildren="Yes" id = "event_count_attendance" unCheckedChildren="No" onClick={this.handleButtonChange} defaultChecked = {this.state.count_attendance}/></bs.Col>
                             <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>
                             <bs.Col lg={3}><Input id="event_signup_deadline" name="signup_ddl" type="datetime-local" defaultValue={this.state.signup_ddl} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>

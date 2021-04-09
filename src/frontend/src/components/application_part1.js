@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import ProfileData from "./profile_data";
 import {ApplicationStep} from "./application_steps";
+import {useHistory} from "react-router";
 
 const EventDiv = styled.div`
   display: grid;
@@ -21,7 +22,11 @@ const ProfileBox = styled.div`
   border-radius: 20pt;
 `;
 
-export default function ApplicationOne() {
+export default function ApplicationOne(props) {
+    
+    let history = useHistory();
+    
+
     return(
         <EventDiv>
             <ApplicationStep i ={0}/>
@@ -30,8 +35,10 @@ export default function ApplicationOne() {
             <ProfileBox>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
-                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="button" className="btn btn-outline-primary">Go To Next Step</button></a></bs.Col>
+                        <bs.Col><a href="/apply0"><button id="application1_prev_btn" type="button" className="btn btn-outline-primary">Go to Previous Step</button></a></bs.Col>
+                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>    
+                        <bs.Col><a href="/apply2"><button id="application1_next_btn" type="form" className="btn btn-outline-primary">Go to next step</button></a></bs.Col>
+                        
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>
