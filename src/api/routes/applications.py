@@ -11,7 +11,7 @@ from ..database import *
 from ..error_msg import ErrorMsg as MSG
 from ..functional import clean_dict, convert_date_to_datetime
 from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
-from .application_helpers import validate_AP
+from .application_helpers import validate_new_application
 
 router = APIRouter(prefix="/api/applications", tags=["Housing Applications"])
 auth_handler = AuthHandler()
@@ -59,7 +59,7 @@ async def submit_application(
     target_student: str = application_form.student_id
     if not target_student or not Access.is_student(target_student):
         logger.debug("Student does not exist.")
-        raise HTTPException(status_code=400, detail=MSG.TARGET_ITEM_NOT_FOUND)
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
     # Check access
     permission_ok = (username == target_student) or Access.is_admin_write(username)
@@ -79,7 +79,7 @@ async def submit_application(
     # make sure only one application per student for an application period
     # validate stay period, cross check with allowable period
     AP_uid: str = application_form.application_period_uid
-    if not validate_AP(AP_uid, target_student, stay_period):
+    if not validate_new_application(AP_uid, target_student, stay_period):
         raise HTTPException(status_code=400, detail=MSG.INVALID_APPLICATION)
 
     # set values by this action
@@ -104,21 +104,20 @@ async def submit_application(
                 # add application uid to student profile
                 _updated = students_collection.find_one_and_update(
                     filter={"student_id": target_student},
+                    # NOTE: use dot notation to update field in dict in a document
                     update={"$push": {"application_uids": application_form.uid}},
                     return_document=ReturnDocument.AFTER,
                     session=session,
                 )
                 logger.debug(f"Student Updated: {str(_updated)}")
                 # increate application period reference count
-                # add student to application map
+                # add application_form.uid to application map
                 _updated = application_periods_collection.find_one_and_update(
                     filter={"uid": AP_uid},
                     update={
                         "$inc": {"reference_count": 1},
                         "$set": {
-                            "application_forms_map": {
-                                target_student: application_form.uid
-                            }
+                            f"application_forms_map.{target_student}": application_form.uid
                         },
                     },
                     return_document=ReturnDocument.AFTER,

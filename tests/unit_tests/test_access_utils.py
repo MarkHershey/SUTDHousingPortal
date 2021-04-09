@@ -48,7 +48,7 @@ class TestAccessUtils(unittest.TestCase):
         if self.ignore:
             return
         self.assertTrue(Access.is_student_hg("1004515"))
-        self.assertFalse(Access.is_student_hg("1000000"))
+        self.assertTrue(Access.is_student_hg("1000000"))
         self.assertFalse(Access.is_student_hg("markkk"))
         self.assertFalse(Access.is_student_hg("xxxxxxxxxxx"))
 

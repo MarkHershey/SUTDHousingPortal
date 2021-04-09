@@ -14,7 +14,9 @@ from ..functional import clean_dict, convert_datetime_to_date
 from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 
 
-def validate_AP(AP_uid: str, student_id: str, stay_period: TimePeriod) -> bool:
+def validate_new_application(
+    target_AP_uid: str, student_id: str, stay_period: TimePeriod
+) -> bool:
     """
     This method does the following checks to ensure incoming Application Form is valid.
 
@@ -26,7 +28,7 @@ def validate_AP(AP_uid: str, student_id: str, stay_period: TimePeriod) -> bool:
     """
     _now = datetime.now()
     try:
-        ap_dict = application_periods_collection.find_one({"uid": AP_uid})
+        ap_dict = application_periods_collection.find_one({"uid": target_AP_uid})
         clean_dict(ap_dict)
     except Exception as e:
         logger.error(MSG.DB_QUERY_ERROR)
@@ -34,27 +36,27 @@ def validate_AP(AP_uid: str, student_id: str, stay_period: TimePeriod) -> bool:
         raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
     if not ap_dict:
-        logger.info(f"ApplicationPeriod '{AP_uid}' Not Found")
+        logger.info(f"ApplicationPeriod '{target_AP_uid}' Not Found")
         return False
 
     window_open_dt = ap_dict.get("application_window_open")
     window_close_dt = ap_dict.get("application_window_close")
     if not window_open_dt <= _now <= window_close_dt:
         logger.info(
-            f"Student({student_id}) attempted submitting application to ApplicationPeriod({AP_uid})"
+            f"Student({student_id}) attempted submitting application to ApplicationPeriod({target_AP_uid})"
         )
-        logger.info(f"Failed. Not in Application Window: {AP_uid}")
+        logger.info(f"Failed. Not in Application Window: {target_AP_uid}")
         return False
 
     application_forms_map: Dict[str, str] = ap_dict.get("application_forms_map")
     if student_id not in application_forms_map:
         logger.info(
-            f"Ineligible Student({student_id}) attempted submitting application to ApplicationPeriod({AP_uid})"
+            f"Ineligible Student({student_id}) attempted submitting application to ApplicationPeriod({target_AP_uid})"
         )
         return False
     if application_forms_map[student_id] != "":
         logger.info(
-            f"Illegal second submission by Student({student_id}) to ApplicationPeriod({AP_uid})"
+            f"Illegal second submission by Student({student_id}) to ApplicationPeriod({target_AP_uid})"
         )
         return False
 
@@ -71,7 +73,7 @@ def validate_AP(AP_uid: str, student_id: str, stay_period: TimePeriod) -> bool:
             break
     if not period_matched:
         logger.info(
-            f"Illegal Stay Period by Student({student_id}) to ApplicationPeriod({AP_uid})"
+            f"Illegal Stay Period by Student({student_id}) to ApplicationPeriod({target_AP_uid})"
         )
         return False
 

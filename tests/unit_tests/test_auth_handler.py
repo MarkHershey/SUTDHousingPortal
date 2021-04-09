@@ -1,11 +1,12 @@
+import string
 import sys
 import unittest
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from random import randint
-from markkk.logger import logger
 from typing import List
-import string
+
+from markkk.logger import logger
 
 src_dir = Path(__file__).resolve().parent.parent.parent / "src"
 
