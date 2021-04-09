@@ -131,7 +131,7 @@ export default class EventCreation extends React.Component{
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
-                            <bs.Col lg={3} style = {{textAlign:"center"}}>
+                            <bs.Col lg={3} style = {{textAlign:"left"}}>
                                 <Switch checkedChildren="Yes" id = "event_count_attendance" unCheckedChildren="No" onClick={this.handleButtonChange} defaultChecked/>
                             </bs.Col>
                             <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>

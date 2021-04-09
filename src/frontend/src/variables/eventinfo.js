@@ -125,6 +125,7 @@ export async function createEvent(json) {
             notification.success({
                 message: 'Event Created Successfully',
             });
+            window.location.href="/event";
         }).catch(error => {
             notification.error({
                 message: 'Event Creation Failed',
@@ -246,6 +247,7 @@ export async function editEvent(uid,title,event_type,meetup_location,
     axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
+            window.location.href="/event";
         })
         .catch(function (error) {
             console.log(error);

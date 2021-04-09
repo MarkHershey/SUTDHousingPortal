@@ -43,7 +43,7 @@ export const NavigationBar = () => (
                     <Nav.Item><Nav.Link href="/profile" id="dropdown_profile">Profile</Nav.Link></Nav.Item>
                     <NavDropdown title="Events">
                         <NavDropdown.Item href="/event" id="dropdown_events">Floor Events</NavDropdown.Item>
-                        <NavDropdown.Item href="/event_history" id="dropdown_event_records">Event Records</NavDropdown.Item>
+                        <NavDropdown.Item href="/event_history" id="dropdown_event_records">My Event Records</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/event_creation" disabled={!isHG()} id="dropdown_create_event">Create Event</NavDropdown.Item>
                     </NavDropdown>
