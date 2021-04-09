@@ -1,10 +1,12 @@
 # SUTD HousingPortal
 
-![](https://github.com/MarkHershey/SUTDHousingPortal/workflows/CI/badge.svg?branch=master)
-[![codecov](https://codecov.io/gh/MarkHershey/SUTDHousingPortal/branch/master/graph/badge.svg?token=CUDPJZRG4Y)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal)
-![](https://img.shields.io/badge/license-MIT-blue)
+[![](https://github.com/MarkHershey/SUTDHousingPortal/workflows/CI/badge.svg?branch=master)](https://github.com/MarkHershey/SUTDHousingPortal/actions)
+[![](https://img.shields.io/codecov/c/github/MarkHershey/SUTDHousingPortal)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal)
+[![](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-Focusing on transparent application process and easy-to-use UI, this is the proposed web-based Housing Portal MVP for SUTD.
+<!-- [![codecov](https://codecov.io/gh/MarkHershey/SUTDHousingPortal/branch/master/graph/badge.svg?token=CUDPJZRG4Y)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal) -->
+
+Focusing on transparent application process and efficient events management, this is the proposed web-based Housing Portal MVP for SUTD.
 
 ## Stack
 
