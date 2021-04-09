@@ -17,10 +17,10 @@ time.sleep(1)
 driver.get("http://localhost:3000/admin/application_creation")
 
 #edit all fields
-input_text(driver,"app_period_window_open","2021-04-08T17:37")
-input_text(driver,"app_period_window_close","2021-04-08T17:37")
+input_text(driver, "app_period_window_open", "2021-04-08T17:37")
+input_text(driver, "app_period_window_close", "2021-04-08T17:37")
 
-click_btn(driver,"app_period_create_app_period")
+click_btn(driver, "app_period_create_app_period")
 
 assert driver.current_url == "http://localhost:3000/"
 

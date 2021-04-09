@@ -66,7 +66,7 @@ class ProfileTest(unittest.TestCase):
         time.sleep(1)
         click_btn(driver, "loginbtn")
         time.sleep(1)
-        driver.get("http://localhost:3000/profile")
+        driver.get(url + "/profile")
         self.assertEqual(get_text(driver, "ppl_prof_phone_number_display"), str(phone_num))
         click_btn(driver, "logout")
         time.sleep(1)
