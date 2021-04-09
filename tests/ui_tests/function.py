@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import time
-
+import threading
 from datetime_selenium import send_datetime
 from selenium import webdriver
 import unittest
@@ -10,15 +10,15 @@ import string
 from selenium.webdriver.common.by import By
 
 path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
+path2 = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver2"
 url = "http://localhost:3000"
 
 options = webdriver.ChromeOptions()
 options.add_argument('--ignore-certificate-errors')
-options.add_argument('headless')
+# options.add_argument('headless')
 options.add_argument('--no-sandbox')
 options.add_argument('-disable-dev-shm-usage')
 driver = webdriver.Chrome(executable_path=path, options=options)
-driver.get("http://localhost:3000")
 
 
 def input_text(driver, element_id, value):

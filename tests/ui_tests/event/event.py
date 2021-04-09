@@ -12,7 +12,7 @@ class EventTest(unittest.TestCase):
         # Login
         print("login")
         usrname = "1004515"
-        driver.get("http://localhost:3000")
+        driver.get(url)
         input_text(driver, "text", usrname)
         input_text(driver, "password", "pass1234")
         click_btn(driver, "loginbtn")
