@@ -22,7 +22,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
     def setUp(self):
         self.test_use_uid = "TEST_123"
         self.url_local_root = "http://127.0.0.1:8000"
-        self.url_server_root = "http://esc.dev.markhh.com/"
+        self.url_server_root = "http://esc.dev.markhh.com"
         self.admin_username = "markkk"
         self.admin_password = None
         self.token = auth_handler.encode_token(self.admin_username)
