@@ -28,7 +28,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
         self.token = auth_handler.encode_token(self.admin_username)
         self.ignore = False
         # test connection
-        request_url = str(self.url_local_root + "/api")
+        request_url = str(self.url_server_root + "/api")
         try:
             response = requests.get(url=request_url, timeout=1)
             if response.status_code != 200:
@@ -44,7 +44,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
             "accept": "application/json",
             "Content-Type": "application/json",
         }
-        request_url = self.url_local_root + "/api/auth/login"
+        request_url = self.url_server_root + "/api/auth/login"
         data = {
             "username": self.admin_username,
             "password": self.admin_password,
@@ -66,7 +66,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
         """Test Creation of a new ApplicationPeriod by using API endpoint POST method"""
         if self.ignore:
             return
-        request_url = self.url_local_root + "/api/application_periods/"
+        request_url = self.url_server_root + "/api/application_periods/"
         _data = {
             "uid": self.test_use_uid,
             "application_window_open": datetime.now().isoformat(),
@@ -102,7 +102,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
         """Check the newly created Application Period by using API endpoint GET method"""
         if self.ignore:
             return
-        request_url = self.url_local_root + "/api/application_periods/"
+        request_url = self.url_server_root + "/api/application_periods/"
         _data = {
             "uid": self.test_use_uid,
             "application_window_open": datetime.now().isoformat(),
@@ -129,7 +129,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         ###
         request_url = (
-            self.url_local_root + f"/api/application_periods/{self.test_use_uid}"
+            self.url_server_root + f"/api/application_periods/{self.test_use_uid}"
         )
         time.sleep(1)
         response = requests.get(url=request_url, headers=self.headers)
@@ -145,7 +145,7 @@ class TestApplicationPeriodCreation(unittest.TestCase):
         if self.ignore:
             return
         request_url = (
-            self.url_local_root + f"/api/application_periods/{self.test_use_uid}"
+            self.url_server_root + f"/api/application_periods/{self.test_use_uid}"
         )
         response = requests.delete(url=request_url, headers=self.headers)
         if response.status_code == 200:
