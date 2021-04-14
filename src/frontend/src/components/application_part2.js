@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {instanceOf} from "prop-types";
 import {Redirect, useHistory} from "react-router";
 import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import {getUserInfoJson} from "../variables/localstorage";
+import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicablePeriodInfoJson, getPersonalEventInfoJson} from "../variables/localstorage";
 import {getCurrentStudentInfo} from "../variables/studentinfo";
 import {ApplicationStep} from "./application_steps";
 
@@ -38,9 +38,11 @@ export default class ApplicationPartTwo extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
         this.handleSave = this.handleSave.bind(this);
         var roomPreferences = getUserInfoJson().preference_room
         this.state = roomPreferences;
+        //console.log(this.props.location.state.applicable_period);
     }
 
     handleChange(event) {
@@ -60,6 +62,10 @@ export default class ApplicationPartTwo extends React.Component {
             [event.target.name]: value
         });
         console.log(this.state);
+    }
+
+    handlePrev(){
+        this.props.history.push("/apply1");
     }
 
     handleSave(event) {
@@ -83,7 +89,15 @@ export default class ApplicationPartTwo extends React.Component {
         getCurrentStudentInfo();
         this.state = getUserInfoJson().preference_room;
         console.log(this.state);
-        this.props.history.push("/apply3");
+        var uid = getPersonalApplicablePeriodUidInfoJson();
+        var applicablePeriod = getPersonalApplicablePeriodInfoJson();
+        this.props.history.push({
+            pathname: "/apply3",
+            state: {
+                application_period_uid: uid,
+                applicable_period : applicablePeriod
+            }
+        });
     }
 
     render() {
@@ -530,10 +544,10 @@ export default class ApplicationPartTwo extends React.Component {
                     <Apply2BtnSet>
                         <bs.Container>
                             <bs.Row>
-                                <bs.Col><a href="/apply">
-                                    <button id="application2_back_btn" type="button" className="btn btn-outline-primary">Go to previous step
+                                <bs.Col>
+                                    <button id="application2_back_btn" type="button" onClick={this.handlePrev} className="btn btn-outline-primary">Go to previous step
                                     </button>
-                                </a></bs.Col>
+                                </bs.Col>
                                 <bs.Col>
                                     <button id="application2_save_btn" onClick={this.handleSave} type="button"
                                             className="btn btn-outline-primary">Save

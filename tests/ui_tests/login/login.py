@@ -1,5 +1,5 @@
-from selenium.common.exceptions import UnexpectedAlertPresentException
 from function import *
+from selenium.common.exceptions import UnexpectedAlertPresentException
 
 
 class LoginTest(unittest.TestCase):
@@ -56,6 +56,7 @@ class LoginTest(unittest.TestCase):
         self.assertTrue(test_guard_after_logout("application_summary"))
         self.assertTrue(test_guard_after_logout("event_creation"))
         self.assertTrue(test_guard_after_logout("application_status"))
+
 
 # trying tp go to an forbidden page after logout
 def test_guard_after_logout(router_name):

@@ -21,14 +21,15 @@ from api.routes.auth import auth_handler
 class TestApplicationCreation(unittest.TestCase):
     def setUp(self):
         self.test_use_uid = "TEST_123"
+        self.test_use_uid2 = "TEST_456"
         self.url_local_root = "http://127.0.0.1:8000"
-        self.url_server_root = "http://esc.dev.markhh.com/"
+        self.url_server_root = "http://esc.dev.markhh.com"
         self.admin_username = "markkk"
         self.admin_password = None
         self.token = auth_handler.encode_token(self.admin_username)
         self.ignore = False
         # test connection
-        request_url = str(self.url_local_root + "/api")
+        request_url = str(self.url_server_root + "/api")
         try:
             response = requests.get(url=request_url, timeout=1)
             if response.status_code != 200:
@@ -44,7 +45,7 @@ class TestApplicationCreation(unittest.TestCase):
             "accept": "application/json",
             "Content-Type": "application/json",
         }
-        request_url = self.url_local_root + "/api/auth/login"
+        request_url = self.url_server_root + "/api/auth/login"
         data = {
             "username": self.admin_username,
             "password": self.admin_password,
@@ -64,7 +65,7 @@ class TestApplicationCreation(unittest.TestCase):
 
         ################################################################################
         # set up an AP for testing
-        request_url = self.url_local_root + "/api/application_periods/"
+        request_url = self.url_server_root + "/api/application_periods/"
         data = {
             "uid": self.test_use_uid,
             "application_window_open": datetime.now().isoformat(),
@@ -91,15 +92,53 @@ class TestApplicationCreation(unittest.TestCase):
         """Test Submission of Application via endpoint POST method"""
         if self.ignore:
             return
-        request_url = self.url_local_root + "/api/..."
-        _data = {}
-        pass
+        request_url = self.url_server_root + "/api/applications"
+        data = {
+            "uid": self.test_use_uid2,
+            "application_period_uid": self.test_use_uid,
+            "created_at": "2021-04-09T09:29:53.668Z",
+            "student_id": "1000000",
+            "room_profile": {
+                "room_type": "string",
+                "room_type_2nd": "string",
+                "block": "59",
+                "block_2nd": "55",
+                "level_range": "UPPER",
+                "window_facing": "CAMPUS",
+                "near_to_lift": False,
+                "near_to_washroom": True,
+                "level_has_pantry": None,
+                "level_has_mr": None,
+                "level_has_gsr": True,
+                "level_has_rr": None,
+                "weightage_order": [3, 4, 5, 1, 2, 6, 7, 8, 9],
+            },
+            "lifestyle_profile": {
+                "bedtime": 2,
+                "wakeup_time": 8,
+                "like_social": False,
+                "like_clean": True,
+            },
+            "stay_period": {
+                "start_date": date.today().isoformat(),
+                "end_date": (date.today() + timedelta(days=30)).isoformat(),
+            },
+        }
+        response = requests.post(
+            url=request_url,
+            headers=self.headers,
+            json=data,
+        )
+        self.assertEqual(response.status_code, 201)
+        res_data = response.json()
+        self.assertEqual(res_data.get("uid"), self.test_use_uid2)
+        self.assertEqual(res_data.get("created_by"), self.admin_username)
 
     def tearDown(self):
         if self.ignore:
             return
         request_url = (
-            self.url_local_root + f"/api/application_periods/{self.test_use_uid}"
+            self.url_server_root + f"/api/application_periods/{self.test_use_uid}"
         )
         response = requests.delete(url=request_url, headers=self.headers)
         if response.status_code == 200:
