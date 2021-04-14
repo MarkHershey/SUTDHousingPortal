@@ -65,3 +65,11 @@ def gen_datetime(min_year=2019, max_year=datetime.now().year):
     result = start + (end - start) * random.random()
     print(result)
     return result
+
+def clear_input_text(driver,element_id):
+    driver.find_element_by_xpath('//*[@id="'+element_id + '"]').clear()
+    time.sleep(0.1)
+
+def clear_input_text_by_name(driver, element_name):
+    driver.find_element_by_name(element_name).clear()
+    time.sleep(0.1)

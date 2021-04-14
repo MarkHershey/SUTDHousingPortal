@@ -93,13 +93,13 @@ export default class ApplicationManagement extends React.Component{
         const fetchJSON = async () =>{
             getApplicationPeriodInfo(this.props.location.state.uid).then(r=>{
                 this.setState(getPersonalApplicationPeriodInfoJson());
-                console.log("Current Application Period Info JSON");
-                console.log(getPersonalApplicationPeriodInfoJson());
+                console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
                 
             });
 
         }
         fetchJSON();
+        
     }
 
     handleDelete() {
@@ -163,6 +163,7 @@ export default class ApplicationManagement extends React.Component{
                                     <TableCell align="left">Room Offered</TableCell>
                                 </TableRow>
                             </TableHead>
+                            {console.log(this.state.application_forms_map)}
                             {/*
                             <TableBody>
                                 {this.state.application_forms_map.map((row)=>(

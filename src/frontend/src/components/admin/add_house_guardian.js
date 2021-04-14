@@ -78,10 +78,10 @@ export default class AddHouseGuardian extends React.Component{
                             <Input type="text" name="student_id" value={el.student_id ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
                         <bs.Col lg={1}>
-                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
+                            <CloseCircleTwoTone id="remove_student_id" style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
                         </bs.Col>
                         <bs.Col lg={1}>
-                                <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
+                                <PlusCircleTwoTone id="add_student_id" style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
                         </bs.Col>
                         <bs.Col lg={2}></bs.Col>
                     </bs.Row>

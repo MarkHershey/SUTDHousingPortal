@@ -71,7 +71,7 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component {
 
     handleDelete() {
         deleteDisciplinaryRecord(this.props.location.state.uid);
-        this.props.history.push("/");
+        this.props.history.push("/admin/disciplinary_record_view_all");
     }
 
     handleChange(event) {
