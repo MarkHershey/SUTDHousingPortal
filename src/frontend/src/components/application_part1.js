@@ -25,7 +25,6 @@ const ProfileBox = styled.div`
 export default function ApplicationOne(props) {
     
     let history = useHistory();
-    
 
     return(
         <EventDiv>
@@ -36,9 +35,8 @@ export default function ApplicationOne(props) {
                 <bs.Container>
                     <bs.Row>
                         <bs.Col><a href="/apply0"><button id="application1_prev_btn" type="button" className="btn btn-outline-primary">Go to Previous Step</button></a></bs.Col>
-                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>    
+                        <bs.Col><a href="/profile_edit"><button id="application1_edit_personal_btn" type="button" className="btn btn-outline-primary">Edit Personal Profile</button></a></bs.Col>
                         <bs.Col><a href="/apply2"><button id="application1_next_btn" type="form" className="btn btn-outline-primary">Go to next step</button></a></bs.Col>
-                        
                     </bs.Row>
                 </bs.Container>
             </ProfileBox>

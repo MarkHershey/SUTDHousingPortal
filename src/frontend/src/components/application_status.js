@@ -3,6 +3,9 @@ import styled from "styled-components";
 import {Col, Container, Row} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
 import * as bs from "react-bootstrap";
+import {getEventInfo} from "../variables/eventinfo";
+import {getApplicationStatusJson, getEventInfoJson} from "../variables/localstorage";
+import {getApplicationInfo} from "../variables/applicationstatusinfo";
 
 const ApplicationBox = styled.div`
   background-color: #F3F6FA;
@@ -31,7 +34,33 @@ const Field = styled.p`
   color: #3C64B1;
   text-align: right;
 `;
+
 export default class ApplicationStatus extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {application: {
+                created_at: "",
+                room_profile: {
+                    room_type: "",
+                    room_type_2nd:"",
+                    block: "",
+                    block_2nd: "",
+                },
+                visible_status:"",
+                stay_period: {start_date: "", end_date: ""},
+
+            }};
+    }
+
+    componentDidMount() {
+        const fetchJSON = async () =>{
+            getApplicationInfo().then(r=>{
+                this.setState({application: getApplicationStatusJson()});
+            });
+        }
+        fetchJSON();
+    }
+
     render() {
         return (
             <ApplicationDiv>
@@ -48,16 +77,16 @@ export default class ApplicationStatus extends React.Component {
                             <Col lg = {3}>
                                 <Field>Applied Date: </Field>
                             </Col>
-                            <Col lg = {3}>{ "04/03/2021" }</Col>
+                            <Col lg = {3}>{ this.state.application.created_at.slice(0,10)}</Col>
                             <Col lg = {3}><Field>Estimated Success Rate:</Field></Col>
                             <Col lg = {3}>{"70%"}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>Applied Room Type:</Field></Col>
-                            <Col lg={3}>{"Double Room / Single Room"}</Col>
+                            <Col lg={3}>{this.state.application.room_profile.room_type + " / " + this.state.application.room_profile.room_type_2nd + " Room"}</Col>
                             <Col lg={3}><Field>Applied Room Location</Field></Col>
-                            <Col lg={3}>{"Blk 55 / Blk 59"}</Col>
+                            <Col lg={3}>{"Blk "+ this.state.application.room_profile.block +" / Blk " + this.state.application.room_profile.block_2nd}</Col>
                         </Row>
                         <br/>
                     </Container>
@@ -75,23 +104,23 @@ export default class ApplicationStatus extends React.Component {
                             <Col lg = {3}>
                                 <Field>Offer Status: </Field>
                             </Col>
-                            <Col lg = {3}>{ "Offer Issued" }</Col>
-                            <Col lg = {3}><Field>Confirmation Deadline:</Field></Col>
-                            <Col lg = {3}>{"01/09/2021"}</Col>
+                            <Col lg = {3}>{ "Offer " + this.state.application.visible_status }</Col>
+                            <Col lg = {3}><Field>Period:</Field></Col>
+                            <Col lg = {3}>{this.state.application.stay_period.start_date + "~" + this.state.application.stay_period.end_date}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>{"Offered Room Type:"}</Field></Col>
-                            <Col lg={3}>{"Double Room"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Double Room"}</Col>
                             <Col lg={3}><Field>{"Offered Room ID:"}</Field></Col>
-                            <Col lg={3}>{"59-03-25"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"59-03-25"}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>{"Roommate-To-Be:"}</Field></Col>
-                            <Col lg={3}>{"Ziqi Jin"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Ziqi Jin"}</Col>
                             <Col lg={3}><Field>{"Move-Out Date:"}</Field></Col>
-                            <Col lg={3}>{"01/10/2021 11:00AM"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"01/10/2021 11:00AM"}</Col>
                         </Row>
                     </Container>
                 </ApplicationBox>

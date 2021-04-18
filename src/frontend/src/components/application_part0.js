@@ -126,7 +126,7 @@ function CreateUI(props,uid){
                     <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" onClick={()=>{
+                    <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
                         setApplicationPeriodInfoJson(el);
@@ -135,7 +135,7 @@ function CreateUI(props,uid){
                             pathname: "/apply1",
                             state: {
                                 applicable_period : el,
-                                application_period_uid : uid
+                                application_period_uid : uid,
                             }
                         });
                         
@@ -189,16 +189,16 @@ export default class ApplicationZero extends React.Component {
     constructor(props) {
         super(props);
         this.state = {events: [{
-            uid: "",
-            created_at: "",
-            created_by: "",
-            application_window_open: "",
-            application_window_close: "",
-            applicable_periods: [{
-                start_date:"",
-                end_date : ""
-            }], 
-        }]};
+                uid: "",
+                created_at: "",
+                created_by: "",
+                application_window_open: "",
+                application_window_close: "",
+                applicable_periods: [{
+                    start_date:"",
+                    end_date : ""
+                }],
+            }]};
     }
 
 

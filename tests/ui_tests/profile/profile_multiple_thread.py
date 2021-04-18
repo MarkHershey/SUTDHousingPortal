@@ -11,6 +11,7 @@ class ProfileTestMultipleThread(unittest.TestCase):
             user.start()
         for user in users:
             user.join()
+        self.assertTrue(True)
 
 
 class TestThread(threading.Thread):
@@ -55,6 +56,6 @@ class TestThread(threading.Thread):
         driver_.get(url + "/profile")
         time.sleep(5)
         assert(get_text(driver_, "ppl_prof_phone_number_display") == str(phone_num))
-        assert(get_text(driver, "ppl_prof_address_display") == street + " " + unit + " " + postcode)
+        assert(get_text(driver_, "ppl_prof_address_display") == street + " " + unit + " " + postcode)
         click_btn(driver_, "logout")
         time.sleep(1)

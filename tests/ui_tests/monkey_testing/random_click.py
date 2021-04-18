@@ -20,7 +20,7 @@ class MonkeyTesting(unittest.TestCase):
             links.extend(driver.find_elements_by_tag_name("button"))
             l = links[random.randint(0, len(links) - 1)]
             try:
-                if not l.text == "Logout":
+                if not l.text == ("Logout" or "Housing Application"):
                     print(l.text)
                     l.click()
             except ElementNotInteractableException:  # when the attribute is not clickable

@@ -9,6 +9,11 @@ export function setToken(newToken){
     console.log(getToken());
 }
 
+export function clearToken(){
+    storage.removeItem("token");
+    console.log(typeof(storage["token"]));
+}
+
 export function isAdmin(){
     if(!checkValidity) return false;
     if(storage["admin"] === undefined){
@@ -46,10 +51,6 @@ export function checkValidity(){
     return (typeof(storage["token"]) !== "undefined");
 }
 
-export function clearToken(){
-    storage.removeItem("token");
-    console.log(typeof(storage["token"]));
-}
 
 export function getUsername(){
     return storage["username"];
@@ -64,16 +65,16 @@ export function clearUsername(){
     console.log(typeof(storage["username"]));
 }
 
-export function getUserInfoJson(){
-    if (storage["userinfojson"] === undefined) return undefined;
-    return JSON.parse(storage["userinfojson"]);
-}
-
 export function isHG(){
     if (!checkValidity()) return false;
     if (getUserInfoJson() === undefined) return false;
     return getUserInfoJson().is_house_guardian;
 
+}
+
+export function getUserInfoJson(){
+    if (storage["userinfojson"] === undefined) return undefined;
+    return JSON.parse(storage["userinfojson"]);
 }
 
 export function setUserInfoJson(newUserInfoJson){
@@ -185,6 +186,11 @@ export function setApplicationPeriodInfoJson(newApplicationPeriodInfoJson){
     storage.setItem("applicationperiodinfojson",JSON.stringify(newApplicationPeriodInfoJson))
 }
 
+export function clearApplicationPeriodInfoJson(){
+    storage.removeItem("applicationperiodinfojson");
+    console.log(typeof(storage["applicationperiodinfojson"]));
+}
+
 export function getPersonalApplicationPeriodInfoJson(){
     if (storage["personalapplicationperiodinfojson"] === undefined) return undefined;
     return JSON.parse(storage["personalapplicationperiodinfojson"]);
@@ -209,8 +215,9 @@ export function setOngoingApplicationPeriodInfoJson(newOngoingApplicationPeriodI
     storage.setItem("ongoingapplicationperiodinfojson",JSON.stringify(newOngoingApplicationPeriodInfoJson));
 }
 
-export function setAllDisciplinaryRecordsInfoJson(newAllDisciplinaryRecordsInfoJson){
-    storage.setItem("alldisciplinaryrecords",JSON.stringify(newAllDisciplinaryRecordsInfoJson));
+export function clearOngoingApplicationPeriodInfoJson(){
+    storage.removeItem("ongoingapplicationperiodinfojson");
+    console.log(typeof(storage["ongoingapplicationperiodinfojson"]));
 }
 
 export function getAllDisciplinaryRecordsInfoJson(){
@@ -218,14 +225,24 @@ export function getAllDisciplinaryRecordsInfoJson(){
     return JSON.parse(storage["alldisciplinaryrecords"]);
 }
 
-export function setPersonalDisciplinaryRecordInfoJson(newInfoJson){
-    storage.setItem("personaldisciplinaryrecord",JSON.stringify(newInfoJson));
+export function setAllDisciplinaryRecordsInfoJson(newAllDisciplinaryRecordsInfoJson){
+    storage.setItem("alldisciplinaryrecords",JSON.stringify(newAllDisciplinaryRecordsInfoJson));
+}
+
+export function clearAllDisciplinaryRecordsInfoJson(){
+    storage.removeItem("alldisciplinaryrecords");
+    console.log(typeof(storage["alldisciplinaryrecords"]));
 }
 
 export function getPersonalDisciplinaryRecordInfoJson(){
     if(storage["personaldisciplinaryrecord"]===undefined) return undefined;
     return JSON.parse(storage["personaldisciplinaryrecord"]);
 }
+
+export function setPersonalDisciplinaryRecordInfoJson(newInfoJson){
+    storage.setItem("personaldisciplinaryrecord",JSON.stringify(newInfoJson));
+}
+
 
 export function setPersonalApplicablePeriodUidInfoJson(newjson){
     storage.setItem("personalApplicationPeriodUid",JSON.stringify(newjson));
@@ -245,11 +262,27 @@ export function getPersonalApplicablePeriodInfoJson(){
     return JSON.parse(storage["personalApplicablePeriodInfoJson"]);
 }
 
+export function setApplicationStatusJson(newJson){
+    storage.setItem("ApplicationStatusJson",JSON.stringify(newJson));
+}
+
+export function getApplicationStatusJson(){
+    if(storage["ApplicationStatusJson"]===undefined) return undefined;
+    return JSON.parse(storage["ApplicationStatusJson"]);
+}
+
+
+
 export function logout(){
     clearToken();
     clearEventInfoJson();
     clearUserInfoJson();
+    clearUsername();
     clearUpcomingEventInfoJson();
+    clearPersonalEventInfoJson();
     clearAdmin();
     clearAdminWrite();
+    clearApplicationPeriodInfoJson();
+    clearOngoingApplicationPeriodInfoJson();
+    clearPersonalApplicationPeriodInfoJson();
 }
