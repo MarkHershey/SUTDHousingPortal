@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../../SUTDLogo 1.png";
-import {checkValidity, getUserInfoJson, isHG, logout,isAdmin} from "../../variables/localstorage";
+import {checkValidity, getUserInfoJson, isHG, logout,isAdmin} from "../../functions/localstorage";
 
 const Styles = styled.div`
   .navbar {

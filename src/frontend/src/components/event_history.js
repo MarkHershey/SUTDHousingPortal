@@ -16,14 +16,14 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
 import * as bs from 'react-bootstrap';
-import "../variables/utilities";
+import "../functions/utilities";
 
 import {
     getPersonalEventInfoJson,
     getUserInfoJson
-} from "../variables/localstorage";
-import {getPersonalEventInfo} from "../variables/eventinfo";
-import {getUsername} from "../variables/localstorage";
+} from "../functions/localstorage";
+import {getPersonalEventInfo} from "../functions/eventinfo";
+import {getUsername} from "../functions/localstorage";
 
 const useRowStyles = makeStyles({
     root: {

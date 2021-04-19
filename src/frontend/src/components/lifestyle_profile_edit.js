@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { instanceOf } from "prop-types";
 import { Redirect, useHistory } from "react-router";
 import LifestyleData from "./lifestyle_data";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
-import { getUserInfoJson } from "../variables/localstorage";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
+import { getUserInfoJson } from "../functions/localstorage";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 
 const EventDiv = styled.div`
 display: grid;

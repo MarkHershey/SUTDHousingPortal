@@ -169,7 +169,7 @@ export async function eventHandler(uid){
         data : JSON.stringify([getUsername()])
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             window.location.reload(true);
         })
@@ -244,7 +244,7 @@ export async function editEvent(uid,title,event_type,meetup_location,
         data : data
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             window.location.href="/event";

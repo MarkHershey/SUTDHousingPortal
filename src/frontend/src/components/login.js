@@ -3,8 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../variables/localstorage";
-import {url} from "../variables/url.js";
+import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../functions/localstorage";
+import {url} from "../functions/url.js";
 import {notification} from "antd";
 
 export default function Login() {

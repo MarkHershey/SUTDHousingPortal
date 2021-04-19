@@ -21,12 +21,12 @@ import {
     getAllDisciplinaryRecordsInfoJson,
     getToken,
     getUserInfoJson, initAttendanceEditJson
-} from "../../variables/localstorage";
+} from "../../functions/localstorage";
 import {
     getAllDisciplinaryRecords,
-} from "../../variables/disciplinaryrecordinfo"
+} from "../../functions/disciplinaryrecordinfo"
 import {useHistory} from "react-router";
-import "../../variables/utilities"
+import "../../functions/utilities"
 
 
 const useRowStyles = makeStyles({

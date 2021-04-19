@@ -1,15 +1,15 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../../variables/localstorage";
-import {setHouseGuardian} from "../../variables/houseguardianinfo";
-import {createEvent} from "../../variables/eventinfo";
+import {getCurrentStudentInfo} from "../../functions/studentinfo";
+import {updateStudentProfileInfo} from "../../functions/studentprofileinfo";
+import {getUserInfoJson, getUsername} from "../../functions/localstorage";
+import {setHouseGuardian} from "../../functions/houseguardianinfo";
+import {createEvent} from "../../functions/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import {notification, Input, Button, Tooltip} from "antd";
 import {CloseCircleTwoTone, PlusCircleTwoTone, SearchOutlined} from '@ant-design/icons';
-import { student_id } from "../../variables/applicationforminfo";
+import { student_id } from "../../functions/applicationforminfo";
 
 const Field = styled.p`
   color: #3C64B1;

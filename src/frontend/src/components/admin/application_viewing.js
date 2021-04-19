@@ -25,7 +25,7 @@ import {
     getToken,
     getOngoingApplicationPeriodInfoJson,
     getUserInfoJson, initAttendanceEditJson
-} from "../../variables/localstorage";
+} from "../../functions/localstorage";
 import {
     submitApplicationPeriod,
     getApplicationPeriodInfo,
@@ -33,16 +33,16 @@ import {
     deleteApplicationPeriodInfo,
     getOngoingApplicationPeriodInfo,
     
-} from "../../variables/applicationperiodinfo"
-import {getUsername} from "../../variables/localstorage";
+} from "../../functions/applicationperiodinfo"
+import {getUsername} from "../../functions/localstorage";
 import axios from "axios";
-import {url} from "../../variables/url";
+import {url} from "../../functions/url";
 import Modal from '@material-ui/core/Modal';
 import {CheckBox} from "@material-ui/icons";
 import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../../variables/eventinfo";
+import {eventHandler} from "../../functions/eventinfo";
 import {useHistory} from "react-router";
-import "../../variables/utilities"
+import "../../functions/utilities"
 
 
 const useRowStyles = makeStyles({

@@ -3,9 +3,9 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import { instanceOf } from "prop-types";
 import { Redirect, useHistory } from "react-router";
-import { getUserInfoJson } from "../variables/localstorage";
-import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import { getCurrentStudentInfo } from "../variables/studentinfo";
+import { getUserInfoJson } from "../functions/localstorage";
+import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
+import { getCurrentStudentInfo } from "../functions/studentinfo";
 
 
 const EventDiv = styled.div`

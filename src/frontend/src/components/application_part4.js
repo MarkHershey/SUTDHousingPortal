@@ -6,10 +6,10 @@ import {List} from "antd";
 import ReactDragListView from "react-drag-listview";
 import TestModal from "./draggable_modal.js";
 import * as bs from "react-bootstrap";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
-import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/localstorage";
+import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
+import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {getUserInfoJson} from "../functions/localstorage";
 import { StarTwoTone } from '@ant-design/icons';
 const EventDiv = styled.div`
   margin: 20pt 300pt;

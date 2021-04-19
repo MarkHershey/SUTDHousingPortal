@@ -31,7 +31,7 @@ export default async function submitApplication(application_period_uid,student_i
     data : data
     };
 
-    axios(config)
+    await axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
     })

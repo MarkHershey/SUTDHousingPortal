@@ -4,9 +4,9 @@ import styled from "styled-components";
 import {useHistory} from "react-router";
 import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
-import submitApplication, { application_period_uid, room_profile, student_id } from '../variables/applicationforminfo';
+import submitApplication, { application_period_uid, room_profile, student_id } from '../functions/applicationforminfo';
 import {ApplicationStep} from "./application_steps";
-import { getUserInfoJson, getUsername } from "../variables/localstorage";
+import { getUserInfoJson, getUsername } from "../functions/localstorage";
 
 const EventDiv = styled.div`
   display: grid;

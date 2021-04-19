@@ -2,9 +2,9 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import {Typography, Slider, TextField, Checkbox } from '@material-ui/core';
-import {Student} from "../variables/studentinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/localstorage";
+import {Student} from "../functions/studentinfo";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {getUserInfoJson} from "../functions/localstorage";
 import {BsPrefixComponent} from "react-bootstrap/esm/helpers";
 
 

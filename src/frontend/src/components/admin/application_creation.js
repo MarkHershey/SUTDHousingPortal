@@ -1,7 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {submitApplicationPeriod} from "../../variables/applicationperiodinfo";
+import {submitApplicationPeriod} from "../../functions/applicationperiodinfo";
 import {Input, Select} from 'antd';
 import {notification} from "antd";
 import {CloseCircleTwoTone, PlusCircleTwoTone,MinusOutlined} from "@ant-design/icons";

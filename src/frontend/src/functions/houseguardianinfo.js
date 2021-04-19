@@ -13,7 +13,7 @@ export async function setHouseGuardian(id) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             notification.success({
@@ -38,7 +38,7 @@ export async function revokeHouseGuardian(id) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             notification.success({

@@ -1,10 +1,10 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {Student} from "../variables/studentinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {updateStudentProfileInfo} from "../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../variables/localstorage";
+import {Student} from "../functions/studentinfo";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {updateStudentProfileInfo} from "../functions/studentprofileinfo";
+import {getUserInfoJson, getUsername} from "../functions/localstorage";
 import { Typography, Slider, TextField } from '@material-ui/core';
 
 const Field = styled.p`

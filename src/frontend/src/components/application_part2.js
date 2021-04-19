@@ -3,9 +3,9 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {instanceOf} from "prop-types";
 import {Redirect, useHistory} from "react-router";
-import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicablePeriodInfoJson, getPersonalEventInfoJson} from "../variables/localstorage";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
+import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicablePeriodInfoJson, getPersonalEventInfoJson} from "../functions/localstorage";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 
 

@@ -35,7 +35,7 @@ export async function submitApplicationPeriod(application_window_open, applicati
 
     };
     console.log(data);
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             notification.success({
@@ -63,7 +63,7 @@ export async function getAllApplicationPeriodInfo() {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             application_data_json = response.data
             setApplicationPeriodInfoJson(application_data_json);
@@ -87,7 +87,7 @@ export async function getApplicationPeriodInfo(uid) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             application_period_info_json = response.data;
             setPersonalApplicationPeriodInfoJson(application_period_info_json);
@@ -110,7 +110,7 @@ export async function deleteApplicationPeriodInfo(uid) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             notification.success({
                 message: "Application Period deleted successfully",

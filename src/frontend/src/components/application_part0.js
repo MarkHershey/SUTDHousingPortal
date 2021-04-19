@@ -21,10 +21,10 @@ import {
     getOngoingApplicationPeriodInfoJson,
     setApplicationPeriodInfoJson,
     setPersonalApplicablePeriodUidInfoJson
-} from "../variables/localstorage";
-import {getOngoingApplicationPeriodInfo,} from "../variables/applicationperiodinfo"
+} from "../functions/localstorage";
+import {getOngoingApplicationPeriodInfo,} from "../functions/applicationperiodinfo"
 import {useHistory} from "react-router";
-import "../variables/utilities"
+import "../functions/utilities"
 
 
 const useRowStyles = makeStyles({

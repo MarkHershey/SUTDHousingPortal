@@ -1,10 +1,10 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {updateStudentProfileInfo} from "../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../variables/localstorage";
-import {editEvent} from "../variables/eventinfo";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {updateStudentProfileInfo} from "../functions/studentprofileinfo";
+import {getUserInfoJson, getUsername} from "../functions/localstorage";
+import {editEvent} from "../functions/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
 import {notification, Input, Switch} from "antd";

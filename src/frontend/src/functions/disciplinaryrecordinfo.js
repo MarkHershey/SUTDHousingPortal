@@ -24,7 +24,7 @@ export async function createDisciplinaryRecord(id, record_type, description, poi
         data: data
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             notification.success({
@@ -52,7 +52,7 @@ export async function getAllDisciplinaryRecords() {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             all_disciplinary_records = response.data;
             setAllDisciplinaryRecordsInfoJson(all_disciplinary_records);
@@ -75,7 +75,7 @@ export async function getDisciplinaryRecord(uid) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             personal_disciplinary_record = response.data;
             setPersonalDisciplinaryRecordInfoJson(personal_disciplinary_record);
@@ -101,7 +101,7 @@ export async function updateDisciplinaryRecord(uid, description, points_deductio
         data: data
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             getAllDisciplinaryRecords();
@@ -128,7 +128,7 @@ export async function deleteDisciplinaryRecord(uid) {
         }
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
             getAllDisciplinaryRecords();

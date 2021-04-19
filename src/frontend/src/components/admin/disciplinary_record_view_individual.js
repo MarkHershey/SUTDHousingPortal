@@ -1,11 +1,11 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {getDisciplinaryRecord, deleteDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
-import {getUserInfoJson, getUsername, getPersonalDisciplinaryRecordInfoJson} from "../../variables/localstorage";
-import {createEvent} from "../../variables/eventinfo";
+import {getCurrentStudentInfo} from "../../functions/studentinfo";
+import {updateStudentProfileInfo} from "../../functions/studentprofileinfo";
+import {getDisciplinaryRecord, deleteDisciplinaryRecord} from "../../functions/disciplinaryrecordinfo";
+import {getUserInfoJson, getUsername, getPersonalDisciplinaryRecordInfoJson} from "../../functions/localstorage";
+import {createEvent} from "../../functions/eventinfo";
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from "react-bootstrap/Button";
 import {notification} from "antd";

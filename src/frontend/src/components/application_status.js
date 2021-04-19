@@ -3,9 +3,9 @@ import styled from "styled-components";
 import {Col, Container, Row} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
 import * as bs from "react-bootstrap";
-import {getEventInfo} from "../variables/eventinfo";
-import {getApplicationStatusJson, getEventInfoJson} from "../variables/localstorage";
-import {getApplicationInfo} from "../variables/applicationstatusinfo";
+import {getEventInfo} from "../functions/eventinfo";
+import {getApplicationStatusJson, getEventInfoJson} from "../functions/localstorage";
+import {getApplicationInfo} from "../functions/applicationstatusinfo";
 
 const ApplicationBox = styled.div`
   background-color: #F3F6FA;
@@ -105,7 +105,7 @@ export default class ApplicationStatus extends React.Component {
                                 <Field>Offer Status: </Field>
                             </Col>
                             <Col lg = {3}>{ "Offer " + this.state.application.visible_status }</Col>
-                            <Col lg = {3}><Field>Period:</Field></Col>
+                            <Col lg = {3}><Field>Estimate Period:</Field></Col>
                             <Col lg = {3}>{this.state.application.stay_period.start_date + "~" + this.state.application.stay_period.end_date}</Col>
                         </Row>
                         <br/>

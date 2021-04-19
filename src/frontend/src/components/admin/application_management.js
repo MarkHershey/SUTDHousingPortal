@@ -12,11 +12,11 @@ import {
     deleteApplicationPeriodInfo,
     getOngoingApplicationPeriodInfo,
     
-} from "../../variables/applicationperiodinfo"
+} from "../../functions/applicationperiodinfo"
 import { 
     getPersonalApplicationPeriodInfoJson,
 
-} from "../../variables/localstorage";
+} from "../../functions/localstorage";
 import {notification} from "antd";
 
 const Field = styled.p`
@@ -142,9 +142,9 @@ export default class ApplicationManagement extends React.Component{
                     <bs.Container>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
-                            <bs.Col><Field>{new Date(Date.parse(this.state.application_window_open)).toDateString()}</Field></bs.Col>
+                            <bs.Col>{new Date(Date.parse(this.state.application_window_open)).toDateString()}</bs.Col>
                             <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col lg={3}><Field>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</Field></bs.Col>
+                            <bs.Col lg={3}>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable periods:</Field></bs.Col>

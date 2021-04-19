@@ -25,17 +25,17 @@ import {
     getToken,
     getUpcomingEventInfoJson,
     getUserInfoJson, initAttendanceEditJson, isHG
-} from "../variables/localstorage";
-import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../variables/eventinfo";
-import {getUsername} from "../variables/localstorage";
+} from "../functions/localstorage";
+import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
+import {getUsername} from "../functions/localstorage";
 import axios from "axios";
-import {url} from "../variables/url";
+import {url} from "../functions/url";
 import Modal from '@material-ui/core/Modal';
 import {CheckBox} from "@material-ui/icons";
 import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../variables/eventinfo";
+import {eventHandler} from "../functions/eventinfo";
 import {useHistory} from "react-router";
-import "../variables/utilities"
+import "../functions/utilities"
 import {DatePicker} from "antd";
 import {DownOutlined, UpOutlined} from "@ant-design/icons";
 
@@ -92,7 +92,7 @@ async function quitEventHandler(event_id) {
         data: data
     };
 
-    axios(config)
+    await axios(config)
         .then(function (response) {
             window.location.reload(true);
         })

@@ -24,7 +24,7 @@ export async function updateLifestyleProfileInfo(bedtime,wakeup_time,like_social
     data : data
     };
 
-    axios(config)
+    await axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
     })
