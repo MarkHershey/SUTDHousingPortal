@@ -95,7 +95,7 @@ export default class CreateDisciplinaryRecord extends React.Component {
                         <br/>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
-                            <bs.Col lg={9}><TextArea id="create_event_description" name="description" cols="55" rows="5"
+                            <bs.Col lg={9}><TextArea id="create_disciplinary_record_description" name="description" cols="55" rows="5"
                                                      onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <br/>
