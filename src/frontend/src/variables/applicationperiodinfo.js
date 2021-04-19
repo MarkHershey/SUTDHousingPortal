@@ -12,16 +12,6 @@ import axios from "axios";
 import {url} from "./url";
 import {notification} from "antd";
 
-var uid = "string";
-var created_at = new Date();
-var created_by = "string";
-var application_window_open = new Date();
-var application_window_close = new Date();
-var applicable_periods = [] // list of time period objects
-var applicable_rooms = [] // list of room ids
-var applicable_students = []// list of student ids
-var application_forms = [] // list of application form objects
-
 
 export async function submitApplicationPeriod(application_window_open, application_window_close,
                                               applicable_periods, applicable_rooms, applicable_students) {
@@ -137,8 +127,8 @@ export async function deleteApplicationPeriodInfo(uid) {
 
 export async function getOngoingApplicationPeriodInfo() {
     if (!checkValidity()) return undefined;
-    var ongoing_application_period_data_json;
-    var config = {
+    let ongoing_application_period_data_json;
+    const config = {
         method: 'get',
         url: url + '/api/application_periods/',
         headers: {
