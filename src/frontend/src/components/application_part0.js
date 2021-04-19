@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,23 +18,11 @@ import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
 import {
-
-    getApplicationPeriodInfoJson,
-    getToken,
     getOngoingApplicationPeriodInfoJson,
-    getUserInfoJson, initAttendanceEditJson, setApplicationPeriodInfoJson
+    setApplicationPeriodInfoJson,
+    setPersonalApplicablePeriodUidInfoJson
 } from "../variables/localstorage";
-import {
-    getOngoingApplicationPeriodInfo,
-    
-} from "../variables/applicationperiodinfo"
-import {getUsername,setPersonalApplicablePeriodUidInfoJson,setPersonalApplicablePeriodInfoJson} from "../variables/localstorage";
-import axios from "axios";
-import {url} from "../variables/url";
-import Modal from '@material-ui/core/Modal';
-import {CheckBox} from "@material-ui/icons";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../variables/eventinfo";
+import {getOngoingApplicationPeriodInfo,} from "../variables/applicationperiodinfo"
 import {useHistory} from "react-router";
 import "../variables/utilities"
 
@@ -60,19 +48,6 @@ const EventDiv = styled.div`
   margin-right: 2em;
   grid-column: auto;
 `;
-const SubTitle = styled.p`
-  text-align: right;
-  color: #3C64B1;
-  font-weight: bold;
-  font-size: medium;
-`;
-
-const CenterDiv = styled.div`
-    text-align: center;
-`;
-
-const ButtonDivEvent = styled.div`text-align: center;`;
-
 
 Row.propTypes = {
     row: PropTypes.shape({
@@ -84,31 +59,6 @@ Row.propTypes = {
     }).isRequired,
 };
 
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
 
 function CreateUI(props,uid){
     console.log("belowww");
