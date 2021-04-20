@@ -1,18 +1,50 @@
-class ApStatus:
+class AFStatus:
     # by student action
     SUBMIT = "submitted"
     WITHDRAW = "withdrawn"
-    CONFIRM = "confirmed"
+    ACCEPT = "accepted"  # after offer acceptance
+    DECLINE = "declined"
+    CONFIRM = "confirmed"  # after payment made
     # by admin/system action
     PROCESS = "processing"
     WAITLIST = "waitlist"
-    REJECTE = "rejected"
-    OFFERE = "offered"
+    REJECT = "rejected"
+    OFFER = "offered"
     # by system automation
     SYS_ALLOCATE = "sys-allocated"
-    SYS_REJECTE = "sys-rejection"
+    SYS_REJECT = "sys-rejection"
     SYS_WAITLIST = "sys-waitlist"
     # by admin manual action
     PRE_ALLOCATE = "pending-allocation"
     PRE_REJECT = "pending-rejection"
     PRE_WAITLIST = "pending-waitlist"
+
+    ALL = [
+        SUBMIT,
+        WITHDRAW,
+        ACCEPT,
+        DECLINE,
+        CONFIRM,
+        PROCESS,
+        WAITLIST,
+        REJECT,
+        OFFER,
+        SYS_ALLOCATE,
+        SYS_REJECT,
+        SYS_WAITLIST,
+        PRE_ALLOCATE,
+        PRE_REJECT,
+        PRE_WAITLIST,
+    ]
+
+    PRE_WITHDRAW = [
+        SUBMIT,
+        PROCESS,
+        WAITLIST,
+        SYS_ALLOCATE,
+        SYS_REJECT,
+        SYS_WAITLIST,
+        PRE_ALLOCATE,
+        PRE_REJECT,
+        PRE_WAITLIST,
+    ]

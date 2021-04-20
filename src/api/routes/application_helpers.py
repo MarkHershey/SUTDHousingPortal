@@ -3,11 +3,7 @@ from typing import Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
-from pymongo import ReturnDocument
 
-from ..access_utils import Access
-from ..auth import AuthHandler
-from ..constants import ApStatus
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
 from ..functional import clean_dict, convert_datetime_to_date
