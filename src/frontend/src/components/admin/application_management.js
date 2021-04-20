@@ -21,7 +21,6 @@ import {
 
 } from "../../functions/localstorage";
 import {notification} from "antd";
-import StudentFormData from "./studentFormData";
 
 
 const Field = styled.p`
@@ -105,10 +104,30 @@ export default class ApplicationManagement extends React.Component{
         const fetchJSON = async () =>{
             getApplicationPeriodInfo(this.props.location.state.uid).then(r=>{
                 this.setState(getPersonalApplicationPeriodInfoJson());
-                //console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
             });
         }
+        const fetchStudentData = async () => {
+            //console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
+            let studentApplication = [];
+            let data = this.state.application_forms_map;
+            for(const item in data){
+                //console.log(item);
+                //console.log(props[item]);
+                if(data[item]!=""){
+                    console.log(item);
+                    if(getSpecificApplicationInfoJson()!=undefined){
+                        studentApplication.push(getSpecificApplicationInfoJson());
+                    }
+                }
+            }
+            console.log(studentApplication);
+            this.setState({
+                studentData: studentApplication
+            })
+            console.log(this.state);
+        }
         fetchJSON();
+        fetchStudentData();
     }
 
     handleDelete() {
@@ -205,8 +224,7 @@ export default class ApplicationManagement extends React.Component{
                                     <TableCell align="left">Room Offered</TableCell>
                                 </TableRow>
                             </TableHead>
-                            
-                            {this.handleApplicationForms(this.state.application_forms_map)}
+
                         </Table>
                     </TableContainer>
                 </EditBox>
