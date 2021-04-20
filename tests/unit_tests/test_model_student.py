@@ -40,7 +40,7 @@ class TestStudentCreation(unittest.TestCase):
 
         self.assertTrue(student.username == "1006879")
 
-    def test_creation_will_complete_data(self):
+    def test_creation_with_complete_data(self):
         student = Student(
             username="1000000",
             password="pass1234",
