@@ -78,9 +78,14 @@ Check API documentation after firing up local server
 $ pytest
 ```
 
-### Demo init
+### Dev Demo
+
+Demo initialization
 
 ```bash
+# config db
+$ vim db_config
+
 # Terminal Window 1: At project root `YOUR/PATH/SUTDHousingPortal`
 $ source db_config
 $ uvicorn src.api.main:app --reload
@@ -88,6 +93,22 @@ $ uvicorn src.api.main:app --reload
 # Terminal Window 2: At project root `YOUR/PATH/SUTDHousingPortal`
 $ source db_config
 $ python src/api/data_migrations/demo_init.py
+```
+
+Demo accounts
+
+```yaml
+Demo Admin
+username: admin
+password: pass1234
+
+Demo HG
+username: 1000000
+password: 1000000
+
+Demo Student
+username: 1000001 ~ 1000030
+password: 1000001 ~ 1000030
 ```
 
 ## Developers

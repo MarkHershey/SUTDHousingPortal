@@ -1,9 +1,4 @@
-import json
-import os
-import random
 import sys
-import time
-import unittest
 from datetime import date, datetime, timedelta
 from math import ceil
 from pathlib import Path
@@ -12,9 +7,7 @@ from typing import List
 
 import names
 import requests
-from bson import json_util
 from markkk.logger import logger
-from pydantic.utils import Representation
 
 src_dir = Path(__file__).resolve().parent.parent.parent
 
@@ -23,12 +16,9 @@ sys.path.insert(0, str(src_dir))
 
 ###############################################
 ## Configs
-os.environ["_DB_USER"] = "markdev"
-os.environ["_DB_PASS"] = "XXXXXXXXXXXXXXXX"
-os.environ["_DB_NAME"] = "demo"
 LOCAL_ROOT = "http://127.0.0.1:8000"
 SERVER_ROOT = "http://esc.dev.markhh.com"
-API_ROOT_URL = LOCAL_ROOT
+API_ROOT_URL = SERVER_ROOT
 ###############################################
 
 from api.database import *
@@ -163,25 +153,24 @@ def create_students():
 ########################################################
 ## House Guardian Create Events
 def create_events():
-    game = choice(
-        (
-            "Table Soccer",
-            "Darts",
-            "Darts",
-            "Board Game",
-            "Fortnite",
-            "Minecraft",
-            "Among Us",
-            "Animal Crossing",
-            "Cyberpunk",
-            "FIFA",
-            "2K21",
-            "The Sims",
-            "Overcooked",
+    for _ in range(30):
+        game = choice(
+            (
+                "Table Soccer",
+                "Darts",
+                "Board Game",
+                "Fortnite",
+                "Minecraft",
+                "Among Us",
+                "Animal Crossing",
+                "Cyberpunk",
+                "FIFA",
+                "2K21",
+                "The Sims",
+                "Overcooked",
+            )
         )
-    )
-    for _ in range(15):
-        startM = randint(1, 12)
+        startM = randint(4, 12)
         startD = randint(1, 28)
         startH = randint(15, 22)
         startMin = choice((0, 0, 30))
