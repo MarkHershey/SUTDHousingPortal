@@ -11,13 +11,13 @@ class AFStatus:
     REJECT = "rejected"
     OFFER = "offered"
     # by system automation
-    SYS_ALLOCATE = "sys-allocated"
+    SYS_ALLOCATE = "sys-allocation"
     SYS_REJECT = "sys-rejection"
     SYS_WAITLIST = "sys-waitlist"
     # by admin manual action
-    PRE_ALLOCATE = "pending-allocation"
-    PRE_REJECT = "pending-rejection"
-    PRE_WAITLIST = "pending-waitlist"
+    PRE_ALLOCATE = "pre-allocation"
+    PRE_REJECT = "pre-rejection"
+    PRE_WAITLIST = "pre-waitlist"
 
     ALL = [
         SUBMIT,
