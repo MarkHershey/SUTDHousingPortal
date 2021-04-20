@@ -108,7 +108,7 @@ function Row(props) {
                 <TableCell id={row.student_id+row.description} component="th" scope="row">{row.student_id}</TableCell>
                 <TableCell id={row.student_id+row.description+"_record_type"} align="right">{row.record_type}</TableCell>
                 <TableCell id={row.student_id+row.description+"_description"} align="right">{row.description}</TableCell>
-                <TableCell id={row.student_id+row.description+"_points_deduction"}align="right">{row.points_deduction}</TableCell>
+                <TableCell id={row.student_id+row.description+"_points_deduction"} align="right">{row.points_deduction}</TableCell>
                 <TableCell id={row.student_id+row.description+"_view_individual_btn"} align="right">
                     <button type="button" class="btn btn-outline-primary"
                             onClick = {()=>{

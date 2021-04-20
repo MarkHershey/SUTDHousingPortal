@@ -116,7 +116,7 @@ export default class EditDisciplinaryRecord extends React.Component {
                         <br/>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Points Deduction</Field></bs.Col>
-                            <bs.Col lg={3}><Input value={this.state.points_deduction}
+                            <bs.Col lg={3}><Input placeholder={this.state.points_deduction}
                                                   id="edit_disciplinary_record_points_deduction" name="points_deduction"
                                                   type="number" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>

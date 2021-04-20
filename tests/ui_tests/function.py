@@ -22,6 +22,7 @@ driver = webdriver.Chrome(executable_path=path, options=options)
 
 
 def input_text(driver, element_id, value):
+    driver.find_element_by_xpath('//*[@id="' + element_id + '"]').clear()
     driver.find_element_by_xpath('//*[@id="' + element_id + '"]').send_keys(value)
     time.sleep(0.5)
 
