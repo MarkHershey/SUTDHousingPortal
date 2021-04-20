@@ -5,7 +5,7 @@ import {Divider} from "@material-ui/core";
 import * as bs from "react-bootstrap";
 import {getEventInfo} from "../functions/eventinfo";
 import {getApplicationStatusJson, getEventInfoJson} from "../functions/localstorage";
-import {getApplicationInfo} from "../functions/applicationstatusinfo";
+import {accept, getApplicationInfo} from "../functions/applicationstatusinfo";
 
 const ApplicationBox = styled.div`
   background-color: #F3F6FA;
@@ -39,6 +39,7 @@ export default class ApplicationStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {application: {
+                uid: "",
                 created_at: "",
                 room_profile: {
                     room_type: "",
@@ -127,9 +128,9 @@ export default class ApplicationStatus extends React.Component {
                 <ApplicationBox style={{textAlign:"center"}}>
                     <Container>
                         <Row>
-                            <Col><button type="button" className="btn btn-outline-success" id = "accept_btn">Accept</button></Col>
+                            <Col><button type="button" className="btn btn-outline-success" id = "accept_btn" disabled={this.state.application.visible_status !== "offered"} onClick={async ()=> await accept(true,this.state.application.uid)}>Accept</button></Col>
                             <Col><button type="button" className="btn btn-outline-secondary" id = "reject_btn">Apply Extension</button></Col>
-                            <Col><button type="button" className="btn btn-outline-danger" id = "extension_btn">Reject</button></Col>
+                            <Col><button type="button" className="btn btn-outline-danger" id = "extension_btn" disabled={this.state.application.visible_status !== "offered"} onClick={async ()=> await accept(false,this.state.application.uid)}>Reject</button></Col>
                         </Row>
                     </Container>
                 </ApplicationBox>

@@ -2,6 +2,7 @@ import {checkValidity, getToken, getUsername,
     setSpecificApplicationInfoJson,getSpecificApplicationInfoJson,clearSpecificApplicationInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
+import {notification} from "antd";
 
 export var application_period_uid = "application period id"; //must have an application period id
 export var created_at = new Date();
@@ -35,9 +36,19 @@ export default async function submitApplication(application_period_uid,student_i
     await axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
+    notification.success({
+        message: 'Submitted!',
+        description:
+            "Submitted Application Form Successfully!",
+        });
     })
     .catch(function (error) {
-    console.log(error);
+        console.log(error);
+        notification.error({
+            message: 'Failed!',
+            description:
+                "Application Form Failed to Submit!",
+        });
     });
 }
 
