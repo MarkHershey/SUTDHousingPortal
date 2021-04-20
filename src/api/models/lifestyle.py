@@ -1,196 +1,48 @@
-from typing import Dict, List, Optional
-
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
 
 class LifestyleProfile(BaseModel):
-    bedtime: int = None
-    wakeup_time: int = None
-    like_social: int = None
-    like_quiet: int = None
-    sleep_time: str = None  # choice (before midnight/after midnight/around midnight)
-    like_clean: int = None  # how tidy do they need their room to be? range from 1 to 5
-    like_music: bool = None  # do they like to have music in the room?
-    relationship_scale: int = None  # from 1 to 5
-    aircon_usage: str = None  # choice (often, occasionally, not at all)
-    interests: List[str] = None  # select from given list
-    intended_pillar: str = None  # choice (ISTD, EPD, ESD, ASD, DAI, NA)
-    diet: str = None  # choice (halal, no beef, kosher, others)
-    smoking: str = None  # choice (social smoker, not smoker, active smoker)
+    sleep_time: int = None  # 21, 22, 23, 0, 1, 2, 3
+    wakeup_time: int = None  # 5, 6, 7, 8, 9, 10, 11
+    like_social: int = None  # on a scale of 0 to 10
+    like_quiet: int = None  # on a scale of 0 to 10
+    like_clean: int = None  # on a scale of 0 to 10
+    diet: str = None
+    use_aircon: bool = None
+    smoking: bool = None
 
     @validator("sleep_time", pre=True, always=True)
     def validate_sleep_time(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "BEFORE MIDNIGHT",
-            "AROUND MIDNIGHT",
-            "AFTER MIDNIGHT",
-        ):
+        if isinstance(v, int) and v in (21, 22, 23, 0, 1, 2, 3):
             return v
         else:
-            return "AROUND MIDNIGHT"
+            return None
+
+    @validator("wakeup_time", pre=True, always=True)
+    def validate_wakeup_time(cls, v):
+        if isinstance(v, int) and v in (5, 6, 7, 8, 9, 10, 11):
+            return v
+        else:
+            return None
+
+    @validator("like_social", pre=True, always=True)
+    def validate_like_social(cls, v):
+        if isinstance(v, int) and 0 <= v <= 10:
+            return v
+        else:
+            return 5
+
+    @validator("like_quiet", pre=True, always=True)
+    def validate_like_quiet(cls, v):
+        if isinstance(v, int) and 0 <= v <= 10:
+            return v
+        else:
+            return 5
 
     @validator("like_clean", pre=True, always=True)
-    def validate_room_cleanliness(cls, v):
-        if isinstance(v, int):
-            if v >= 0 and v <= 5:
-                return v
-            else:
-                return 3
-        else:
-            return 3
-
-    @validator("relationship_scale", pre=True, always=True)
-    def validate_relationship_scale(cls, v):
-        if isinstance(v, int) and v <= 5 and v >= 0:
+    def validate_like_clean(cls, v):
+        if isinstance(v, int) and 0 <= v <= 10:
             return v
         else:
-            return 3
-
-    @validator("aircon_usage", pre=True, always=True)
-    def validate_aircon_usage(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "OFTEN",
-            "OCCASIONALLY",
-            "NOT AT ALL",
-        ):
-            return v
-        else:
-            return "OCCASIONALLY"
-
-    @validator("interests", pre=True, always=True)
-    def validate_interests_list(cls, v):
-        interests = [
-            "kpop",
-            "anime",
-            "film",
-            "reading",
-            "photography",
-            "art",
-        ]  # random list of interests
-        valid = []
-        if isinstance(v, list):
-            for interest in v:
-                if interest.lower() not in interests:
-                    continue
-                else:
-                    valid.append(interest)
-            if len(valid) == len(v):
-                return v
-            else:
-                return valid
-        else:
-            return valid
-
-    @validator("intended_pillar", pre=True, always=True)
-    def validate_intended_pillar(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "ISTD",
-            "EPD",
-            "ESD",
-            "DAI",
-            "ASD",
-        ):
-            return v
-        else:
-            return None
-
-    @validator("diet", pre=True, always=True)
-    def validate_diet(cls, v):
-        if isinstance(v, str):
-            return v
-        else:
-            return None
-
-    @validator("smoking", pre=True, always=True)
-    def validate_smoker(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "ACTIVE SMOKER",
-            "SOCIAL SMOKER",
-            "DO NOT SMOKE",
-        ):
-            return v
-        else:
-            return "DO NOT SMOKE"
-
-
-class RoommatePreference(
-    BaseModel
-):  # all options are set to None unless stated otherwise
-    sleep_time: str = None
-    like_social: bool = None
-    like_music: bool = None
-    interests: List[str] = None
-    intended_pillar: str = None
-    diet: str = None
-    smoking: str = None
-    preferred_roommate: str = None
-    blacklist_roommate: List[str] = None
-
-    @validator("sleep_time", pre=True, always=True)
-    def validate_sleep_time(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "BEFORE MIDNIGHT",
-            "AROUND MIDNIGHT",
-            "AFTER MIDNIGHT",
-        ):
-            return v
-        else:
-            return None
-
-    @validator("interests", pre=True, always=True)
-    def validate_interests_list(cls, v):
-        interests = [
-            "kpop",
-            "anime",
-            "film",
-            "reading",
-            "photography",
-            "art",
-        ]  # random list of interests
-        valid = []
-        if isinstance(v, list):
-            for interest in v:
-                if interest.lower() not in interests:
-                    continue
-                else:
-                    valid.append(interest)
-            if len(valid) == len(v):
-                return v
-            else:
-                return valid
-        else:
-            return None
-
-    @validator("intended_pillar", pre=True, always=True)
-    def validate_intended_pillar(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "ISTD",
-            "EPD",
-            "ESD",
-            "DAI",
-            "ASD",
-        ):
-            return v
-        else:
-            return None
-
-    @validator("smoking", pre=True, always=True)
-    def validate_smoker(cls, v):
-        if isinstance(v, str) and v.upper() in (
-            "ACTIVE SMOKER",
-            "SOCIAL SMOKER",
-            "DO NOT SMOKE",
-        ):
-            return v
-        else:
-            return None
-
-    @validator("blacklist_roommate", pre=True, always=True)
-    def validate_blacklisted_roomates(cls, v):
-        if isinstance(
-            v, list
-        ):  # do not have a student list to check if name in student list
-            return v
-        else:
-            return None
+            return 5

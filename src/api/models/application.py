@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from markkk.logger import logger
 from pydantic import BaseModel, validator
