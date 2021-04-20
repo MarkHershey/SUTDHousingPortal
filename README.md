@@ -3,6 +3,7 @@
 [![](https://github.com/MarkHershey/SUTDHousingPortal/workflows/CI/badge.svg?branch=master)](https://github.com/MarkHershey/SUTDHousingPortal/actions)
 [![](https://img.shields.io/codecov/c/github/MarkHershey/SUTDHousingPortal)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal)
 [![](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
 <!-- [![codecov](https://codecov.io/gh/MarkHershey/SUTDHousingPortal/branch/master/graph/badge.svg?token=CUDPJZRG4Y)](https://codecov.io/gh/MarkHershey/SUTDHousingPortal) -->
 
