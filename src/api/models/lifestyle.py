@@ -3,8 +3,8 @@ from pydantic import BaseModel, validator
 
 
 class LifestyleProfile(BaseModel):
-    sleep_time: int = None  # 21, 22, 23, 0, 1, 2, 3
-    wakeup_time: int = None  # 5, 6, 7, 8, 9, 10, 11
+    sleep_time: int = None  # dropdown selection - Only allow: 21, 22, 23, 0, 1, 2, 3
+    wakeup_time: int = None  # dropdown selection - Only allow: 5, 6, 7, 8, 9, 10, 11
     like_social: int = None  # on a scale of 0 to 10
     like_quiet: int = None  # on a scale of 0 to 10
     like_clean: int = None  # on a scale of 0 to 10
