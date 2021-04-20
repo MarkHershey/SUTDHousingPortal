@@ -3,12 +3,19 @@ import os
 import pymongo
 from markkk.logger import logger
 
+_USER = os.environ.get("_DB_USER", "REPLACE_ME")
+_PASS = os.environ.get("_DB_PASS", "REPLACE_ME")
+_NAME = os.environ.get("_DB_NAME", "REPLACE_ME")
+
 try:
-    from .db_secrete import _DB_NAME, _DB_PASS, _DB_USER
+    if _USER.endswith("ME"):
+        from .db_secrete import _DB_NAME, _DB_PASS, _DB_USER
+    else:
+        _DB_USER = _USER
+        _DB_PASS = _PASS
+        _DB_NAME = _NAME
 except ImportError:
-    _DB_USER = os.environ.get("_DB_USER", "REPLACE_ME")
-    _DB_PASS = os.environ.get("_DB_PASS", "REPLACE_ME")
-    _DB_NAME = os.environ.get("_DB_NAME", "REPLACE_ME")
+    logger.error("No Database Config Found.")
 
 logger.info(
     f"""-----------------------------------
