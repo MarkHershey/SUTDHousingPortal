@@ -1,8 +1,9 @@
-import * as bs from "react-bootstrap";
+    import * as bs from "react-bootstrap";
 import React from "react";
 import {useHistory} from "react-router"
 import styled from "styled-components";
 import { makeStyles } from '@material-ui/core/styles';
+import {getSpecificApplicationInfo} from "../../functions/applicationforminfo";
 import Paper from '@material-ui/core/Paper';
 import { InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
 import {
@@ -12,12 +13,16 @@ import {
     deleteApplicationPeriodInfo,
     getOngoingApplicationPeriodInfo,
     
-} from "../../functions/applicationperiodinfo"
+} from "../../functions/applicationperiodinfo";
 import { 
     getPersonalApplicationPeriodInfoJson,
+    getSpecificApplicationInfoJson,
+    clearSpecificApplicationInfoJson
 
 } from "../../functions/localstorage";
 import {notification} from "antd";
+import StudentFormData from "./studentFormData";
+
 
 const Field = styled.p`
   color: #3C64B1;
@@ -65,9 +70,9 @@ function Row(props){
             <TableRow className={classes.root}>
                 <TableCell>
                 </TableCell>
-                <TableCell component="th" scope="row">{row.created_by}</TableCell>
-                <TableCell align="right">Application status</TableCell>
-                <TableCell align="right">Room Offered</TableCell>
+                <TableCell component="th" scope="row">{row}</TableCell>
+                <TableCell align="left">{row}</TableCell>
+                <TableCell align="left">Room Offered</TableCell>
             </TableRow>
         </React.Fragment>
     )
@@ -79,13 +84,20 @@ export default class ApplicationManagement extends React.Component{
         this.handleDelete = this.handleDelete.bind(this);
         this.createUI = this.createUI.bind(this);
         this.handleDropdown = this.handleDropdown.bind(this);
+        this.handleApplicationForms = this.handleApplicationForms.bind(this);
+        
         this.state = {
             application_window_open:"",
             application_window_close:"",
             applicable_periods: ["string"],
             applicable_rooms: ["string"],
             applicable_students: ["string"],
-
+            application_forms_map : {
+                form1: {uid:"uid"}
+            },
+            studentData: {
+                form1: {uid : "uid"}
+            }
         }
     }
 
@@ -93,18 +105,15 @@ export default class ApplicationManagement extends React.Component{
         const fetchJSON = async () =>{
             getApplicationPeriodInfo(this.props.location.state.uid).then(r=>{
                 this.setState(getPersonalApplicationPeriodInfoJson());
-                console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
-                
+                //console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
             });
-
         }
         fetchJSON();
-        
     }
 
     handleDelete() {
         deleteApplicationPeriodInfo(this.props.location.state.uid);
-        this.props.history.push("/");
+        this.props.history.push("/admin/application_viewing");
     }
 
     createUI(){
@@ -127,6 +136,39 @@ export default class ApplicationManagement extends React.Component{
             </EventDiv>          
         )
     }
+
+    handleApplicationForms(props){
+        let studentApplication =[];
+        /*
+        for(const item in props){
+            //console.log(item);
+            //console.log(props[item]);
+            if(props[item]!=""){
+                console.log(item);
+                var data =getSpecificApplicationInfo(props[item]);
+                if(getSpecificApplicationInfoJson()!=undefined){
+                    studentApplication.push(getSpecificApplicationInfoJson());
+                }
+            }
+        }
+        */
+       for(const item in props){
+           studentApplication.push(item);
+       }
+        console.log(studentApplication);
+        console.log("HDKJFHDSFJKDSHJFKSDHFJKD");
+        
+        return (
+            <TableBody>
+                {studentApplication.map((row)=>(
+                <Row key={row} row={row}/>
+                ))} 
+            </TableBody> 
+        )
+         
+    }
+
+
 
     handleDropdown(event){
         const name = event.target.name;
@@ -163,14 +205,8 @@ export default class ApplicationManagement extends React.Component{
                                     <TableCell align="left">Room Offered</TableCell>
                                 </TableRow>
                             </TableHead>
-                            {console.log(this.state.application_forms_map)}
-                            {/*
-                            <TableBody>
-                                {this.state.application_forms_map.map((row)=>(
-                                    <Row key={row.id} row={row}/>
-                                ))}
-                            </TableBody>
-                                */}
+                            
+                            {this.handleApplicationForms(this.state.application_forms_map)}
                         </Table>
                     </TableContainer>
                 </EditBox>

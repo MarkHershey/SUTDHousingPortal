@@ -1,4 +1,5 @@
-import {checkValidity, getToken, getUsername} from "./localstorage";
+import {checkValidity, getToken, getUsername,
+    setSpecificApplicationInfoJson,getSpecificApplicationInfoJson,clearSpecificApplicationInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
 
@@ -37,5 +38,30 @@ export default async function submitApplication(application_period_uid,student_i
     })
     .catch(function (error) {
     console.log(error);
+    });
+}
+
+export async function getSpecificApplicationInfo(uid){
+    if (!checkValidity()) return undefined;
+    var config = {
+        method: 'get',
+        url: url+'/api/applications/'+uid,
+        headers: { 
+        'accept': 'application/json', 
+        'Authorization': 'Bearer '+getToken(),
+        }
+    };
+    
+    await axios(config)
+    .then(function (response) {
+        const data = response.data;
+        clearSpecificApplicationInfoJson();
+        setSpecificApplicationInfoJson(data);
+        //console.log("methiod data");
+        //console.log(data);
+        return data
+    })
+    .catch(function (error) {
+        console.log(error);
     });
 }
