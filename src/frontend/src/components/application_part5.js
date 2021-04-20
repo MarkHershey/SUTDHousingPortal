@@ -6,7 +6,7 @@ import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
 import submitApplication, { application_period_uid, room_profile, student_id } from '../functions/applicationforminfo';
 import {ApplicationStep} from "./application_steps";
-import { getUserInfoJson, getUsername } from "../functions/localstorage";
+import { getUserInfoJson, getUsername, getPersonalApplicablePeriodUidInfoJson, getPersonalApplicationPeriodInfoJson } from "../functions/localstorage";
 
 const EventDiv = styled.div`
   display: grid;
@@ -23,12 +23,12 @@ export default function ApplicationSummary(props){
     let history = useHistory();
     let data = getUserInfoJson();
     let username = getUsername();
-    let applicable_period = props.location.state.applicable_period;
-    let application_period_uid = props.location.state.application_period_uid;
+    let applicable_period = getPersonalApplicationPeriodInfoJson();
+    let application_period_uid = getPersonalApplicablePeriodUidInfoJson();
     function handleSubmit(){
         console.log(application_period_uid);
         console.log("HERE");
-        console.log(applicable_period);
+        console.log(getPersonalApplicationPeriodInfoJson());
         submitApplication(application_period_uid,username,
             data.preference_room,data.preference_lifestyle,applicable_period);
         history.push("/");

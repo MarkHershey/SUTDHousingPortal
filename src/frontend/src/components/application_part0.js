@@ -20,7 +20,8 @@ import * as bs from 'react-bootstrap';
 import {
     getOngoingApplicationPeriodInfoJson,
     setApplicationPeriodInfoJson,
-    setPersonalApplicablePeriodUidInfoJson
+    setPersonalApplicablePeriodUidInfoJson,
+    setPersonalApplicationPeriodInfoJson
 } from "../functions/localstorage";
 import {getOngoingApplicationPeriodInfo,} from "../functions/applicationperiodinfo"
 import {useHistory} from "react-router";
@@ -79,7 +80,7 @@ function CreateUI(props,uid){
                     <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
-                        setApplicationPeriodInfoJson(el);
+                        setPersonalApplicationPeriodInfoJson(el);
                         setPersonalApplicablePeriodUidInfoJson(uid);
                         history.push({
                             pathname: "/apply1",

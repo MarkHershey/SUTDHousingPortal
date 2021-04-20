@@ -253,15 +253,6 @@ export function getPersonalApplicablePeriodUidInfoJson(){
     return JSON.parse(storage["personalApplicationPeriodUid"]);
 }
 
-export function setPersonalApplicablePeriodInfoJson(newjson){
-    storage.setItem("personalApplicablePeriodInfoJson",JSON.stringify(newjson));
-}
-
-export function getPersonalApplicablePeriodInfoJson(){
-    if(storage["personalApplicablePeriodInfoJson"]===undefined) return undefined;
-    return JSON.parse(storage["personalApplicablePeriodInfoJson"]);
-}
-
 export function setApplicationStatusJson(newJson){
     storage.setItem("ApplicationStatusJson",JSON.stringify(newJson));
 }
@@ -269,6 +260,20 @@ export function setApplicationStatusJson(newJson){
 export function getApplicationStatusJson(){
     if(storage["ApplicationStatusJson"]===undefined) return undefined;
     return JSON.parse(storage["ApplicationStatusJson"]);
+}
+
+export function getSpecificApplicationInfoJson(){
+    if(storage["specificApplicationInfoJson"]==undefined) return undefined;
+    return JSON.parse(storage["specificApplicationInfoJson"]);
+}  
+
+export function setSpecificApplicationInfoJson(newJson){
+    storage.setItem("specificApplicationInfoJson",JSON.stringify(newJson));
+}
+
+export function clearSpecificApplicationInfoJson(){
+    storage.removeItem("specificApplicationInfoJson");
+    //console.log(typeof(storage["specificApplicationInfoJson"]));
 }
 
 

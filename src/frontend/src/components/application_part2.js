@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {instanceOf} from "prop-types";
 import {Redirect, useHistory} from "react-router";
 import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
-import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicablePeriodInfoJson, getPersonalEventInfoJson} from "../functions/localstorage";
+import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicationPeriodInfoJson, getPersonalEventInfoJson} from "../functions/localstorage";
 import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 
@@ -90,7 +90,7 @@ export default class ApplicationPartTwo extends React.Component {
         this.state = getUserInfoJson().preference_room;
         console.log(this.state);
         var uid = getPersonalApplicablePeriodUidInfoJson();
-        var applicablePeriod = getPersonalApplicablePeriodInfoJson();
+        var applicablePeriod = getPersonalApplicationPeriodInfoJson();
         this.props.history.push({
             pathname: "/apply3",
             state: {
