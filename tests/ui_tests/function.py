@@ -1,16 +1,12 @@
-from datetime import datetime, timedelta
-import time
-import threading
-from datetime_selenium import send_datetime
-from selenium import webdriver
-import unittest
 import random
 import string
+import threading
 import time
 import unittest
+from datetime import datetime, timedelta
 
+from datetime_selenium import send_datetime
 from selenium import webdriver
-
 from selenium.webdriver.common.by import By
 
 path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"

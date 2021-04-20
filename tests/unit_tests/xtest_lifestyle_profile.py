@@ -8,12 +8,13 @@ sys.path.insert(0, str(src_dir))
 
 from api.models.lifestyle import LifestyleProfile, RoommatePreference
 
+
 class TestProfileCreation(unittest.TestCase):
     def test_lifestyle_creation_with_missing_data(self):
         with self.assertRaises(Exception):
             lifeStyleProfile = LifestyleProfile(
                 sleep_time="AROUND MIDNIGHT",
-                like_social=False,
+                like_social="2323243",
                 like_clean=4,
                 like_music=True,
             )
@@ -26,7 +27,7 @@ class TestProfileCreation(unittest.TestCase):
             like_music=True,
             relationship_scale=3,
             aircon_usage="OCCASIONALLY",
-            smoking="DO NOT SMOKE"
+            smoking="DO NOT SMOKE",
         )
         self.assertTrue(isinstance(lifestyleProfile, LifestyleProfile))
         self.assertTrue(lifestyleProfile.sleep_time == "AROUND MIDNIGHT")
@@ -166,7 +167,7 @@ class TestProfileCreation(unittest.TestCase):
         self.assertTrue(lifestyleProfile.diet == None)
 
     def test_roommate_creation_with_no_input(self):
-        roommatePreference = RoommatePreference();
+        roommatePreference = RoommatePreference()
         self.assertTrue(roommatePreference.sleep_time == None)
         self.assertTrue(roommatePreference.like_social == None)
         self.assertTrue(roommatePreference.like_music == None)
@@ -183,7 +184,7 @@ class TestProfileCreation(unittest.TestCase):
             like_music=True,
             intended_pillar="ESD",
             smoking="DO NOT SMOKE",
-        );
+        )
         self.assertTrue(roommatePreference.sleep_time == "AROUND MIDNIGHT")
         self.assertTrue(roommatePreference.like_social == None)
         self.assertTrue(roommatePreference.like_music == True)
@@ -200,7 +201,7 @@ class TestProfileCreation(unittest.TestCase):
             like_social=True,
             intended_pillar="EPD",
             smoking="DO NOT SMOKE",
-        );
+        )
         self.assertTrue(roommatePreference.sleep_time == "AROUND MIDNIGHT")
         self.assertTrue(roommatePreference.like_social == True)
         self.assertTrue(roommatePreference.like_music == None)
@@ -218,7 +219,7 @@ class TestProfileCreation(unittest.TestCase):
             intended_pillar=29048394,
             smoking="djkndskjcns",
             interests="skdckjsnc",
-        );
+        )
         self.assertTrue(roommatePreference.sleep_time == None)
         self.assertTrue(roommatePreference.like_social == None)
         self.assertTrue(roommatePreference.like_music == None)
@@ -237,7 +238,7 @@ class TestProfileCreation(unittest.TestCase):
             intended_pillar="jdkcnskjcdsdc",
             smoking=89479824,
             interests=4948435304,
-        );
+        )
         self.assertTrue(roommatePreference.sleep_time == None)
         self.assertTrue(roommatePreference.like_social == None)
         self.assertTrue(roommatePreference.like_music == None)
@@ -256,7 +257,7 @@ class TestProfileCreation(unittest.TestCase):
             intended_pillar=True,
             smoking=True,
             interests=True,
-        );
+        )
         self.assertTrue(roommatePreference.sleep_time == None)
         self.assertTrue(roommatePreference.like_social == None)
         self.assertTrue(roommatePreference.like_music == None)
@@ -267,6 +268,6 @@ class TestProfileCreation(unittest.TestCase):
         self.assertTrue(roommatePreference.preferred_roommate == None)
         self.assertTrue(roommatePreference.blacklist_roommate == None)
 
+
 if __name__ == "__main__":
     unittest.main()
-    

@@ -1,7 +1,4 @@
 import string
-import threading
-import pytest
-
 from function import *
 
 

@@ -1,7 +1,6 @@
-import string
-from function import *
 import logging
+import string
 import threading
 import time
 
-class 
+from function import *
