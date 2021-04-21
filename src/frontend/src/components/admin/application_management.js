@@ -1,29 +1,46 @@
 import * as bs from "react-bootstrap";
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {url} from "../../functions/url";
 import {useHistory} from "react-router"
 import styled from "styled-components";
-import { makeStyles } from '@material-ui/core/styles';
-import {getSpecificApplicationInfo,approveApplication,rejectApplication,waitlistApplication} from "../../functions/applicationforminfo";
+import {makeStyles} from '@material-ui/core/styles';
+import {
+    getSpecificApplicationInfo,
+    approveApplication,
+    rejectApplication,
+    waitlistApplication
+} from "../../functions/applicationforminfo";
 import Paper from '@material-ui/core/Paper';
-import { InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
+import {
+    InputLabel,
+    MenuItem,
+    Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from '@material-ui/core'
 import {
     submitApplicationPeriod,
     getApplicationPeriodInfo,
     getAllApplicationPeriodInfo,
     deleteApplicationPeriodInfo,
     getOngoingApplicationPeriodInfo,
-    
+
 } from "../../functions/applicationperiodinfo";
-import { 
+import {
     getPersonalApplicationPeriodInfoJson,
     getSpecificApplicationInfoJson,
     clearSpecificApplicationInfoJson,
-    getToken
+    getToken, setSpecificApplicationInfoJson
 
 } from "../../functions/localstorage";
-import {notification} from "antd";
+import {Modal, notification} from "antd";
+import {Button} from "react-bootstrap";
+
 
 
 const Field = styled.p`
@@ -64,12 +81,27 @@ const useRowStyles = makeStyles({
 });
 
 
-function Row(props){
+function Row(props) {
     const {row} = props;
     const classes = useRowStyles();
     let history = useHistory();
     console.log("roww");
     console.log(props);
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
@@ -78,20 +110,91 @@ function Row(props){
                 <TableCell component="th" scope="row">{row.student_id}</TableCell>
                 <TableCell align="left">{row.internal_status}</TableCell>
                 <TableCell align="left">
-                <button onClick={()=>{approveApplication(row.uid)}}>Approve</button>
-                <button onClick={()=>{rejectApplication(row.uid)}}>Reject</button>
-                <button onClick={()=>{waitlistApplication(row.uid)}}>Waitlist</button>
-                </TableCell>
+                    <bs.Row>
+                        <bs.Col lg = {4}>
+                            <button type="button" className="btn btn-light" onClick={showModal}>
+                                View Details
+                            </button>
+                            <Modal title="Application Details" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                    <bs.Row>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Student ID:
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.student_id}
+                                        </bs.Col>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Created At:
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.created_at.slice(0,10)}
+                                        </bs.Col>
+                                    </bs.Row>
 
+                                    <br/>
+
+                                    <bs.Row>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Room Type 1:
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.room_profile.room_type === "SINGLE_ENSUITE"? "ENSUITE" : row.room_profile.room_type}
+                                        </bs.Col>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Room Type 2
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.room_profile.room_type_2nd}
+                                        </bs.Col>
+                                    </bs.Row>
+
+                                    <bs.Row>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Block Pref 1:
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.room_profile.block}
+                                        </bs.Col>
+                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
+                                            Block Pref 2:
+                                        </bs.Col>
+                                        <bs.Col lg={3}>
+                                            {row.room_profile.block_2nd}
+                                        </bs.Col>
+                                    </bs.Row>
+                                </Modal>
+                        </bs.Col>
+                        <bs.Col lg = {2}>
+                            <button type="button" className="btn btn-outline-success"
+                                    id={"accept_" + row.student_id} onClick={() => {
+                                approveApplication(row.uid)
+                            }}>Approve
+                            </button>
+                        </bs.Col>
+                        <bs.Col lg = {2}>
+                            <button type="button" className="btn btn-outline-danger" id={"reject_" + row.student_id}
+                                    onClick={() => {
+                                        rejectApplication(row.uid)
+                                    }}>Reject
+                            </button>
+                        </bs.Col>
+                        <bs.Col lg = {2}>
+                            <button type="button" className="btn btn-outline-dark" id={"waitlist_" + row.student_id}
+                                    onClick={() => {
+                                        waitlistApplication(row.uid)
+                                    }}>Waitlist
+                            </button>
+                        </bs.Col>
+                    </bs.Row>
+                </TableCell>
             </TableRow>
         </React.Fragment>
     )
 };
 
 
-
-export default class ApplicationManagement extends React.Component{
-    constructor(props){
+export default class ApplicationManagement extends React.Component {
+    constructor(props) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.createUI = this.createUI.bind(this);
@@ -99,28 +202,32 @@ export default class ApplicationManagement extends React.Component{
         this.handleApplicationForms = this.handleApplicationForms.bind(this);
         this.checkState = this.checkState.bind(this);
         this.state = {
-            application_window_open:"",
-            application_window_close:"",
-            applicable_periods: ["string"],
-            applicable_rooms: ["string"],
-            applicable_students: ["string"],
-            application_forms_map : {
-                form1: {uid:"uid"}
+            application_window_open: "",
+            application_window_close: "",
+            applicable_periods: [""],
+            applicable_rooms: [""],
+            applicable_students: [""],
+            application_forms_map: {
+                form1: {uid: ""}
             },
-            studentData: [{
-                uid : "uid"
-            }],
-            update:false
+            student_data: [],
+            update: false
         }
     }
-    checkState(){
+
+    checkState() {
         console.log(this.state);
     }
 
-    componentDidMount(){
-        const fetchJSON = async () =>{
-            getApplicationPeriodInfo(this.props.location.state.uid).then(r=>{
+    componentDidMount() {
+        const fetchJSON = async () => {
+            getApplicationPeriodInfo(this.props.location.state.uid).then(r => {
                 this.setState(getPersonalApplicationPeriodInfoJson());
+                this.handleApplicationForms(this.state.application_forms_map).then(r => {
+                    console.log("Student Data:");
+                    console.log(getSpecificApplicationInfoJson());
+                    this.setState({student_data: getSpecificApplicationInfoJson()});
+                })
             });
         }
         fetchJSON();
@@ -131,61 +238,39 @@ export default class ApplicationManagement extends React.Component{
         this.props.history.push("/admin/application_viewing");
     }
 
-    createUI(){
-        return this.state.applicable_periods.map((el, i) => 
+    createUI() {
+        return this.state.applicable_periods.map((el, i) =>
             <EventDiv key={i}>
                 <bs.Container>
                     <bs.Row>
                         <bs.Col lg={3}><Field>Start Date:</Field></bs.Col>
                         <bs.Col lg={3}>
-                            <input type="date" name="start_date" value={el.start_date ||''} />
+                            <input type="date" name="start_date" value={el.start_date || ''}/>
                         </bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col lg={3}><Field>End Date:</Field></bs.Col>
                         <bs.Col lg={3}>
-                            <input type="date" name="end_date" value={el.end_date ||''} />
+                            <input type="date" name="end_date" value={el.end_date || ''}/>
                         </bs.Col>
-                    </bs.Row>                    
+                    </bs.Row>
                 </bs.Container>
-            </EventDiv>          
+            </EventDiv>
         )
     }
 
-    
-    
-    handleApplicationForms(e){
-        let studentApplication =[];
-        let props = this.state.application_forms_map;
-        var count=0
-        for(const item in props){
-            //console.log(item);
-            //console.log((props[item]));
-            if(props[item]!=""){
-                //console.log(props[item])
-                let data = getSpecificApplicationInfo(props[item]).then(value => {
-                    //console.log("here");
-                    //console.log(getSpecificApplicationInfoJson());
-                    studentApplication.push(getSpecificApplicationInfoJson());
-                });
-            }
-        }
 
-        console.log(studentApplication);
-        console.log("HDKJFHDSFJKDSHJFKSDHFJKD");
-        if(this.state.update==false){
-            this.setState({
-                studentData:studentApplication,
-                update:true
-            })
-        }
-        
-        
+    async handleApplicationForms(e) {
+        let props = this.state.application_forms_map;
+        await getSpecificApplicationInfo(props);
+        this.setState({
+            studentData: getPersonalApplicationPeriodInfoJson(),
+            update: true
+        })
     }
 
 
-
-    handleDropdown(event){
+    handleDropdown(event) {
         const name = event.target.name;
         this.state.title = name;
         console.log(this.state);
@@ -201,11 +286,11 @@ export default class ApplicationManagement extends React.Component{
                             <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
                             <bs.Col>{new Date(Date.parse(this.state.application_window_open)).toDateString()}</bs.Col>
                             <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col lg={3}>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</bs.Col>
+                            <bs.Col
+                                lg={3}>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Applicable periods:</Field></bs.Col>
-                            
                         </bs.Row>
                         {this.createUI()}
                     </bs.Container>
@@ -217,19 +302,13 @@ export default class ApplicationManagement extends React.Component{
                                     <TableCell/>
                                     <TableCell align="left">Student name</TableCell>
                                     <TableCell align="left">Application Status</TableCell>
-                                    <TableCell align="left">Actions</TableCell>
+                                    <TableCell align="left"></TableCell>
                                 </TableRow>
                             </TableHead>
-                            
-                            
-                            
-                            
-                            {console.log(this.state)}
-                            {this.handleApplicationForms(this.state.application_forms_map)}
                             <TableBody>
-                                {this.state.studentData.map((row)=>(
-                                <Row key={row.student_id} row={row}/>
-                                ))} 
+                                {this.state.student_data.map((row) => (
+                                    <Row key={row.student_id} row={row}/>
+                                ))}
                             </TableBody>
                             {/*
                             {console.log("hiuhih")}
@@ -242,8 +321,8 @@ export default class ApplicationManagement extends React.Component{
                             
                             */
                             }
-                            
-                                
+
+
                         </Table>
                     </TableContainer>
                 </EditBox>
@@ -255,12 +334,16 @@ export default class ApplicationManagement extends React.Component{
                             <bs.Col><button type="button" onClick={this.checkState}>check state</button></bs.Col>
                             */
                             }
-                            
-                            <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleDelete}>Delete Application Period</button></bs.Col>
+
+                            <bs.Col>
+                                <button type="button" className="btn btn-outline-primary"
+                                        onClick={this.handleDelete}>Delete Application Period
+                                </button>
+                            </bs.Col>
                         </bs.Row>
                     </bs.Container>
                 </Apply2BtnSet>
             </EventDiv>
-                );
+        );
     };
 }

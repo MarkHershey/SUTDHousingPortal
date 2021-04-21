@@ -100,17 +100,17 @@ export default class ApplicationCreation extends React.Component{
                     <bs.Row>
                         <bs.Col lg={3} style={{textAlign:"right"}}><h4>{i + 1}</h4></bs.Col>
                         <bs.Col lg={3}>
-                            <Input type="date" name="start_date" value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                            <Input type="date" name="start_date" id={"start_date_" + i} value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
                         <bs.Col lg={1}><MinusOutlined style={{ fontSize: '30px' }}/></bs.Col>
                         <bs.Col lg={3}>
-                            <Input type="date" name="end_date" value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
+                            <Input type="date" name="end_date" id={"end_date_" + i} value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
                         <bs.Col lg={1}>
-                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
+                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"} id ={"minus_" + i}/>
                         </bs.Col>
                         <bs.Col lg={1}>
-                            <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
+                            <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"} id ={"plus_" + i}/>
                         </bs.Col>
                     </bs.Row>
                 </bs.Container>
