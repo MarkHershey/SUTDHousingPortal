@@ -1,6 +1,7 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
+<<<<<<< Updated upstream
 import { getUserInfoJson } from "../functions/localstorage";
 import {Typography, Slider, TextField, Checkbox, Button, FormControl,Select,MenuItem,InputLabel, Switch } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
@@ -19,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 120,
     },
 }));
+=======
+import {Slider, TextField, Typography} from '@material-ui/core';
+import {getUserInfoJson} from "../functions/localstorage";
+>>>>>>> Stashed changes
 
 const Field = styled.p`
   color: #3C64B1;
