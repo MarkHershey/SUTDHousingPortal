@@ -441,6 +441,7 @@ export default class Events extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {console.log(this.state)}
                             {this.state.events.reverse().map((row) => (
                                 <Row key={row.uid} row={row}/>
                             ))}

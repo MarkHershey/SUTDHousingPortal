@@ -53,7 +53,7 @@ export default async function submitApplication(application_period_uid,student_i
 }
 
 export async function getSpecificApplicationInfo(uid){
-    if (!checkValidity()) return undefined;
+    
     var config = {
         method: 'get',
         url: url+'/api/applications/'+uid,
@@ -65,14 +65,71 @@ export async function getSpecificApplicationInfo(uid){
     
     await axios(config)
     .then(function (response) {
-        const data = response.data;
-        clearSpecificApplicationInfoJson();
-        setSpecificApplicationInfoJson(data);
+        let data = response.data;
         //console.log("methiod data");
         //console.log(data);
-        return data
+        clearSpecificApplicationInfoJson();
+        setSpecificApplicationInfoJson(data);
+        //return data
     })
     .catch(function (error) {
         console.log(error);
     });
+}
+
+export async function approveApplication(uid){
+    var config = {
+        method: 'post',
+        url: url+'/api/applications/'+uid+'/offer',
+        headers: { 
+           'accept': 'application/json', 
+           'Authorization': 'Bearer '+getToken(),
+        }
+     };
+     
+     axios(config)
+     .then(function (response) {
+        console.log(JSON.stringify(response.data));
+     })
+     .catch(function (error) {
+        console.log(error);
+     });
+}
+
+export async function rejectApplication(uid){
+    var config = {
+        method: 'post',
+        url: url+'/api/applications/'+uid+'/reject',
+        headers: { 
+           'accept': 'application/json', 
+           'Authorization': 'Bearer '+getToken(),
+        }
+     };
+     
+     axios(config)
+     .then(function (response) {
+        console.log(JSON.stringify(response.data));
+     })
+     .catch(function (error) {
+        console.log(error);
+     });
+}
+
+export function waitlistApplication(uid){
+    var config = {
+        method: 'post',
+        url: url+'/api/applications/'+uid+'/waitlist',
+        headers: { 
+           'accept': 'application/json', 
+           'Authorization': 'Bearer '+getToken(),
+        }
+     };
+     
+     axios(config)
+     .then(function (response) {
+        console.log(JSON.stringify(response.data));
+     })
+     .catch(function (error) {
+        console.log(error);
+     });
 }
