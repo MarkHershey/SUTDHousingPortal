@@ -83,11 +83,7 @@ function CreateUI(props,uid){
                         setPersonalApplicationPeriodInfoJson(el);
                         setPersonalApplicablePeriodUidInfoJson(uid);
                         history.push({
-                            pathname: "/apply1",
-                            state: {
-                                applicable_period : el,
-                                application_period_uid : uid,
-                            }
+                            pathname: "/apply1"
                         });
                         
                     }}>Select</Button></bs.Col>
