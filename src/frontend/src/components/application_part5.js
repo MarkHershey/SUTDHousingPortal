@@ -2,11 +2,15 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
-import ApplicationTwo from './application_part2';
 import SummaryData from './summary_data';
-import submitApplication, { application_period_uid, room_profile, student_id } from '../functions/applicationforminfo';
+import submitApplication from '../functions/applicationforminfo';
 import {ApplicationStep} from "./application_steps";
-import { getUserInfoJson, getUsername, getPersonalApplicablePeriodUidInfoJson, getPersonalApplicationPeriodInfoJson } from "../functions/localstorage";
+import {
+    getPersonalApplicablePeriodUidInfoJson,
+    getPersonalApplicationPeriodInfoJson,
+    getUserInfoJson,
+    getUsername
+} from "../functions/localstorage";
 
 const EventDiv = styled.div`
   display: grid;

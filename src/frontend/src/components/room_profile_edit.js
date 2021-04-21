@@ -1,11 +1,8 @@
 import * as bs from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import { instanceOf } from "prop-types";
-import { Redirect, useHistory } from "react-router";
-import { getUserInfoJson } from "../functions/localstorage";
+import {getUserInfoJson} from "../functions/localstorage";
 import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
-import { getCurrentStudentInfo } from "../functions/studentinfo";
 
 
 const EventDiv = styled.div`

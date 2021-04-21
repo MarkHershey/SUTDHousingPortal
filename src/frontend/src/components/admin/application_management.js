@@ -1,46 +1,19 @@
 import * as bs from "react-bootstrap";
 import React, {useState} from "react";
-import axios from "axios";
-import {url} from "../../functions/url";
 import {useHistory} from "react-router"
 import styled from "styled-components";
 import {makeStyles} from '@material-ui/core/styles';
 import {
-    getSpecificApplicationInfo,
     approveApplication,
+    getSpecificApplicationInfo,
     rejectApplication,
     waitlistApplication
 } from "../../functions/applicationforminfo";
 import Paper from '@material-ui/core/Paper';
-import {
-    InputLabel,
-    MenuItem,
-    Select,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@material-ui/core'
-import {
-    submitApplicationPeriod,
-    getApplicationPeriodInfo,
-    getAllApplicationPeriodInfo,
-    deleteApplicationPeriodInfo,
-    getOngoingApplicationPeriodInfo,
-
-} from "../../functions/applicationperiodinfo";
-import {
-    getPersonalApplicationPeriodInfoJson,
-    getSpecificApplicationInfoJson,
-    clearSpecificApplicationInfoJson,
-    getToken, setSpecificApplicationInfoJson
-
-} from "../../functions/localstorage";
-import {Modal, notification} from "antd";
-import {Button} from "react-bootstrap";
-
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
+import {deleteApplicationPeriodInfo, getApplicationPeriodInfo,} from "../../functions/applicationperiodinfo";
+import {getPersonalApplicationPeriodInfoJson, getSpecificApplicationInfoJson} from "../../functions/localstorage";
+import {Modal} from "antd";
 
 
 const Field = styled.p`

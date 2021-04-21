@@ -5,8 +5,8 @@ import {Typography, Slider, TextField, Checkbox, Button, FormControl,Select,Menu
 import { makeStyles} from '@material-ui/core/styles';
 import {Student} from "../functions/studentinfo";
 import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {Slider, TextField, Typography} from '@material-ui/core';
 import {getUserInfoJson} from "../functions/localstorage";
-import {BsPrefixComponent} from "react-bootstrap/esm/helpers";
 
 const useStyles = makeStyles((theme) => ({
     button: {

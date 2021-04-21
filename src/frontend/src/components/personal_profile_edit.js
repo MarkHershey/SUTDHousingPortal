@@ -1,11 +1,8 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {Student} from "../functions/studentinfo";
-import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {updateStudentProfileInfo} from "../functions/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../functions/localstorage";
-import { Typography, Slider, TextField } from '@material-ui/core';
+import {getUserInfoJson} from "../functions/localstorage";
 
 const Field = styled.p`
   color: #3C64B1;

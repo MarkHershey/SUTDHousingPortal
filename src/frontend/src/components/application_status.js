@@ -2,9 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import {Col, Container, Row} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
-import * as bs from "react-bootstrap";
-import {getEventInfo} from "../functions/eventinfo";
-import {getApplicationStatusJson, getEventInfoJson} from "../functions/localstorage";
+import {getApplicationStatusJson} from "../functions/localstorage";
 import {accept, getApplicationInfo} from "../functions/applicationstatusinfo";
 
 const ApplicationBox = styled.div`

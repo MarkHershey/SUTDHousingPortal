@@ -1,7 +1,4 @@
-import {
-    checkValidity, getToken, getUsername,
-    setSpecificApplicationInfoJson, getSpecificApplicationInfoJson, clearSpecificApplicationInfoJson
-} from "./localstorage";
+import {getToken, setSpecificApplicationInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
 import {notification} from "antd";

@@ -1,4 +1,4 @@
-import {checkValidity, getToken, getUsername} from "./localstorage";
+import {getToken} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
 import {notification} from "antd";

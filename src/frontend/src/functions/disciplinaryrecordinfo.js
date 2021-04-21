@@ -1,10 +1,12 @@
 import {
-    checkValidity, getToken, getUsername, getAllDisciplinaryRecordsInfoJson,
-    setAllDisciplinaryRecordsInfoJson, setPersonalDisciplinaryRecordInfoJson, getPersonalDisciplinaryRecordInfoJson
+    getAllDisciplinaryRecordsInfoJson,
+    getPersonalDisciplinaryRecordInfoJson,
+    getToken,
+    setAllDisciplinaryRecordsInfoJson,
+    setPersonalDisciplinaryRecordInfoJson
 } from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
-import {FunctionOutlined} from "@ant-design/icons";
 import {notification} from "antd";
 
 export async function createDisciplinaryRecord(id, record_type, description, points_deduction) {

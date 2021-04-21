@@ -1,11 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import { instanceOf } from "prop-types";
-import { Redirect, useHistory } from "react-router";
 import LifestyleData from "./lifestyle_data";
 import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
-import { getUserInfoJson } from "../functions/localstorage";
+import {getUserInfoJson} from "../functions/localstorage";
 import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 

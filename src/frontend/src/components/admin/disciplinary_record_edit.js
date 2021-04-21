@@ -1,12 +1,8 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../functions/studentinfo";
 import {getDisciplinaryRecord, updateDisciplinaryRecord} from "../../functions/disciplinaryrecordinfo";
-import {getPersonalDisciplinaryRecordInfoJson, getUserInfoJson, getUsername} from "../../functions/localstorage";
-import {createEvent} from "../../functions/eventinfo";
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from "react-bootstrap/Button";
+import {getPersonalDisciplinaryRecordInfoJson} from "../../functions/localstorage";
 import {Input, notification} from "antd";
 import TextArea from "antd/es/input/TextArea";
 

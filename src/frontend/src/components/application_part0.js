@@ -19,7 +19,6 @@ import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
 import {
     getOngoingApplicationPeriodInfoJson,
-    setApplicationPeriodInfoJson,
     setPersonalApplicablePeriodUidInfoJson,
     setPersonalApplicationPeriodInfoJson
 } from "../functions/localstorage";

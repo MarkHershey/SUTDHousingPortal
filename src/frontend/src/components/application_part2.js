@@ -1,10 +1,12 @@
 import * as bs from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import {instanceOf} from "prop-types";
-import {Redirect, useHistory} from "react-router";
 import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
-import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicationPeriodInfoJson, getPersonalEventInfoJson} from "../functions/localstorage";
+import {
+    getPersonalApplicablePeriodUidInfoJson,
+    getPersonalApplicationPeriodInfoJson,
+    getUserInfoJson
+} from "../functions/localstorage";
 import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 

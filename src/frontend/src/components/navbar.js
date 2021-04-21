@@ -1,8 +1,8 @@
 import React from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import {Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import styled from 'styled-components';
 import logo from "../SUTDLogo 1.png";
-import {checkValidity, getUserInfoJson, isHG, logout} from "../functions/localstorage";
+import {isHG, logout} from "../functions/localstorage";
 
 const Styles = styled.div`
   .navbar {

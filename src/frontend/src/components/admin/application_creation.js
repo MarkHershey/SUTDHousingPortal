@@ -2,9 +2,8 @@ import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import {submitApplicationPeriod} from "../../functions/applicationperiodinfo";
-import {Input, Select} from 'antd';
-import {notification} from "antd";
-import {CloseCircleTwoTone, PlusCircleTwoTone,MinusOutlined} from "@ant-design/icons";
+import {Input, notification, Select} from 'antd';
+import {CloseCircleTwoTone, MinusOutlined, PlusCircleTwoTone} from "@ant-design/icons";
 
 const { Option } = Select;
 const Field = styled.p`

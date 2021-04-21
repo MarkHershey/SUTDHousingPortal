@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { getUserInfoJson } from "../functions/localstorage";
 import {Typography, Slider, TextField, Checkbox, Button, FormControl,Select,MenuItem,InputLabel, Switch } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
+import {Slider, TextField, Typography} from '@material-ui/core';
+import {getUserInfoJson} from "../functions/localstorage";
 
 
 

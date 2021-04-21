@@ -1,5 +1,6 @@
 import {
-    checkValidity, getAttendanceEditJson,
+    checkValidity,
+    getAttendanceEditJson,
     getEventInfoJson,
     getPersonalEventInfoJson,
     getToken,

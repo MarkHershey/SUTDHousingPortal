@@ -37,16 +37,30 @@ class EventTest(unittest.TestCase):
 
         # Student login
         print("Student login")
-        admin_usrname = "100"
-        admin_passwd = "pass1234"
+        admin_usrname = "1000001"
+        admin_passwd = "1000001"
         driver.get(url)
         input_text(driver, "text", admin_usrname)
         input_text(driver, "password", admin_passwd)
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
+        # Student Submit application form
+        print("Student submit application form")
 
 
+
+
+
+        # Student check status(submitted)
+
+        # Student logout
+
+        # Admin login
+
+        # Admin go to view application
+
+        # Admin 
 
 
 

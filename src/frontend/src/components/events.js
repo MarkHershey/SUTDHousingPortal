@@ -19,21 +19,20 @@ import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
 import {
     addAttendanceADDJson,
-    addAttendanceDELJson, deleteAttendanceADDJson,
+    addAttendanceDELJson,
+    deleteAttendanceADDJson,
     deleteAttendanceDELJson,
     getEventInfoJson,
     getToken,
     getUpcomingEventInfoJson,
-    getUserInfoJson, initAttendanceEditJson, isHG
+    getUsername,
+    initAttendanceEditJson,
+    isHG
 } from "../functions/localstorage";
-import {deleteEvent, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
-import {getUsername} from "../functions/localstorage";
+import {deleteEvent, eventHandler, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
 import axios from "axios";
 import {url} from "../functions/url";
 import Modal from '@material-ui/core/Modal';
-import {CheckBox} from "@material-ui/icons";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../functions/eventinfo";
 import {useHistory} from "react-router";
 import "../functions/utilities"
 import {DatePicker} from "antd";

@@ -1,12 +1,12 @@
 import {
-    checkValidity, getToken, getUsername,
-    setApplicationPeriodInfoJson,
+    checkValidity,
     getApplicationPeriodInfoJson,
-    setPersonalApplicationPeriodInfoJson,
-    getPersonalApplicationPeriodInfoJson,
     getOngoingApplicationPeriodInfoJson,
-    setOngoingApplicationPeriodInfoJson
-
+    getPersonalApplicationPeriodInfoJson,
+    getToken,
+    setApplicationPeriodInfoJson,
+    setOngoingApplicationPeriodInfoJson,
+    setPersonalApplicationPeriodInfoJson
 } from "./localstorage";
 import axios from "axios";
 import {url} from "./url";

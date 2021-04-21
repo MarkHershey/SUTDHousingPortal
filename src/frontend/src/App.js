@@ -1,6 +1,6 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {NavigationBar} from './components/navbar';
 import {AdminNavigationBar} from './components/admin/admin_navigationBar';
 import Login from './components/login';
