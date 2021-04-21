@@ -298,8 +298,33 @@ async def update_one_lifestyle_profile(
 
     Require: Student-self or Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    if username == student_id:
+        permission_ok = True
+    if Access.is_admin_write(username):
+        permission_ok = True
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    data = dict(lifestyle_profile.dict())
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": {"preference_lifestyle": data}},
+            return_document=ReturnDocument.AFTER,
+        )
+        clean_dict(updated)
+    except Exception as e:
+        logger.error(MSG.DB_UPDATE_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.get("/{student_id}/events", response_model=List[Event])
