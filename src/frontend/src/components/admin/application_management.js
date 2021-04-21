@@ -1,9 +1,11 @@
-    import * as bs from "react-bootstrap";
+import * as bs from "react-bootstrap";
 import React from "react";
+import axios from "axios";
+import {url} from "../../functions/url";
 import {useHistory} from "react-router"
 import styled from "styled-components";
 import { makeStyles } from '@material-ui/core/styles';
-import {getSpecificApplicationInfo} from "../../functions/applicationforminfo";
+import {getSpecificApplicationInfo,approveApplication,rejectApplication,waitlistApplication} from "../../functions/applicationforminfo";
 import Paper from '@material-ui/core/Paper';
 import { InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
 import {
@@ -17,7 +19,8 @@ import {
 import { 
     getPersonalApplicationPeriodInfoJson,
     getSpecificApplicationInfoJson,
-    clearSpecificApplicationInfoJson
+    clearSpecificApplicationInfoJson,
+    getToken
 
 } from "../../functions/localstorage";
 import {notification} from "antd";
@@ -60,22 +63,32 @@ const useRowStyles = makeStyles({
     },
 });
 
+
 function Row(props){
     const {row} = props;
     const classes = useRowStyles();
     let history = useHistory();
+    console.log("roww");
+    console.log(props);
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
                 <TableCell>
                 </TableCell>
-                <TableCell component="th" scope="row">{row}</TableCell>
-                <TableCell align="left">{row}</TableCell>
-                <TableCell align="left">Room Offered</TableCell>
+                <TableCell component="th" scope="row">{row.student_id}</TableCell>
+                <TableCell align="left">{row.internal_status}</TableCell>
+                <TableCell align="left">
+                <button onClick={()=>{approveApplication(row.uid)}}>Approve</button>
+                <button onClick={()=>{rejectApplication(row.uid)}}>Reject</button>
+                <button onClick={()=>{waitlistApplication(row.uid)}}>Waitlist</button>
+                </TableCell>
+
             </TableRow>
         </React.Fragment>
     )
 };
+
+
 
 export default class ApplicationManagement extends React.Component{
     constructor(props){
@@ -84,7 +97,7 @@ export default class ApplicationManagement extends React.Component{
         this.createUI = this.createUI.bind(this);
         this.handleDropdown = this.handleDropdown.bind(this);
         this.handleApplicationForms = this.handleApplicationForms.bind(this);
-        
+        this.checkState = this.checkState.bind(this);
         this.state = {
             application_window_open:"",
             application_window_close:"",
@@ -94,10 +107,14 @@ export default class ApplicationManagement extends React.Component{
             application_forms_map : {
                 form1: {uid:"uid"}
             },
-            studentData: {
-                form1: {uid : "uid"}
-            }
+            studentData: [{
+                uid : "uid"
+            }],
+            update:false
         }
+    }
+    checkState(){
+        console.log(this.state);
     }
 
     componentDidMount(){
@@ -106,28 +123,7 @@ export default class ApplicationManagement extends React.Component{
                 this.setState(getPersonalApplicationPeriodInfoJson());
             });
         }
-        const fetchStudentData = async () => {
-            //console.log(getPersonalApplicationPeriodInfoJson().application_forms_map);
-            let studentApplication = [];
-            let data = this.state.application_forms_map;
-            for(const item in data){
-                //console.log(item);
-                //console.log(props[item]);
-                if(data[item]!=""){
-                    console.log(item);
-                    if(getSpecificApplicationInfoJson()!=undefined){
-                        studentApplication.push(getSpecificApplicationInfoJson());
-                    }
-                }
-            }
-            console.log(studentApplication);
-            this.setState({
-                studentData: studentApplication
-            })
-            console.log(this.state);
-        }
         fetchJSON();
-        fetchStudentData();
     }
 
     handleDelete() {
@@ -156,35 +152,35 @@ export default class ApplicationManagement extends React.Component{
         )
     }
 
-    handleApplicationForms(props){
+    
+    
+    handleApplicationForms(e){
         let studentApplication =[];
-        /*
+        let props = this.state.application_forms_map;
+        var count=0
         for(const item in props){
             //console.log(item);
-            //console.log(props[item]);
+            //console.log((props[item]));
             if(props[item]!=""){
-                console.log(item);
-                var data =getSpecificApplicationInfo(props[item]);
-                if(getSpecificApplicationInfoJson()!=undefined){
+                //console.log(props[item])
+                let data = getSpecificApplicationInfo(props[item]).then(value => {
+                    //console.log("here");
+                    //console.log(getSpecificApplicationInfoJson());
                     studentApplication.push(getSpecificApplicationInfoJson());
-                }
+                });
             }
         }
-        */
-       for(const item in props){
-           studentApplication.push(item);
-       }
+
         console.log(studentApplication);
         console.log("HDKJFHDSFJKDSHJFKSDHFJKD");
+        if(this.state.update==false){
+            this.setState({
+                studentData:studentApplication,
+                update:true
+            })
+        }
         
-        return (
-            <TableBody>
-                {studentApplication.map((row)=>(
-                <Row key={row} row={row}/>
-                ))} 
-            </TableBody> 
-        )
-         
+        
     }
 
 
@@ -221,17 +217,45 @@ export default class ApplicationManagement extends React.Component{
                                     <TableCell/>
                                     <TableCell align="left">Student name</TableCell>
                                     <TableCell align="left">Application Status</TableCell>
-                                    <TableCell align="left">Room Offered</TableCell>
+                                    <TableCell align="left">Actions</TableCell>
                                 </TableRow>
                             </TableHead>
+                            
+                            
+                            
+                            
+                            {console.log(this.state)}
+                            {this.handleApplicationForms(this.state.application_forms_map)}
+                            <TableBody>
+                                {this.state.studentData.map((row)=>(
+                                <Row key={row.student_id} row={row}/>
+                                ))} 
+                            </TableBody>
+                            {/*
+                            {console.log("hiuhih")}
+                            <StudentAppData appData={this.state.application_forms_map}/>
+                            
 
+                            {this.state.studentData.map((e)=>(
+                                console.log(e)
+                            ))}
+                            
+                            */
+                            }
+                            
+                                
                         </Table>
                     </TableContainer>
                 </EditBox>
                 <br/>
                 <Apply2BtnSet>
                     <bs.Container>
-                        <bs.Row> 
+                        <bs.Row>
+                            {/*
+                            <bs.Col><button type="button" onClick={this.checkState}>check state</button></bs.Col>
+                            */
+                            }
+                            
                             <bs.Col><button type="button" className="btn btn-outline-primary" onClick={this.handleDelete}>Delete Application Period</button></bs.Col>
                         </bs.Row>
                     </bs.Container>
