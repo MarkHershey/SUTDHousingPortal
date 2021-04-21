@@ -66,7 +66,7 @@ export default class RoomProfileEdit extends React.Component{
             this.state.near_to_lift,this.state.near_to_washroom,this.state.level_has_pantry,
             this.state.level_has_mr,this.state.level_has_gsr,this.state.level_has_rr,[1,2,3,4,5,6,7,8,9]
             );
-        this.props.history.push("/");
+        this.props.history.push("/profile");
     }
 
     render() {

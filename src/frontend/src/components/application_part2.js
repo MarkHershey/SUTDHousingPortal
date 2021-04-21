@@ -92,11 +92,7 @@ export default class ApplicationPartTwo extends React.Component {
         var uid = getPersonalApplicablePeriodUidInfoJson();
         var applicablePeriod = getPersonalApplicationPeriodInfoJson();
         this.props.history.push({
-            pathname: "/apply3",
-            state: {
-                application_period_uid: uid,
-                applicable_period : applicablePeriod
-            }
+            pathname: "/apply3"
         });
     }
 

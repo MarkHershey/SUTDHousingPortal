@@ -35,6 +35,7 @@ export default class LifeStyleProfileEdit extends React.Component{
     }
     lifestyleCallback(childData){
         this.state = childData;
+        console.log(this.state);
     }
     checkValidation(){
         var stateNames = Object.keys(this.state);
@@ -49,12 +50,13 @@ export default class LifeStyleProfileEdit extends React.Component{
     }
     handleSubmit(){
         if(this.checkValidation()){
-            console.log("submitted")
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
+            console.log("submitted");
+            console.log(this.state);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
-            this.props.history.push("/");
+            //this.props.history.push("/profile");
         } else {
             console.log("invalid");
         }

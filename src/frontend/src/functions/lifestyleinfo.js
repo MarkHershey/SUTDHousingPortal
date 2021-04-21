@@ -8,10 +8,11 @@ var like_social = 0;
 var like_clean = 0;
 var like_quiet =0;
 
-export async function updateLifestyleProfileInfo(bedtime,wakeup_time,like_social,
-    like_clean,like_quite){
-    var data = JSON.stringify({"bedtime":bedtime,"wakeup_time":wakeup_time,
-    "like_social":like_social,"like_clean":like_clean,"like_quite":like_quite});
+
+
+export async function updateLifestyleProfileInfo(sleep_time,wakeup_time,like_social,like_quiet,like_clean,diet,use_aircon,smoking){
+    var data = JSON.stringify({"sleep_time":sleep_time,"wakeup_time":wakeup_time,"like_social":like_social,"like_quiet":like_quiet,"like_clean":like_clean,
+    "diet":diet,"use_aircon":use_aircon,"smoking":smoking});
 
     var config = {
     method: 'put',
