@@ -269,7 +269,19 @@ async def register_students_for_event(
         logger.debug(MSG.permission_denied_msg(username))
         raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
 
-    # 0. validate student list first
+    # 0. find the event
+    try:
+        event_info = events_collection.find_one(filter={"uid": uid})
+        clean_dict(event_info)
+    except Exception as e:
+        logger.error(MSG.DB_UPDATE_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if not event_info:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
+
+    # 1. validate student list first
     validated_students = []
     for student_id in student_id_list:
         if not isinstance(student_id, str):
@@ -287,7 +299,15 @@ async def register_students_for_event(
             logger.error(e)
             raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
 
-    # 1. add them into event's sign up list
+    # 2. check sign up limit
+    num_validated_students = len(validated_students)
+    available_slots = event_info.get("signup_limit", 0) - len(
+        event_info.get("signups", [])
+    )
+    if num_validated_students > available_slots:
+        raise HTTPException(status_code=400, detail=MSG.NO_AVAILABLE_SLOTS)
+
+    # 3. add them into event's sign up list
     try:
         updated = events_collection.find_one_and_update(
             filter={"uid": uid},
@@ -305,7 +325,7 @@ async def register_students_for_event(
     else:
         clean_dict(updated)
 
-    # 2. add event uid to student registered event list
+    # 4. add event uid to student registered event list
     for student_id in validated_students:
         try:
             # NOTE: push operator
