@@ -14,6 +14,7 @@ import {
 import {url} from "./url";
 import axios from "axios";
 import {notification} from "antd";
+import {getCurrentStudentInfo} from "./studentinfo";
 
 export class Event{
     constructor(event_data){
@@ -147,6 +148,7 @@ export async function deleteEvent(uid){
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             window.location.reload(true);
         })
         .catch(function (error) {
@@ -172,6 +174,7 @@ export async function eventHandler(uid){
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             window.location.reload(true);
         })
         .catch(function (error) {
@@ -197,6 +200,7 @@ export async function updateAttendance(eventId){
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {

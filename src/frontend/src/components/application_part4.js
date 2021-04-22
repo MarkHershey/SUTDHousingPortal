@@ -94,7 +94,7 @@ export default class ApplicationFour extends React.Component {
                                         if (item === 6) return " Preferred Pantry Location";
                                         if (item === 7) return " Preferred Meeting Room Location";
                                         if (item === 8) return " Preferred Group Study Room Location";
-                                        if (item === 9) return " Preferred Meeting Room Location"
+                                        if (item === 9) return " Preferred Toilet Location"
                                     }
 
                                     return (
