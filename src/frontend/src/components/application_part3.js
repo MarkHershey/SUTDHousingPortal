@@ -60,8 +60,8 @@ export default class ApplicationThree extends React.Component{
         if(this.checkValidation()){
             console.log("saved");
             console.log("submitted");
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
         }
@@ -70,8 +70,8 @@ export default class ApplicationThree extends React.Component{
     handleSubmit(){
         if(this.checkValidation()){
             console.log("submitted");
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
             //const history = useHistory();
