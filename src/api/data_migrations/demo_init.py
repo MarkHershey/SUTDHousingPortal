@@ -89,7 +89,7 @@ def create_admin():
 ########################################################
 ## Create Students
 def create_students():
-    for i in range(30):
+    for i in range(31):
         student_id = 1000000 + i
         gender = choice(["male", "female"])
         first_name = names.get_first_name(gender=gender)
@@ -97,6 +97,8 @@ def create_students():
         email_sutd = f"{first_name.lower()}_{last_name.lower()}@mail.sutd.edu.sg"
         email_personal = f"{first_name.lower()}@gmail.com"
         sc_status = choice([True, False])
+        weightage_order = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        shuffle(weightage_order)
         data = {
             "username": str(student_id),
             "password": str(student_id),
@@ -130,7 +132,7 @@ def create_students():
                 "level_has_mr": choice((True, False)),
                 "level_has_gsr": choice((True, False)),
                 "level_has_rr": choice((True, False)),
-                "weightage_order": shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                "weightage_order": weightage_order,
             },
             "preference_lifestyle": {
                 "sleep_time": choice((21, 22, 23, 0, 1, 2, 3)),
@@ -145,42 +147,55 @@ def create_students():
                 "smoking": choice((True, False)),
             },
             "is_house_guardian": True if student_id == 1000000 else False,
-            "travel_time_hrs": uniform(0.0, 2.0),
+            "travel_time_hrs": round(uniform(0.0, 2.0), 2),
         }
         post_request(endpoint="/api/auth/register/student", data=data, token=None)
 
 
 ########################################################
 ## House Guardian Create Events
-def create_events():
-    for _ in range(30):
-        game = choice(
-            (
-                "Table Soccer",
-                "Darts",
-                "Board Game",
-                "Fortnite",
-                "Minecraft",
-                "Among Us",
-                "Animal Crossing",
-                "Cyberpunk",
-                "FIFA",
-                "2K21",
-                "The Sims",
-                "Overcooked",
-            )
-        )
-        startM = randint(4, 12)
+GAMES = (
+    "Table Soccer",
+    "Darts",
+    "Board Game",
+    "Fortnite",
+    "Minecraft",
+    "Among Us",
+    "Animal Crossing",
+    "Cyberpunk",
+    "FIFA",
+    "2K21",
+    "The Sims",
+    "Overcooked",
+    "League of Legends",
+    "Overwatch",
+    "Call of Duty",
+    "Mario Kart",
+    "Halo",
+)
+
+
+def create_events(year=2021, start_month=1, num=12):
+    games = []
+    if num <= len(GAMES):
+        games = sample(GAMES, num)
+    else:
+        while len(games) < num:
+            games.append(choice(GAMES))
+
+    shuffle(games)
+    for game in games:
+        startM = randint(start_month, 12)
         startD = randint(1, 28)
         startH = randint(15, 22)
         startMin = choice((0, 0, 30))
-        start_time = datetime(2021, startM, startD, startH, startMin)
+        start_time = datetime(year, startM, startD, startH, startMin)
         location = choice(("Hostel Rooftop", "Student Lounge", "Root Cove", "Zoom"))
         data = {
             "title": f"{game} {choice(('Night', 'Event', 'Meetup'))}",
             "event_type": choice(("IBE", "BE", "FE", "MEETUP")),
             "meetup_location": location,
-            "block": choice(("59", "57", "55", "ANY")),
+            "block": choice(("59", "57", "55")),
             "floor": str(randint(2, 12)),
             "description": f"Let us play {game} together at {location}, no experiences required, sign up and see you there!",
             "start_time": start_time.isoformat(),
@@ -194,6 +209,15 @@ def create_events():
 
 ########################################################
 ## Student Sign up Event
+def get_all_events_uid() -> List[str]:
+    uids = []
+    events: List[dict] = get_request(endpoint="/api/events/all", token=ADMIN_TOKEN)
+    for event in events:
+        if event.get("uid"):
+            uids.append(event.get("uid"))
+    return uids
+
+
 def get_upcoming_events_uid() -> List[str]:
     uids = []
     events: List[dict] = get_request(endpoint="/api/events/upcoming", token=ADMIN_TOKEN)
@@ -204,15 +228,24 @@ def get_upcoming_events_uid() -> List[str]:
 
 
 def signup_attend_events():
-    for event_uid in get_upcoming_events_uid():
+    for event_uid in get_all_events_uid():
         num_ppl = randint(3, 15)
         students: List[str] = sample(STUDENTS_IDS, num_ppl)
         post_request(
             endpoint=f"/api/events/{event_uid}/signup", data=students, token=ADMIN_TOKEN
         )
-        students: List[str] = sample(students, num_ppl - 2)
+        students: List[str] = sample(students, num_ppl - 1)
         post_request(
             endpoint=f"/api/events/{event_uid}/attend", data=students, token=ADMIN_TOKEN
+        )
+
+
+def signup_events():
+    for event_uid in get_upcoming_events_uid():
+        num_ppl = randint(3, 15)
+        students: List[str] = sample(STUDENTS_IDS, num_ppl)
+        post_request(
+            endpoint=f"/api/events/{event_uid}/signup", data=students, token=ADMIN_TOKEN
         )
 
 
@@ -264,26 +297,113 @@ def create_rooms():
 
 ########################################################
 ## Create Application Periods
+Applicable_Periods = [
+    {
+        "start_date": date.today().isoformat(),
+        "end_date": (date.today() + timedelta(days=30)).isoformat(),
+    },
+    {
+        "start_date": (date.today() + timedelta(days=30)).isoformat(),
+        "end_date": (date.today() + timedelta(days=60)).isoformat(),
+    },
+    {
+        "start_date": (date.today() + timedelta(days=60)).isoformat(),
+        "end_date": (date.today() + timedelta(days=90)).isoformat(),
+    },
+]
+DEMO_AP_UID = "AP_DEMO"
+
+
 def create_application_periods():
     data = {
+        "uid": DEMO_AP_UID,
         "application_window_open": datetime.now().isoformat(),
         "application_window_close": (datetime.now() + timedelta(days=30)).isoformat(),
-        "applicable_periods": [
-            {
-                "start_date": date.today().isoformat(),
-                "end_date": (date.today() + timedelta(days=30)).isoformat(),
-            }
-        ],
+        "applicable_periods": Applicable_Periods,
         "applicable_rooms": sample(ROOM_UIDs, int(len(ROOM_UIDs) * 0.3)),
         "applicable_students": STUDENTS_IDS,
     }
     post_request(endpoint=f"/api/application_periods/", data=data, token=ADMIN_TOKEN)
+    for _ in range(5):
+        rand_open = datetime.now() + timedelta(days=randint(0, 100))
+        rand_close = rand_open + timedelta(days=30)
+        data = {
+            "application_window_open": rand_open.isoformat(),
+            "application_window_close": rand_close.isoformat(),
+            "applicable_periods": [
+                {
+                    "start_date": (
+                        rand_close + timedelta(days=randint(30, 60))
+                    ).isoformat(),
+                    "end_date": (
+                        rand_close + timedelta(days=randint(90, 240))
+                    ).isoformat(),
+                },
+                {
+                    "start_date": (
+                        rand_close + timedelta(days=randint(30, 60))
+                    ).isoformat(),
+                    "end_date": (
+                        rand_close + timedelta(days=randint(90, 240))
+                    ).isoformat(),
+                },
+                {
+                    "start_date": (
+                        rand_close + timedelta(days=randint(30, 60))
+                    ).isoformat(),
+                    "end_date": (
+                        rand_close + timedelta(days=randint(90, 240))
+                    ).isoformat(),
+                },
+            ],
+            "applicable_rooms": sample(ROOM_UIDs, int(len(ROOM_UIDs) * 0.1)),
+            "applicable_students": sample(STUDENTS_IDS, int(len(STUDENTS_IDS) * 0.4)),
+        }
+        post_request(
+            endpoint=f"/api/application_periods/", data=data, token=ADMIN_TOKEN
+        )
 
 
 ########################################################
 ## Create Application
+def create_applications():
+    for student_id in STUDENTS_IDS:
+        weightage_order = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        shuffle(weightage_order)
+        data = {
+            "application_period_uid": DEMO_AP_UID,
+            "student_id": student_id,
+            "room_profile": {
+                "room_type": choice(("DOUBLE", "SINGLE", "SINGLE_ENSUITE")),
+                "room_type_2nd": choice(("DOUBLE", "SINGLE", "SINGLE_ENSUITE")),
+                "block": choice(("59", "57", "55", "ANY")),
+                "block_2nd": choice(("59", "57", "55", "ANY")),
+                "level_range": choice(("UPPER", "MIDDLE", "LOWER", "ANY")),
+                "window_facing": choice(("CAMPUS", "AIRPORT", "BUILDING", "ANY")),
+                "near_to_lift": choice((True, False)),
+                "near_to_washroom": choice((True, False)),
+                "level_has_pantry": choice((True, False)),
+                "level_has_mr": choice((True, False)),
+                "level_has_gsr": choice((True, False)),
+                "level_has_rr": choice((True, False)),
+                "weightage_order": weightage_order,
+            },
+            "lifestyle_profile": {
+                "sleep_time": choice((21, 22, 23, 0, 1, 2, 3)),
+                "wakeup_time": choice((5, 6, 7, 8, 9, 10, 11)),
+                "like_social": randint(0, 10),
+                "like_quiet": randint(0, 10),
+                "like_clean": randint(0, 10),
+                "diet": choice(
+                    ("Standard", "Vegetarian", "Vegan", "Raw", "No Sugar", "Halal")
+                ),
+                "use_aircon": choice((True, False)),
+                "smoking": choice((True, False)),
+            },
+            "stay_period": choice(Applicable_Periods),
+        }
+        post_request(endpoint=f"/api/applications/", data=data, token=ADMIN_TOKEN)
 
-## TODO
 
 if __name__ == "__main__":
     ### Drop collections
@@ -300,8 +420,12 @@ if __name__ == "__main__":
     create_admin()
     create_students()
     init_tokens()
-    create_events()
+    create_events(year=2019, start_month=1, num=12)
+    create_events(year=2020, start_month=1, num=12)
     signup_attend_events()
+    create_events(year=2021, start_month=5, num=8)
+    signup_events()
     create_disciplinary_records()
     create_rooms()
     create_application_periods()
+    create_applications()
