@@ -175,7 +175,6 @@ export async function eventHandler(uid){
     await axios(config)
         .then(function (response) {
             getCurrentStudentInfo();
-            window.location.reload(true);
         })
         .catch(function (error) {
             console.log(error);
@@ -220,6 +219,7 @@ export async function updateAttendance(eventId){
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
@@ -251,6 +251,7 @@ export async function editEvent(uid,title,event_type,meetup_location,
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             console.log(JSON.stringify(response.data));
             window.location.href="/event";
         })

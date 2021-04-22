@@ -127,13 +127,13 @@ function Row(props) {
 export default class Events extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {events: []};
+        this.state = {events: [], attended: 0, registered: 0};
     }
 
     componentDidMount() {
         const fetchJSON = async () =>{
             getPersonalEventInfo().then(r=>{
-                this.setState({events: getPersonalEventInfoJson()});
+                this.setState({events: getPersonalEventInfoJson(), registered: getUserInfoJson().registered_events.length, attended: getUserInfoJson().attended_events.length});
                 console.log("Personal Event Info JSON:");
                 console.log(getPersonalEventInfoJson());
             });

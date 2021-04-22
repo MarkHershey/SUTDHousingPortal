@@ -68,13 +68,13 @@ export default class SummaryData extends React.Component{
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Disciplinary Record:</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.disciplinary_records}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.disciplinary_records.length}</Answer></bs.Col>
                         <bs.Col><Field>Housing Event:</Field></bs.Col>
-                        <bs.Col><Answer>{this.state.attended_events}</Answer></bs.Col>
+                        <bs.Col><Answer>{this.state.attended_events.length}</Answer></bs.Col>
                     </bs.Row>
                     <bs.Row>
                         <bs.Col><Field>Address: </Field></bs.Col>
-                        <bs.Col><Answer>{this.state.local_addr_street+'\n'}+{this.state.local_addr_unit}
+                        <bs.Col><Answer>{this.state.local_addr_street+'\n' + this.state.local_addr_unit}
                         , Singapore {this.state.local_addr_post_code}</Answer></bs.Col>
                         <bs.Col><Field>Current Term:</Field></bs.Col>
                         <bs.Col><Answer>Term 5</Answer></bs.Col>
@@ -83,11 +83,11 @@ export default class SummaryData extends React.Component{
                     <h4>Room Preference</h4>
                     <br/>
                     <bs.Row>
-                        <bs.Col><Field>Prefered Block</Field></bs.Col>
+                        <bs.Col><Field>Preferred Block</Field></bs.Col>
                         <bs.Col><Answer>{this.state.preference_room.block == "55" ? "Block 55":
                         this.state.preference_room.block == "57" ? "Block 57":
                         this.state.preference_room.block == "59" ? "Block 59": "Any"  }</Answer></bs.Col>
-                        <bs.Col><Field>Prefered Level</Field></bs.Col>
+                        <bs.Col><Field>Preferred Level</Field></bs.Col>
                         <bs.Col><Answer>{this.state.preference_room.level_range == "LOWER" ? "Low Level(L1-L4)":
                         this.state.preference_room.level_range == "MIDDLE" ? "Medium Level(L5-L7)":
                         this.state.preference_room.level_range == "UPPER" ? "High Level(L8-L12)": "Any" }</Answer></bs.Col>

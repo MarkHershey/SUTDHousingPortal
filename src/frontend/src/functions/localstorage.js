@@ -262,6 +262,8 @@ export function getApplicationStatusJson(){
     return JSON.parse(storage["ApplicationStatusJson"]);
 }
 
+
+
 export function getSpecificApplicationInfoJson(){
     if(storage["specificApplicationInfoJson"]==undefined) return undefined;
     return JSON.parse(storage["specificApplicationInfoJson"]);
@@ -279,6 +281,7 @@ export function clearSpecificApplicationInfoJson(){
 
 
 export function logout(){
+    localStorage.clear();
     clearToken();
     clearEventInfoJson();
     clearUserInfoJson();

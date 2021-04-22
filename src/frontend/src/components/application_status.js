@@ -4,6 +4,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
 import {getApplicationStatusJson} from "../functions/localstorage";
 import {accept, getApplicationInfo} from "../functions/applicationstatusinfo";
+import {Button, Result} from "antd";
 
 const ApplicationBox = styled.div`
   background-color: #F3F6FA;
@@ -45,7 +46,7 @@ export default class ApplicationStatus extends React.Component {
                     block: "",
                     block_2nd: "",
                 },
-                visible_status:"",
+                visible_status:"not found",
                 stay_period: {start_date: "", end_date: ""},
 
             }};
@@ -54,13 +55,26 @@ export default class ApplicationStatus extends React.Component {
     componentDidMount() {
         const fetchJSON = async () =>{
             getApplicationInfo().then(r=>{
-                this.setState({application: getApplicationStatusJson()});
+
+                if (getApplicationStatusJson() !== undefined)
+                    this.setState({application: getApplicationStatusJson()});
             });
         }
         fetchJSON();
     }
 
     render() {
+        if (getApplicationStatusJson() === undefined)
+            return (
+                <Result
+                    title="You haven't apply any applications!"
+                    extra={
+                        <Button type="primary" key="console" href="/apply0">
+                            Create a new room application
+                        </Button>
+                    }
+                />
+            )
         return (
             <ApplicationDiv>
                 <h3>Application Status</h3>

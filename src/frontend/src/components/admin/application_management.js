@@ -117,7 +117,7 @@ function Row(props) {
                                             Room Type 2
                                         </bs.Col>
                                         <bs.Col lg={3}>
-                                            {row.room_profile.room_type_2nd}
+                                            {row.room_profile.room_type_2nd === "SINGLE_ENSUITE"? "ENSUITE" : row.room_profile.room_type}
                                         </bs.Col>
                                     </bs.Row>
 

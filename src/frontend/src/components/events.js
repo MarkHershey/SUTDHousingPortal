@@ -37,6 +37,7 @@ import {useHistory} from "react-router";
 import "../functions/utilities"
 import {DatePicker} from "antd";
 import {DownOutlined, UpOutlined} from "@ant-design/icons";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 
 
 const useRowStyles = makeStyles({
@@ -93,6 +94,7 @@ async function quitEventHandler(event_id) {
 
     await axios(config)
         .then(function (response) {
+            getCurrentStudentInfo();
             window.location.reload(true);
         })
         .catch(function (error) {
@@ -164,7 +166,7 @@ function Row(props) {
                 <TableCell align="right">
                     <button type="button" class="btn btn-outline-primary"
                             onClick={async () => {
-                                await eventHandler(row.uid)
+                                await eventHandler(row.uid);
                             }}
                             disabled={joined(row)}
                             id={row.title + "-join-status"}>{joined(row) ? "Signed Up" : "Join Now!"}</button>

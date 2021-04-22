@@ -84,7 +84,6 @@ export default class ApplicationFour extends React.Component {
                                 dataSource={this.state.weightage_order}
                                 renderItem={item => {
                                     const draggble = true;
-
                                     function getTitle(item) {
                                         if (item === 1) return " Preferred Block Location";
                                         if (item === 2) return " Preferred Level Range";
