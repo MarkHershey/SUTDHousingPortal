@@ -71,8 +71,20 @@ class EventTest(unittest.TestCase):
 
         # Admin go to view application
 
-        # Admin 
+        # Admin view student's application
 
+        # Admin accept student's application
 
+        # Admin logout
+
+        # Student login
+
+        # Student accept offer
+
+        # Student logout
+
+        # Admin login
+
+        # Admin see the change
 
         driver.quit()
