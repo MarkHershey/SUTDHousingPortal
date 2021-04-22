@@ -196,7 +196,7 @@ export default class SummaryData extends React.Component{
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
                         id="aircon_slider"
-                        defaultValue={this.state.preference_lifestyle.use_aircon ===0 ? false : true}
+                        defaultValue={this.state.preference_lifestyle.use_aircon === false ? 0 : this.state.preference_lifestyle.use_aircon === true ? 1 : 0}
                         aria-labelledby="aircon-slider"
                         step={1}
                         marks
@@ -216,7 +216,7 @@ export default class SummaryData extends React.Component{
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
                         id="smokes_slider"
-                        defaultValue={this.state.preference_lifestyle.smoking === 0 ? false :true}
+                        defaultValue={this.state.preference_lifestyle.smoking === false ? 0 : this.state.preference_lifestyle.smoking === true ? 1 : 0}
                         aria-labelledby="smokes-slider"
                         step={1}
                         marks
