@@ -8,8 +8,8 @@ from function import *
 class ProfileTest(unittest.TestCase):
     def test_edit_profile_all(self):
         driver.get(url)
-        input_text(driver, "text", "1004515")
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", "100000")
+        input_text(driver, "password", "100000")
         click_btn(driver, "loginbtn")
         time.sleep(1)
         driver.get(url + "/profile")
@@ -32,8 +32,8 @@ class ProfileTest(unittest.TestCase):
         # Logout and Re-login
         click_btn(driver, "logout")
         time.sleep(1)
-        input_text(driver, "text", "1004515")
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", "1000000")
+        input_text(driver, "password", "1000000")
         time.sleep(1)
         click_btn(driver, "loginbtn")
         time.sleep(1)
@@ -47,8 +47,8 @@ class ProfileTest(unittest.TestCase):
 
     def test_edit_profile_one(self):
         driver.get(url)
-        input_text(driver, "text", "1004515")
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", "1000000")
+        input_text(driver, "password", "1000000")
         click_btn(driver, "loginbtn")
         time.sleep(1)
         driver.get(url + "/profile")
@@ -63,8 +63,8 @@ class ProfileTest(unittest.TestCase):
         # Logout and Re-login
         click_btn(driver, "logout")
         time.sleep(1)
-        input_text(driver, "text", "1004515")
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", "1000000")
+        input_text(driver, "password", "1000000")
         time.sleep(1)
         click_btn(driver, "loginbtn")
         time.sleep(1)

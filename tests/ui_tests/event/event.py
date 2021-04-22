@@ -11,10 +11,10 @@ class EventTest(unittest.TestCase):
     def test_event_normal_workflow(self):
         # Login
         print("login")
-        usrname = "1004515"
+        usrname = "1000000"
         driver.get(url)
         input_text(driver, "text", usrname)
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "password", "1000000")
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
