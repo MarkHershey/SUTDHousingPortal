@@ -146,7 +146,7 @@ def create_students():
                 "use_aircon": choice((True, False)),
                 "smoking": choice((True, False)),
             },
-            "is_house_guardian": True if student_id == 1000000 else False,
+            "is_house_guardian": True if student_id <= 1000005 else False,
             "travel_time_hrs": round(uniform(0.0, 2.0), 2),
         }
         post_request(endpoint="/api/auth/register/student", data=data, token=None)
