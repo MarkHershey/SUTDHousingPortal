@@ -49,12 +49,16 @@ def validate_new_application(
         logger.info(
             f"Ineligible Student({student_id}) attempted submitting application to ApplicationPeriod({target_AP_uid})"
         )
-        return False
+        # NOTE: this restriction is temporarily relaxed
+        logger.info(f"Restriction temporarily relaxed")
+        # return False
     if application_forms_map[student_id] != "":
         logger.info(
             f"Illegal second submission by Student({student_id}) to ApplicationPeriod({target_AP_uid})"
         )
-        return False
+        # NOTE: this restriction is temporarily relaxed
+        logger.info(f"Restriction temporarily relaxed")
+        # return False
 
     u_start_date = stay_period.start_date
     u_end_date = stay_period.end_date
