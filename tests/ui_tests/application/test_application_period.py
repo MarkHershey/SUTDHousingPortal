@@ -47,13 +47,24 @@ class EventTest(unittest.TestCase):
 
         # Student Submit application form
         print("Student submit application form")
-
+        driver.get(url+ "/apply0")
+        window_open = "2021-04-20T05:00:00.666+00:00"
+        window_close = "2021-06-20T07:00:00.666+00:00"
+        
+        click_btn(driver,"expand_row_button"+window_open+window_close)
+        click_btn(driver,"next"+window_open+window_close)
+        
+        click_btn(driver,"application1_next_btn")
+        click_btn(driver,"application2_next_btn")
+        click_btn(driver,"application3_next_btn")
+        click_btn(driver,"application4_next_btn")
+        click_btn(driver,"submit_application_btn")
 
 
 
 
         # Student check status(submitted)
-
+        driver.get(url+"/application_status")
         # Student logout
 
         # Admin login

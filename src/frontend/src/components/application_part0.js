@@ -76,7 +76,7 @@ function CreateUI(props,uid){
                     <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
+                    <bs.Col lg={3}><Button id={"next"+el.start_date+el.end_date} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
                         setPersonalApplicationPeriodInfoJson(el);
@@ -101,7 +101,7 @@ function Row(props) {
         <React.Fragment>
             <TableRow className={classes.root}>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton id={"expand_row_button"+row.application_window_open+row.application_window_close} aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
