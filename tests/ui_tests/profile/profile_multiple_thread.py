@@ -4,8 +4,8 @@ from function import *
 class ProfileTestMultipleThread(unittest.TestCase):
     def test_edit_profile_multiple_users(self):
         users = []
-        users.append(TestThread("1000000", "1000000"))
-        users.append(TestThread("1000001", "1000001"))
+        users.append(TestThread(student_username, student_password))
+        users.append(TestThread(student_username_ms, student_password_ms))
 
         for user in users:
             user.start()
@@ -59,3 +59,4 @@ class TestThread(threading.Thread):
         assert(get_text(driver_, "ppl_prof_address_display") == street + " " + unit + " " + postcode)
         click_btn(driver_, "logout")
         time.sleep(1)
+        driver_.quit()

@@ -1,7 +1,4 @@
 # Front End Testing
-from datetime import datetime, timedelta
-
-from datetime_selenium import send_datetime
 
 from function import *
 
@@ -11,10 +8,9 @@ class EventTest(unittest.TestCase):
     def test_event_normal_workflow(self):
         # Login
         print("login")
-        usrname = "1000000"
         driver.get(url)
-        input_text(driver, "text", usrname)
-        input_text(driver, "password", "1000000")
+        input_text(driver, "text", HG_username)
+        input_text(driver, "password", HG_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
@@ -45,7 +41,7 @@ class EventTest(unittest.TestCase):
         if not count_attendance: click_btn(driver, "event_count_attendance")
         time.sleep(1)
         click_btn(driver, "create_event_btn")
-
+        time.sleep(1)
         # Check whether the event is here
         print("check event")
         driver.get(url + "/event")
@@ -58,7 +54,7 @@ class EventTest(unittest.TestCase):
         self.assertEqual(str(duration_mins) + "mins", get_text(driver, title + "-duration"))
         self.assertEqual(str(meetup_location), get_text(driver, title + "-location"))
         self.assertEqual(str(signup_limit), get_text(driver, title + "-signup-limit"))
-        self.assertEqual(usrname, get_text(driver, title + "-held-by"))
+        self.assertEqual(HG_username, get_text(driver, title + "-held-by"))
         self.assertEqual("Yes" if count_attendance else "No", get_text(driver, title + "-count-attendance"))
 
         # Join event
@@ -95,13 +91,13 @@ class EventTest(unittest.TestCase):
         self.assertEqual(str(duration_mins) + "mins", get_text(driver, title + "-duration"))
         self.assertEqual(str(meetup_location), get_text(driver, title + "-location"))
         self.assertEqual(str(signup_limit), get_text(driver, title + "-signup-limit"))
-        self.assertEqual(usrname, get_text(driver, title + "-held-by"))
+        self.assertEqual(HG_username, get_text(driver, title + "-held-by"))
         self.assertEqual("Yes" if count_attendance else "No", get_text(driver, title + "-count-attendance"))
 
         # Take attendance
         print("take attendance")
         click_btn(driver, title + "-take-attendance")
-        click_btn(driver, usrname + "-mark")
+        click_btn(driver, HG_username + "-mark")
         click_btn(driver, title + "update-attendance")
 
         # Cancel attendance
@@ -110,7 +106,7 @@ class EventTest(unittest.TestCase):
         time.sleep(1)
         click_btn(driver, title + "-drop-down")
         click_btn(driver, title + "-take-attendance")
-        click_btn(driver, usrname + "-mark")
+        click_btn(driver, HG_username + "-mark")
         click_btn(driver, title + "update-attendance")
 
         # Quit event

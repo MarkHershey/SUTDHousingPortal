@@ -39,7 +39,9 @@ class DisciplinaryRecordTest(unittest.TestCase):
 
         # Edit Disciplinary Record
         print("Edit disciplinary record")
+        time.sleep(1)
         click_btn(driver, id + description + "_view_individual_btn")
+        time.sleep(1)
         click_btn(driver, "edit_disciplinary_record_btn")
 
         description = ''.join(
@@ -62,5 +64,6 @@ class DisciplinaryRecordTest(unittest.TestCase):
         # delete the record
         print("Deleting record")
         click_btn(driver, id + description + "_view_individual_btn")
+        time.sleep(1)
         click_btn(driver, "delete_disciplinary_record_btn")
         driver.quit()

@@ -1,4 +1,3 @@
-from selenium.common.exceptions import UnexpectedAlertPresentException
 from function import *
 
 
@@ -7,39 +6,42 @@ class LoginTest(unittest.TestCase):
 
     def test_login_normal_admin(self):
         # login normal
-        input_text(driver, "text", "admin")
-        input_text(driver, "password", "pass1234")
+        driver.get(url)
+        input_text(driver, "text", admin_username)
+        input_text(driver, "password", admin_password)
         time.sleep(2)
         click_btn(driver, "loginbtn")
         time.sleep(2)
-        self.assertEqual(driver.current_url, "http://localhost:3000/")
+        self.assertEqual(driver.current_url, url + "/")
         # logout
-        click_btn(driver, "adminlogout")
+        driver.get(url + "/login")
         time.sleep(1)
-        self.assertEqual(driver.current_url, "http://localhost:3000/login")
+        self.assertEqual(driver.current_url, url + "/login")
         time.sleep(1)
 
     def test_login_normal_student(self):
         # login normal
-        input_text(driver, "text", "1000001")
-        input_text(driver, "password", "1000001")
+        driver.get(url)
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_username)
         time.sleep(2)
         click_btn(driver, "loginbtn")
         time.sleep(2)
-        self.assertEqual(driver.current_url, "http://localhost:3000/")
+        self.assertEqual(driver.current_url, url + "/")
         # logout
-        click_btn(driver, "logout")
+        driver.get(url + "/login")
         time.sleep(1)
-        self.assertEqual(driver.current_url, "http://localhost:3000/login")
+        self.assertEqual(driver.current_url, url + "/login")
         time.sleep(1)
 
     def test_login_abnormal(self):
         # login abnormally
-        input_text(driver, "text", "1000001")
+        driver.get(url)
+        input_text(driver, "text", student_username)
         input_text(driver, "password", "hahahawrongpswd")
         click_btn(driver, "loginbtn")
         time.sleep(5)
-        self.assertNotEqual(driver.current_url, "http://localhost:3000/")
+        self.assertNotEqual(driver.current_url, url + "/")
         time.sleep(1)
 
     def test_login_guard(self):
@@ -50,17 +52,23 @@ class LoginTest(unittest.TestCase):
         self.assertTrue(test_guard_after_logout("profile_edit"))
         self.assertTrue(test_guard_after_logout("room_profile_edit"))
         self.assertTrue(test_guard_after_logout("lifestyle_profile_edit"))
-        self.assertTrue(test_guard_after_logout("apply"))
+        self.assertTrue(test_guard_after_logout("apply0"))
+        self.assertTrue(test_guard_after_logout("apply1"))
         self.assertTrue(test_guard_after_logout("apply2"))
         self.assertTrue(test_guard_after_logout("apply3"))
+        self.assertTrue(test_guard_after_logout("apply4"))
         self.assertTrue(test_guard_after_logout("application_summary"))
         self.assertTrue(test_guard_after_logout("event_creation"))
         self.assertTrue(test_guard_after_logout("application_status"))
 
+    def test_404(self):
+        driver.get(url + "/I_am_not_a_valid_path")
+        self.assertEqual(driver.current_url, url + "/404")
+
 # trying tp go to an forbidden page after logout
 def test_guard_after_logout(router_name):
-    driver.get("http://localhost:3000/" + router_name)
+    driver.get(url + "/" + router_name)
     time.sleep(0.1)
-    if driver.current_url != "http://localhost:3000/login":
+    if driver.current_url != url + "/login":
         return False
     return True

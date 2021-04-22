@@ -142,7 +142,7 @@ function Row(props) {
                     <button type="button" class="btn btn-outline-primary"
                             onClick={async () => {
                                 await eventHandler(row.uid);
-                                history.push("/event_history");
+                                history.push("/");
                                 history.push("/event")
                             }}
                             disabled={joined(row)}
@@ -197,7 +197,7 @@ function Row(props) {
                                     <button type="button" className="btn btn-outline-dark" id={row.title + "-quit"}
                                             onClick={async () => {
                                                 await quitEventHandler(row.uid);
-                                                history.push("/event_history");
+                                                history.push("/");
                                                 history.push("/event")
                                             }}
                                             disabled={!joined(row)}>Quit Event

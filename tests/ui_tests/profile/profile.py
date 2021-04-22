@@ -1,15 +1,11 @@
-import string
-import threading
-import pytest
-
 from function import *
 
 
 class ProfileTest(unittest.TestCase):
     def test_edit_profile_all(self):
         driver.get(url)
-        input_text(driver, "text", "100000")
-        input_text(driver, "password", "100000")
+        input_text(driver, "text",  student_username)
+        input_text(driver, "password", student_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
         driver.get(url + "/profile")
@@ -21,7 +17,7 @@ class ProfileTest(unittest.TestCase):
         postcode = str(random.randint(100000, 999999))
         street = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
         unit = str(random.randint(10, 99)) + "-" + str(random.randint(10, 99))
-        input_text(driver, "ppl_prof_roommate", "1004522")
+        input_text(driver, "ppl_prof_roommate", "1000001")
         input_text(driver, "phone_number", phone_num)
         input_text(driver, "ppl_prof_email", email)
         input_text(driver, "ppl_prof_local_addr_post_code", postcode)
@@ -30,10 +26,10 @@ class ProfileTest(unittest.TestCase):
         time.sleep(1)
         click_btn(driver, "ppl_prof_submit")
         # Logout and Re-login
-        click_btn(driver, "logout")
+        driver.get(url + "/login")
         time.sleep(1)
-        input_text(driver, "text", "1000000")
-        input_text(driver, "password", "1000000")
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_password)
         time.sleep(1)
         click_btn(driver, "loginbtn")
         time.sleep(1)
@@ -42,13 +38,13 @@ class ProfileTest(unittest.TestCase):
         time.sleep(5)
         self.assertEqual(get_text(driver, "ppl_prof_phone_number_display"), str(phone_num))
         self.assertEqual(get_text(driver, "ppl_prof_address_display"), street + " " + unit + " " + postcode)
-        click_btn(driver, "logout")
+        driver.get(url + "/login")
         time.sleep(1)
 
     def test_edit_profile_one(self):
         driver.get(url)
-        input_text(driver, "text", "1000000")
-        input_text(driver, "password", "1000000")
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
         driver.get(url + "/profile")
@@ -61,15 +57,15 @@ class ProfileTest(unittest.TestCase):
         click_btn(driver, "ppl_prof_submit")
 
         # Logout and Re-login
-        click_btn(driver, "logout")
+        driver.get(url + "/login")
         time.sleep(1)
-        input_text(driver, "text", "1000000")
-        input_text(driver, "password", "1000000")
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_password)
         time.sleep(1)
         click_btn(driver, "loginbtn")
         time.sleep(1)
         driver.get(url + "/profile")
         self.assertEqual(get_text(driver, "ppl_prof_phone_number_display"), str(phone_num))
-        click_btn(driver, "logout")
+        driver.get(url + "/login")
         time.sleep(1)
 

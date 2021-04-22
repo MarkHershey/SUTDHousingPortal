@@ -131,7 +131,7 @@ export default class ApplicationStatus extends React.Component {
                         <br/>
                         <Row>
                             <Col lg={3}><Field>{"Roommate-To-Be:"}</Field></Col>
-                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Ziqi Jin"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Marry Keith"}</Col>
                             <Col lg={3}><Field>{"Move-Out Date:"}</Field></Col>
                             <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"01/10/2021 11:00AM"}</Col>
                         </Row>
