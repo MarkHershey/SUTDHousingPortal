@@ -1,5 +1,6 @@
 # project-specifc secrete
 db_secrete.py
+db_config.conf
 
 # IDE configs
 .vscode
