@@ -57,7 +57,6 @@ class Event(BaseModel):
                 v = str(int(v))
             except:
                 pass
-
         if isinstance(v, str) and v.upper() in (
             "2",
             "3",
@@ -78,6 +77,11 @@ class Event(BaseModel):
 
     @validator("duration_mins", pre=True, always=True)
     def validate_duration_mins(cls, v):
+        if isinstance(v, str):
+            try:
+                v = int(v)
+            except:
+                pass
         if isinstance(v, int) and v > 0:
             return v
         else:
@@ -85,6 +89,11 @@ class Event(BaseModel):
 
     @validator("signup_limit", pre=True, always=True)
     def validate_signup_limit(cls, v):
+        if isinstance(v, str):
+            try:
+                v = int(v)
+            except:
+                pass
         if isinstance(v, int) and 0 < v <= 300:
             return v
         else:

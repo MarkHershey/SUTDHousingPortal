@@ -30,6 +30,46 @@ class TestLifestyleProfileCreation(unittest.TestCase):
         self.assertTrue(lifestyle_profile.use_aircon == True)
         self.assertTrue(lifestyle_profile.smoking == False)
 
+    def test_creation_with_string_int(self):
+        lifestyle_profile = LifestyleProfile(
+            sleep_time="23",
+            wakeup_time="9",
+            like_social="5",
+            like_quiet="5",
+            like_clean="5",
+            diet="Vegetarian",
+            use_aircon=True,
+            smoking=False,
+        )
+        self.assertTrue(lifestyle_profile.sleep_time == 23)
+        self.assertTrue(lifestyle_profile.wakeup_time == 9)
+        self.assertTrue(lifestyle_profile.like_social == 5)
+        self.assertTrue(lifestyle_profile.like_quiet == 5)
+        self.assertTrue(lifestyle_profile.like_clean == 5)
+        self.assertTrue(lifestyle_profile.diet == "Vegetarian")
+        self.assertTrue(lifestyle_profile.use_aircon == True)
+        self.assertTrue(lifestyle_profile.smoking == False)
+
+    def test_creation_with_invalid_string(self):
+        lifestyle_profile = LifestyleProfile(
+            sleep_time="xx",
+            wakeup_time="xx",
+            like_social="xx",
+            like_quiet="xx",
+            like_clean="xx",
+            diet="Vegetarian",
+            use_aircon=True,
+            smoking=False,
+        )
+        self.assertTrue(lifestyle_profile.sleep_time is None)
+        self.assertTrue(lifestyle_profile.wakeup_time is None)
+        self.assertTrue(lifestyle_profile.like_social == 5)
+        self.assertTrue(lifestyle_profile.like_quiet == 5)
+        self.assertTrue(lifestyle_profile.like_clean == 5)
+        self.assertTrue(lifestyle_profile.diet == "Vegetarian")
+        self.assertTrue(lifestyle_profile.use_aircon == True)
+        self.assertTrue(lifestyle_profile.smoking == False)
+
     def test_creation_with_out_of_range_data(self):
         lifestyle_profile = LifestyleProfile(
             sleep_time=8,
