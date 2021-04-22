@@ -39,7 +39,7 @@ export default class LifeStyleProfileEdit extends React.Component{
         var stateNames = Object.keys(this.state);
         var stateValues = Object.values(this.state);
         for(var i=0;i<stateNames.length;i++){
-            if(stateValues==""){
+            if(stateValues===""){
                 console.log("ffailed");
                 return false;
             }
@@ -52,8 +52,6 @@ export default class LifeStyleProfileEdit extends React.Component{
             console.log(this.state);
             updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
                 this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
-            getCurrentStudentInfo();
-            this.state = getUserInfoJson().preference_lifestyle;
             this.props.history.push("/profile");
         } else {
             console.log("invalid");

@@ -1,7 +1,8 @@
-import {checkValidity, getToken, getUsername} from "./localstorage";
+import {checkValidity, getToken, getUsername, setUserInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
 import {getCurrentStudentInfo} from "./studentinfo";
+import {notification} from "antd";
 
 export var phone_number = "string";
 export var email_personal = "";
@@ -30,11 +31,18 @@ export async function updateStudentProfileInfo(phone_number,
     };
 
     await axios(config)
-    .then(function (response) {
-       console.log(JSON.stringify(response.data));
-       getCurrentStudentInfo();
-    })
-    .catch(function (error) {
-       console.log(error);
-    });
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            setUserInfoJson(response.data);
+            notification.success({
+                message: 'Profile Edited!',
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            notification.error({
+                message: 'Profile Edition Failed',
+                description: 'Please try again'
+            });
+        });
 }

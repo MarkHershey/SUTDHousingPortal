@@ -1,6 +1,7 @@
-import {getToken, getUsername} from "./localstorage";
+import {getToken, getUsername, setUserInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
+import {notification} from "antd";
 
 var bedtime = 0;
 var wakeup_time = 0;
@@ -26,10 +27,18 @@ export async function updateLifestyleProfileInfo(sleep_time,wakeup_time,like_soc
     };
 
     await axios(config)
-    .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-    console.log(error);
-    });
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            setUserInfoJson(response.data);
+            notification.success({
+                message: 'Profile Edited!',
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            notification.error({
+                message: 'Profile Edition Failed',
+                description: 'Please try again'
+            });
+        });
 }

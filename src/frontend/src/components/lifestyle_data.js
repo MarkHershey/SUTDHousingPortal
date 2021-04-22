@@ -272,7 +272,7 @@ export default class LifestyleData extends React.Component {
                         <bs.Col>
                             <Field >Diet</Field>
                             <input id="lifestyle_diet" name="diet" placeholder={this.state.diet}
-                             onChange={(e)=>this.handleChange("diet",e.target.value)}></input>
+                             onChange={(e)=>this.handleChange("diet",e.target.value)}/>
                         </bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
