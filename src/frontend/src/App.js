@@ -1,6 +1,6 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {NavigationBar} from './components/navbar';
 import {AdminNavigationBar} from './components/admin/admin_navigationBar';
 import Login from './components/login';
@@ -18,7 +18,7 @@ import EventCreation from "./components/event_creation";
 import ApplicationStatus from "./components/application_status";
 import ApplicationSummary from "./components/application_part5";
 import React from 'react';
-import {checkValidity, isAdmin} from "./variables/localstorage";
+import {checkValidity, isAdmin} from "./functions/localstorage";
 import LifeStyleProfileEdit from './components/lifestyle_profile_edit';
 import EventEdit from './components/event_edit';
 import ApplicationCreation from './components/admin/application_creation';
@@ -31,6 +31,7 @@ import ViewAllDisciplinaryRecord from './components/admin/view_all_disciplinary_
 import ViewIndividualDisciplinaryRecord from './components/admin/disciplinary_record_view_individual';
 import EditDisciplinaryRecord from './components/admin/disciplinary_record_edit';
 import ApplicationFour from "./components/application_part4";
+import {Button, Result} from "antd";
 
 function App() {
     const GuardedRoute = ({component: Component, auth, ...rest}) => (
@@ -40,6 +41,22 @@ function App() {
                 : <Redirect to='/login'/>
         )}/>
     )
+
+    function NotFoundPage() {
+        return(
+            <div>
+                <br/>
+                <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Button type="primary" href="/">Back Home</Button>}
+                />
+            </div>
+        );
+    }
+
+
     return (
         <React.Fragment>
             <Router>
@@ -71,6 +88,8 @@ function App() {
                     <GuardedRoute path="/admin/disciplinary_record_view_individual" component={ViewIndividualDisciplinaryRecord}/>
                     <GuardedRoute path="/admin/disciplinary_record_edit" component={EditDisciplinaryRecord}/>
                     <Route path="/login" component={Login}/>
+                    <Route path="/404" component={NotFoundPage} />
+                    <Redirect to="/404" />
                 </Switch>
             </Router>
         </React.Fragment>

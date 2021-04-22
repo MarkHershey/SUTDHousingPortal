@@ -2,7 +2,9 @@ import React from 'react';
 import styled from "styled-components";
 import {Col, Container, Row} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
-import * as bs from "react-bootstrap";
+import {getApplicationStatusJson} from "../functions/localstorage";
+import {accept, getApplicationInfo} from "../functions/applicationstatusinfo";
+import {Button, Result} from "antd";
 
 const ApplicationBox = styled.div`
   background-color: #F3F6FA;
@@ -31,8 +33,48 @@ const Field = styled.p`
   color: #3C64B1;
   text-align: right;
 `;
+
 export default class ApplicationStatus extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {application: {
+                uid: "",
+                created_at: "",
+                room_profile: {
+                    room_type: "",
+                    room_type_2nd:"",
+                    block: "",
+                    block_2nd: "",
+                },
+                visible_status:"not found",
+                stay_period: {start_date: "", end_date: ""},
+
+            }};
+    }
+
+    componentDidMount() {
+        const fetchJSON = async () =>{
+            getApplicationInfo().then(r=>{
+
+                if (getApplicationStatusJson() !== undefined)
+                    this.setState({application: getApplicationStatusJson()});
+            });
+        }
+        fetchJSON();
+    }
+
     render() {
+        if (getApplicationStatusJson() === undefined)
+            return (
+                <Result
+                    title="You haven't apply any applications!"
+                    extra={
+                        <Button type="primary" key="console" href="/apply0">
+                            Create a new room application
+                        </Button>
+                    }
+                />
+            )
         return (
             <ApplicationDiv>
                 <h3>Application Status</h3>
@@ -48,16 +90,16 @@ export default class ApplicationStatus extends React.Component {
                             <Col lg = {3}>
                                 <Field>Applied Date: </Field>
                             </Col>
-                            <Col lg = {3}>{ "04/03/2021" }</Col>
+                            <Col lg = {3}>{ this.state.application.created_at.slice(0,10)}</Col>
                             <Col lg = {3}><Field>Estimated Success Rate:</Field></Col>
                             <Col lg = {3}>{"70%"}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>Applied Room Type:</Field></Col>
-                            <Col lg={3}>{"Double Room / Single Room"}</Col>
+                            <Col lg={3}>{this.state.application.room_profile.room_type + " / " + this.state.application.room_profile.room_type_2nd + " Room"}</Col>
                             <Col lg={3}><Field>Applied Room Location</Field></Col>
-                            <Col lg={3}>{"Blk 55 / Blk 59"}</Col>
+                            <Col lg={3}>{"Blk "+ this.state.application.room_profile.block +" / Blk " + this.state.application.room_profile.block_2nd}</Col>
                         </Row>
                         <br/>
                     </Container>
@@ -75,32 +117,32 @@ export default class ApplicationStatus extends React.Component {
                             <Col lg = {3}>
                                 <Field>Offer Status: </Field>
                             </Col>
-                            <Col lg = {3}>{ "Offer Issued" }</Col>
-                            <Col lg = {3}><Field>Confirmation Deadline:</Field></Col>
-                            <Col lg = {3}>{"01/09/2021"}</Col>
+                            <Col lg = {3}>{ "Offer " + this.state.application.visible_status }</Col>
+                            <Col lg = {3}><Field>Estimate Period:</Field></Col>
+                            <Col lg = {3}>{this.state.application.stay_period.start_date + "~" + this.state.application.stay_period.end_date}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>{"Offered Room Type:"}</Field></Col>
-                            <Col lg={3}>{"Double Room"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Double Room"}</Col>
                             <Col lg={3}><Field>{"Offered Room ID:"}</Field></Col>
-                            <Col lg={3}>{"59-03-25"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"59-03-25"}</Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col lg={3}><Field>{"Roommate-To-Be:"}</Field></Col>
-                            <Col lg={3}>{"Ziqi Jin"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"Ziqi Jin"}</Col>
                             <Col lg={3}><Field>{"Move-Out Date:"}</Field></Col>
-                            <Col lg={3}>{"01/10/2021 11:00AM"}</Col>
+                            <Col lg={3}>{this.state.application.visible_status === "submitted"? "NA":"01/10/2021 11:00AM"}</Col>
                         </Row>
                     </Container>
                 </ApplicationBox>
                 <ApplicationBox style={{textAlign:"center"}}>
                     <Container>
                         <Row>
-                            <Col><button type="button" className="btn btn-outline-success" id = "accept_btn">Accept</button></Col>
+                            <Col><button type="button" className="btn btn-outline-success" id = "accept_btn" disabled={this.state.application.visible_status !== "offered"} onClick={async ()=> await accept(true,this.state.application.uid)}>Accept</button></Col>
                             <Col><button type="button" className="btn btn-outline-secondary" id = "reject_btn">Apply Extension</button></Col>
-                            <Col><button type="button" className="btn btn-outline-danger" id = "extension_btn">Reject</button></Col>
+                            <Col><button type="button" className="btn btn-outline-danger" id = "extension_btn" disabled={this.state.application.visible_status !== "offered"} onClick={async ()=> await accept(false,this.state.application.uid)}>Reject</button></Col>
                         </Row>
                     </Container>
                 </ApplicationBox>

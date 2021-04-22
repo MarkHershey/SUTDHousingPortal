@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import avatar from "../avatar.png";
 import * as bs from 'react-bootstrap';
 import ProfileData from "./profile_data";
-import {getUserInfoJson} from "../variables/localstorage";
+import {getUserInfoJson} from "../functions/localstorage";
 
 const ProfileBox = styled.div`
   background-color: #F3F6FA;

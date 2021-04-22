@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,25 +18,13 @@ import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import * as bs from 'react-bootstrap';
 import {
-
-    getApplicationPeriodInfoJson,
-    getToken,
     getOngoingApplicationPeriodInfoJson,
-    getUserInfoJson, initAttendanceEditJson, setApplicationPeriodInfoJson
-} from "../variables/localstorage";
-import {
-    getOngoingApplicationPeriodInfo,
-    
-} from "../variables/applicationperiodinfo"
-import {getUsername,setPersonalApplicablePeriodUidInfoJson,setPersonalApplicablePeriodInfoJson} from "../variables/localstorage";
-import axios from "axios";
-import {url} from "../variables/url";
-import Modal from '@material-ui/core/Modal';
-import {CheckBox} from "@material-ui/icons";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../variables/eventinfo";
+    setPersonalApplicablePeriodUidInfoJson,
+    setPersonalApplicationPeriodInfoJson
+} from "../functions/localstorage";
+import {getOngoingApplicationPeriodInfo,} from "../functions/applicationperiodinfo"
 import {useHistory} from "react-router";
-import "../variables/utilities"
+import "../functions/utilities"
 
 
 const useRowStyles = makeStyles({
@@ -60,19 +48,6 @@ const EventDiv = styled.div`
   margin-right: 2em;
   grid-column: auto;
 `;
-const SubTitle = styled.p`
-  text-align: right;
-  color: #3C64B1;
-  font-weight: bold;
-  font-size: medium;
-`;
-
-const CenterDiv = styled.div`
-    text-align: center;
-`;
-
-const ButtonDivEvent = styled.div`text-align: center;`;
-
 
 Row.propTypes = {
     row: PropTypes.shape({
@@ -84,33 +59,8 @@ Row.propTypes = {
     }).isRequired,
 };
 
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
 
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
-
-function CreateUI(props,uid){
+function CreateUI(props,uid, id){
     console.log("belowww");
     console.log(props);
     let history = useHistory();
@@ -126,17 +76,13 @@ function CreateUI(props,uid){
                     <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button id="next" class="btn btn-outline-primary" onClick={()=>{
+                    <bs.Col lg={3}><Button id={"next"+id +"_"+ i} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
-                        setApplicationPeriodInfoJson(el);
+                        setPersonalApplicationPeriodInfoJson(el);
                         setPersonalApplicablePeriodUidInfoJson(uid);
                         history.push({
-                            pathname: "/apply1",
-                            state: {
-                                applicable_period : el,
-                                application_period_uid : uid
-                            }
+                            pathname: "/apply1"
                         });
                         
                     }}>Select</Button></bs.Col>
@@ -155,7 +101,7 @@ function Row(props) {
         <React.Fragment>
             <TableRow className={classes.root}>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton id={"expand_row_button"+row.application_window_open+row.application_window_close} aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
@@ -173,7 +119,7 @@ function Row(props) {
                             <Typography variant="h6" gutterBottom component="div" text-align="center">
                                 Application Periods
                             </Typography>
-                            {CreateUI(row.applicable_periods,row.uid)}
+                            {CreateUI(row.applicable_periods,row.uid, row.application_window_open+row.application_window_close)}
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -189,16 +135,16 @@ export default class ApplicationZero extends React.Component {
     constructor(props) {
         super(props);
         this.state = {events: [{
-            uid: "",
-            created_at: "",
-            created_by: "",
-            application_window_open: "",
-            application_window_close: "",
-            applicable_periods: [{
-                start_date:"",
-                end_date : ""
-            }], 
-        }]};
+                uid: "",
+                created_at: "",
+                created_by: "",
+                application_window_open: "",
+                application_window_close: "",
+                applicable_periods: [{
+                    start_date:"",
+                    end_date : ""
+                }],
+            }]};
     }
 
 

@@ -1,15 +1,8 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {getDisciplinaryRecord, deleteDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
-import {getUserInfoJson, getUsername, getPersonalDisciplinaryRecordInfoJson} from "../../variables/localstorage";
-import {createEvent} from "../../variables/eventinfo";
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from "react-bootstrap/Button";
-import {notification} from "antd";
-import TextArea from "antd/es/input/TextArea";
+import {deleteDisciplinaryRecord, getDisciplinaryRecord} from "../../functions/disciplinaryrecordinfo";
+import {getPersonalDisciplinaryRecordInfoJson} from "../../functions/localstorage";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -71,7 +64,7 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component {
 
     handleDelete() {
         deleteDisciplinaryRecord(this.props.location.state.uid);
-        this.props.history.push("/");
+        this.props.history.push("/admin/disciplinary_record_view_all");
     }
 
     handleChange(event) {

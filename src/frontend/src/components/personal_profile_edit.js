@@ -1,11 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {Student} from "../variables/studentinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {updateStudentProfileInfo} from "../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../variables/localstorage";
-import { Typography, Slider, TextField } from '@material-ui/core';
+import {updateStudentProfileInfo} from "../functions/studentprofileinfo";
+import {getUserInfoJson} from "../functions/localstorage";
+import {Input} from "antd";
 
 const Field = styled.p`
   color: #3C64B1;
@@ -49,7 +47,7 @@ export default class PersonalDataEdit extends React.Component{
         updateStudentProfileInfo(this.state.phone_number,
         this.state.email_personal,this.state.local_addr_post_code,this.state.local_addr_street,
         this.state.local_addr_unit,this.state.preference_roommate)
-        this.props.history.push("/");
+        this.props.history.push("/profile");
     }
 
     handleChange(event) {
@@ -69,22 +67,22 @@ export default class PersonalDataEdit extends React.Component{
                     <bs.Container>
                         <bs.Row>
                             <bs.Col><Field>Personal Email:</Field></bs.Col>
-                            <bs.Col><input id = "ppl_prof_email" name="email_personal" type="email" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><Input id = "ppl_prof_email" name="email_personal" type="email" placeholder={this.state.email_personal} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Preferred Roommate</Field></bs.Col>
-                            <bs.Col><input id = "ppl_prof_roommate" name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
+                            <bs.Col><Input id = "ppl_prof_roommate" name="preference_roommate" type="text" placeholder={this.state.preference_roommate}/></bs.Col>
                         </bs.Row>
     
                         <bs.Row>
                             <bs.Col><Field>Phone Number:</Field></bs.Col>
-                            <bs.Col><input id="phone_number" name="phone_number" type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><Input id="phone_number" name="phone_number" type="number" placeholder={this.state.phone_number} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Street</Field></bs.Col>
-                            <bs.Col><input id = "ppl_prof_local_addr_street" name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><Input id = "ppl_prof_local_addr_street" name="local_addr_street" type="text" placeholder={this.state.local_addr_street} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <bs.Row>
                             <bs.Col><Field>Local Address Unit Number:</Field></bs.Col>
-                            <bs.Col><input id="ppl_prof_local_addr_unit" name="local_addr_unit" type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><Input id="ppl_prof_local_addr_unit" name="local_addr_unit" type="text" placeholder={this.state.local_addr_unit} onChange={e => this.handleChange(e)}/></bs.Col>
                             <bs.Col><Field>Local Address Postal Code:</Field></bs.Col>
-                            <bs.Col><input id="ppl_prof_local_addr_post_code" name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col><Input id="ppl_prof_local_addr_post_code" name="local_addr_post_code" type="text" placeholder={this.state.local_addr_post_code} onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         
                     </bs.Container>

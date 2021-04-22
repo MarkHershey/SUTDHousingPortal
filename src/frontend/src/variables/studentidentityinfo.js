@@ -1,9 +1,0 @@
-export var student_id ="";
-export var full_name ="";
-export var gender ="";
-export var enrollment_type = "";
-export var year_of_enrollment =0;
-export var sc_status = false;
-export var pr_status = false;
-export var nationality = "";
-export var email_sutd = "";

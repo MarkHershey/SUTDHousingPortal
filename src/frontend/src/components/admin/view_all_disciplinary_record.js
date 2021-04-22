@@ -1,32 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
-import * as bs from 'react-bootstrap';
-import {
-    getAllDisciplinaryRecordsInfoJson,
-    getToken,
-    getUserInfoJson, initAttendanceEditJson
-} from "../../variables/localstorage";
-import {
-    getAllDisciplinaryRecords,
-} from "../../variables/disciplinaryrecordinfo"
+import {getAllDisciplinaryRecordsInfoJson} from "../../functions/localstorage";
+import {getAllDisciplinaryRecords,} from "../../functions/disciplinaryrecordinfo"
 import {useHistory} from "react-router";
-import "../../variables/utilities"
+import "../../functions/utilities"
 
 
 const useRowStyles = makeStyles({
@@ -105,11 +91,11 @@ function Row(props) {
             <TableRow className={classes.root}>
                 <TableCell>
                 </TableCell>
-                <TableCell component="th" scope="row">{row.student_id}</TableCell>
-                <TableCell align="right">{row.record_type}</TableCell>
-                <TableCell align="right">{row.description}</TableCell>
-                <TableCell align="right">{row.points_deduction}</TableCell>
-                <TableCell align="right">
+                <TableCell id={row.student_id+row.description} component="th" scope="row">{row.student_id}</TableCell>
+                <TableCell id={row.student_id+row.description+"_record_type"} align="right">{row.record_type}</TableCell>
+                <TableCell id={row.student_id+row.description+"_description"} align="right">{row.description}</TableCell>
+                <TableCell id={row.student_id+row.description+"_points_deduction"} align="right">{row.points_deduction}</TableCell>
+                <TableCell id={row.student_id+row.description+"_view_individual_btn"} align="right">
                     <button type="button" class="btn btn-outline-primary"
                             onClick = {()=>{
                                 history.push({
@@ -129,7 +115,7 @@ function Row(props) {
 }
 
 
-export default class ViewIndividualDisciplinaryRecord extends React.Component {
+export default class ViewADisciplinaryRecord extends React.Component {
     constructor(props) {
         super(props);
         this.state = {events: [{

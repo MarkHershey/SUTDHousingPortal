@@ -4,13 +4,14 @@ from function import *
 class ProfileTestMultipleThread(unittest.TestCase):
     def test_edit_profile_multiple_users(self):
         users = []
-        users.append(TestThread("1004514", "pass1234"))
-        users.append(TestThread("1004515", "pass1234"))
+        users.append(TestThread("1000000", "1000000"))
+        users.append(TestThread("1000001", "1000001"))
 
         for user in users:
             user.start()
         for user in users:
             user.join()
+        self.assertTrue(True)
 
 
 class TestThread(threading.Thread):
@@ -62,7 +63,7 @@ class TestThread(threading.Thread):
         time.sleep(5)
         assert get_text(driver_, "ppl_prof_phone_number_display") == str(phone_num)
         assert (
-            get_text(driver, "ppl_prof_address_display")
+            get_text(driver_, "ppl_prof_address_display")
             == street + " " + unit + " " + postcode
         )
         click_btn(driver_, "logout")

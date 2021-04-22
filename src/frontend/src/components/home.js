@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson, isAdmin} from "../variables/localstorage";
-import {Card, Row, Col, Carousel} from 'antd';
+import {getCurrentStudentInfo} from "../functions/studentinfo";
+import {getUserInfoJson, isAdmin} from "../functions/localstorage";
+import {Card, Carousel, Col, Row} from 'antd';
 import 'antd/dist/antd.css';
 import {Statistic} from "antd/es";
 import SUTD1 from "../SUTD1.png";

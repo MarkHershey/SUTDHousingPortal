@@ -1,48 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
-import * as bs from 'react-bootstrap';
-import {
-    addAttendanceADDJson,
-    addAttendanceDELJson, deleteAttendanceADDJson,
-    deleteAttendanceDELJson,
-    getApplicationPeriodInfoJson,
-    getToken,
-    getOngoingApplicationPeriodInfoJson,
-    getUserInfoJson, initAttendanceEditJson
-} from "../../variables/localstorage";
-import {
-    submitApplicationPeriod,
-    getApplicationPeriodInfo,
-    getAllApplicationPeriodInfo,
-    deleteApplicationPeriodInfo,
-    getOngoingApplicationPeriodInfo,
-    
-} from "../../variables/applicationperiodinfo"
-import {getUsername} from "../../variables/localstorage";
-import axios from "axios";
-import {url} from "../../variables/url";
-import Modal from '@material-ui/core/Modal';
-import {CheckBox} from "@material-ui/icons";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {eventHandler} from "../../variables/eventinfo";
+import {getApplicationPeriodInfoJson, getOngoingApplicationPeriodInfoJson} from "../../functions/localstorage";
+import {getAllApplicationPeriodInfo, getOngoingApplicationPeriodInfo,} from "../../functions/applicationperiodinfo"
 import {useHistory} from "react-router";
-import "../../variables/utilities"
+import "../../functions/utilities"
 
 
 const useRowStyles = makeStyles({
@@ -136,6 +106,7 @@ function Row(props) {
                                 }
                                 )
                             }}
+                            id = {"view"+row.application_window_open + row.application_window_close}
                             >View</button>
                 </TableCell>
             </TableRow>

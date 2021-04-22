@@ -1,11 +1,13 @@
 import * as bs from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import {instanceOf} from "prop-types";
-import {Redirect, useHistory} from "react-router";
-import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import {getUserInfoJson,getPersonalApplicablePeriodUidInfoJson,getPersonalApplicablePeriodInfoJson, getPersonalEventInfoJson} from "../variables/localstorage";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
+import {
+    getPersonalApplicablePeriodUidInfoJson,
+    getPersonalApplicationPeriodInfoJson,
+    getUserInfoJson
+} from "../functions/localstorage";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 
 
@@ -42,7 +44,7 @@ export default class ApplicationPartTwo extends React.Component {
         this.handleSave = this.handleSave.bind(this);
         var roomPreferences = getUserInfoJson().preference_room
         this.state = roomPreferences;
-        //console.log(this.props.location.state.applicable_period);
+        
     }
 
     handleChange(event) {
@@ -90,13 +92,9 @@ export default class ApplicationPartTwo extends React.Component {
         this.state = getUserInfoJson().preference_room;
         console.log(this.state);
         var uid = getPersonalApplicablePeriodUidInfoJson();
-        var applicablePeriod = getPersonalApplicablePeriodInfoJson();
+        var applicablePeriod = getPersonalApplicationPeriodInfoJson();
         this.props.history.push({
-            pathname: "/apply3",
-            state: {
-                application_period_uid: uid,
-                applicable_period : applicablePeriod
-            }
+            pathname: "/apply3"
         });
     }
 
@@ -134,73 +132,71 @@ export default class ApplicationPartTwo extends React.Component {
                         <br/>
 
                         <bs.Row>
-                            <bs.Col><Question>Preferred Block</Question></bs.Col>
-                            <bs.Col><Question>Preferred Block 2nd Choice</Question></bs.Col>
-                        </bs.Row>
-                        <bs.Row>
-                            <bs.Col>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_block_55" className="form-check-input" type="radio" name="block"
-                                           value="55" required
-                                           defaultChecked={this.state.block === "55" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 55
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_block_57" className="form-check-input" type="radio" name="block"
-                                           value="57" defaultChecked={this.state.block === "57" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 57
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_block_59" className="form-check-input" type="radio" name="block"
-                                           value="59" defaultChecked={this.state.block === "59" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 59
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_block_any" className="form-check-input" type="radio" name="block"
-                                           value="ANY" defaultChecked={this.state.block === "ANY" ? true : false}/>
-                                    <label className="form-check-label">
-                                        No Preference
-                                    </label>
-                                </div>
-                            </bs.Col>
-                            <bs.Col>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_2nd_block_55" lassName="form-check-input" type="radio" name="block_2nd"
-                                           value="55" required
-                                           defaultChecked={this.state.block_2nd === "55" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 55
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_2nd_block_57" className="form-check-input" type="radio" name="block_2nd"
-                                           value="57" defaultChecked={this.state.block_2nd === "57" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 57
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_2nd_block_59" className="form-check-input" type="radio" name="block_2nd"
-                                           value="59" defaultChecked={this.state.block_2nd === "59" ? true : false}/>
-                                    <label className="form-check-label">
-                                        Block 59
-                                    </label>
-                                </div>
-                                <div className="form-check" align="left" onChange={(e) => this.handleChange(e)}>
-                                    <input id="application2_2nd_block_any" className="form-check-input" type="radio" name="block_2nd"
-                                           value="ANY" defaultChecked={this.state.block_2nd === "ANY" ? true : false}/>
-                                    <label className="form-check-label">
-                                        No Preference
-                                    </label>
-                                </div>
-                            </bs.Col>
-                        </bs.Row>
+                    <bs.Col><Question>Preferred Block</Question></bs.Col>
+                    <bs.Col><Question>Preferred Block 2nd Choice</Question></bs.Col>
+                </bs.Row>
+                <bs.Row>
+                    <bs.Col>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_block_55" className="form-check-input" type="radio" name="block"
+                                    value="55" required defaultChecked={this.state.block === "55" ? true:false}/>
+                                <label className="form-check-label">
+                                    Block 55
+                                </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_block_57" className="form-check-input" type="radio" name="block" 
+                                    value="57" defaultChecked={this.state.block==="57" ? true:false}/>
+                            <label className="form-check-label">
+                                Block 57
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_block_59" className="form-check-input" type="radio" name="block"
+                                    value="59" defaultChecked={this.state.block==="59" ? true:false}/>
+                            <label className="form-check-label">
+                                Block 59
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_block_any" className="form-check-input" type="radio" name="block"
+                                    value="ANY" defaultChecked={this.state.block==="ANY" ? true:false}/>
+                                <label className="form-check-label">
+                                    No Preference
+                                </label>
+                        </div>
+                    </bs.Col>
+                    <bs.Col>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_2nd_block_55" className="form-check-input" type="radio" name="block_2nd"
+                                    value="55" required defaultChecked={this.state.block_2nd==="55" ? true:false}/>
+                                <label className="form-check-label">
+                                    Block 55
+                                </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_2nd_block_57" className="form-check-input" type="radio" name="block_2nd" 
+                                    value="57" defaultChecked={this.state.block_2nd==="57" ? true:false}/>
+                            <label className="form-check-label">
+                                Block 57
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_2nd_block_59" className="form-check-input" type="radio" name="block_2nd"
+                                    value="59" defaultChecked={this.state.block_2nd==="59" ? true:false}/>
+                            <label className="form-check-label">
+                                Block 59
+                            </label>
+                        </div>
+                        <div className="form-check" align="left" onChange={(e)=>this.handleChange(e)}>
+                            <input id="application2_2nd_block_any" className="form-check-input" type="radio" name="block_2nd"
+                                    value="ANY" defaultChecked={this.state.block_2nd==="ANY" ? true:false}/>
+                                <label className="form-check-label">
+                                    No Preference
+                                </label>
+                        </div>
+                    </bs.Col>
+                </bs.Row>
 
                         <br/>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {Steps} from "antd";
 import styled from "styled-components";
+
 const {Step} = Steps;
 
 const StepDiv = styled.div`

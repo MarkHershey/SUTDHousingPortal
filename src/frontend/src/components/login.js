@@ -3,13 +3,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from 'axios';
-import {getToken, setToken, setUsername, setAdmin, setAdminWrite} from "../variables/localstorage";
-import {url} from "../variables/url.js";
+import {getToken, logout, setAdmin, setAdminWrite, setToken, setUsername} from "../functions/localstorage";
+import {url} from "../functions/url.js";
 import {notification} from "antd";
 
 export default function Login() {
     const [username, setUsernameElement] = useState("");
     const [password, setPassword] = useState("");
+    logout();
     function validateForm() {
         return username.length > 0 && password.length > 0;
     }

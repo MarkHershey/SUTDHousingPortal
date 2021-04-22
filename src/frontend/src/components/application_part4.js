@@ -4,13 +4,11 @@ import {ApplicationStep} from "./application_steps";
 import "antd/dist/antd.css";
 import {List} from "antd";
 import ReactDragListView from "react-drag-listview";
-import TestModal from "./draggable_modal.js";
 import * as bs from "react-bootstrap";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
-import {updateRoomProfileInfo} from "../variables/roomprofileinfo";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {getUserInfoJson} from "../variables/localstorage";
-import { StarTwoTone } from '@ant-design/icons';
+import {updateRoomProfileInfo} from "../functions/roomprofileinfo";
+import {getUserInfoJson} from "../functions/localstorage";
+import {StarTwoTone} from '@ant-design/icons';
+
 const EventDiv = styled.div`
   margin: 20pt 300pt;
   padding: 20pt 20pt;
@@ -33,8 +31,7 @@ export default class ApplicationFour extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         var roomPreferences = getUserInfoJson().preference_room
         this.state = roomPreferences;
-        console.log("HEREE");
-        console.log(this.props.location.state.applicable_period);
+
     }
 
     handleSave(){
@@ -55,11 +52,7 @@ export default class ApplicationFour extends React.Component {
             );
             //Submit Data
             this.props.history.push({
-                pathname:"/application_summary",
-                state: {
-                    application_period_uid: this.props.location.state.application_period_uid,
-                    applicable_period : this.props.location.state.applicable_period
-                }
+                pathname:"/application_summary"
             });
         }
     }
@@ -91,7 +84,6 @@ export default class ApplicationFour extends React.Component {
                                 dataSource={this.state.weightage_order}
                                 renderItem={item => {
                                     const draggble = true;
-
                                     function getTitle(item) {
                                         if (item === 1) return " Preferred Block Location";
                                         if (item === 2) return " Preferred Level Range";
@@ -101,7 +93,7 @@ export default class ApplicationFour extends React.Component {
                                         if (item === 6) return " Preferred Pantry Location";
                                         if (item === 7) return " Preferred Meeting Room Location";
                                         if (item === 8) return " Preferred Group Study Room Location";
-                                        if (item === 9) return " Preferred Meeting Room Location"
+                                        if (item === 9) return " Preferred Toilet Location"
                                     }
 
                                     return (

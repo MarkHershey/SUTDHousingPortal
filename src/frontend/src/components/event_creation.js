@@ -1,14 +1,10 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
-import {updateStudentProfileInfo} from "../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../variables/localstorage";
-import {createEvent} from "../variables/eventinfo";
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from "react-bootstrap/Button";
-import {notification, Input, Switch} from "antd";
+import {createEvent} from "../functions/eventinfo";
+import {Input, notification, Switch} from "antd";
 import {icons} from "antd/es/image/PreviewGroup";
+
 const {  CloseOutlined, CheckOutlined  } = icons;
 const { TextArea } = Input;
 const Field = styled.p`

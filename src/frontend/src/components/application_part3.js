@@ -1,12 +1,10 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import { instanceOf } from "prop-types";
-import { Redirect, useHistory } from "react-router";
 import LifestyleData from "./lifestyle_data";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
-import { getUserInfoJson } from "../variables/localstorage";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
+import {getUserInfoJson} from "../functions/localstorage";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 import {ApplicationStep} from "./application_steps";
 
 const EventDiv = styled.div`
@@ -35,12 +33,20 @@ export default class ApplicationThree extends React.Component{
         this.handleSave = this.handleSave.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
-        console.log("HEREE");
-        console.log(this.props.location.state.applicable_period);
+        this.hasUpdated = true;
+        console.log(this.state);
     }
 
-    lifestyleCallback(childData){
-        this.state = childData;
+    lifestyleCallback(name,value){
+        this.hasUpdated = false;
+        this.setState({
+            ...this.state,
+            [name]: value
+        }, ()=>{
+            this.hasUpdated =true;
+            console.log(this.state);
+        } 
+        )
     }
     checkValidation(){
         var stateNames = Object.keys(this.state);
@@ -56,39 +62,31 @@ export default class ApplicationThree extends React.Component{
 
     handlePrev(){
         this.props.history.push({
-            pathname: "/apply3",
-            state: {
-                application_period_uid: this.props.location.state.application_period_uid,
-                applicable_period : this.props.location.state.applicable_period
-            }
+            pathname: "/apply2"
         });
     }
 
     handleSave(){
-        if(this.checkValidation()){
+        if(this.checkValidation() && this.hasUpdated==true){
             console.log("saved");
             console.log("submitted");
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
         }
     }
 
     handleSubmit(){
-        if(this.checkValidation()){
+        if(this.checkValidation() && this.hasUpdated == true){
             console.log("submitted");
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
             getCurrentStudentInfo();
             this.state = getUserInfoJson().preference_lifestyle;
             //const history = useHistory();
             this.props.history.push({
-                pathname: "/apply4",
-                state: {
-                    application_period_uid: this.props.location.state.application_period_uid,
-                    applicable_period : this.props.location.state.applicable_period
-                }
+                pathname: "/apply4"
             });
         }
 

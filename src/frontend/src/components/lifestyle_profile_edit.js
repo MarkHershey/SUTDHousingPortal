@@ -1,12 +1,10 @@
 import * as bs from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import { instanceOf } from "prop-types";
-import { Redirect, useHistory } from "react-router";
 import LifestyleData from "./lifestyle_data";
-import {updateLifestyleProfileInfo} from "../variables/lifestyleinfo";
-import { getUserInfoJson } from "../variables/localstorage";
-import {getCurrentStudentInfo} from "../variables/studentinfo";
+import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
+import {getUserInfoJson} from "../functions/localstorage";
+import {getCurrentStudentInfo} from "../functions/studentinfo";
 
 const EventDiv = styled.div`
 display: grid;
@@ -32,15 +30,24 @@ export default class LifeStyleProfileEdit extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
+        this.hasUpdated = true;
     }
-    lifestyleCallback(childData){
-        this.state = childData;
+    lifestyleCallback(name,value){
+        this.hasUpdated = false;
+        this.setState({
+            ...this.state,
+            [name]: value
+        }, ()=>{
+            this.hasUpdated =true;
+            console.log(this.state);
+        } 
+        )
     }
     checkValidation(){
         var stateNames = Object.keys(this.state);
         var stateValues = Object.values(this.state);
         for(var i=0;i<stateNames.length;i++){
-            if(stateValues==""){
+            if(stateValues===""){
                 console.log("ffailed");
                 return false;
             }
@@ -48,13 +55,12 @@ export default class LifeStyleProfileEdit extends React.Component{
         return true;
     }
     handleSubmit(){
-        if(this.checkValidation()){
-            console.log("submitted")
-            updateLifestyleProfileInfo(this.state.bedtime,this.state.wakeup_time,this.state.like_social,
-                this.state.like_clean,this.state.like_quite);
-            getCurrentStudentInfo();
-            this.state = getUserInfoJson().preference_lifestyle;
-            this.props.history.push("/");
+        if(this.checkValidation() && this.hasUpdated==true){
+            console.log("submitted");
+            console.log(this.state);
+            updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
+                this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);
+            this.props.history.push("/profile");
         } else {
             console.log("invalid");
         }

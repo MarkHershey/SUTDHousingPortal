@@ -1,15 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {getUserInfoJson, getUsername} from "../../variables/localstorage";
-import {setHouseGuardian} from "../../variables/houseguardianinfo";
-import {createEvent} from "../../variables/eventinfo";
-import Checkbox from '@material-ui/core/Checkbox';
-import {notification, Input, Button, Tooltip} from "antd";
-import {CloseCircleTwoTone, PlusCircleTwoTone, SearchOutlined} from '@ant-design/icons';
-import { student_id } from "../../variables/applicationforminfo";
+import {setHouseGuardian} from "../../functions/houseguardianinfo";
+import {Input} from "antd";
+import {CloseCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
 
 const Field = styled.p`
   color: #3C64B1;
@@ -78,10 +72,10 @@ export default class AddHouseGuardian extends React.Component{
                             <Input type="text" name="student_id" value={el.student_id ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
                         <bs.Col lg={1}>
-                            <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
+                            <CloseCircleTwoTone id="remove_student_id" style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"}/>
                         </bs.Col>
                         <bs.Col lg={1}>
-                                <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
+                                <PlusCircleTwoTone id="add_student_id" style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"}/>
                         </bs.Col>
                         <bs.Col lg={2}></bs.Col>
                     </bs.Row>

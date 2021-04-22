@@ -1,14 +1,8 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import {getCurrentStudentInfo} from "../../variables/studentinfo";
-import {updateStudentProfileInfo} from "../../variables/studentprofileinfo";
-import {createDisciplinaryRecord} from "../../variables/disciplinaryrecordinfo";
-import {getUserInfoJson, getUsername} from "../../variables/localstorage";
-import {createEvent} from "../../variables/eventinfo";
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from "react-bootstrap/Button";
-import {notification, Input} from "antd";
+import {createDisciplinaryRecord} from "../../functions/disciplinaryrecordinfo";
+import {Input, notification} from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 const Field = styled.p`
@@ -95,7 +89,7 @@ export default class CreateDisciplinaryRecord extends React.Component {
                         <br/>
                         <bs.Row>
                             <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
-                            <bs.Col lg={9}><TextArea id="create_event_description" name="description" cols="55" rows="5"
+                            <bs.Col lg={9}><TextArea id="create_disciplinary_record_description" name="description" cols="55" rows="5"
                                                      onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <br/>
