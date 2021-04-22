@@ -33,10 +33,20 @@ export default class ApplicationThree extends React.Component{
         this.handleSave = this.handleSave.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
+        this.hasUpdated = true;
+        console.log(this.state);
     }
 
-    lifestyleCallback(childData){
-        this.state = childData;
+    lifestyleCallback(name,value){
+        this.hasUpdated = false;
+        this.setState({
+            ...this.state,
+            [name]: value
+        }, ()=>{
+            this.hasUpdated =true;
+            console.log(this.state);
+        } 
+        )
     }
     checkValidation(){
         var stateNames = Object.keys(this.state);
@@ -57,7 +67,7 @@ export default class ApplicationThree extends React.Component{
     }
 
     handleSave(){
-        if(this.checkValidation()){
+        if(this.checkValidation() && this.hasUpdated==true){
             console.log("saved");
             console.log("submitted");
             updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
@@ -68,7 +78,7 @@ export default class ApplicationThree extends React.Component{
     }
 
     handleSubmit(){
-        if(this.checkValidation()){
+        if(this.checkValidation() && this.hasUpdated == true){
             console.log("submitted");
             updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,
                 this.state.like_quiet,this.state.like_clean,this.state.diet,this.state.use_aircon,this.state.smoking);

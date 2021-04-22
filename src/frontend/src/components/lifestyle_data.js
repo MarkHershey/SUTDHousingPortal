@@ -35,6 +35,8 @@ export default class LifestyleData extends React.Component {
         if(name=="smoking" || name=="use_aircon"){
             if(value==0){
                 value=false;
+            } else if(value==null){
+                value=false;
             } else {
                 value=true;
             }
@@ -115,7 +117,7 @@ export default class LifestyleData extends React.Component {
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
                         id="aircon_slider"
-                        defaultValue={this.state.use_aircon ===0 ? false : true}
+                        defaultValue={this.state.use_aircon ===false ? 0 : this.state.use_aircon === true ? 1: 0}
                         aria-labelledby="aircon-slider"
                         step={1}
                         marks
@@ -134,7 +136,7 @@ export default class LifestyleData extends React.Component {
                     <bs.Col lg={4}></bs.Col>
                     <bs.Col lg={4}><Slider
                         id="smokes_slider"
-                        defaultValue={this.state.smoking === 0 ? false :true}
+                        defaultValue={this.state.smoking === false ? 0 : this.state.smoking === true ? 1 : 0}
                         aria-labelledby="smokes-slider"
                         step={1}
                         marks
@@ -146,47 +148,7 @@ export default class LifestyleData extends React.Component {
                     /></bs.Col>
                     <bs.Col lg={4}></bs.Col>
                 </bs.Row>
-                {
-                    /*
-                    <form noValidate>
-                    <TextField
-                        id="time-sleep"
-                        label="What time do you normally sleep?"
-                        margin="normal"
-                        size="medium"
-                        type="time"
-                        onChange={(e) => {
-                            this.handleChange("bedtime", e.target.value)
-                        }}
-                        defaultValue={this.state.bedtime}
-                        style={{width: '350px'}}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        inputProps={{
-                            step: 300, // 5 min
-                        }}
-                    />
-                    <br/>
-                    <TextField
-                        id="time-wake"
-                        label="What time do you normally wake up?"
-                        margin="normal"
-                        size="medium"
-                        type="time"
-                        onChange={(e) => this.handleChange("wakeup_time", e.target.value)}
-                        defaultValue={this.state.wakeup_time}
-                        style={{width: '350px'}}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        inputProps={{
-                            step: 300,
-                        }}
-                    />
-                </form>
-                    */
-                }
+
                 <bs.Row>
                     <bs.Col lg={4}></bs.Col>
                     <Button id="controlDropdownSleep" className={useStyles.button} onClick={()=>{
