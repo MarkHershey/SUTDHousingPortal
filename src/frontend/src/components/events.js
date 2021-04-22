@@ -29,17 +29,15 @@ import {
     initAttendanceEditJson,
     isHG
 } from "../functions/localstorage";
-import {deleteEvent, eventHandler, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
+import {deleteEvent, eventHandler, quitEventHandler, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
 import axios from "axios";
 import {url} from "../functions/url";
 import Modal from '@material-ui/core/Modal';
 import {useHistory} from "react-router";
 import "../functions/utilities"
-import {DatePicker} from "antd";
+import {DatePicker, notification} from "antd";
 import {DownOutlined, UpOutlined} from "@ant-design/icons";
 import {getCurrentStudentInfo} from "../functions/studentinfo";
-
-
 const useRowStyles = makeStyles({
     root: {
         '& > *': {
@@ -78,29 +76,6 @@ function joined(row) {
     return signed_up
 }
 
-async function quitEventHandler(event_id) {
-    const data = JSON.stringify([getUsername()]);
-
-    const config = {
-        method: 'delete',
-        url: url + '/api/events/' + event_id + '/signup',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer ' + getToken(),
-            'Content-Type': 'application/json'
-        },
-        data: data
-    };
-
-    await axios(config)
-        .then(function (response) {
-            getCurrentStudentInfo();
-            window.location.reload(true);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 
 
 Row.propTypes = {
@@ -167,6 +142,8 @@ function Row(props) {
                     <button type="button" class="btn btn-outline-primary"
                             onClick={async () => {
                                 await eventHandler(row.uid);
+                                history.push("/event_history");
+                                history.push("/event")
                             }}
                             disabled={joined(row)}
                             id={row.title + "-join-status"}>{joined(row) ? "Signed Up" : "Join Now!"}</button>
@@ -219,7 +196,9 @@ function Row(props) {
                                 <bs.Col><ButtonDivEvent>
                                     <button type="button" className="btn btn-outline-dark" id={row.title + "-quit"}
                                             onClick={async () => {
-                                                await quitEventHandler(row.uid)
+                                                await quitEventHandler(row.uid);
+                                                history.push("/event_history");
+                                                history.push("/event")
                                             }}
                                             disabled={!joined(row)}>Quit Event
                                     </button>

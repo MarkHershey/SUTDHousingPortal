@@ -175,9 +175,46 @@ export async function eventHandler(uid){
     await axios(config)
         .then(function (response) {
             getCurrentStudentInfo();
+            notification.success({
+                message: 'Joined Event Successfully',
+            });
         })
         .catch(function (error) {
             console.log(error);
+            notification.error({
+                message: 'Failed to Joined Event',
+                description: 'Please try again'
+            });
+        });
+}
+
+export async function quitEventHandler(event_id) {
+    const data = JSON.stringify([getUsername()]);
+
+    const config = {
+        method: 'delete',
+        url: url + '/api/events/' + event_id + '/signup',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    await axios(config)
+        .then(function (response) {
+            getCurrentStudentInfo();
+            notification.success({
+                message: 'Quited Event Successfully',
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            notification.error({
+                message: 'Failed to Quit Event',
+                description: 'Please try again'
+            });
         });
 }
 
