@@ -39,6 +39,7 @@ export default class LifeStyleProfileEdit extends React.Component{
             [name]: value
         }, ()=>{
             this.hasUpdated =true;
+            console.log(this.state);
         } 
         )
     }

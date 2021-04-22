@@ -39,6 +39,10 @@ export default class LifestyleData extends React.Component {
                 value=true;
             }
         }
+        this.setState({
+            ...this.state,
+            [name]:value
+        })
         this.props.parentCallBack(name,value);
     }
 
