@@ -4,8 +4,8 @@ from function import *
 class ProfileTestMultipleThread(unittest.TestCase):
     def test_edit_profile_multiple_users(self):
         users = []
-        users.append(TestThread("1004514", "pass1234"))
-        users.append(TestThread("1004515", "pass1234"))
+        users.append(TestThread("1000000", "1000000"))
+        users.append(TestThread("1000001", "1000001"))
 
         for user in users:
             user.start()

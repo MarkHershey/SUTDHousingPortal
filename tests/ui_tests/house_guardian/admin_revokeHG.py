@@ -5,7 +5,7 @@ class RevokeHgTest(unittest.TestCase):
     def test_normal_workflow(self):
         #Login
         print("login")
-        usrname = "adminjustin"
+        usrname = "admin"
         driver.get(url)
         input_text(driver,"text",usrname)
         input_text(driver,"password","pass1234")
@@ -24,7 +24,7 @@ class RevokeHgTest(unittest.TestCase):
     def test_invalid_workflow(self):
         #Login
         print("login")
-        usrname = "adminjustin"
+        usrname = "admin"
         driver.get(url)
         input_text(driver,"text",usrname)
         input_text(driver,"password","pass1234")

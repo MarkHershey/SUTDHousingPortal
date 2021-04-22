@@ -7,7 +7,7 @@ class LoginTest(unittest.TestCase):
 
     def test_login_normal_admin(self):
         # login normal
-        input_text(driver, "text", "adminn")
+        input_text(driver, "text", "admin")
         input_text(driver, "password", "pass1234")
         time.sleep(2)
         click_btn(driver, "loginbtn")
@@ -21,8 +21,8 @@ class LoginTest(unittest.TestCase):
 
     def test_login_normal_student(self):
         # login normal
-        input_text(driver, "text", "1004515")
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", "1000001")
+        input_text(driver, "password", "1000001")
         time.sleep(2)
         click_btn(driver, "loginbtn")
         time.sleep(2)
@@ -35,7 +35,7 @@ class LoginTest(unittest.TestCase):
 
     def test_login_abnormal(self):
         # login abnormally
-        input_text(driver, "text", "1004515")
+        input_text(driver, "text", "1000001")
         input_text(driver, "password", "hahahawrongpswd")
         click_btn(driver, "loginbtn")
         time.sleep(5)

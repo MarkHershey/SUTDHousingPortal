@@ -6,7 +6,7 @@ class DisciplinaryRecordTest(unittest.TestCase):
     def test_disciplinary_record(self):
         # Login
         print("login")
-        usrname = "adminjustin"
+        usrname = "admin"
         driver.get(url)
         input_text(driver, "text", usrname)
         input_text(driver, "password", "pass1234")

@@ -30,10 +30,18 @@ export default class LifeStyleProfileEdit extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.lifestyleCallback = this.lifestyleCallback.bind(this);
         this.checkValidation = this.checkValidation.bind(this);
+        this.hasUpdated = true;
     }
-    lifestyleCallback(childData){
-        this.state = childData;
-        console.log(this.state);
+    lifestyleCallback(name,value){
+        this.hasUpdated = false;
+        this.setState({
+            ...this.state,
+            [name]: value
+        }, ()=>{
+            this.hasUpdated =true;
+            console.log(this.state);
+        } 
+        )
     }
     checkValidation(){
         var stateNames = Object.keys(this.state);
@@ -47,7 +55,7 @@ export default class LifeStyleProfileEdit extends React.Component{
         return true;
     }
     handleSubmit(){
-        if(this.checkValidation()){
+        if(this.checkValidation() && this.hasUpdated==true){
             console.log("submitted");
             console.log(this.state);
             updateLifestyleProfileInfo(this.state.sleep_time,this.state.wakeup_time,this.state.like_social,

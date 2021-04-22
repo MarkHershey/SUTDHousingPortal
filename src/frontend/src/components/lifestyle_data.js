@@ -41,10 +41,9 @@ export default class LifestyleData extends React.Component {
         }
         this.setState({
             ...this.state,
-            [name]: value
-        });
-        var data = this.state;
-        this.props.parentCallBack(data);
+            [name]:value
+        })
+        this.props.parentCallBack(name,value);
     }
 
 
