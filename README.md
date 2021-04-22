@@ -11,7 +11,7 @@ Focusing on transparent application process and efficient events management, thi
 
 ## Stack
 
-![](docs/deploy.png)
+![](docs/imgs/deploy.png)
 
 - Backend
   - [FastAPI](https://fastapi.tiangolo.com/) (Python high performance web framework)
@@ -103,12 +103,12 @@ username: admin
 password: pass1234
 
 Demo HG
-username: 1000000
-password: 1000000
+username: 1000000 ~ 1000005
+password: 1000000 ~ 1000005
 
 Demo Student
-username: 1000001 ~ 1000030
-password: 1000001 ~ 1000030
+username: 1000006 ~ 1000030
+password: 1000006 ~ 1000030
 ```
 
 ## Developers
