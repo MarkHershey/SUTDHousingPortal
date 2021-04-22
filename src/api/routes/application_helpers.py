@@ -52,7 +52,7 @@ def validate_new_application(
         # NOTE: this restriction is temporarily relaxed
         logger.info(f"Restriction temporarily relaxed")
         # return False
-    if application_forms_map[student_id] != "":
+    if application_forms_map.get(student_id) != "":
         logger.info(
             f"Illegal second submission by Student({student_id}) to ApplicationPeriod({target_AP_uid})"
         )
