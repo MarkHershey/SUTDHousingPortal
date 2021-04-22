@@ -25,6 +25,7 @@ class TestAccessUtils(unittest.TestCase):
             return
         self.assertTrue(Access.is_admin("admin"))
         self.assertFalse(Access.is_admin("1000000"))
+        self.assertFalse(Access.is_admin("1000001"))
         self.assertFalse(Access.is_admin("xxxxxxxxxx"))
 
     def test_is_admin_write(self):
@@ -45,9 +46,11 @@ class TestAccessUtils(unittest.TestCase):
         if self.ignore:
             return
         self.assertTrue(Access.is_student_hg("1000000"))
-        self.assertFalse(Access.is_student_hg("1000001"))
-        self.assertFalse(Access.is_student_hg("1000002"))
-        self.assertFalse(Access.is_student_hg("1000003"))
+        self.assertTrue(Access.is_student_hg("1000001"))
+        self.assertTrue(Access.is_student_hg("1000002"))
+        self.assertTrue(Access.is_student_hg("1000003"))
+        self.assertFalse(Access.is_student_hg("1000029"))
+        self.assertFalse(Access.is_student_hg("1000030"))
         self.assertFalse(Access.is_student_hg("admin"))
         self.assertFalse(Access.is_student_hg("xxxxxxxxxxx"))
 
