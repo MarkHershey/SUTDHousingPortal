@@ -6,16 +6,15 @@ class DisciplinaryRecordTest(unittest.TestCase):
     def test_disciplinary_record(self):
         # Login
         print("login")
-        usrname = "admin"
         driver.get(url)
-        input_text(driver, "text", usrname)
-        input_text(driver, "password", "pass1234")
+        input_text(driver, "text", admin_username)
+        input_text(driver, "password", admin_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
         # create disciplinary record
         print("creating record")
-        id = "1004000"
+        id = student_username
         record_type = ''.join(
             random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
         description = ''.join(

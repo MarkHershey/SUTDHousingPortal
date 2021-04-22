@@ -113,14 +113,13 @@ export async function deleteApplicationPeriodInfo(uid) {
     await axios(config)
         .then(function (response) {
             notification.success({
-                message: "Application Period deleted successfully",
+                message: "Application Period Deleted Successfully",
             });
-            window.location.reload(true);
             console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
             notification.error({
-                message: "Application Period deleted failed",
+                message: "Application Period Deletion Failed",
             });
         });
 }

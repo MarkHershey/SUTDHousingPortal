@@ -106,6 +106,7 @@ function Row(props) {
                                 }
                                 )
                             }}
+                            id = {"view"+row.application_window_open + row.application_window_close}
                             >View</button>
                 </TableCell>
             </TableRow>

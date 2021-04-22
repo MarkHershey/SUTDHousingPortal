@@ -1,4 +1,8 @@
+from telnetlib import EC
+
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.expected_conditions import element_to_be_clickable
+from selenium.webdriver.support.wait import WebDriverWait
 
 from function import *
 
@@ -8,11 +12,9 @@ class EventTest(unittest.TestCase):
     def test_application_normal_workflow(self):
         # Login with admins account
         print("Login with admins account")
-        admin_usrname = "admin"
-        admin_passwd = "pass1234"
         driver.get(url)
-        input_text(driver, "text", admin_usrname)
-        input_text(driver, "password", admin_passwd)
+        input_text(driver, "text", admin_username)
+        input_text(driver, "password", admin_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
@@ -33,58 +35,75 @@ class EventTest(unittest.TestCase):
 
         # Admin logout
         print("Admin logout")
-        click_btn(driver, "adminlogout")
+        driver.get(url + "/login")
 
         # Student login
         print("Student login")
-        admin_usrname = "1000001"
-        admin_passwd = "1000001"
         driver.get(url)
-        input_text(driver, "text", admin_usrname)
-        input_text(driver, "password", admin_passwd)
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_password)
         click_btn(driver, "loginbtn")
         time.sleep(1)
 
-        # Student Submit application form
+        # Student submit application form
         print("Student submit application form")
-        driver.get(url+ "/apply0")
-        window_open = "2021-04-20T05:00:00.666+00:00"
-        window_close = "2021-06-20T07:00:00.666+00:00"
-        
-        click_btn(driver,"expand_row_button"+window_open+window_close)
-        click_btn(driver,"next"+window_open+window_close)
-        
-        click_btn(driver,"application1_next_btn")
-        click_btn(driver,"application2_next_btn")
-        click_btn(driver,"application3_next_btn")
-        click_btn(driver,"application4_next_btn")
-        click_btn(driver,"submit_application_btn")
+        driver.get(url + "/apply0")
+        window_open = "2021-04-20T05:00:00"
+        window_close = "2021-06-20T07:00:00"
+        click_btn(driver, "expand_row_button" + window_open + window_close)
+        click_btn(driver, "next" + window_open + window_close + "_0")
 
-
-
+        click_btn(driver, "application1_next_btn")
+        click_btn(driver, "application2_next_btn")
+        click_btn(driver, "application3_next_btn")
+        click_btn(driver, "application4_next_btn")
+        click_btn(driver, "submit_application_btn")
 
         # Student check status(submitted)
-        driver.get(url+"/application_status")
+        driver.get(url + "/application_status")
+        time.sleep(5)
+        driver.find_element_by_xpath('//div[text()="Offer submitted"]')
+
         # Student logout
+        print("Student logout")
+        driver.get(url + "/login")
 
         # Admin login
+        print("Login with admins account")
+        driver.get(url)
+        input_text(driver, "text", admin_username)
+        input_text(driver, "password", admin_password)
+        click_btn(driver, "loginbtn")
+        time.sleep(1)
 
         # Admin go to view application
+        print("Admin go to view application")
+        driver.get(url + "/admin/application_viewing")
+        time.sleep(1)
+        click_btn(driver, "view" + window_open + window_close)
 
         # Admin view student's application
+        print("Admin view student's application")
 
         # Admin accept student's application
+        print("Admin accept student's application")
+        click_btn(driver, "accept_" + student_username)
 
         # Admin logout
-
+        driver.get(url + "/login")
         # Student login
-
+        print("Student login")
+        driver.get(url)
+        input_text(driver, "text", student_username)
+        input_text(driver, "password", student_password)
+        click_btn(driver, "loginbtn")
+        time.sleep(1)
         # Student accept offer
+        driver.get(url + "/application_status")
+        time.sleep(5)
+        click_btn(driver, "accept_btn")
 
         # Student logout
-
-        # Admin login
-
-        # Admin see the change
+        driver.get(url + "/login")
 
         driver.quit()

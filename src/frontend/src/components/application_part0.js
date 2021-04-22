@@ -60,7 +60,7 @@ Row.propTypes = {
 };
 
 
-function CreateUI(props,uid){
+function CreateUI(props,uid, id){
     console.log("belowww");
     console.log(props);
     let history = useHistory();
@@ -76,7 +76,7 @@ function CreateUI(props,uid){
                     <bs.Col lg={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button id={"next"+el.start_date+el.end_date} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
+                    <bs.Col lg={3}><Button id={"next"+id +"_"+ i} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
                         setPersonalApplicationPeriodInfoJson(el);
@@ -119,7 +119,7 @@ function Row(props) {
                             <Typography variant="h6" gutterBottom component="div" text-align="center">
                                 Application Periods
                             </Typography>
-                            {CreateUI(row.applicable_periods,row.uid)}
+                            {CreateUI(row.applicable_periods,row.uid, row.application_window_open+row.application_window_close)}
                         </Box>
                     </Collapse>
                 </TableCell>

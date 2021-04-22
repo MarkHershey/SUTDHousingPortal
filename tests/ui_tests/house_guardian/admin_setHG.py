@@ -38,4 +38,4 @@ class SetHgTest(unittest.TestCase):
 
         input_text_by_name(driver, "student_id", "100")
         click_btn(driver, "add_house_guardians_btn")
-        self.assertEqual(driver.current_url, "http://localhost:3000/admin/house_guardian_add")
+        self.assertEqual(driver.current_url, url + "/admin/house_guardian_add")

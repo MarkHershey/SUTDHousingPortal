@@ -9,9 +9,15 @@ import string
 
 from selenium.webdriver.common.by import By
 
-path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
-path2 = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver2"
 url = "http://localhost:3000"
+path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
+admin_username = "admin"
+admin_password = "pass1234"
+student_username = "1000007"
+student_password = "1000007"
+HG_username = "1000000"
+HG_password = "1000000"
+
 
 options = webdriver.ChromeOptions()
 options.add_argument('--ignore-certificate-errors')
