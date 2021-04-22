@@ -4,9 +4,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
 
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import *
 from ..error_msg import ErrorMsg as MSG
+from ..functional import clean_dict, remove_none_value_keys
+from ..models.application import ApplicationForm, ApplicationPeriod, TimePeriod
 from ..models.event import Event
 from ..models.lifestyle import LifestyleProfile
 from ..models.record import DisciplinaryRecord
@@ -16,8 +19,6 @@ from ..models.student import (
     StudentIdentityProfile,
     StudentProfile,
 )
-from ..models.user import Admin, User
-from ..utils import Access, clean_dict, remove_none_value_keys
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 auth_handler = AuthHandler()
@@ -297,8 +298,33 @@ async def update_one_lifestyle_profile(
 
     Require: Student-self or Admin-write
     """
-    # TODO:
-    pass
+    permission_ok = False
+    if username == student_id:
+        permission_ok = True
+    if Access.is_admin_write(username):
+        permission_ok = True
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    data = dict(lifestyle_profile.dict())
+    try:
+        updated = students_collection.find_one_and_update(
+            filter={"student_id": student_id},
+            update={"$set": {"preference_lifestyle": data}},
+            return_document=ReturnDocument.AFTER,
+        )
+        clean_dict(updated)
+    except Exception as e:
+        logger.error(MSG.DB_UPDATE_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_UPDATE_ERROR)
+
+    if updated:
+        logger.debug(f"Updated: {updated}")
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
 
 
 @router.get("/{student_id}/events", response_model=List[Event])
@@ -359,10 +385,7 @@ async def get_student_disciplinary_records(
         f"User({username}) trying fetching Student({student_id})'s DisciplinaryRecords"
     )
 
-    permission_ok = Access.is_admin(username)
-    if username == student_id:
-        permission_ok = True
-
+    permission_ok = Access.is_admin(username) or (username == student_id)
     if not permission_ok:
         logger.debug(MSG.permission_denied_msg(username))
         raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
@@ -402,3 +425,56 @@ async def get_student_disciplinary_records(
         f"Fetched {len(event_info_list)} DisciplinaryRecord(s) that belong to Student({student_id})"
     )
     return event_info_list
+
+
+@router.get("/{student_id}/applications", response_model=Dict[str, ApplicationForm])
+async def get_student_submitted_applications(
+    student_id: str, username=Depends(auth_handler.auth_wrapper)
+):
+    """
+    Get a list of ApplicationForm that the student has submitted.
+
+    Require: Student-self or Admin-read
+    """
+    logger.debug(
+        f"User({username}) trying fetching Student({student_id})'s Applications"
+    )
+
+    permission_ok = Access.is_admin(username) or (username == student_id)
+    if not permission_ok:
+        logger.debug(MSG.permission_denied_msg(username))
+        raise HTTPException(status_code=401, detail=MSG.PERMISSION_ERROR)
+
+    application_list = []
+    try:
+        student_info = students_collection.find_one({"student_id": student_id})
+        clean_dict(student_info)
+    except Exception as e:
+        logger.error(MSG.DB_QUERY_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
+
+    if not student_info:
+        raise HTTPException(status_code=404, detail=MSG.TARGET_ITEM_NOT_FOUND)
+
+    AF_uids = student_info.get("application_uids", [])
+    if not AF_uids:
+        return {}
+    else:
+        AF_uids = list(set(AF_uids))
+
+    submitted_applications: Dict[str, dict] = {}
+
+    try:
+        for uid in AF_uids:
+            if isinstance(uid, str):
+                ap_dict: dict = applications_collection.find_one({"uid": uid})
+                clean_dict(ap_dict)
+                if ap_dict:
+                    submitted_applications[uid] = ap_dict
+    except Exception as e:
+        logger.error(MSG.DB_QUERY_ERROR)
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=MSG.DB_QUERY_ERROR)
+
+    return submitted_applications

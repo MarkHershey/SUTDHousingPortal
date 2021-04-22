@@ -1,12 +1,12 @@
-from datetime import datetime, timedelta
-import time
-import threading
-from datetime_selenium import send_datetime
-from selenium import webdriver
-import unittest
 import random
 import string
+import threading
+import time
+import unittest
+from datetime import datetime, timedelta
 
+from datetime_selenium import send_datetime
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 url = "http://localhost:3000"
@@ -20,10 +20,10 @@ HG_password = "1000000"
 
 
 options = webdriver.ChromeOptions()
-options.add_argument('--ignore-certificate-errors')
+options.add_argument("--ignore-certificate-errors")
 # options.add_argument('headless')
-options.add_argument('--no-sandbox')
-options.add_argument('-disable-dev-shm-usage')
+options.add_argument("--no-sandbox")
+options.add_argument("-disable-dev-shm-usage")
 driver = webdriver.Chrome(executable_path=path, options=options)
 
 
@@ -41,12 +41,17 @@ def input_text_by_name(driver, element_name, value):
 
 def input_datetime_by_name(driver, element_name):
     datetime_local = driver.find_element_by_xpath('//*[@name="' + element_name + '"]')
-    send_datetime(datetime_local, datetime(random.randint(2016,2022),
-                                           random.randint(1,12),
-                                           random.randint(1,28),
-                                           random.randint(1,23),
-                                           random.randint(1,59),
-                                           random.randint(1,59)))
+    send_datetime(
+        datetime_local,
+        datetime(
+            random.randint(2016, 2022),
+            random.randint(1, 12),
+            random.randint(1, 28),
+            random.randint(1, 23),
+            random.randint(1, 59),
+            random.randint(1, 59),
+        ),
+    )
     time.sleep(0.5)
 
 

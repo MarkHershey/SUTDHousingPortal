@@ -1,9 +1,9 @@
-from typing import Dict, List, Optional
+from typing import List
 
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from .helpers import uid_gen
+from ..functional import uid_gen
 
 LEVEL_MIN = 1
 LEVEL_MAX = 15

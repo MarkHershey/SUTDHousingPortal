@@ -1,0 +1,3 @@
+export _DB_USER="REPLACE_ME"
+export _DB_PASS="REPLACE_ME"
+export _DB_NAME="REPLACE_ME"
