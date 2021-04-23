@@ -88,45 +88,50 @@ export default class EditDisciplinaryRecord extends React.Component {
 
 
     render() {
-        return (
-            <EventDiv>
-                <h3>Edit Disciplinary Record</h3>
-                <EditBox>
-                    <bs.Container>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Student ID:</Field></bs.Col>
-                            <bs.Col lg={3}><Input disabled="true" value={this.state.student_id}
-                                                  id="edit_disciplinary_record_id" name="student_id" type="text"
-                                                  onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Record Type:</Field></bs.Col>
-                            <bs.Col lg={3}><Input disabled="true" value={this.state.record_type}
-                                                  id="edit_disciplinary_record_type" name="record_type" type="text"
-                                                  onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Description:</Field></bs.Col>
-                            <bs.Col lg={9}><TextArea value={this.state.description} id="edit_disciplinary_record_description"
-                                                     name="description" cols="55" rows="5"
-                                                     onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                        <br/>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Points Deduction</Field></bs.Col>
-                            <bs.Col lg={3}><Input placeholder={this.state.points_deduction}
-                                                  id="edit_disciplinary_record_points_deduction" name="points_deduction"
-                                                  type="number" onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                    </bs.Container>
-                </EditBox>
-                <EditBox>
-                    <bs.Col>
-                        <button id="edit_disciplinary_record_btn" type="submit" onClick={this.handleUpdate}
-                                className="btn btn-outline-primary">Update
-                        </button>
-                    </bs.Col>
-                </EditBox>
-            </EventDiv>
-        );
+        if (this.props.location.state === undefined)
+            window.location.replace("/")
+        else
+            return (
+                <EventDiv>
+                    <h3>Edit Disciplinary Record</h3>
+                    <EditBox>
+                        <bs.Container>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Student ID:</Field></bs.Col>
+                                <bs.Col sm={3}><Input disabled="true" value={this.state.student_id}
+                                                      id="edit_disciplinary_record_id" name="student_id" type="text"
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                                <bs.Col sm={3}><Field>Record Type:</Field></bs.Col>
+                                <bs.Col sm={3}><Input disabled="true" value={this.state.record_type}
+                                                      id="edit_disciplinary_record_type" name="record_type" type="text"
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Description:</Field></bs.Col>
+                                <bs.Col sm={9}><TextArea value={this.state.description}
+                                                         id="edit_disciplinary_record_description"
+                                                         name="description" cols="55" rows="5"
+                                                         onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
+                            <br/>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Points Deduction</Field></bs.Col>
+                                <bs.Col sm={3}><Input placeholder={this.state.points_deduction}
+                                                      id="edit_disciplinary_record_points_deduction"
+                                                      name="points_deduction"
+                                                      type="number" onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
+                        </bs.Container>
+                    </EditBox>
+                    <EditBox>
+                        <bs.Col>
+                            <button id="edit_disciplinary_record_btn" type="submit" onClick={this.handleUpdate}
+                                    className="btn btn-outline-primary">Update
+                            </button>
+                        </bs.Col>
+                    </EditBox>
+                </EventDiv>
+            );
     }
 
 };

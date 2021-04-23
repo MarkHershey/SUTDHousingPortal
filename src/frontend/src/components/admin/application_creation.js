@@ -97,18 +97,18 @@ export default class ApplicationCreation extends React.Component{
             <EventDiv key={i}>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col lg={3} style={{textAlign:"right"}}><h4>{i + 1}</h4></bs.Col>
-                        <bs.Col lg={3}>
+                        <bs.Col sm={3} style={{textAlign:"right"}}><h4>{i + 1}</h4></bs.Col>
+                        <bs.Col sm={3}>
                             <Input type="date" name="start_date" id={"start_date_" + i} value={el.start_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
-                        <bs.Col lg={1}><MinusOutlined style={{ fontSize: '30px' }}/></bs.Col>
-                        <bs.Col lg={3}>
+                        <bs.Col sm={1}><MinusOutlined style={{ fontSize: '30px' }}/></bs.Col>
+                        <bs.Col sm={3}>
                             <Input type="date" name="end_date" id={"end_date_" + i} value={el.end_date ||''} onChange={this.handleChangeArrays.bind(this, i)} />
                         </bs.Col>
-                        <bs.Col lg={1}>
+                        <bs.Col sm={1}>
                             <CloseCircleTwoTone style={{ fontSize: '30px' }} onClick={this.removeClick.bind(this, i)} twoToneColor={"#ff0000"} id ={"minus_" + i}/>
                         </bs.Col>
-                        <bs.Col lg={1}>
+                        <bs.Col sm={1}>
                             <PlusCircleTwoTone style={{ fontSize: '30px' }} onClick={this.addClick.bind(this)} twoToneColor={"#52C41A"} id ={"plus_" + i}/>
                         </bs.Col>
                     </bs.Row>
@@ -143,22 +143,22 @@ export default class ApplicationCreation extends React.Component{
                 <EditBox>
                     <bs.Container>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="app_period_window_open"name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
-                            <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="app_period_window_close" name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col sm={3}><Field>Application Opening Date:</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="app_period_window_open"name="application_window_open" type="datetime-local" onChange={e => this.handleChange(e)} /></bs.Col>
+                            <bs.Col sm={3}><Field>Application Closing Date:</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="app_period_window_close" name="application_window_close" type="datetime-local" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <br/>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Applicable Periods:</Field></bs.Col>
+                            <bs.Col sm={3}><Field>Applicable Periods:</Field></bs.Col>
                         </bs.Row>
                         <br/>
                             {this.createUI()}
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Applicable Rooms:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="app_period_applicable_rooms" name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Applicable students:</Field></bs.Col>
-                            <bs.Col lg={3}>
+                            <bs.Col sm={3}><Field>Applicable Rooms:</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="app_period_applicable_rooms" name="applicable_rooms" type="text" onChange={e => this.handleChange(e)}/></bs.Col>
+                            <bs.Col sm={3}><Field>Applicable students:</Field></bs.Col>
+                            <bs.Col sm={3}>
                                 <Select name="applicable_students" id="applicable_students" defaultValue="Undergraduate" style={{ width: 200 }}>
                                     <Option value="Freshmore">Freshmore</Option>
                                     <Option value="Undergraduate">Undergraduate</Option>

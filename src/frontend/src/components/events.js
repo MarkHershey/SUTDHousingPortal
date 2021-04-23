@@ -162,35 +162,35 @@ function Row(props) {
                             </Typography>
                             <bs.Container>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Description:</SubTitle></bs.Col>
-                                    <bs.Col lg={9} id={row.title + "-description-text"}>{row.description}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Description:</SubTitle></bs.Col>
+                                    <bs.Col sm={9} id={row.title + "-description-text"}>{row.description}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
-                                    <bs.Col lg={3} id={row.title + "-duration"}>{row.duration_mins + "mins"}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
-                                    <bs.Col lg={3} id={row.title + "-location"}>{row.meetup_location}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
+                                    <bs.Col sm={3} id={row.title + "-duration"}>{row.duration_mins + "mins"}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
+                                    <bs.Col sm={3} id={row.title + "-location"}>{row.meetup_location}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Max Signups:</SubTitle></bs.Col>
-                                    <bs.Col lg={3} id={row.title + "-signup-limit"}>{row.signup_limit}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Remaining Slots:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}
+                                    <bs.Col sm={3}><SubTitle>Max Signups:</SubTitle></bs.Col>
+                                    <bs.Col sm={3} id={row.title + "-signup-limit"}>{row.signup_limit}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Remaining Slots:</SubTitle></bs.Col>
+                                    <bs.Col sm={3}
                                             id={row.title + "-remaining-slots"}>{row.signup_limit - row.signups.length}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Signup Deadline:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}
+                                    <bs.Col sm={3}><SubTitle>Signup Deadline:</SubTitle></bs.Col>
+                                    <bs.Col sm={3}
                                             id={row.title + "-signup-ddl"}>{new Date(Date.parse(row.signup_ddl)).format("dd/MM/yyyy hh:mm:ss")}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Event Held by:</SubTitle></bs.Col>
-                                    <bs.Col lg={3} id={row.title + "-held-by"}>{row.created_by}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Event Held by:</SubTitle></bs.Col>
+                                    <bs.Col sm={3} id={row.title + "-held-by"}>{row.created_by}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Count Attendance:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}
+                                    <bs.Col sm={3}><SubTitle>Count Attendance:</SubTitle></bs.Col>
+                                    <bs.Col sm={3}
                                             id={row.title + "-count-attendance"}>{row.count_attendance ? "Yes" : "No"}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Enrollment Status</SubTitle></bs.Col>
-                                    <bs.Col lg={3}>{joined(row) ? "Signed Up" : "Not Joined"}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Enrollment Status</SubTitle></bs.Col>
+                                    <bs.Col sm={3}>{joined(row) ? "Signed Up" : "Not Joined"}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
                             <Typography variant="h6" gutterBottom component="div" text-align="center">
@@ -297,11 +297,11 @@ function SimpleModal(props) {
         return (
             <bs.Container>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={1}><input type={"checkbox"} checked={checked} onChange={handleClick}
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={1}><input type={"checkbox"} checked={checked} onChange={handleClick}
                                           id={props.id + "-mark"}/></bs.Col>
-                    <bs.Col lg={3}><p>{props.id}</p></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={3}><p>{props.id}</p></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
             </bs.Container>
         );

@@ -56,8 +56,8 @@ export default class LifestyleData extends React.Component {
                     Sociability
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="socialbility_slider"
                         name="socialbility"
                         defaultValue={this.state.like_social}
@@ -69,14 +69,14 @@ export default class LifestyleData extends React.Component {
                         onChange={(e, value) => this.handleChange("like_social", value)}
                         color="primary"
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="cleanliness-slider_topo">
                     Cleanliness
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="cleanliness_slider"
                         defaultValue={this.state.like_clean}
                         aria-labelledby="cleanliness-slider"
@@ -87,14 +87,14 @@ export default class LifestyleData extends React.Component {
                         color="primary"
                         onChange={(e, value) => this.handleChange("like_clean", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="noisiness-slider">
                     Noisiness Level
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="noisiness_slider"
                         defaultValue={this.state.like_quiet}
                         aria-labelledby="noisiness-slider"
@@ -106,14 +106,14 @@ export default class LifestyleData extends React.Component {
                         color="primary"
                         onChange={(e, value) => this.handleChange("like_quiet", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="aircon-slider">
                     Use Aircon
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="aircon_slider"
                         defaultValue={this.state.use_aircon ===false ? 0 : this.state.use_aircon === true ? 1: 0}
                         aria-labelledby="aircon-slider"
@@ -125,14 +125,14 @@ export default class LifestyleData extends React.Component {
                         color="secondary"
                         onChange={(e, value) => this.handleChange("use_aircon", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="smokes-slider">
                     Smokes
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="smokes_slider"
                         defaultValue={this.state.smoking === false ? 0 : this.state.smoking === true ? 1 : 0}
                         aria-labelledby="smokes-slider"
@@ -144,11 +144,11 @@ export default class LifestyleData extends React.Component {
                         color="secondary"
                         onChange={(e, value) => this.handleChange("smoking", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
 
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                     <Button id="controlDropdownSleep" className={useStyles.button} onClick={()=>{
                         this.setState({
                             sleepDropDownOpen : true
@@ -183,11 +183,11 @@ export default class LifestyleData extends React.Component {
                         <MenuItem id="sleepMenuItem2" value={2}>2:00</MenuItem>
                         </Select>
                     </FormControl>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <br/>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                     <Button id="controlDropdownWake" className={useStyles.button} onClick={()=>{
                         this.setState({
                             wakeUpDropDownOpen : true
@@ -223,17 +223,17 @@ export default class LifestyleData extends React.Component {
                         <MenuItem id="wakeMenuItem11" value={11}>11:00</MenuItem>
                         </Select>
                     </FormControl>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <br/>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                         <bs.Col>
                             <Field >Diet</Field>
                             <input id="lifestyle_diet" name="diet" placeholder={this.state.diet}
                              onChange={(e)=>this.handleChange("diet",e.target.value)}/>
                         </bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 
             </bs.Container>
