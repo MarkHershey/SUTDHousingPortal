@@ -29,9 +29,9 @@
     - [Cloud-native & Container-based Deployment](#Cloud-native-&-Container-based-Deployment)
     - [User Access & Permissions](#User-Access-&-Permissions)
     - [Frontend Implementation Challenges](#Frontend-Implementation-Challenges)
-- [Testing Challenges](#testing-challenges)
-  - [Auto-computation of Test Coverage](#Auto-computation-of-Test-Coverage)
-  - [UI Testing Challenges](#UI-Testing-Challenges)
+  - [Testing Challenges](#testing-challenges)
+    - [Auto-computation of Test Coverage](#Auto-computation-of-Test-Coverage)
+    - [UI Testing Challenges](#UI-Testing-Challenges)
 - [Testing](#testing)
   - [a. Unit Test](#a-unit-test)
   - [b. Integration Test](#b-integration-test)
@@ -236,17 +236,19 @@ We need to plan the development timeline based on many factors: our role (backen
 
 ### Application Screenshots
 
-|   User   |        Page         |                       Screenshot                        |
-| :------: | :-----------------: | :-----------------------------------------------------: |
-| Everyone |    Portal Login     |   <img src="imgs/ss_login.png" height=auto width=600>   |
-| Student  |      User Home      |   <img src="imgs/ss_home.png" height=auto width=600>    |
-| Student  |   Housing Events    |  <img src="imgs/ss_events.png" height=auto width=600>   |
-| Student  |   Track My Events   | <img src="imgs/ss_events_my.png" height=auto width=600> |
-| Student  | Submit Application  |    <img src="imgs/ss_af1.png" height=auto width=600>    |
-| Student  | Submit Application  |    <img src="imgs/ss_af2.png" height=auto width=600>    |
-| Student  | Application Status  |    <img src="imgs/ss_af3.png" height=auto width=600>    |
-|  Admin   | Application Periods |    <img src="imgs/ss_ap1.png" height=auto width=600>    |
-|  Admin   | Review Applications |    <img src="imgs/ss_ap2.png" height=auto width=600>    |
+|   User   |         Page         |                        Screenshot                         |
+| :------: | :------------------: | :-------------------------------------------------------: |
+| Everyone |     Portal Login     |    <img src="imgs/ss_login.png" height=auto width=600>    |
+| Student  |      User Home       |    <img src="imgs/ss_home.png" height=auto width=600>     |
+| Student  |    Housing Events    |   <img src="imgs/ss_events.png" height=auto width=600>    |
+| Student  |   Track My Events    |  <img src="imgs/ss_events_my.png" height=auto width=600>  |
+| Student  |  Submit Application  |     <img src="imgs/ss_af1.png" height=auto width=600>     |
+| Student  |  Submit Application  |     <img src="imgs/ss_af2.png" height=auto width=600>     |
+| Student  |  Application Status  |     <img src="imgs/ss_af3.png" height=auto width=600>     |
+|  Admin   | Application Periods  |     <img src="imgs/ss_ap1.png" height=auto width=600>     |
+|  Admin   | Review Applications  |     <img src="imgs/ss_ap2.png" height=auto width=600>     |
+|  Admin   | Disciplinary Records |     <img src="imgs/ss_dr.png" height=auto width=600>      |
+|  Admin   |     Admin Tools      | <img src="imgs/ss_admin_tools.png" height=auto width=300> |
 
 ### API Endpoints
 
