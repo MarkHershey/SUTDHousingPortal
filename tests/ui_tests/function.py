@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from datetime_selenium import send_datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 url = "http://localhost:3000"
 path = "/Users/home/Documents/WebStorm/SUTDHousingPortal/tests/ui_tests/chromedriver"
@@ -15,6 +16,8 @@ admin_username = "admin"
 admin_password = "pass1234"
 student_username = "1000007"
 student_password = "1000007"
+student_username_ms = "1000006"
+student_password_ms = "1000006"
 HG_username = "1000000"
 HG_password = "1000000"
 
@@ -40,17 +43,18 @@ def input_text_by_name(driver, element_name, value):
 
 
 def input_datetime_by_name(driver, element_name):
-    datetime_local = driver.find_element_by_xpath('//*[@name="' + element_name + '"]')
-    send_datetime(
-        datetime_local,
-        datetime(
-            random.randint(2016, 2022),
-            random.randint(1, 12),
-            random.randint(1, 28),
-            random.randint(1, 23),
-            random.randint(1, 59),
-            random.randint(1, 59),
-        ),
+    # datetime_local = driver.find_element_by_xpath('//*[@name="' + element_name + '"]')
+    input_text_by_name(
+        driver,
+        element_name,
+        str(random.randint(1, 28))
+        + "0"
+        + str(random.randint(1, 9))
+        + str(random.randint(2021, 2024))
+        + Keys.RIGHT
+        + "0"
+        + str(random.randint(1, 9))
+        + "00AM",
     )
     time.sleep(0.5)
 
