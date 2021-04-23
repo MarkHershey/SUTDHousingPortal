@@ -28,8 +28,21 @@
     - [System Architecture Design](#System-Architecture-Design)
     - [Cloud-native & Container-based Deployment](#Cloud-native-&-Container-based-Deployment)
     - [User Access & Permissions](#User-Access-&-Permissions)
+    - [Frontend Implementation Challenges](#Frontend-Implementation-Challenges)
 - [Testing Challenges](#testing-challenges)
   - [Auto-computation of Test Coverage](#Auto-computation-of-Test-Coverage)
+  - [UI Testing Challenges](#UI-Testing-Challenges)
+- [Testing](#testing)
+  - [a. Unit Test](#a-unit-test)
+  - [b. Integration Test](#b-integration-test)
+  - [c. API-level User Flow Test](#c-api-level-user-flow-test)
+  - [d. UI-level User Flow Test with Selenium](#d-ui-level-user-flow-test-with-selenium)
+  - [e. UI Robustness Tests with Selenium](#d-ui-level-user-flow-test-with-selenium)
+  - [f. User Test with End User](#f-user-test-with-end-user)
+- [Lesson Learned](#lesson-learned)
+- [Deliverables](#deliverables)
+  - [Application Screenshots](#application-screenshots)
+  - [API Endpoints](#api-endpoints)
 
 ---
 
@@ -124,6 +137,8 @@ Hence, we designed 4 types of users in our application and their corresponding a
 - To design and implement UI components from scratch requires a tremendous amount of work. Therefore, we utilize some libraries such as [Ant Design](https://ant.design/), [Bootstrap](https://getbootstrap.com/), and [Material UI](https://material-ui.com/).
 - Every HTTP request takes time to get a response. If we directly 'assume' that the data is ready and start to render it, it will result in page errors. Therefore, we decided to use empty placeholders to fill in all the required data fields first. Then, after the data is fetched, we use the `componentDidMount` function to replace all placeholders with real data.
 - There were some challenges when passing data among React components by using the state. As the `setState` method is asynchronous, there were instances a user would like to make changes to a form and due to these changes are made using `setState`, there would be a time delay when making these changes. Hence, if the user decides to submit the form before `setState` is completed, the data sent to the server would not be the latest data as the user intended. To handle this, we implemented a callback condition to check whether the data has been fully updated before allowing the data to be patched with a request.
+- After the update of certain user profiles, it is good to see the change immediately after the update completes. However, updating the change is done by an async HTTP `POST` request while in order to get the updated value we need an async HTTP `GET` request. When writing code, if we just execute the `POST` followed by `GET`, it is possible that `POST` is done after the `GET`, resulting in failure of fetching the latest version of data. Our solution is that we start the `GET` only when we are sure that `POST` has completed by putting the `GET` function inside the `.then()` of the `POST` function(That means that the `POST` has returned normally). The experience has taught us: be aware of the async function!
+- Another challenge is to preventing user accessing pages that it does not has access to. Admin and students have their unique frontend interfaces, which shouldn't be reached by the other type of user. We do try to avoid this by designing 2 different navigation bars. However, instead of using the navigation bar, how about the student just key in the URL? Therefore we designed a router guard (which is different from our login router guard), if the type of the user is forbidden, it will redirect the URL to the home page.
 
 ### Testing Challenges
 
@@ -133,23 +148,74 @@ How do we develop and push new features with confidence? We believe test-driven 
 
 In our project, we adopted the testing framework [pytest](https://docs.pytest.org/) to run python unit tests based on Python's built-in [unittest](https://docs.python.org/3/library/unittest.html) module. We also adopted the test coverage computation and reporting tool [Codecov](https://about.codecov.io/) to auto-compute statement coverage for us. Furthermore, we set up a continuous integration (CI) pipeline on [GitHub Actions](https://github.com/MarkHershey/SUTDHousingPortal/actions) to run all of our tests and compute test coverage automatically every time we push new commits to GitHub, or every time before a pull request get approved. By using web interface provided by [Codecov](https://app.codecov.io/gh/MarkHershey/SUTDHousingPortal), we could easily checkout testing statistics report and locate under-tested source code lines.
 
+#### UI Testing Challenges
+
+As some of our components are rendered dynamically and are not statically rendered, we found that we had to find a way to give the components being rendered a unique id so that we are able to control the component when utilizing selenium. In order to solve this issue, we decide to allocate the component’s id based on the data we data of other fields in the state. This allows us to have a unique id for the component and a way for us to know the id of the component in selenium as we control what data is filled up in the other previous fields and thus we would have the unique id of the component we want.
+
 ## Testing
+
+> Checkout testing-related source code [here](https://github.com/MarkHershey/SUTDHousingPortal/tree/master/tests)
 
 #### a. Unit Test
 
 Unit tests are the basic white-box tests to ensure functional behaviors matches with the defined project requirements and be able to produces expected output consistently.
 
+- Unit Test Coverage Report: [app.codecov.io/gh/MarkHershey/SUTDHousingPortal](https://app.codecov.io/gh/MarkHershey/SUTDHousingPortal)
+
 #### b. Integration Test
+
+Our integration tests serve as the black-box test after the backend has beed deployed. The objective of integration tests is mainly testing the integration of our backend server and the cloud database server. We use Python's `requests` library to make API calls (HTTP requests) to our backend server, and then we verify the expected result directly from MongoDB database. This is to ensure 1. backend produces expected results. 2. the data models (classes) we defined in backend code can be correctly converted to database collections and vice versa.
 
 #### c. API-level User Flow Test
 
+API-level user flow test uses API endpoints to simulate user behaviors, it models the complete user journey from start to end. the user flow covers:
+
+1. create admin user accounts
+2. create student user accounts and profiles
+3. assign students as house guardians
+4. house guardians create housing events
+5. students sign up for events
+6. house guardians take attendance for events
+7. admins issue disciplinary records to students
+8. admins migrate room data
+9. admins create housing application exercise period
+10. students submit new housing applications
+11. admins approve/ reject / wait-list applications
+12. students accepts/ decline housing offers
+
 #### d. UI-level User Flow Test with Selenium
+
+UI-level user flow tests cover the same user flow as above, but it is done at the user interface level, thus completely black-boxed, the test program has no direct access to API endpoints, it could only access what normal user could possibly access. The automated test is powered by Selenium with Python.
 
 #### e. UI Robustness Tests with Selenium
 
+To ensure that the robustness of our system, the application should not stop responding, the database should not be taking in invalid or malicious data under any circumstances. Thus, we introduced the money test, which is powered by Selenium to randomly click buttons, create random inputs.
+
 #### f. User Test with End User
 
-## Lessons Learnt
+To continuous get feedback from our end user, we have approached to many fellow students and invited them to try our application, asking for their suggestion along the way we develop and roll out new features. Their positive feedback had affirmed us that we are going at the right direction, and some criticism also helped us to iterate and refine features.
+
+Feedbacks from end user:
+
+> How satisfied are you with the new event management system?
+>
+> ![](imgs/q1.png)
+
+> How useful it is for Housing Portal to integrate the Housing Event system?
+>
+> ![](imgs/q2.png)
+
+> Do you think our process of Event creation/sign-up/record attendance on the web interface is intuitive and user-friendly?
+>
+> 1: Not Intuitive; 10: Very intuitive
+>
+> ![](imgs/q3.png)
+
+> Other feedbacks:
+>
+> ![](imgs/q5.png)
+
+## Lesson Learned
 
 We used the iterative and incremental methods. At first, our frontend and backend were developed separately. For the frontend part, it was initially a static webpage. Later on, we started to make the real functional frontend and backend. We discussed the next stage’s work together. Usually, the backend will be developed at one stage faster than the frontend to ensure that the frontend will not need to wait for the backend to implement required functions which could be a waste of time. After each stage is finished, corresponding tests are written for both the backend and frontend to ensure the stability of the functions.
 
@@ -168,4 +234,22 @@ We need to plan the development timeline based on many factors: our role (backen
 - API Documentation: [esc.dev.markhh.com/api/docs](http://esc.dev.markhh.com/api/docs)
 - Test Coverage Report: [app.codecov.io/gh/MarkHershey/SUTDHousingPortal](https://app.codecov.io/gh/MarkHershey/SUTDHousingPortal)
 
-![](imgs/portal_home_page.png)
+### Application Screenshots
+
+|   User   |        Page         |                       Screenshot                        |
+| :------: | :-----------------: | :-----------------------------------------------------: |
+| Everyone |    Portal Login     |   <img src="imgs/ss_login.png" height=auto width=600>   |
+| Student  |      User Home      |   <img src="imgs/ss_home.png" height=auto width=600>    |
+| Student  |   Housing Events    |  <img src="imgs/ss_events.png" height=auto width=600>   |
+| Student  |   Track My Events   | <img src="imgs/ss_events_my.png" height=auto width=600> |
+| Student  | Submit Application  |    <img src="imgs/ss_af1.png" height=auto width=600>    |
+| Student  | Submit Application  |    <img src="imgs/ss_af2.png" height=auto width=600>    |
+| Student  | Application Status  |    <img src="imgs/ss_af3.png" height=auto width=600>    |
+|  Admin   | Application Periods |    <img src="imgs/ss_ap1.png" height=auto width=600>    |
+|  Admin   | Review Applications |    <img src="imgs/ss_ap2.png" height=auto width=600>    |
+
+### API Endpoints
+
+<img src="imgs/api1.png" height=auto width=auto>
+<img src="imgs/api2.png" height=auto width=auto>
+<img src="imgs/api3.png" height=auto width=auto>
