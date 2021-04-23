@@ -28,7 +28,10 @@ services:
             MODULE_NAME: "api.main"
             LOG_LEVEL: "debug"
             PRE_START_PATH: "/app/api/prestart.sh"
+            # openssl rand -hex 32
+            JWT_SECRET_KEY_PROD: "None" # For Production
+            JWT_SECRET_KEY_DEV: "None" # For Development
             # Gunicorn workers
             MAX_WORKERS: "1"
-        # volumes:
-        #     - "./logs:/app/logs"
+        volumes:
+            - "./logs:/app/logs"

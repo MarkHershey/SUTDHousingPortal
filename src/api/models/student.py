@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import List
 
 from markkk.logger import logger
 from pydantic import BaseModel, validator
@@ -26,6 +26,7 @@ class Student(User):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None
@@ -56,6 +57,7 @@ class StudentProfile(BaseModel):
     registered_events: List[str] = []
     attended_events: List[str] = []
     disciplinary_records: List[str] = []
+    application_uids: List[str] = []
     preference_roommate: List[str] = []
     preference_room: RoomProfile = None
     preference_lifestyle: LifestyleProfile = None

@@ -39,4 +39,4 @@ if __name__ == "__main__":
     assert STUDENT_DATA_FILEPATH.is_file()
 
     room_list = import_room(str(STUDENT_DATA_FILEPATH))
-    pprint(room_list)
+    print(room_list)
