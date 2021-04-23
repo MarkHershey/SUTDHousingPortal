@@ -40,7 +40,6 @@ export const NavigationBar = () => (
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
-                    <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/profile" id="dropdown_profile">Profile</Nav.Link></Nav.Item>
                     <NavDropdown title="Events">
                         <NavDropdown.Item href="/event" id="dropdown_events">Floor Events</NavDropdown.Item>
@@ -53,6 +52,7 @@ export const NavigationBar = () => (
                         <NavDropdown.Item href="/apply0" id="dropdown_apply">Housing Application</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item><Nav.Link href="/login" onClick = {logout} id="logout">Logout</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
