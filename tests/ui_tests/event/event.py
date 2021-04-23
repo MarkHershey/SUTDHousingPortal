@@ -60,16 +60,17 @@ class EventTest(unittest.TestCase):
         # Join event
         print("join event")
         click_btn(driver, title + "-join-status")
-        time.sleep(2)
+
 
         # Try to delete this event (Will be rejected)
         print("try delete event when someone's joined")
+        time.sleep(3)
         click_btn(driver, title + "-drop-down")
         time.sleep(2)
         click_btn(driver, title + "-delete-event")
         driver.refresh()
         # Find the correct drop down(If found, that means that doesn't delete properly)
-        time.sleep(1)
+        time.sleep(3)
         click_btn(driver, title + "-drop-down")
 
         # Edit Event (Edit one field)
@@ -103,7 +104,7 @@ class EventTest(unittest.TestCase):
         # Cancel attendance
         print("cancel attendance")
         driver.refresh()
-        time.sleep(1)
+        time.sleep(3)
         click_btn(driver, title + "-drop-down")
         click_btn(driver, title + "-take-attendance")
         click_btn(driver, HG_username + "-mark")
@@ -112,14 +113,17 @@ class EventTest(unittest.TestCase):
         # Quit event
         print("quit event")
         driver.refresh()
+        time.sleep(3)
         click_btn(driver, title + "-drop-down")
         click_btn(driver, title + "-quit")
 
         # Try to delete this event (Will be accepted)
         print("delete event")
+        time.sleep(3)
         click_btn(driver, title + "-drop-down")
         time.sleep(2)
         click_btn(driver, title + "-delete-event")
         driver.refresh()
         with self.assertRaises(Exception):
             click_btn(driver, title + "-drop-down")
+        driver.quit()

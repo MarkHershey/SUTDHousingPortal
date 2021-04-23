@@ -27,14 +27,14 @@ const EventDiv = styled.div`
   text-align: center;
 `;
 
-export default class EventEdit extends React.Component{
-    constructor(props){
+export default class EventEdit extends React.Component {
+    constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleButtonChange = this.handleButtonChange.bind(this);
-       this.state=this.props.location.state;
-       console.log(this.state);
+        this.state = this.props.location.state;
+        console.log(this.state);
     }
 
     handleSubmit() {
@@ -54,10 +54,10 @@ export default class EventEdit extends React.Component{
             });
             return;
         }
-        editEvent(this.state.uid,this.state.title,this.state.event_type,
-            this.state.meetup_location,this.state.block,this.state.floor,
-            this.state.description,this.state.start_time,this.state.duration_mins,
-            this.state.count_attendance,this.state.signup_limit);
+        editEvent(this.state.uid, this.state.title, this.state.event_type,
+            this.state.meetup_location, this.state.block, this.state.floor,
+            this.state.description, this.state.start_time, this.state.duration_mins,
+            this.state.count_attendance, this.state.signup_limit);
         this.props.history.push("/event");
     }
 
@@ -79,58 +79,94 @@ export default class EventEdit extends React.Component{
         console.log(this.state);
     }
 
-    render(){
-        return(
-            <EventDiv>
-                <h3>Edit Event</h3>
-                <EditBox>
-                    <bs.Container>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Event Name:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_title" name="title" type="text" placeholder={this.state.title} onChange={e => this.handleChange(e)} /></bs.Col>
-                            <bs.Col lg={3}><Field>Event Type:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_type" name="event_type" type="text" placeholder={this.state.event_type} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
+    render() {
+        if (this.state === null) {
+            window.location.replace("/")
+        } else {
+            return (
+                <EventDiv>
+                    <h3>Edit Event</h3>
+                    <EditBox>
+                        <bs.Container>
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Event Name:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_title" name="title" type="text"
+                                                      placeholder={this.state.title}
+                                                      onChange={e => this.handleChange(e)}/>
+                                </bs.Col>
+                                <bs.Col lg={3}><Field>Event Type:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_type" name="event_type" type="text"
+                                                      placeholder={this.state.event_type}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
 
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Event Duration:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_duration" name="duration_mins" type="number" placeholder={this.state.duration_mins} onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Signup Limit:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_signup_limit" name="signup_limit" type="number" placeholder={this.state.signup_limit} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Event Duration:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_duration" name="duration_mins" type="number"
+                                                      placeholder={this.state.duration_mins}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                                <bs.Col lg={3}><Field>Signup Limit:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_signup_limit" name="signup_limit" type="number"
+                                                      placeholder={this.state.signup_limit}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
 
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Applicable Block:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_applicable_block" name="block" type="text" placeholder={this.state.block} onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Applicable Floor:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_applicable_floor" name="floor" type="text" placeholder={this.state.floor} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Applicable Block:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_applicable_block" name="block" type="text"
+                                                      placeholder={this.state.block}
+                                                      onChange={e => this.handleChange(e)}/>
+                                </bs.Col>
+                                <bs.Col lg={3}><Field>Applicable Floor:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_applicable_floor" name="floor" type="text"
+                                                      placeholder={this.state.floor}
+                                                      onChange={e => this.handleChange(e)}/>
+                                </bs.Col>
+                            </bs.Row>
 
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Event Location:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_location" name="meetup_location" type="text" placeholder={this.state.meetup_location} onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Event Start Time:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_start_time" name="start_time" type="datetime-local" defaultValue={this.state.start_time} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Event Location:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_location" name="meetup_location" type="text"
+                                                      placeholder={this.state.meetup_location}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                                <bs.Col lg={3}><Field>Event Start Time:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_start_time" name="start_time" type="datetime-local"
+                                                      defaultValue={this.state.start_time}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
 
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
-                            <bs.Col lg={3} style = {{textAlign:"left"}}><Switch checkedChildren="Yes" id = "event_count_attendance" unCheckedChildren="No" onClick={this.handleButtonChange} defaultChecked = {this.state.count_attendance}/></bs.Col>
-                            <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="event_signup_deadline" name="signup_ddl" type="datetime-local" defaultValue={this.state.signup_ddl} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                        <br/>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
-                            <bs.Col lg={9}><TextArea id="event_description" name="description" cols="55" rows="5" placeholder={this.state.description} onChange={e => this.handleChange(e)}/></bs.Col>
-                        </bs.Row>
-                    </bs.Container>
-                </EditBox>
-                <EditBox>
-                    <bs.Col><button id = "edit_event_btn" type="submit" onClick={this.handleSubmit} className="btn btn-outline-primary" >Edit Event</button></bs.Col>
-                </EditBox>
-            </EventDiv>
-        );
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Count Attendance:</Field></bs.Col>
+                                <bs.Col lg={3} style={{textAlign: "left"}}><Switch checkedChildren="Yes"
+                                                                                   id="event_count_attendance"
+                                                                                   unCheckedChildren="No"
+                                                                                   onClick={this.handleButtonChange}
+                                                                                   defaultChecked={this.state.count_attendance}/>
+                                </bs.Col>
+                                <bs.Col lg={3}><Field>Signup Deadline:</Field></bs.Col>
+                                <bs.Col lg={3}><Input id="event_signup_deadline" name="signup_ddl" type="datetime-local"
+                                                      defaultValue={this.state.signup_ddl}
+                                                      onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
+                            <br/>
+                            <bs.Row>
+                                <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
+                                <bs.Col lg={9}><TextArea id="event_description" name="description" cols="55" rows="5"
+                                                         placeholder={this.state.description}
+                                                         onChange={e => this.handleChange(e)}/></bs.Col>
+                            </bs.Row>
+                        </bs.Container>
+                    </EditBox>
+                    <EditBox>
+                        <bs.Col>
+                            <button id="edit_event_btn" type="submit" onClick={this.handleSubmit}
+                                    className="btn btn-outline-primary">Edit Event
+                            </button>
+                        </bs.Col>
+                    </EditBox>
+                </EventDiv>
+            );
+        }
     }
 
 };

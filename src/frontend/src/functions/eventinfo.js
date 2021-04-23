@@ -110,7 +110,13 @@ export async function getPersonalEventInfo(){
 }
 
 export async function createEvent(json) {
-    if (!checkValidity() || !isHG()) return undefined;
+    if (!checkValidity() || !isHG()) {
+        notification.error({
+            message: 'Event Creation Failed',
+            description: "You don't have the permission!"
+        });
+        return undefined;
+    }
     const config = {
         method: 'post',
         url: url + '/api/events/',

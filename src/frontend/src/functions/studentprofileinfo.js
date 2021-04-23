@@ -1,7 +1,6 @@
 import {checkValidity, getToken, getUsername, setUserInfoJson} from "./localstorage";
 import axios from "axios";
 import {url} from "./url";
-import {getCurrentStudentInfo} from "./studentinfo";
 import {notification} from "antd";
 
 export var phone_number = "string";

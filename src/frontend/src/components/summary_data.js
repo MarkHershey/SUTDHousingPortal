@@ -1,10 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import { getUserInfoJson } from "../functions/localstorage";
-import {Typography, Slider, TextField, Checkbox, Button, FormControl,Select,MenuItem,InputLabel, Switch } from '@material-ui/core';
-import { makeStyles} from '@material-ui/core/styles';
-
+import {getUserInfoJson} from "../functions/localstorage";
+import {Button, FormControl, MenuItem, Select, Slider, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({

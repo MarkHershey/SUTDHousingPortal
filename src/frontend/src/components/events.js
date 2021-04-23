@@ -23,21 +23,25 @@ import {
     deleteAttendanceADDJson,
     deleteAttendanceDELJson,
     getEventInfoJson,
-    getToken,
     getUpcomingEventInfoJson,
     getUsername,
     initAttendanceEditJson,
     isHG
 } from "../functions/localstorage";
-import {deleteEvent, eventHandler, quitEventHandler, getEventInfo, getUpcomingEventInfo, updateAttendance} from "../functions/eventinfo";
-import axios from "axios";
-import {url} from "../functions/url";
+import {
+    deleteEvent,
+    eventHandler,
+    getEventInfo,
+    getUpcomingEventInfo,
+    quitEventHandler,
+    updateAttendance
+} from "../functions/eventinfo";
 import Modal from '@material-ui/core/Modal';
 import {useHistory} from "react-router";
 import "../functions/utilities"
-import {DatePicker, notification} from "antd";
+import {DatePicker} from "antd";
 import {DownOutlined, UpOutlined} from "@ant-design/icons";
-import {getCurrentStudentInfo} from "../functions/studentinfo";
+
 const useRowStyles = makeStyles({
     root: {
         '& > *': {

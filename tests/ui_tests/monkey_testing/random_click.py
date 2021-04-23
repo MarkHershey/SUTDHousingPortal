@@ -13,7 +13,7 @@ class MonkeyTesting(unittest.TestCase):
         time.sleep(2)
         click_btn(driver, "loginbtn")
         time.sleep(2)
-        for i in range(1000):
+        for i in range(10000):
             links = []
             links.extend(driver.find_elements_by_tag_name("a"))
             links.extend(driver.find_elements_by_tag_name("Button"))
@@ -37,7 +37,7 @@ class MonkeyTesting(unittest.TestCase):
         time.sleep(2)
         click_btn(driver, "loginbtn")
         time.sleep(2)
-        for i in range(1000):
+        for i in range(10000):
             links = []
             links.extend(driver.find_elements_by_tag_name("a"))
             links.extend(driver.find_elements_by_tag_name("Button"))

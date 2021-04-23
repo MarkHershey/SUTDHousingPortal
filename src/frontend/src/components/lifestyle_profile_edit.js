@@ -4,7 +4,6 @@ import styled from "styled-components";
 import LifestyleData from "./lifestyle_data";
 import {updateLifestyleProfileInfo} from "../functions/lifestyleinfo";
 import {getUserInfoJson} from "../functions/localstorage";
-import {getCurrentStudentInfo} from "../functions/studentinfo";
 
 const EventDiv = styled.div`
 display: grid;
