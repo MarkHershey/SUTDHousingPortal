@@ -41,6 +41,20 @@ function App() {
                 : <Redirect to='/login'/>
         )}/>
     )
+    const GuardedRouteStudentOnly = ({component: Component, auth, ...rest}) => (
+        <Route {...rest} render={(props) => (
+            checkValidity()
+                ? (!isAdmin() ? <Component {...props} /> : <Redirect to='/'/>)
+                : <Redirect to='/login'/>
+        )}/>
+    )
+    const GuardedRouteAdminOnly = ({component: Component, auth, ...rest}) => (
+        <Route {...rest} render={(props) => (
+            checkValidity()
+                ? (isAdmin() ? <Component {...props} /> : <Redirect to='/'/>)
+                : <Redirect to='/login'/>
+        )}/>
+    )
 
     function NotFoundPage() {
         return(
@@ -63,33 +77,33 @@ function App() {
                 {isAdmin() ? <AdminNavigationBar/> : <NavigationBar/>}
                 <Switch>
                     <GuardedRoute exact path="/" component={Home}/>
-                    <GuardedRoute path="/profile" component={Profile}/>
                     <GuardedRoute path="/event" component={Events}/>
-                    <GuardedRoute path="/event_history" component={EventHistory}/>
-                    <GuardedRoute path="/event_edit" component={EventEdit}/>
-                    <GuardedRoute path="/profile_edit" component={PersonalDataEdit}/>
-                    <GuardedRoute path="/room_profile_edit" component={RoomProfileEdit}/>
-                    <GuardedRoute path="/lifestyle_profile_edit" component={LifeStyleProfileEdit}/>
-                    <GuardedRoute path="/apply0" component={ApplicationZero}/>
-                    <GuardedRoute path="/apply1" component={ApplicationOne}/>
-                    <GuardedRoute path="/apply2" component={ApplicationTwo}/>
-                    <GuardedRoute path="/apply3" component={ApplicationThree}/>
-                    <GuardedRoute path="/apply4" component={ApplicationFour}/>
-                    <GuardedRoute path="/application_summary" component={ApplicationSummary}/>
-                    <GuardedRoute path="/event_creation" component={EventCreation}/>
-                    <GuardedRoute path="/application_status" component={ApplicationStatus}/>
-                    <GuardedRoute path="/admin/application_creation" component={ApplicationCreation}/>
-                    <GuardedRoute path="/admin/application_management" component={ApplicationManagement}/>
-                    <GuardedRoute path="/admin/application_viewing" component={ApplicationViewing}/>
-                    <GuardedRoute path="/admin/house_guardian_add" component={AddHouseGuardian}/>
-                    <GuardedRoute path="/admin/house_guardian_remove" component={RemoveHouseGuardian}/>
-                    <GuardedRoute path="/admin/disciplinary_record_create" component={CreateDisciplinaryRecord}/>
-                    <GuardedRoute path="/admin/disciplinary_record_view_all" component={ViewAllDisciplinaryRecord}/>
-                    <GuardedRoute path="/admin/disciplinary_record_view_individual" component={ViewIndividualDisciplinaryRecord}/>
-                    <GuardedRoute path="/admin/disciplinary_record_edit" component={EditDisciplinaryRecord}/>
+                    <GuardedRouteStudentOnly path="/event_edit" component={EventEdit}/>
+                    <GuardedRouteStudentOnly path="/profile" component={Profile}/>
+                    <GuardedRouteStudentOnly path="/event_history" component={EventHistory}/>
+                    <GuardedRouteStudentOnly path="/profile_edit" component={PersonalDataEdit}/>
+                    <GuardedRouteStudentOnly path="/room_profile_edit" component={RoomProfileEdit}/>
+                    <GuardedRouteStudentOnly path="/lifestyle_profile_edit" component={LifeStyleProfileEdit}/>
+                    <GuardedRouteStudentOnly path="/apply0" component={ApplicationZero}/>
+                    <GuardedRouteStudentOnly path="/apply1" component={ApplicationOne}/>
+                    <GuardedRouteStudentOnly path="/apply2" component={ApplicationTwo}/>
+                    <GuardedRouteStudentOnly path="/apply3" component={ApplicationThree}/>
+                    <GuardedRouteStudentOnly path="/apply4" component={ApplicationFour}/>
+                    <GuardedRouteStudentOnly path="/application_summary" component={ApplicationSummary}/>
+                    <GuardedRouteStudentOnly path="/event_creation" component={EventCreation}/>
+                    <GuardedRouteStudentOnly path="/application_status" component={ApplicationStatus}/>
+                    <GuardedRouteAdminOnly path="/admin/application_creation" component={ApplicationCreation}/>
+                    <GuardedRouteAdminOnly path="/admin/application_management" component={ApplicationManagement}/>
+                    <GuardedRouteAdminOnly path="/admin/application_viewing" component={ApplicationViewing}/>
+                    <GuardedRouteAdminOnly path="/admin/house_guardian_add" component={AddHouseGuardian}/>
+                    <GuardedRouteAdminOnly path="/admin/house_guardian_remove" component={RemoveHouseGuardian}/>
+                    <GuardedRouteAdminOnly path="/admin/disciplinary_record_create" component={CreateDisciplinaryRecord}/>
+                    <GuardedRouteAdminOnly path="/admin/disciplinary_record_view_all" component={ViewAllDisciplinaryRecord}/>
+                    <GuardedRouteAdminOnly path="/admin/disciplinary_record_view_individual" component={ViewIndividualDisciplinaryRecord}/>
+                    <GuardedRouteAdminOnly path="/admin/disciplinary_record_edit" component={EditDisciplinaryRecord}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/404" component={NotFoundPage} />
-                    <Redirect to="/404" />
+                    <Redirect to="/404"/>
                 </Switch>
             </Router>
         </React.Fragment>

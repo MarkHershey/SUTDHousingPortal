@@ -79,48 +79,51 @@ export default class ViewIndividualDisciplinaryRecord extends React.Component {
 
 
     render() {
-        return (
-            <EventDiv>
-                <h3>View Disciplinary Record</h3>
-                <EditBox>
-                    <bs.Container>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Student ID:</Field></bs.Col>
-                            <bs.Col lg={3}>{this.state.student_id}</bs.Col>
+        if (this.props.location.state === undefined)
+            window.location.replace("/")
+        else
+            return (
+                <EventDiv>
+                    <h3>View Disciplinary Record</h3>
+                    <EditBox>
+                        <bs.Container>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Student ID:</Field></bs.Col>
+                                <bs.Col sm={3}>{this.state.student_id}</bs.Col>
 
-                            <bs.Col lg={3}><Field>Record Type:</Field></bs.Col>
-                            <bs.Col lg={3}>{this.state.record_type}</bs.Col>
+                                <bs.Col sm={3}><Field>Record Type:</Field></bs.Col>
+                                <bs.Col sm={3}>{this.state.record_type}</bs.Col>
 
-                        </bs.Row>
+                            </bs.Row>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Description:</Field></bs.Col>
+                                <bs.Col sm={9}><textarea disabled="true" id="view_disciplinary_description"
+                                                         name="description" cols="100" rows="8"
+                                                         value={this.state.description}/></bs.Col>
+                            </bs.Row>
+                            <br/>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Points Deduction:</Field></bs.Col>
+                                <bs.Col sm={3}>{this.state.points_deduction}</bs.Col>
+                            </bs.Row>
+                        </bs.Container>
+                    </EditBox>
+                    <EditBox>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Description:</Field></bs.Col>
-                            <bs.Col lg={9}><textarea disabled="true" id="view_disciplinary_description"
-                                                     name="description" cols="100" rows="8"
-                                                     value={this.state.description}/></bs.Col>
+                            <bs.Col>
+                                <button id="delete_disciplinary_record_btn" type="submit" onClick={this.handleDelete}
+                                        className="btn btn-outline-primary">Delete Disciplinary Record
+                                </button>
+                            </bs.Col>
+                            <bs.Col>
+                                <button id="edit_disciplinary_record_btn" type="submit" onClick={this.handleEdit}
+                                        className="btn btn-outline-primary">Edit Disciplinary Record
+                                </button>
+                            </bs.Col>
                         </bs.Row>
-                        <br/>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Points Deduction:</Field></bs.Col>
-                            <bs.Col lg={3}>{this.state.points_deduction}</bs.Col>
-                        </bs.Row>
-                    </bs.Container>
-                </EditBox>
-                <EditBox>
-                    <bs.Row>
-                        <bs.Col>
-                            <button id="delete_disciplinary_record_btn" type="submit" onClick={this.handleDelete}
-                                    className="btn btn-outline-primary">Delete Disciplinary Record
-                            </button>
-                        </bs.Col>
-                        <bs.Col>
-                            <button id="edit_disciplinary_record_btn" type="submit" onClick={this.handleEdit}
-                                    className="btn btn-outline-primary">Edit Disciplinary Record
-                            </button>
-                        </bs.Col>
-                    </bs.Row>
-                </EditBox>
-            </EventDiv>
-        );
+                    </EditBox>
+                </EventDiv>
+            );
     }
 
 };

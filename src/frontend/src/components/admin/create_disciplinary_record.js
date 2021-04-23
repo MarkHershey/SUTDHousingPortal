@@ -79,23 +79,23 @@ export default class CreateDisciplinaryRecord extends React.Component {
                 <EditBox>
                     <bs.Container>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Student ID:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="create_disciplinary_record_id" name="student_id" type="text"
+                            <bs.Col sm={3}><Field>Student ID:</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="create_disciplinary_record_id" name="student_id" type="text"
                                                   onChange={e => this.handleChange(e)}/></bs.Col>
-                            <bs.Col lg={3}><Field>Record Type:</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="create_disciplinary_record_type" name="record_type" type="text"
+                            <bs.Col sm={3}><Field>Record Type:</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="create_disciplinary_record_type" name="record_type" type="text"
                                                   onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <br/>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Event Description:</Field></bs.Col>
-                            <bs.Col lg={9}><TextArea id="create_disciplinary_record_description" name="description" cols="55" rows="5"
+                            <bs.Col sm={3}><Field>Event Description:</Field></bs.Col>
+                            <bs.Col sm={9}><TextArea id="create_disciplinary_record_description" name="description" cols="55" rows="5"
                                                      onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                         <br/>
                         <bs.Row>
-                            <bs.Col lg={3}><Field>Points Deduction</Field></bs.Col>
-                            <bs.Col lg={3}><Input id="create_disciplinary_points_deduction" name="points_deduction"
+                            <bs.Col sm={3}><Field>Points Deduction</Field></bs.Col>
+                            <bs.Col sm={3}><Input id="create_disciplinary_points_deduction" name="points_deduction"
                                                   type="number" onChange={e => this.handleChange(e)}/></bs.Col>
                         </bs.Row>
                     </bs.Container>

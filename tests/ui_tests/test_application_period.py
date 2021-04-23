@@ -59,6 +59,7 @@ class EventTest(unittest.TestCase):
         click_btn(driver, "submit_application_btn")
 
         # Student check status(submitted)
+        print("Student check status(submitted)")
         driver.get(url + "/application_status")
         time.sleep(5)
         driver.find_element_by_xpath('//div[text()="Offer submitted"]')
@@ -89,6 +90,7 @@ class EventTest(unittest.TestCase):
         click_btn(driver, "accept_" + student_username)
 
         # Admin logout
+        print("Admin logout")
         driver.get(url + "/login")
         # Student login
         print("Student login")
@@ -98,11 +100,13 @@ class EventTest(unittest.TestCase):
         click_btn(driver, "loginbtn")
         time.sleep(1)
         # Student accept offer
+        print("Student accept offer")
         driver.get(url + "/application_status")
         time.sleep(5)
         click_btn(driver, "accept_btn")
 
         # Student logout
+        print("Student logout")
         driver.get(url + "/login")
 
         driver.quit()

@@ -1,10 +1,9 @@
 import * as bs from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import { getUserInfoJson } from "../functions/localstorage";
-import {Typography, Slider, TextField, Checkbox, Button, FormControl,Select,MenuItem,InputLabel, Switch } from '@material-ui/core';
-import { makeStyles} from '@material-ui/core/styles';
-
+import {getUserInfoJson} from "../functions/localstorage";
+import {Button, FormControl, MenuItem, Select, Slider, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -134,8 +133,8 @@ export default class SummaryData extends React.Component{
                     Sociability
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="socialbility_slider"
                         name="socialbility"
                         defaultValue={this.state.preference_lifestyle.like_social}
@@ -148,14 +147,14 @@ export default class SummaryData extends React.Component{
                         onChange={(e, value) => this.handleChange("like_social", value)}
                         color="primary"
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="cleanliness-slider_topo">
                     Cleanliness
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="cleanliness_slider"
                         defaultValue={this.state.preference_lifestyle.like_clean}
                         aria-labelledby="cleanliness-slider"
@@ -167,14 +166,14 @@ export default class SummaryData extends React.Component{
                         color="primary"
                         onChange={(e, value) => this.handleChange("like_clean", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="noisiness-slider">
                     Noisiness Level
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="noisiness_slider"
                         defaultValue={this.state.preference_lifestyle.like_quiet}
                         aria-labelledby="noisiness-slider"
@@ -187,14 +186,14 @@ export default class SummaryData extends React.Component{
                         color="primary"
                         onChange={(e, value) => this.handleChange("like_quiet", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="aircon-slider">
                     Use Aircon
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="aircon_slider"
                         defaultValue={this.state.preference_lifestyle.use_aircon === false ? 0 : this.state.preference_lifestyle.use_aircon === true ? 1 : 0}
                         aria-labelledby="aircon-slider"
@@ -207,14 +206,14 @@ export default class SummaryData extends React.Component{
                         color="secondary"
                         onChange={(e, value) => this.handleChange("use_aircon", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <Typography id="smokes-slider">
                     Smokes
                 </Typography>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
-                    <bs.Col lg={4}><Slider
+                    <bs.Col sm={4}></bs.Col>
+                    <bs.Col sm={4}><Slider
                         id="smokes_slider"
                         defaultValue={this.state.preference_lifestyle.smoking === false ? 0 : this.state.preference_lifestyle.smoking === true ? 1 : 0}
                         aria-labelledby="smokes-slider"
@@ -227,10 +226,10 @@ export default class SummaryData extends React.Component{
                         disabled={true}
                         onChange={(e, value) => this.handleChange("smoking", value)}
                     /></bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                     <Button id="controlDropdownSleep" className={useStyles.button} onClick={()=>{
                         this.setState({
                             sleepDropDownOpen : true
@@ -266,11 +265,11 @@ export default class SummaryData extends React.Component{
                         <MenuItem id="sleepMenuItem2" value={2}>2:00</MenuItem>
                         </Select>
                     </FormControl>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <br/>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                     <Button id="controlDropdownWake" className={useStyles.button} onClick={()=>{
                         this.setState({
                             wakeUpDropDownOpen : true
@@ -307,17 +306,17 @@ export default class SummaryData extends React.Component{
                         <MenuItem id="wakeMenuItem11" value={11}>11:00</MenuItem>
                         </Select>
                     </FormControl>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 <br/>
                 <bs.Row>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                         <bs.Col>
                             <Field >Diet</Field>
                             <input disabled={true} id="lifestyle_diet" name="diet" placeholder={this.state.preference_lifestyle.diet}
                              onChange={(e)=>this.handleChange("diet",e.target.value)}></input>
                         </bs.Col>
-                    <bs.Col lg={4}></bs.Col>
+                    <bs.Col sm={4}></bs.Col>
                 </bs.Row>
                 </bs.Container>
             </ProfileBox>

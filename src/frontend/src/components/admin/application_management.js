@@ -84,74 +84,75 @@ function Row(props) {
                 <TableCell align="left">{row.internal_status}</TableCell>
                 <TableCell align="left">
                     <bs.Row>
-                        <bs.Col lg = {4}>
+                        <bs.Col lg={4}>
                             <button type="button" className="btn btn-light" onClick={showModal}>
                                 View Details
                             </button>
-                            <Modal title="Application Details" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                    <bs.Row>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Student ID:
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.student_id}
-                                        </bs.Col>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Created At:
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.created_at.slice(0,10)}
-                                        </bs.Col>
-                                    </bs.Row>
+                            <Modal title="Application Details" visible={isModalVisible} onOk={handleOk}
+                                   onCancel={handleCancel}>
+                                <bs.Row>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Student ID:
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.student_id}
+                                    </bs.Col>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Created At:
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.created_at.slice(0, 10)}
+                                    </bs.Col>
+                                </bs.Row>
 
-                                    <br/>
+                                <br/>
 
-                                    <bs.Row>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Room Type 1:
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.room_profile.room_type === "SINGLE_ENSUITE"? "ENSUITE" : row.room_profile.room_type}
-                                        </bs.Col>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Room Type 2
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.room_profile.room_type_2nd === "SINGLE_ENSUITE"? "ENSUITE" : row.room_profile.room_type_2nd}
-                                        </bs.Col>
-                                    </bs.Row>
+                                <bs.Row>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Room Type 1:
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.room_profile.room_type === "SINGLE_ENSUITE" ? "ENSUITE" : row.room_profile.room_type}
+                                    </bs.Col>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Room Type 2
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.room_profile.room_type_2nd === "SINGLE_ENSUITE" ? "ENSUITE" : row.room_profile.room_type_2nd}
+                                    </bs.Col>
+                                </bs.Row>
 
-                                    <bs.Row>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Block Pref 1:
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.room_profile.block}
-                                        </bs.Col>
-                                        <bs.Col style={{color:"#3C64B1"}} lg={3}>
-                                            Block Pref 2:
-                                        </bs.Col>
-                                        <bs.Col lg={3}>
-                                            {row.room_profile.block_2nd}
-                                        </bs.Col>
-                                    </bs.Row>
-                                </Modal>
+                                <bs.Row>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Block Pref 1:
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.room_profile.block}
+                                    </bs.Col>
+                                    <bs.Col style={{color: "#3C64B1"}} lg={3}>
+                                        Block Pref 2:
+                                    </bs.Col>
+                                    <bs.Col sm={3}>
+                                        {row.room_profile.block_2nd}
+                                    </bs.Col>
+                                </bs.Row>
+                            </Modal>
                         </bs.Col>
-                        <bs.Col lg = {2}>
+                        <bs.Col lg={2}>
                             <button type="button" className="btn btn-outline-success"
                                     id={"accept_" + row.student_id} onClick={() => {
                                 approveApplication(row.uid)
                             }}>Approve
                             </button>
                         </bs.Col>
-                        <bs.Col lg = {2}>
+                        <bs.Col lg={2}>
                             <button type="button" className="btn btn-outline-danger" id={"reject_" + row.student_id}
                                     onClick={() => {
                                         rejectApplication(row.uid)
                                     }}>Reject
                             </button>
                         </bs.Col>
-                        <bs.Col lg = {2}>
+                        <bs.Col lg={2}>
                             <button type="button" className="btn btn-outline-dark" id={"waitlist_" + row.student_id}
                                     onClick={() => {
                                         waitlistApplication(row.uid)
@@ -203,7 +204,9 @@ export default class ApplicationManagement extends React.Component {
                 })
             });
         }
-        fetchJSON();
+        console.log(this.props)
+        if (this.props.location.state !== undefined)
+            fetchJSON();
     }
 
     handleDelete() {
@@ -216,14 +219,14 @@ export default class ApplicationManagement extends React.Component {
             <EventDiv key={i}>
                 <bs.Container>
                     <bs.Row>
-                        <bs.Col lg={3}><Field>Start Date:</Field></bs.Col>
-                        <bs.Col lg={3}>
+                        <bs.Col sm={3}><Field>Start Date:</Field></bs.Col>
+                        <bs.Col sm={3}>
                             <input type="date" name="start_date" value={el.start_date || ''}/>
                         </bs.Col>
                     </bs.Row>
                     <bs.Row>
-                        <bs.Col lg={3}><Field>End Date:</Field></bs.Col>
-                        <bs.Col lg={3}>
+                        <bs.Col sm={3}><Field>End Date:</Field></bs.Col>
+                        <bs.Col sm={3}>
                             <input type="date" name="end_date" value={el.end_date || ''}/>
                         </bs.Col>
                     </bs.Row>
@@ -250,40 +253,43 @@ export default class ApplicationManagement extends React.Component {
     }
 
     render() {
-        return (
-            <EventDiv>
-                <h3>Manage Application Window</h3>
-                <EditBox>
-                    <bs.Container>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Application Opening Date:</Field></bs.Col>
-                            <bs.Col>{new Date(Date.parse(this.state.application_window_open)).toDateString()}</bs.Col>
-                            <bs.Col lg={3}><Field>Application Closing Date:</Field></bs.Col>
-                            <bs.Col
-                                lg={3}>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</bs.Col>
-                        </bs.Row>
-                        <bs.Row>
-                            <bs.Col lg={3}><Field>Applicable periods:</Field></bs.Col>
-                        </bs.Row>
-                        {this.createUI()}
-                    </bs.Container>
+        if (this.props.location.state === undefined)
+            window.location.replace("/")
+        else
+            return (
+                <EventDiv>
+                    <h3>Manage Application Window</h3>
+                    <EditBox>
+                        <bs.Container>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Application Opening Date:</Field></bs.Col>
+                                <bs.Col>{new Date(Date.parse(this.state.application_window_open)).toDateString()}</bs.Col>
+                                <bs.Col sm={3}><Field>Application Closing Date:</Field></bs.Col>
+                                <bs.Col
+                                    lg={3}>{new Date(Date.parse(this.state.application_window_close)).toDateString()}</bs.Col>
+                            </bs.Row>
+                            <bs.Row>
+                                <bs.Col sm={3}><Field>Applicable periods:</Field></bs.Col>
+                            </bs.Row>
+                            {this.createUI()}
+                        </bs.Container>
 
-                    <TableContainer component={Paper}>
-                        <Table aria-label="collapsible table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell/>
-                                    <TableCell align="left">Student name</TableCell>
-                                    <TableCell align="left">Application Status</TableCell>
-                                    <TableCell align="left"></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {this.state.student_data.map((row) => (
-                                    <Row key={row.student_id} row={row}/>
-                                ))}
-                            </TableBody>
-                            {/*
+                        <TableContainer component={Paper}>
+                            <Table aria-label="collapsible table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell/>
+                                        <TableCell align="left">Student name</TableCell>
+                                        <TableCell align="left">Application Status</TableCell>
+                                        <TableCell align="left"></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.student_data.map((row) => (
+                                        <Row key={row.student_id} row={row}/>
+                                    ))}
+                                </TableBody>
+                                {/*
                             {console.log("hiuhih")}
                             <StudentAppData appData={this.state.application_forms_map}/>
                             
@@ -293,30 +299,30 @@ export default class ApplicationManagement extends React.Component {
                             ))}
                             
                             */
-                            }
+                                }
 
 
-                        </Table>
-                    </TableContainer>
-                </EditBox>
-                <br/>
-                <Apply2BtnSet>
-                    <bs.Container>
-                        <bs.Row>
-                            {/*
+                            </Table>
+                        </TableContainer>
+                    </EditBox>
+                    <br/>
+                    <Apply2BtnSet>
+                        <bs.Container>
+                            <bs.Row>
+                                {/*
                             <bs.Col><button type="button" onClick={this.checkState}>check state</button></bs.Col>
                             */
-                            }
+                                }
 
-                            <bs.Col>
-                                <button type="button" className="btn btn-outline-primary"
-                                        onClick={this.handleDelete}>Delete Application Period
-                                </button>
-                            </bs.Col>
-                        </bs.Row>
-                    </bs.Container>
-                </Apply2BtnSet>
-            </EventDiv>
-        );
+                                <bs.Col>
+                                    <button type="button" className="btn btn-outline-primary"
+                                            onClick={this.handleDelete}>Delete Application Period
+                                    </button>
+                                </bs.Col>
+                            </bs.Row>
+                        </bs.Container>
+                    </Apply2BtnSet>
+                </EventDiv>
+            );
     };
 }

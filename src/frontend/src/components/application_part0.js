@@ -68,15 +68,15 @@ function CreateUI(props,uid, id){
         <EventDiv key={i}>
             <bs.Container>
                 <bs.Row>
-                    <bs.Col lg={2}><Field>Start Date:</Field></bs.Col>
-                    <bs.Col lg={2}>
+                    <bs.Col sm={2}><Field>Start Date:</Field></bs.Col>
+                    <bs.Col sm={2}>
                         <input disabled="true" type="date" name="start_date" value={el.start_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={2}><Field>End Date:</Field></bs.Col>
-                    <bs.Col lg={2}>
+                    <bs.Col sm={2}><Field>End Date:</Field></bs.Col>
+                    <bs.Col sm={2}>
                         <input disabled="true" type="date" name="end_date" value={el.end_date ||''} />
                     </bs.Col>
-                    <bs.Col lg={3}><Button id={"next"+id +"_"+ i} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
+                    <bs.Col sm={3}><Button id={"next"+id +"_"+ i} class="btn btn-outline-primary" style={{padding: "0px 10px",margin:"0px 20px"}} onClick={()=>{
                         console.log(el);
                         //store el and uid into storage
                         setPersonalApplicationPeriodInfoJson(el);

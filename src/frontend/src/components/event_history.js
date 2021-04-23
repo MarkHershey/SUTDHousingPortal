@@ -106,14 +106,14 @@ function Row(props) {
                             </Typography>
                             <bs.Container>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Description:</SubTitle></bs.Col>
-                                    <bs.Col lg={9}>{row.description}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Description:</SubTitle></bs.Col>
+                                    <bs.Col sm={9}>{row.description}</bs.Col>
                                 </bs.Row>
                                 <bs.Row>
-                                    <bs.Col lg={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}>{row.duration_mins + "mins"}</bs.Col>
-                                    <bs.Col lg={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
-                                    <bs.Col lg={3}>{row.meetup_location}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Event Duration:</SubTitle></bs.Col>
+                                    <bs.Col sm={3}>{row.duration_mins + "mins"}</bs.Col>
+                                    <bs.Col sm={3}><SubTitle>Meetup Location:</SubTitle></bs.Col>
+                                    <bs.Col sm={3}>{row.meetup_location}</bs.Col>
                                 </bs.Row>
                             </bs.Container>
                         </Box>
