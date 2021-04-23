@@ -1,10 +1,9 @@
 from datetime import date, datetime, timedelta
-from typing import Dict, List, Optional
 
 from markkk.logger import logger
 from pydantic import BaseModel, validator
 
-from .helpers import uid_gen
+from ..functional import uid_gen
 
 
 class Contract(BaseModel):

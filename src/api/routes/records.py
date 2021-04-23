@@ -3,11 +3,13 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from markkk.logger import logger
 from pymongo import ReturnDocument
-from ..error_msg import ErrorMsg as MSG
+
+from ..access_utils import Access
 from ..auth import AuthHandler
 from ..database import records_collection, students_collection
+from ..error_msg import ErrorMsg as MSG
+from ..functional import clean_dict, remove_none_value_keys
 from ..models.record import DisciplinaryRecord, RecordEditable
-from ..utils import Access, clean_dict, remove_none_value_keys
 
 router = APIRouter(prefix="/api/records", tags=["Disciplinary Records"])
 auth_handler = AuthHandler()
@@ -130,7 +132,9 @@ async def get_disciplinary_record(
 
 @router.put("/{uid}", response_model=DisciplinaryRecord)
 async def update_disciplinary_record(
-    uid: str, record_edit: RecordEditable, username=Depends(auth_handler.auth_wrapper)
+    uid: str,
+    record_edit: RecordEditable,
+    username=Depends(auth_handler.auth_wrapper),
 ):
     """
     Update a DisciplinaryRecord

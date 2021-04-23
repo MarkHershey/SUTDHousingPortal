@@ -1,10 +1,12 @@
-from selenium.common.exceptions import ElementNotInteractableException, ElementClickInterceptedException
+from selenium.common.exceptions import (
+    ElementNotInteractableException,
+    ElementClickInterceptedException,
+)
 
 from function import *
 
 
 class MonkeyTesting(unittest.TestCase):
-
     def test_random_click_student(self):
         # login normally
         driver.get(url)

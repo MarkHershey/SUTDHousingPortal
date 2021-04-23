@@ -10,7 +10,7 @@ fastapi==0.63.0
 h11==0.12.0
 idna==2.10
 iniconfig==1.1.1
-markkk==0.0.16
+markkk>=0.0.16
 passlib==1.7.4
 pkg-resources==0.0.0
 pycparser==2.20
@@ -21,5 +21,7 @@ requests==2.25.1
 six==1.15.0
 starlette==0.13.6
 typing-extensions==3.7.4.3
-urllib3==1.26.3
+urllib3>=1.26.4
 uvicorn==0.13.4
+selenium
+names

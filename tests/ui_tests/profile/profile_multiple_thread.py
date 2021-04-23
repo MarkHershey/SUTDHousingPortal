@@ -32,9 +32,15 @@ class TestThread(threading.Thread):
         time.sleep(1)
         # Edit with all field filled
         phone_num = random.randint(10000000, 99999999)
-        email = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        email = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
         postcode = str(random.randint(100000, 999999))
-        street = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        street = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
         unit = str(random.randint(10, 99)) + "-" + str(random.randint(10, 99))
         input_text(driver_, "ppl_prof_roommate", "1004522")
         input_text(driver_, "phone_number", phone_num)
@@ -55,8 +61,11 @@ class TestThread(threading.Thread):
 
         driver_.get(url + "/profile")
         time.sleep(5)
-        assert(get_text(driver_, "ppl_prof_phone_number_display") == str(phone_num))
-        assert(get_text(driver_, "ppl_prof_address_display") == street + " " + unit + " " + postcode)
+        assert get_text(driver_, "ppl_prof_phone_number_display") == str(phone_num)
+        assert (
+            get_text(driver_, "ppl_prof_address_display")
+            == street + " " + unit + " " + postcode
+        )
         click_btn(driver_, "logout")
         time.sleep(1)
         driver_.quit()

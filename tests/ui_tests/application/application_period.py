@@ -4,7 +4,6 @@ from function import *
 
 
 class EventTest(unittest.TestCase):
-
     def test_application_normal_workflow(self):
         # Login with admins account
         print("Login with admins account")
@@ -18,7 +17,9 @@ class EventTest(unittest.TestCase):
         print("Create an application period")
         driver.get(url + "/admin/application_creation")
         input_text(driver, "app_period_window_open", "20042021" + Keys.RIGHT + "0500AM")
-        input_text(driver, "app_period_window_close", "20062021" + Keys.RIGHT + "0700AM")
+        input_text(
+            driver, "app_period_window_close", "20062021" + Keys.RIGHT + "0700AM"
+        )
         number_of_AP = random.randint(1, 4)
         for i in range(0, number_of_AP):
             input_text(driver, "start_date_" + str(i), "200" + str(5 + i) + "2021")

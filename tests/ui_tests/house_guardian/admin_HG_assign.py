@@ -2,7 +2,6 @@ from function import *
 
 
 class RevokeHgTest(unittest.TestCase):
-
     def test_normal_workflow(self):
         # Login
         print("login")

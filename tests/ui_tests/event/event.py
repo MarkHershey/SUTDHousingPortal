@@ -4,7 +4,6 @@ from function import *
 
 
 class EventTest(unittest.TestCase):
-
     def test_event_normal_workflow(self):
         # Login
         print("login")
@@ -16,14 +15,32 @@ class EventTest(unittest.TestCase):
 
         # Create Event
         print("create event")
-        title = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        event_type = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        title = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        event_type = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
         duration_mins = random.randint(1, 100)
         signup_limit = random.randint(1, 100)
-        block = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        floor = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        meetup_location = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        description = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 100)))
+        block = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        floor = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        meetup_location = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        description = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 100))
+        )
         count_attendance = random.randint(0, 1)
 
         driver.get(url + "/event_creation")
@@ -38,7 +55,8 @@ class EventTest(unittest.TestCase):
         input_datetime_by_name(driver, "start_time")
         input_datetime_by_name(driver, "signup_ddl")
         input_textarea_by_id(driver, "create_event_description", description)
-        if not count_attendance: click_btn(driver, "event_count_attendance")
+        if not count_attendance:
+            click_btn(driver, "event_count_attendance")
         time.sleep(1)
         click_btn(driver, "create_event_btn")
         time.sleep(1)
@@ -51,11 +69,16 @@ class EventTest(unittest.TestCase):
         time.sleep(1)
         # Check whether the event is created successfully
         self.assertEqual(description, get_text(driver, title + "-description-text"))
-        self.assertEqual(str(duration_mins) + "mins", get_text(driver, title + "-duration"))
+        self.assertEqual(
+            str(duration_mins) + "mins", get_text(driver, title + "-duration")
+        )
         self.assertEqual(str(meetup_location), get_text(driver, title + "-location"))
         self.assertEqual(str(signup_limit), get_text(driver, title + "-signup-limit"))
         self.assertEqual(HG_username, get_text(driver, title + "-held-by"))
-        self.assertEqual("Yes" if count_attendance else "No", get_text(driver, title + "-count-attendance"))
+        self.assertEqual(
+            "Yes" if count_attendance else "No",
+            get_text(driver, title + "-count-attendance"),
+        )
 
         # Join event
         print("join event")
@@ -76,8 +99,10 @@ class EventTest(unittest.TestCase):
         print("edit event")
         click_btn(driver, title + "-edit-event")
         time.sleep(1)
-        event_type = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
+        event_type = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
         input_text(driver, "event_type", event_type)
         click_btn(driver, "edit_event_btn")
         driver.get(url + "/event")
@@ -88,11 +113,16 @@ class EventTest(unittest.TestCase):
         # Check whether the event is created successfully
         print("check edition")
         self.assertEqual(description, get_text(driver, title + "-description-text"))
-        self.assertEqual(str(duration_mins) + "mins", get_text(driver, title + "-duration"))
+        self.assertEqual(
+            str(duration_mins) + "mins", get_text(driver, title + "-duration")
+        )
         self.assertEqual(str(meetup_location), get_text(driver, title + "-location"))
         self.assertEqual(str(signup_limit), get_text(driver, title + "-signup-limit"))
         self.assertEqual(HG_username, get_text(driver, title + "-held-by"))
-        self.assertEqual("Yes" if count_attendance else "No", get_text(driver, title + "-count-attendance"))
+        self.assertEqual(
+            "Yes" if count_attendance else "No",
+            get_text(driver, title + "-count-attendance"),
+        )
 
         # Take attendance
         print("take attendance")

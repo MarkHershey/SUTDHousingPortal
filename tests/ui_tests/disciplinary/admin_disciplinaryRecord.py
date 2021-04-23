@@ -2,7 +2,6 @@ from function import *
 
 
 class DisciplinaryRecordTest(unittest.TestCase):
-
     def test_disciplinary_record(self):
         # Login
         print("login")
@@ -15,10 +14,14 @@ class DisciplinaryRecordTest(unittest.TestCase):
         # create disciplinary record
         print("creating record")
         id = student_username
-        record_type = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 15)))
-        description = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 100)))
+        record_type = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 15))
+        )
+        description = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 100))
+        )
         points = random.randrange(0, 1000)
         driver.get(url + "/admin/disciplinary_record_create")
         input_text(driver, "create_disciplinary_record_id", id)
@@ -33,9 +36,15 @@ class DisciplinaryRecordTest(unittest.TestCase):
         time.sleep(3)
         # check the record
         self.assertEqual(id, get_text(driver, id + description))
-        self.assertEqual(record_type, get_text(driver, id + description + "_record_type"))
-        self.assertEqual(description, get_text(driver, id + description + "_description"))
-        self.assertEqual(str(points), get_text(driver, id + description + "_points_deduction"))
+        self.assertEqual(
+            record_type, get_text(driver, id + description + "_record_type")
+        )
+        self.assertEqual(
+            description, get_text(driver, id + description + "_description")
+        )
+        self.assertEqual(
+            str(points), get_text(driver, id + description + "_points_deduction")
+        )
 
         # Edit Disciplinary Record
         print("Edit disciplinary record")
@@ -44,8 +53,10 @@ class DisciplinaryRecordTest(unittest.TestCase):
         time.sleep(1)
         click_btn(driver, "edit_disciplinary_record_btn")
 
-        description = ''.join(
-            random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(8, 100)))
+        description = "".join(
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(random.randint(8, 100))
+        )
         points = random.randrange(0, 1000)
         clear_input_text(driver, "edit_disciplinary_record_description")
         input_text(driver, "edit_disciplinary_record_description", description)
@@ -57,9 +68,15 @@ class DisciplinaryRecordTest(unittest.TestCase):
         time.sleep(3)
 
         self.assertEqual(id, get_text(driver, id + description))
-        self.assertEqual(record_type, get_text(driver, id + description + "_record_type"))
-        self.assertEqual(description, get_text(driver, id + description + "_description"))
-        self.assertEqual(str(points), get_text(driver, id + description + "_points_deduction"))
+        self.assertEqual(
+            record_type, get_text(driver, id + description + "_record_type")
+        )
+        self.assertEqual(
+            description, get_text(driver, id + description + "_description")
+        )
+        self.assertEqual(
+            str(points), get_text(driver, id + description + "_points_deduction")
+        )
 
         # delete the record
         print("Deleting record")

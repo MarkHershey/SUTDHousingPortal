@@ -65,6 +65,7 @@ class LoginTest(unittest.TestCase):
         driver.get(url + "/I_am_not_a_valid_path")
         self.assertEqual(driver.current_url, url + "/404")
 
+
 # trying tp go to an forbidden page after logout
 def test_guard_after_logout(router_name):
     driver.get(url + "/" + router_name)
