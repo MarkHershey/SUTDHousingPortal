@@ -4,6 +4,7 @@
 - Project Git Repository: [github.com/MarkHershey/SUTDHousingPortal](https://github.com/MarkHershey/SUTDHousingPortal)
 - Live Application: [esc.dev.markhh.com](http://esc.dev.markhh.com/)
 - API Documentation: [esc.dev.markhh.com/api/docs](http://esc.dev.markhh.com/api/docs)
+- Demo Video Link: [https://youtu.be/a9598FzhCR4](https://youtu.be/a9598FzhCR4)
 
 | Student ID | Full Name   | Role                    |
 | :--------: | :---------- | :---------------------- |
@@ -136,6 +137,7 @@ Hence, we designed 4 types of users in our application and their corresponding a
 
 - To design and implement UI components from scratch requires a tremendous amount of work. Therefore, we utilize some libraries such as [Ant Design](https://ant.design/), [Bootstrap](https://getbootstrap.com/), and [Material UI](https://material-ui.com/).
 - Every HTTP request takes time to get a response. If we directly 'assume' that the data is ready and start to render it, it will result in page errors. Therefore, we decided to use empty placeholders to fill in all the required data fields first. Then, after the data is fetched, we use the `componentDidMount` function to replace all placeholders with real data.
+- Some of the components that we created require some states to be passed in by other components, like `edit_event` page. In that case, if we want to reach the component by just clicking on the URL of that component, the app will crash due to that the state is not provided correctly. Our solution is: only render the components when this component received proper data from other components. If not, redirect to the home page.
 - After the update of certain user profiles, it is good to see the change immediately after the update completes. However, updating the change is done by an async HTTP `POST` request while in order to get the updated value we need an async HTTP `GET` request. When writing code, if we just execute the `POST` followed by `GET`, it is possible that `POST` is done after the `GET`, resulting in failure of fetching the latest version of data. Our solution is that we start the `GET` only when we are sure that `POST` has completed by putting the `GET` function inside the `.then()` of the `POST` function(That means that the `POST` has returned normally). The experience has taught us: be aware of the async function!
 - Another challenge is to preventing user accessing pages that it does not has access to. Admin and students have their unique frontend interfaces, which shouldn't be reached by the other type of user. We do try to avoid this by designing 2 different navigation bars. However, instead of using the navigation bar, how about the student just key in the URL? Therefore we designed a router guard (which is different from our login router guard), if the type of the user is forbidden, it will redirect the URL to the home page.
 
@@ -151,6 +153,10 @@ In our project, we adopted the testing framework [pytest](https://docs.pytest.or
 
 As some of our components are rendered dynamically and are not statically rendered, we found that we had to find a way to give the components being rendered a unique id so that we are able to control the component when utilizing selenium. In order to solve this issue, we decide to allocate the component’s id based on the data we data of other fields in the state. This allows us to have a unique id for the component and a way for us to know the id of the component in selenium as we control what data is filled up in the other previous fields and thus we would have the unique id of the component we want.
 
+During a UI test, sometimes we want to add or modify data via the frontend interface without direct access to API and database. In order to verify the data we created or modified is done successfully, we need to go to the corresponding pages that contain our changes, which sometimes may not be the same page, after waiting for a short while.
+
+We found that clicking and selecting web elements via Selenium methods produce very messy testing code. Therefore we encapsulated all the frequently used selenium functions in a separated file, then by importing those convenient functions, we can have cleaner import statements and better code readability.
+
 ## Testing
 
 > Checkout testing-related source code [here](https://github.com/MarkHershey/SUTDHousingPortal/tree/master/tests)
@@ -163,7 +169,12 @@ Unit tests are the basic white-box tests to ensure functional behaviors matches 
 
 #### b. Integration Test
 
-Our integration tests serve as the black-box test after the backend has beed deployed. The objective of integration tests is mainly testing the integration of our backend server and the cloud database server. We use Python's `requests` library to make API calls (HTTP requests) to our backend server, and then we verify the expected result directly from MongoDB database. This is to ensure 1. backend produces expected results. 2. the data models (classes) we defined in backend code can be correctly converted to database collections and vice versa.
+Our integration tests serve as the black-box test after the backend has beed deployed. The objective of integration tests is mainly testing the integration of our backend server and the cloud database server. We use Python's `requests` library to make API calls (HTTP requests) to our backend server, and then we verify the expected result directly from MongoDB database.
+
+This is to ensure:
+
+1. backend produces expected results.
+2. the data models (classes) we defined in backend code can be correctly converted to database collections and vice versa.
 
 #### c. API-level User Flow Test
 
@@ -186,9 +197,24 @@ API-level user flow test uses API endpoints to simulate user behaviors, it model
 
 UI-level user flow tests cover the same user flow as above, but it is done at the user interface level, thus completely black-boxed, the test program has no direct access to API endpoints, it could only access what normal user could possibly access. The automated test is powered by Selenium with Python.
 
+Coverage:
+
+1. Complete workflow of the Housing Application module.
+   - Application Creation + Application Submission + Application Status Checking + Application Management + Offer management
+2. Complete workflow of Event module:
+   - Create Event + View Event + Join Event + Delete Event + Edit Event + Take Attendance + Cancel Attendance + Quit Event
+3. Complete workflow of Disciplinary record module. (Similar to event workflow)
+4. Complete workflow of setting and revoking the House Guardian module.
+5. Complete workflow of profile editing module, including multiple user simulation by multiple web drivers (Concurrent Testing).
+6. Basic login/logout normal + abnormal testing
+
+We follow "Modify -> Validation" method to test. For every modification (eg. create event, edit event, etc), we will checkout the result of modification to ensure that the modification has already taken place and is displayed correctly.
+
 #### e. UI Robustness Tests with Selenium
 
 To ensure that the robustness of our system, the application should not stop responding, the database should not be taking in invalid or malicious data under any circumstances. Thus, we introduced the money test, which is powered by Selenium to randomly click buttons, create random inputs.
+
+We also created tests about forbidden URL / invalid URL / Page that is not supposed to be reached just by key in the correct URL, the test result is good as the redirection (to the homepage or the 404-page) of our system works well.
 
 #### f. User Test with End User
 
@@ -229,6 +255,7 @@ We need to plan the development timeline based on many factors: our role (backen
 ## Deliverables
 
 - Project Git Repository: [github.com/MarkHershey/SUTDHousingPortal](https://github.com/MarkHershey/SUTDHousingPortal)
+- Demo Video Link: [https://youtu.be/a9598FzhCR4](https://youtu.be/a9598FzhCR4)
 - Live Application: [esc.dev.markhh.com](http://esc.dev.markhh.com/)
 - API Documentation: [esc.dev.markhh.com/api/docs](http://esc.dev.markhh.com/api/docs)
 - Test Coverage Report: [app.codecov.io/gh/MarkHershey/SUTDHousingPortal](https://app.codecov.io/gh/MarkHershey/SUTDHousingPortal)
