@@ -158,7 +158,7 @@ As some of our components are rendered dynamically and are not statically render
 
 #### a. Unit Test
 
-Unit tests are the basic white-box tests to ensure functional behaviors matches with the defined project requirements and be able to produces expected output consistently.
+Unit tests are the basic white-box tests to ensure functional behaviors matches with the defined project requirements and be able to produces expected output consistently. We achieve **90+ percent** statement coverage on testable backend code.
 
 - Unit Test Coverage Report: [app.codecov.io/gh/MarkHershey/SUTDHousingPortal](https://app.codecov.io/gh/MarkHershey/SUTDHousingPortal)
 
