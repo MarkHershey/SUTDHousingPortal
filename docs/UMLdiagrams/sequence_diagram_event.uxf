@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
+  <help_text>Space for diagram notes</help_text>
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLSequenceAllInOne</id>
     <coordinates>
-      <x>130</x>
-      <y>70</y>
-      <w>880</w>
-      <h>560</h>
+      <x>0</x>
+      <y>0</y>
+      <w>820</w>
+      <h>1690</h>
     </coordinates>
     <panel_attributes>title=Floor Events Sequence Diagram
 autoTick=false
@@ -18,18 +19,76 @@ id1-&gt;b1: create_event()
 tick=
 b1-&gt;id2: notify_student()
 tick=
-id2-&gt;b1: signUp()
-tick=
-b1-&gt;b1 + :add_student()
-tick=2
+id2-&gt;b1: login()
+tick=1
 on=b1
-tick=3
+tick=2
+off=b1
+tick=1
+b1-&gt;b1 + :validity
+tick=2
+b1-&gt;id2: auth_with_JWT_token()
+tick=1
+id2-&gt;b1: sign_up_event(uid_event,token)
+tick=
+
+on=b1
+tick=2
+off=b1
+tick=1
+tick=1
+tick=1
+id1 -&gt; b1 : edit_event()
+tick=
+on=b1
+tick=
 off=b1
 tick=
-id1 -&gt; b1: log_attendance()
+b1-&gt;id2: notify_student()
+tick=3
+id2-&gt;b1: quit_event(uid_event,token)
 tick=
-b1-&gt;id2: add_event()
-	
+on=b1
+tick=
+off=b1
+tick=1
+b1-&gt;id1 : update_event_data
+tick=5
+
+id1 -&gt;b1:log_attendance(id)
+tick=1
+on=b1
+tick=
+off=b1
+tick= 
+b1-&gt;id2: update_event_data()
+tick=
+id1 -&gt; b1: remove_attendance(id)
+tick=
+on=b1
+tick=
+off=b1
+tick=
+b1-&gt;id2: update_event_data()
+
+
+tick=4
+id1 -&gt; b1: log_attendance(id)
+tick=1
+on=b1
+tick=1
+off=b1
+
+tick=
+b1-&gt;id2: update_event_data()
+tick=2
+id2 -&gt;b1: view_event_history()
+tick=
+on=b1
+tick=
+off=b1
+tick=
+b1-&gt;id2: event_history_data()
 	
 //combinedFragment=alt~
 //	id1:[old]
@@ -52,6 +111,175 @@ tick=
 tick=2
 //continuation=id1 id2 :goto X
 tick=</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>230</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>check_identity(id,pwd)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>90</x>
+      <y>670</y>
+      <w>650</w>
+      <h>700</h>
+    </coordinates>
+    <panel_attributes>Alt
+--
+if student quit event
+-.
+
+
+
+
+
+
+
+
+
+
+if student did not attend event
+-.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if student attended event
+-.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>430</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>770</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>1000</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>110</x>
+      <y>900</y>
+      <w>590</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>Alt
+--
+if House guardian incorrectly marks attendance
+-.
+
+
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>1130</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>1340</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>1500</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>fetch_data(uid)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>420</x>
+      <y>590</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>update_database()
+style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

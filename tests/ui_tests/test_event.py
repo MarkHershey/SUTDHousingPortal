@@ -84,7 +84,6 @@ class EventTest(unittest.TestCase):
         print("join event")
         click_btn(driver, title + "-join-status")
 
-
         # Try to delete this event (Will be rejected)
         print("try delete event when someone's joined")
         time.sleep(3)

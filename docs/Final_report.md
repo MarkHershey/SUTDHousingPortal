@@ -68,7 +68,7 @@
 
 #### Key Sequence: Housing Events Management
 
-TODO
+![](UMLdiagrams/sequence_diagram_event.png)
 
 ## Implementation Challenges
 
